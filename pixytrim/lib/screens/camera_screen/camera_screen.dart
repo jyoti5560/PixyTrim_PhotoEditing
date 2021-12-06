@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
@@ -30,6 +31,8 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   CameraScreenController cameraScreenController = Get.put(CameraScreenController());
+
+  final ImagePicker imagePicker = ImagePicker();
 
   List<String> iconList = [
     Images.ic_crop,
@@ -120,10 +123,15 @@ class _CameraScreenState extends State<CameraScreen> {
                 ),
                 Row(
                   children: [
-                    Container(
-                      child: Image.asset(
-                        Images.ic_camera2,
-                        scale: 2,
+                    GestureDetector(
+                      onTap: (){
+                        camera();
+                      },
+                      child: Container(
+                        child: Image.asset(
+                          Images.ic_camera2,
+                          scale: 2,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -160,6 +168,20 @@ class _CameraScreenState extends State<CameraScreen> {
             )),
       ),
     );
+  }
+
+  void camera() async {
+    final image = await imagePicker.pickImage(source: ImageSource.camera);
+    if (image != null) {
+      setState(() {
+        widget.file = File(image.path);
+        print('Camera File Path : ${widget.file}');
+        print('Camera Image Path : ${image.path}');
+        //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
+        //renameImage();
+      });
+      Get.to(()=> CameraScreen(file: widget.file,));
+    } else {}
   }
 
   // Share The

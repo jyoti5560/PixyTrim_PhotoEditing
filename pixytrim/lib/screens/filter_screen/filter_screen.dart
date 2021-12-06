@@ -126,6 +126,7 @@ class FilterScreenState extends State<FilterScreen> {
               });
             },
             child: Container(
+              width: Get.width/3.5,
               child: Column(
                 children: [
                   Container(

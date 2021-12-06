@@ -21,4 +21,6 @@ class Images{
   static const ic_compress = '$root' + 'compress.png';
   static const ic_resize = '$root' + 'resize.png';
   static const ic_size_ratio = '$root' + 'size_ratio.png';
+  static const ic_rotate = '$root' + 'refresh.png';
+  static const ic_scale = '$root' + 'scale.png';
 }

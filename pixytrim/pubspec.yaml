@@ -39,6 +39,8 @@ dependencies:
   path_provider: ^2.0.2
   image: ^3.1.0
   crop_your_image:
+  file_picker: ^4.2.4
+  video_trimmer: ^0.5.4
 
 dev_dependencies:
   flutter_test:

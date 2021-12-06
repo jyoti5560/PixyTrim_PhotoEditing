@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_cont
 import 'package:pixytrim/controller/index_screen_controller/index_screen_controller.dart';
 import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
+import 'package:pixytrim/screens/trim_video_screen/trim_video_screen.dart';
 
 class IndexScreen extends StatefulWidget {
   //IndexScreen({Key? key}) : super(key: key);
@@ -139,31 +141,44 @@ class _IndexScreenState extends State<IndexScreen> {
 
                                       // Trim Video Module
                                       Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(5),
-                                          child: Container(
-                                            decoration: borderGradientDecoration(),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(3),
-                                              child: Container(
-                                                decoration: containerBackgroundGradient(),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    Image.asset(
-                                                      Images.ic_trim_video,
-                                                      scale: 2.5,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Text(
-                                                      "Trim Video",
-                                                      style: TextStyle(
-                                                          fontFamily: "",
-                                                          fontSize: 20),
-                                                    ),
-                                                  ],
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            //Get.to(()=> TrimVideo(file: file!,));
+                                            FilePickerResult? result = await FilePicker.platform.pickFiles(
+                                              type: FileType.video,
+                                              allowCompression: false,
+                                            );
+                                            if (result != null) {
+                                              File file1 = File(result.files.single.path!);
+                                              Get.to(()=> TrimVideo(file: file1,));
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: Container(
+                                              decoration: borderGradientDecoration(),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(3),
+                                                child: Container(
+                                                  decoration: containerBackgroundGradient(),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Image.asset(
+                                                        Images.ic_trim_video,
+                                                        scale: 2.5,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text(
+                                                        "Trim Video",
+                                                        style: TextStyle(
+                                                            fontFamily: "",
+                                                            fontSize: 20),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),

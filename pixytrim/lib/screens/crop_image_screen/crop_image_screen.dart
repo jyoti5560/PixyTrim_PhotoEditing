@@ -33,6 +33,8 @@ class _CropImageScreenState extends State<CropImageScreen> {
   Uint8List? _croppedData;
   var _isCropping = false;
 
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +104,10 @@ class _CropImageScreenState extends State<CropImageScreen> {
                   height: 20,
                 ),
 
-                cropRatio(),
+                index == 0 ? cropRatio() :
+                index == 1 ? rotateRatio() :
+                index == 2 ? scaleRatio()
+                 : Container(),
 
                 SizedBox(
                   height: 20,
@@ -114,6 +119,26 @@ class _CropImageScreenState extends State<CropImageScreen> {
           )
         ],
       ),
+    );
+  }
+
+  Widget rotateRatio(){
+    return Slider(
+      activeColor: Colors.green,
+      onChanged: (value){
+
+      },
+      value: 0,
+    );
+  }
+
+  Widget scaleRatio(){
+    return Slider(
+      activeColor: Colors.green,
+      onChanged: (value){
+
+      },
+      value: 0,
     );
   }
 
@@ -267,7 +292,9 @@ class _CropImageScreenState extends State<CropImageScreen> {
 
           GestureDetector(
             onTap: (){
-
+              setState(() {
+                index = 0;
+              });
             },
             child: Container(
               padding: EdgeInsets.all(2),
@@ -290,44 +317,58 @@ class _CropImageScreenState extends State<CropImageScreen> {
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(2),
-            height: 60,
-            width: 60,
-            margin: EdgeInsets.only(right: 8),
-            decoration: borderGradientDecoration(),
+          GestureDetector(
+            onTap: (){
+              setState(() {
+                index = 1;
+              });
+            },
             child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              //margin: EdgeInsets.only(left: 10, right: 10),
+              padding: EdgeInsets.all(2),
+              height: 60,
+              width: 60,
+              margin: EdgeInsets.only(right: 8),
+              decoration: borderGradientDecoration(),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+                //margin: EdgeInsets.only(left: 10, right: 10),
 
-              child: Center(
-                  child: Image.asset(
-                    Images.ic_crop,
-                    scale: 2,
-                  )),
+                child: Center(
+                    child: Image.asset(
+                      Images.ic_rotate,
+                      scale: 2,
+                    )),
+              ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(2),
-            height: 60,
-            width: 60,
-            margin: EdgeInsets.only(right: 8),
-            decoration: borderGradientDecoration(),
+          GestureDetector(
+            onTap: (){
+              setState(() {
+                index = 2;
+              });
+            },
             child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              //margin: EdgeInsets.only(left: 10, right: 10),
+              padding: EdgeInsets.all(2),
+              height: 60,
+              width: 60,
+              margin: EdgeInsets.only(right: 8),
+              decoration: borderGradientDecoration(),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+                //margin: EdgeInsets.only(left: 10, right: 10),
 
-              child: Center(
-                  child: Image.asset(
-                    Images.ic_crop,
-                    scale: 2,
-                  )),
+                child: Center(
+                    child: Image.asset(
+                      Images.ic_scale,
+                      scale: 2,
+                    )),
+              ),
             ),
           ),
         ],

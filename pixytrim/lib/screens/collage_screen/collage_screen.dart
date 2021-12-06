@@ -60,9 +60,7 @@ class _CollageScreenState extends State<CollageScreen>
                   height: 60,
                 ),
                 appBar(),
-                SizedBox(
-                  height: 20,
-                ),
+
                 Expanded(
                     child: RepaintBoundary(
                       key: key,
