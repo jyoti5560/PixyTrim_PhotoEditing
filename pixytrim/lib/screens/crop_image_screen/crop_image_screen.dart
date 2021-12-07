@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
-
+import 'dart:math' as Math;
 import 'package:crop_your_image/crop_your_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gallery_saver/gallery_saver.dart';
@@ -12,6 +13,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'dart:ui' as ui;
+import 'dart:math' as math;
+//import 'package: photo_view/photo_view.dart';
 
 class CropImageScreen extends StatefulWidget {
   //const CropImageScreen({Key? key}) : super(key: key);
@@ -23,7 +26,7 @@ class CropImageScreen extends StatefulWidget {
   _CropImageScreenState createState() => _CropImageScreenState();
 }
 
-class _CropImageScreenState extends State<CropImageScreen> {
+class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProviderStateMixin {
 
   //final cropKey = GlobalKey<CropState>();
   File? file;
@@ -34,6 +37,17 @@ class _CropImageScreenState extends State<CropImageScreen> {
   var _isCropping = false;
 
   int index = 0;
+  bool showFront = true;
+  AnimationController ? controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize the animation controller
+    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 300), value: 0);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,16 +72,12 @@ class _CropImageScreenState extends State<CropImageScreen> {
                       width: Get.width,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        // child: widget.file.toString().isNotEmpty
-                        //     ? Image.file(widget.file,
-                        //     height: 120, width: 120, fit: BoxFit.fill)
-                        //     : null,
                         child:  _croppedData != null ?
                         RepaintBoundary(
                           key: key,
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
-                              child: Image.memory(_croppedData!)),
+                              child:  Image.memory(_croppedData!)),
                         ):
                         Crop(
                           controller: _cropController,
@@ -98,7 +108,8 @@ class _CropImageScreenState extends State<CropImageScreen> {
                         ),
 
                       ),
-                    )),
+                    )
+                ),
 
                 SizedBox(
                   height: 20,
@@ -121,14 +132,19 @@ class _CropImageScreenState extends State<CropImageScreen> {
       ),
     );
   }
-
+  double sat = 1;
   Widget rotateRatio(){
     return Slider(
-      activeColor: Colors.green,
-      onChanged: (value){
-
+      //label: 'sat : ${sat.toStringAsFixed(2)}',
+      onChanged: (double value) {
+        setState(() {
+          sat = value;
+        });
       },
-      value: 0,
+      divisions: 50,
+      value: sat,
+      min: 0,
+      max: 2,
     );
   }
 

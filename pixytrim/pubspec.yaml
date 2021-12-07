@@ -41,6 +41,8 @@ dependencies:
   crop_your_image:
   file_picker: ^4.2.4
   video_trimmer: ^0.5.4
+  photo_view: ^0.13.0
+  image_painter: ^0.4.4
 
 dev_dependencies:
   flutter_test:

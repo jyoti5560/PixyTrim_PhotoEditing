@@ -20,7 +20,20 @@ class Images{
   static const ic_blur = '$root' + 'blur.png';
   static const ic_compress = '$root' + 'compress.png';
   static const ic_resize = '$root' + 'resize.png';
+  static const ic_image_ratio = '$root' + 'photo_ratio.png';
   static const ic_size_ratio = '$root' + 'size_ratio.png';
   static const ic_rotate = '$root' + 'refresh.png';
   static const ic_scale = '$root' + 'scale.png';
+
+  static const ic_color_palate = '$root' + 'color-palate.png';
+  static const ic_edit = '$root' + 'edit.png';
+  static const ic_paint_brush = '$root' + 'paintbrush.png';
+  static const ic_text = '$root' + 'text.png';
+  static const ic_zoom = '$root' + 'zoom.png';
+  static const ic_line = '$root' + 'line.png';
+  static const ic_rectangle = '$root' + 'rectangle.png';
+  static const ic_pencil = '$root' + 'pencil.png';
+  static const ic_circle = '$root' + 'circle.png';
+  static const ic_right_arrow = '$root' + 'right-arrows.png';
+  static const ic_dash_line = '$root' + 'dash_line.png';
 }
