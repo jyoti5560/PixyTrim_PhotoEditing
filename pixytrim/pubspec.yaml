@@ -43,6 +43,9 @@ dependencies:
   video_trimmer: ^0.5.4
   photo_view: ^0.13.0
   image_painter: ^0.4.4
+  crop: ^0.5.1+1
+  permission_handler:
+  image_gallery_saver:
 
 dev_dependencies:
   flutter_test:
