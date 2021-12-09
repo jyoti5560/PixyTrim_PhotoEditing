@@ -28,6 +28,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
                   ? fourImageSelectCollageModule() :
                 collageScreenController.imageFileList.length == 5
                     ? fiveImageSelectCollageModule() :
+                collageScreenController.imageFileList.length == 6
+                    ? sixImageSelectCollageModule() :
               Container();
   }
 
@@ -179,6 +181,49 @@ class _LayoutScreenState extends State<LayoutScreen> {
             },
             child: Container(
               child: Image.asset(collageScreenController.fiveImageLayout[index]),
+              // child: Container(
+              //   padding: EdgeInsets.all(2),
+              //   height: 60,
+              //   width: 60,
+              //   margin: EdgeInsets.only(right: 8),
+              //   decoration: borderGradientDecoration(),
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(10),
+              //       color: Colors.white,
+              //     ),
+              //     //margin: EdgeInsets.only(left: 10, right: 10),
+              //
+              //     child: Center(
+              //         child: Text(index.toString(),
+              //           style: TextStyle(fontFamily: "", fontSize: 18),)),
+              //   ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget sixImageSelectCollageModule(){
+    return ListView.builder(
+      itemCount: collageScreenController.sixImageLayout.length,
+      scrollDirection: Axis.horizontal,
+      shrinkWrap: true,
+      //physics: BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                collageScreenController.selectedIndex.value = index;
+                print(
+                    'selectedIndex : ${collageScreenController.selectedIndex.value}');
+              });
+            },
+            child: Container(
+              child: Image.asset(collageScreenController.sixImageLayout[index]),
               // child: Container(
               //   padding: EdgeInsets.all(2),
               //   height: 60,

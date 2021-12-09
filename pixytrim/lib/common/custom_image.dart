@@ -5,6 +5,7 @@ class Images{
   static const root2 = 'assets/images/three_image_layout/';
   static const root3 = 'assets/images/four_image_layout/';
   static const root4 = 'assets/images/five_image_layout/';
+  static const root5 = 'assets/images/six_image_layout/';
 
   static const ic_logo = '$root' + 'logo.png';
   static const ic_background1 = '$root' + 'background1.png';
@@ -112,4 +113,26 @@ class Images{
   static const ic_layout61 = '$root4' + '61.png';
   static const ic_layout62 = '$root4' + '62.png';
   static const ic_layout63 = '$root4' + '63.png';
+
+  // Six image layout
+  static const ic_layout64 = '$root5' + '64.png';
+  static const ic_layout65 = '$root5' + '65.png';
+  static const ic_layout66 = '$root5' + '66.png';
+  static const ic_layout67 = '$root5' + '67.png';
+  static const ic_layout68 = '$root5' + '68.png';
+  static const ic_layout69 = '$root5' + '69.png';
+  static const ic_layout70 = '$root5' + '70.png';
+  static const ic_layout71 = '$root5' + '71.png';
+  static const ic_layout72 = '$root5' + '72.png';
+  static const ic_layout73 = '$root5' + '73.png';
+  static const ic_layout74 = '$root5' + '74.png';
+  static const ic_layout75 = '$root5' + '75.png';
+  static const ic_layout76 = '$root5' + '76.png';
+  static const ic_layout77 = '$root5' + '77.png';
+  static const ic_layout78 = '$root5' + '78.png';
+  static const ic_layout79 = '$root5' + '79.png';
+  static const ic_layout80 = '$root5' + '80.png';
+  static const ic_layout81 = '$root5' + '81.png';
+  static const ic_layout82 = '$root5' + '82.png';
+  static const ic_layout83 = '$root5' + '83.png';
 }

@@ -97,4 +97,27 @@ class CollageScreenController extends GetxController{
     Images.ic_layout62,
     Images.ic_layout63,
   ];
+
+  List<String> sixImageLayout = [
+    Images.ic_layout64,
+    Images.ic_layout65,
+    Images.ic_layout66,
+    Images.ic_layout67,
+    Images.ic_layout68,
+    Images.ic_layout69,
+    Images.ic_layout70,
+    Images.ic_layout71,
+    Images.ic_layout72,
+    Images.ic_layout73,
+    Images.ic_layout74,
+    Images.ic_layout75,
+    Images.ic_layout76,
+    Images.ic_layout77,
+    Images.ic_layout78,
+    Images.ic_layout79,
+    Images.ic_layout80,
+    Images.ic_layout81,
+    Images.ic_layout82,
+    Images.ic_layout83,
+  ];
 }
