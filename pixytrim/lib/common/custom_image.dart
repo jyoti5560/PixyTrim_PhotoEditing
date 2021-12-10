@@ -6,6 +6,7 @@ class Images{
   static const root3 = 'assets/images/four_image_layout/';
   static const root4 = 'assets/images/five_image_layout/';
   static const root5 = 'assets/images/six_image_layout/';
+  static const root6 = 'assets/images/size_ratio/';
 
   static const ic_logo = '$root' + 'logo.png';
   static const ic_background1 = '$root' + 'background1.png';
@@ -42,6 +43,11 @@ class Images{
   static const ic_circle = '$root' + 'circle.png';
   static const ic_right_arrow = '$root' + 'right-arrows.png';
   static const ic_dash_line = '$root' + 'dash_line.png';
+  static const ic_layout = '$root' + 'layout.png';
+  static const ic_edit_image = '$root' + 'edit-image.png';
+  static const ic_saturation = '$root' + 'saturation.png';
+  static const ic_contrast = '$root' + 'contrast.png';
+  static const ic_sun = '$root' + 'sun.png';
 
   // Two image layout
   static const ic_layout1 = '$root1' + '1.png';
@@ -135,4 +141,26 @@ class Images{
   static const ic_layout81 = '$root5' + '81.png';
   static const ic_layout82 = '$root5' + '82.png';
   static const ic_layout83 = '$root5' + '83.png';
+
+  // Image size ratio
+  static const ic_sizeRatio1 = '$root6' + '1.2.png';
+  static const ic_sizeRatio2 = '$root6' + '2.3.png';
+  static const ic_sizeRatio3 = '$root6' + '3.2.png';
+  static const ic_sizeRatio4 = '$root6' + '3.4.png';
+  static const ic_sizeRatio5 = '$root6' + '4.3.png';
+  static const ic_sizeRatio6 = '$root6' + '5.4.png';
+  static const ic_sizeRatio7 = '$root6' + '9.16.png';
+  static const ic_sizeRatio8 = '$root6' + '16.9.png';
+  static const ic_sizeRatio9 = '$root6' + 'a4.png';
+  static const ic_sizeRatio10 = '$root6' + 'a5.png';
+  static const ic_sizeRatio11 = '$root6' + 'fb cover.png';
+  static const ic_sizeRatio12 = '$root6' + 'fbpost.png';
+  static const ic_sizeRatio13 = '$root6' + 'ig story.png';
+  static const ic_sizeRatio14 = '$root6' + 'ig1.1.png';
+  static const ic_sizeRatio15 = '$root6' + 'ig4.5.png';
+  static const ic_sizeRatio16 = '$root6' + 'movie.png';
+  static const ic_sizeRatio17 = '$root6' + 'pinterest post.png';
+  static const ic_sizeRatio18 = '$root6' + 'twitter header.png';
+  static const ic_sizeRatio19 = '$root6' + 'twitter post.png';
+  static const ic_sizeRatio20= '$root6' + 'youtubecover.png';
 }

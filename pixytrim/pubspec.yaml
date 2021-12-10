@@ -69,6 +69,7 @@ flutter:
     - assets/images/four_image_layout/
     - assets/images/five_image_layout/
     - assets/images/six_image_layout/
+    - assets/images/size_ratio/
 
   fonts:
     - family: Lemon Jelly

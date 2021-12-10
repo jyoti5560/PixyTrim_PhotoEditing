@@ -41,18 +41,20 @@ class _BlurScreenState extends State<BlurScreen> {
                 SizedBox(height: 60),
                 appBar(),
                 SizedBox(height: 20),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: ImageFiltered(
-                        imageFilter: ImageFilter.blur(
-                            sigmaX: blurImage, sigmaY: blurImage),
-                        child: Container(
-                          color: Colors.transparent,
-                          child: widget.file.toString().isNotEmpty
-                              ? Image.file(widget.file)
-                              : null,
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: ImageFiltered(
+                          imageFilter: ImageFilter.blur(
+                              sigmaX: blurImage, sigmaY: blurImage),
+                          child: Container(
+                            color: Colors.transparent,
+                            child: widget.file.toString().isNotEmpty
+                                ? Image.file(widget.file)
+                                : null,
+                          ),
                         ),
-                      ),
+                  ),
                 ),
 
                 SizedBox(height: 20),
@@ -98,7 +100,7 @@ class _BlurScreenState extends State<BlurScreen> {
                   onTap: () {
                     //Get.back();
                   },
-                  child: Container(child: Icon(Icons.close)),
+                  child: Container(child: Icon(Icons.check_rounded)),
                 ),
               ],
             )),

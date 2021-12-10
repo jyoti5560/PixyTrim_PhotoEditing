@@ -17,6 +17,7 @@ import 'package:pixytrim/screens/compress_image_screen/compress_image_screen.dar
 import 'package:pixytrim/screens/crop_image_screen/crop_image_screen.dart';
 import 'package:pixytrim/screens/filter_screen/filter_screen.dart';
 import 'package:pixytrim/screens/image_editor_screen/image_editor_screen.dart';
+import 'package:pixytrim/screens/image_size_ratio_screen/image_size_ratio_screen.dart';
 import 'package:share/share.dart';
 import 'package:image/image.dart' as imageLib;
 
@@ -42,7 +43,7 @@ class _CameraScreenState extends State<CameraScreen> {
     Images.ic_blur,
     Images.ic_compress,
     Images.ic_resize,
-    Images.ic_size_ratio,
+    Images.ic_edit_image,
     Images.ic_image_ratio,
   ];
 
@@ -280,6 +281,8 @@ class _CameraScreenState extends State<CameraScreen> {
                 } else if(i == 6){
                   Get.to(() => ImageEditorScreen(file: widget.file));
                 } else if(i == 7){
+                  Get.to(() => ImageSizeRatioScreen(),arguments: widget.file);
+
                   //Get.to(() => ImageEditorScreen(file: widget.file));
                 }
               },

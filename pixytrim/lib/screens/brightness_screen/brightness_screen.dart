@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_color.dart';
 import 'package:pixytrim/common/custom_gradient_slider.dart';
+import 'package:pixytrim/common/custom_image.dart';
 
 class BrightnessScreen extends StatefulWidget {
   //const BrightnessScreen({Key? key}) : super(key: key);
@@ -146,7 +147,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                   onTap: () {
                     //Get.back();
                   },
-                  child: Container(child: Icon(Icons.close)),
+                  child: Container(child: Icon(Icons.check_rounded)),
                 ),
               ],
             )),
@@ -172,10 +173,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
             //margin: EdgeInsets.only(left: 10, right: 10),
             child: Row(
               children: [
-                Icon(
-                  Icons.brush,
-                  color: Theme.of(context).accentColor,
-                ),
+                Image.asset(Images.ic_saturation, scale: 2.2,),
                 Expanded(
                   child: SliderTheme(
                     data: SliderThemeData(
@@ -217,10 +215,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
             //margin: EdgeInsets.only(left: 10, right: 10),
             child: Row(
               children: [
-                Icon(
-                  Icons.brightness_4,
-                  color: Theme.of(context).accentColor,
-                ),
+                Image.asset(Images.ic_sun, scale: 2.2,),
                 Expanded(
                   child: SliderTheme(
                     data: SliderThemeData(
@@ -262,10 +257,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
             //margin: EdgeInsets.only(left: 10, right: 10),
             child: Row(
               children: [
-                Icon(
-                  Icons.color_lens,
-                  color: Theme.of(context).accentColor,
-                ),
+                Image.asset(Images.ic_contrast, scale: 2.2,),
                 Expanded(
                   child: SliderTheme(
                     data: SliderThemeData(

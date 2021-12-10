@@ -211,8 +211,8 @@ class _IndexScreenState extends State<IndexScreen> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Image.asset(
-                                          Images.ic_camera,
-                                          scale: 2.5,
+                                          Images.ic_layout,
+                                          scale: 3.2,
                                         ),
                                         SizedBox(
                                           width: 10,
