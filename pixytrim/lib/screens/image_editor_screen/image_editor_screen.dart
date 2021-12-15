@@ -80,7 +80,7 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                   child: ImagePainter.file(
                     widget.file,
                     key: _imageKey,
-                    scalable: true,
+                    scalable: false,
 
                     initialStrokeWidth: 2,
                     initialColor: Colors.green,

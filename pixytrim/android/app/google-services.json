@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "799118890185",
+    "project_id": "pixytrim-photo-editor",
+    "storage_bucket": "pixytrim-photo-editor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799118890185:android:841bfbe887320b12442918",
+        "android_client_info": {
+          "package_name": "com.example.pixytrim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799118890185-ljm9sorm5fum6d728u5csgpk215brf39.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByN1yH265U59LY5484bIhGyQNQFrWmggk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799118890185-ljm9sorm5fum6d728u5csgpk215brf39.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -128,15 +128,15 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                           controller: controller,
                           shape: shape,
                           child: Image.file(widget.file),
-                          foreground: IgnorePointer(
-                            child: Container(
-                              alignment: Alignment.bottomRight,
-                              child: Text(
-                                'Foreground Object',
-                                style: TextStyle(color: Colors.red),
-                              ),
-                            ),
-                          ),
+                          // foreground: IgnorePointer(
+                          //   child: Container(
+                          //     alignment: Alignment.bottomRight,
+                          //     child: Text(
+                          //       'Pixytrim',
+                          //       style: TextStyle(color: Colors.red),
+                          //     ),
+                          //   ),
+                          // ),
                           helper: shape == BoxShape.rectangle
                               ? Container(
                             decoration: BoxDecoration(

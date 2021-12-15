@@ -6,6 +6,7 @@ class Images{
   static const root3 = 'assets/images/four_image_layout/';
   static const root4 = 'assets/images/five_image_layout/';
   static const root5 = 'assets/images/six_image_layout/';
+  static const root7 = 'assets/images/seven_image_layout/';
   static const root6 = 'assets/images/size_ratio/';
 
   static const ic_logo = '$root' + 'logo.png';
@@ -48,6 +49,8 @@ class Images{
   static const ic_saturation = '$root' + 'saturation.png';
   static const ic_contrast = '$root' + 'contrast.png';
   static const ic_sun = '$root' + 'sun.png';
+  static const ic_google = '$root' + 'google.png';
+  static const ic_facebook = '$root' + 'facebook.png';
 
   // Two image layout
   static const ic_layout1 = '$root1' + '1.png';
@@ -141,6 +144,25 @@ class Images{
   static const ic_layout81 = '$root5' + '81.png';
   static const ic_layout82 = '$root5' + '82.png';
   static const ic_layout83 = '$root5' + '83.png';
+
+  // Seven image layout
+  static const ic_layout84 = '$root7' + '84.png';
+  static const ic_layout85 = '$root7' + '85.png';
+  static const ic_layout86 = '$root7' + '86.png';
+  static const ic_layout87 = '$root7' + '87.png';
+  static const ic_layout88 = '$root7' + '88.png';
+  static const ic_layout89 = '$root7' + '89.png';
+  static const ic_layout90 = '$root7' + '90.png';
+  static const ic_layout91 = '$root7' + '91.png';
+  static const ic_layout92 = '$root7' + '92.png';
+  static const ic_layout93 = '$root7' + '93.png';
+  static const ic_layout94 = '$root7' + '94.png';
+  static const ic_layout95 = '$root7' + '95.png';
+  static const ic_layout96 = '$root7' + '96.png';
+  static const ic_layout97 = '$root7' + '97.png';
+  static const ic_layout98 = '$root7' + '98.png';
+  static const ic_layout99 = '$root7' + '99.png';
+
 
   // Image size ratio
   static const ic_sizeRatio1 = '$root6' + '1.2.png';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pixytrim/common/common_widgets.dart';
 import '../delegates/text_delegate.dart';
 
 class TextDialog extends StatelessWidget {
@@ -42,7 +43,7 @@ class TextDialog extends StatelessWidget {
             controller: controller,
             autofocus: true,
             style: TextStyle(
-                fontSize: fontSize, fontWeight: FontWeight.bold, color: color),
+                fontSize: fontSize, fontWeight: FontWeight.bold, color: color, fontFamily: ""),
             textAlign: TextAlign.center,
             decoration: const InputDecoration(
               contentPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -51,15 +52,27 @@ class TextDialog extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.bottomRight,
-            child: TextButton(
-                child: Text(
-                  textDelegate.done,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+            child: Container(
+              padding: EdgeInsets.all(3),
+              decoration: borderGradientDecoration(),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
                 ),
-                onPressed: onFinished),
+                child: TextButton(
+                    child: Text(
+                      textDelegate.done,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "",
+                        fontSize: 18
+                      ),
+                    ),
+                    onPressed: onFinished),
+              ),
+            ),
           ),
         ],
       ),

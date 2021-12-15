@@ -10,19 +10,22 @@ import 'package:pixytrim/common/custom_gradient_slider.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
 
+enum SelectedModule {camera, gallery}
+
 class CompressImageScreen extends StatefulWidget {
 
   //const CompressImageScreen({Key? key}) : super(key: key);
   File file;
   File compressFile;
-  CompressImageScreen({required this.file, required this.compressFile});
+  //final selectedModule;
+  CompressImageScreen({required this.file, required this.compressFile,});
   @override
   _CompressImageScreenState createState() => _CompressImageScreenState();
 }
 
 class _CompressImageScreenState extends State<CompressImageScreen> {
   // CompressImageScreenController compressImageScreenController = Get.put(CompressImageScreenController());
-  CameraScreenController cameraScreenController = Get.find();
+  final cameraScreenController = Get.find<CameraScreenController>();
   LinearGradient gradient = LinearGradient(
       colors: <Color> [
         AppColor.kBorderGradientColor1,
@@ -83,8 +86,7 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
                   ),
                 ),
                 Container(
-                  child: Text(
-                    "Camera",
+                  child: Text(cameraScreenController.selectedModule == SelectedModule.camera ? "Camera" : "Gallery",
                     style: TextStyle(
                         fontFamily: "",
                         fontSize: 18,

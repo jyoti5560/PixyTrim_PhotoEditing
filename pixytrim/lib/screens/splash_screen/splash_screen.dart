@@ -11,16 +11,21 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            height: Get.height,
-            child: Image.asset(Images.ic_background1, fit: BoxFit.cover,),
+      body: Container(
+        height: Get.height,
+        width: Get.width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('${Images.ic_background1}'),
+              fit: BoxFit.cover,
           ),
-          Column(
+        ),
+        child: Container(
+          // height: Get.height * 0.45,
+          child: Column(
             //crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
+            //mainAxisSize: MainAxisSize.max,
             children: [
               Container(
                 child: Image.asset(Images.ic_logo, scale: 3,),
@@ -32,9 +37,8 @@ class SplashScreen extends StatelessWidget {
                 child: Text("Pixy Trim", style: TextStyle(fontSize: 50),),
               )
             ],
-          )
-
-        ],
+          ),
+        ),
       ),
     );
   }

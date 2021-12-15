@@ -262,6 +262,7 @@ class PaintInfo {
   ///Used to save text in case of text type.
   String? text;
 
+
   ///In case of string, it is used to save string value entered.
   PaintInfo({this.offset, this.painter, this.text, this.mode});
 }

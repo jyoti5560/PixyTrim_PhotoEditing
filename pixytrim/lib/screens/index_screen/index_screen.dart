@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pixytrim/common/common_widgets.dart';
-import 'package:pixytrim/common/custom_color.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';
-import 'package:pixytrim/controller/index_screen_controller/index_screen_controller.dart';
 import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
+import 'package:pixytrim/screens/signin_screen/signin_screen.dart';
 import 'package:pixytrim/screens/trim_video_screen/trim_video_screen.dart';
+
 
 class IndexScreen extends StatefulWidget {
   //IndexScreen({Key? key}) : super(key: key);
@@ -50,7 +50,7 @@ class _IndexScreenState extends State<IndexScreen> {
                     ),
                   ),
                   Container(
-                    height: Get.height * 0.35,
+                    height: Get.height * 0.45,
                     margin: EdgeInsets.only(left: 10, right: 10),
                     child: Column(
                       children: [
@@ -60,32 +60,37 @@ class _IndexScreenState extends State<IndexScreen> {
                             children: [
                               // Gallery Module
                               Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Container(
-                                    decoration: borderGradientDecoration(),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(3),
-                                      child: Container(
-                                        decoration: containerBackgroundGradient(),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Image.asset(
-                                                Images.ic_gallery,
-                                                scale: 2.5,
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                "Gallery",
-                                                style:
-                                                TextStyle(fontFamily: "", fontSize: 20),
-                                              ),
-                                            ],
+                                child: GestureDetector(
+                                  onTap: () {
+                                    openGallery();
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: Container(
+                                      decoration: borderGradientDecoration(),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(3),
+                                        child: Container(
+                                          decoration: containerBackgroundGradient(),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  Images.ic_gallery,
+                                                  scale: 2.5,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                  "Gallery",
+                                                  style:
+                                                  TextStyle(fontFamily: "", fontSize: 20),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -103,7 +108,7 @@ class _IndexScreenState extends State<IndexScreen> {
                                         child: GestureDetector(
                                             onTap: (){
                                               //Get.to(() => CameraScreen());
-                                              camera();
+                                              openCamera();
                                             },
                                             child: Padding(
                                               padding: const EdgeInsets.all(5),
@@ -232,6 +237,45 @@ class _IndexScreenState extends State<IndexScreen> {
                             ),
                           ),
                         ),
+                        Expanded(
+                          flex: 3,
+                          child: GestureDetector(
+                            onTap: (){
+                              Get.to(() => SignInScreen());
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Container(
+                                decoration: borderGradientDecoration(),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3),
+                                  child: Container(
+                                    decoration: containerBackgroundGradient(),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          Images.ic_layout,
+                                          scale: 3.2,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          "Login",
+                                          style: TextStyle(
+                                            fontFamily: "",
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -245,7 +289,7 @@ class _IndexScreenState extends State<IndexScreen> {
     );
   }
 
-  void camera() async {
+  void openCamera() async {
     final image = await imagePicker.pickImage(source: ImageSource.camera);
     if (image != null) {
       setState(() {
@@ -255,21 +299,52 @@ class _IndexScreenState extends State<IndexScreen> {
         //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
         //renameImage();
       });
-      Get.to(()=> CameraScreen(file: file!,));
+      Get.to(()=>
+          CameraScreen(file: file!), arguments: SelectedModule.camera);
+
+    } else {}
+  }
+
+  void openGallery() async {
+    final image = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        file = File(image.path);
+        print('Camera File Path : $file');
+        print('Camera Image Path : ${image.path}');
+        //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
+        //renameImage();
+      });
+      Get.to(()=>
+          CameraScreen(file: file!, ), arguments: SelectedModule.gallery
+      );
     } else {}
   }
 
   // Select Multiple Images From Gallery
   void selectImages() async {
     final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
+    print('${selectedImages!.length}');
     try{
-      if(selectedImages!.isEmpty){
-      } else {
+      if(selectedImages.isEmpty){
+      } else if(selectedImages.length == 1 ){
+
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Please select minimum 2 images"),
+        ));
+       // Get.snackbar("Please select minimum 2 image", "", snackPosition: SnackPosition.BOTTOM, );
+      } else if(selectedImages.length >= 2 && selectedImages.length <= 7){
         setState(() {
           collageScreenController.imageFileList.clear();
           collageScreenController.imageFileList.addAll(selectedImages);
         });
         Get.to(()=> CollageScreen());
+      } else if(selectedImages.length >= 8 ){
+
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Please select Maximum 7 images"),
+        ));
+        // Get.snackbar("Please select minimum 2 image", "", snackPosition: SnackPosition.BOTTOM, );
       }
     } catch(e) {
       print('Error : $e');

@@ -21,10 +21,13 @@ import 'package:pixytrim/screens/image_size_ratio_screen/image_size_ratio_screen
 import 'package:share/share.dart';
 import 'package:image/image.dart' as imageLib;
 
+enum SelectedModule {camera, gallery}
+
 class CameraScreen extends StatefulWidget {
   //CameraScreen({Key? key}) : super(key: key);
 
   File file;
+
   CameraScreen({required this.file});
 
   @override
@@ -53,6 +56,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("path===${cameraScreenController.selectedModule}");
     return Scaffold(
       body: Stack(
         children: [
@@ -70,12 +74,13 @@ class _CameraScreenState extends State<CameraScreen> {
                 ),
                 Expanded(
                     child: Container(
-                  width: Get.width,
+                   width: Get.width,
+                  height: double.infinity,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: widget.file.toString().isNotEmpty
                         ? Image.file(widget.file,
-                            height: 120, width: 120, fit: BoxFit.fill)
+                            height: 120, width: 120, fit: BoxFit.cover)
                         : null,
                   ),
                 )),
@@ -116,8 +121,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   ),
                 ),
                 Container(
-                  child: Text(
-                    "Camera",
+                  child: Text(cameraScreenController.selectedModule == SelectedModule.camera ? "Camera" : "Gallery",
                     style: TextStyle(
                         fontFamily: "",
                         fontSize: 18,
@@ -128,12 +132,16 @@ class _CameraScreenState extends State<CameraScreen> {
                   children: [
                     GestureDetector(
                       onTap: (){
-                        camera();
+                        cameraScreenController.selectedModule == SelectedModule.camera
+                            ? openCamera()
+                            : openGallery();
                       },
                       child: Container(
                         child: Image.asset(
-                          Images.ic_camera2,
-                          scale: 2,
+                          cameraScreenController.selectedModule == SelectedModule.camera
+                              ? Images.ic_camera2
+                              : Images.ic_gallery,
+                          scale: 2.5,
                         ),
                       ),
                     ),
@@ -173,7 +181,7 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  void camera() async {
+  void openCamera() async {
     final image = await imagePicker.pickImage(source: ImageSource.camera);
     if (image != null) {
       setState(() {
@@ -183,7 +191,23 @@ class _CameraScreenState extends State<CameraScreen> {
         //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
         //renameImage();
       });
-      Get.to(()=> CameraScreen(file: widget.file,));
+      Get.to(()=> CameraScreen(file: widget.file,), arguments: SelectedModule.camera,);
+    } else {}
+  }
+
+  void openGallery() async {
+    final image = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        widget.file = File(image.path);
+        print('Camera File Path : ${widget.file}');
+        print('Camera Image Path : ${image.path}');
+        //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
+        //renameImage();
+      });
+      Get.to(()=>
+          CameraScreen(file: widget.file, ), arguments: SelectedModule.gallery
+      );
     } else {}
   }
 
@@ -232,9 +256,9 @@ class _CameraScreenState extends State<CameraScreen> {
                   arguments: widget.file);
                 }
                 else if(i == 2){
-                  Get.to(()=> BrightnessScreen(file: widget.file,));
+                  Get.to(()=> BrightnessScreen(file: widget.file,));//todo
                 } else if(i == 3){
-                  Get.to(()=> BlurScreen(file: widget.file,));
+                  Get.to(()=> BlurScreen(file: widget.file));
                 } else if(i == 4){
                   compressImage(widget.file).then((value) {
                     Get.to(() => CompressImageScreen(

@@ -1,17 +1,26 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_color.dart';
 import 'package:pixytrim/common/custom_gradient_slider.dart';
 import 'package:pixytrim/common/custom_image.dart';
+import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
+import 'dart:ui' as ui;
+
+enum SelectedModule {camera, gallery}
 
 class BrightnessScreen extends StatefulWidget {
   //const BrightnessScreen({Key? key}) : super(key: key);
   File file;
-
+  //final selectedModule;
   BrightnessScreen({required this.file});
 
   @override
@@ -53,6 +62,10 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
         AppColor.kBorderGradientColor3,
       ]
   );
+  final GlobalKey key = GlobalKey();
+  File? brightness;
+
+  final cameraScreenController = Get.find<CameraScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -68,43 +81,46 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                 appBar(),
                 SizedBox(height: 20),
                 Expanded(
-                    child: ColorFiltered(
+                    child: RepaintBoundary(
+                      key: key,
+                      child: ColorFiltered(
                   colorFilter: ColorFilter.matrix(calculateContrastMatrix(con)),
                   child: ColorFiltered(
-                    colorFilter:
-                        ColorFilter.matrix(calculateSaturationMatrix(sat)),
-                    child: Container(
-                      //width: Get.width,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: ExtendedImage(
-                          color: bright > 0
-                              ? Colors.white.withOpacity(bright)
-                              : Colors.black.withOpacity(-bright),
-                          colorBlendMode: bright > 0
-                              ? BlendMode.lighten
-                              : BlendMode.darken,
-                          image: ExtendedFileImageProvider(widget.file),
-                          extendedImageEditorKey: editorKey,
-                          /*child: Container(
-                            width: Get.width,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: widget.file.toString().isNotEmpty
-                                  ? Image.file(
-                                      widget.file,
-                                      height: 120,
-                                      width: 120,
-                                      fit: BoxFit.fill,
-                                    )
-                                  : null,
-                            ),
-                          ),*/
+                      colorFilter:
+                          ColorFilter.matrix(calculateSaturationMatrix(sat)),
+                      child: Container(
+                        //width: Get.width,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: ExtendedImage(
+                            color: bright > 0
+                                ? Colors.white.withOpacity(bright)
+                                : Colors.black.withOpacity(-bright),
+                            colorBlendMode: bright > 0
+                                ? BlendMode.lighten
+                                : BlendMode.darken,
+                            image: ExtendedFileImageProvider(widget.file),
+                            extendedImageEditorKey: editorKey,
+                            /*child: Container(
+                              width: Get.width,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: widget.file.toString().isNotEmpty
+                                    ? Image.file(
+                                        widget.file,
+                                        height: 120,
+                                        width: 120,
+                                        fit: BoxFit.fill,
+                                      )
+                                    : null,
+                              ),
+                            ),*/
+                          ),
                         ),
                       ),
-                    ),
                   ),
-                )),
+                ),
+                    )),
                 SizedBox(height: 20),
                 brightnessList()
               ],
@@ -135,8 +151,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                   child: Container(child: Icon(Icons.close)),
                 ),
                 Container(
-                  child: Text(
-                    "Camera",
+                  child: Text(cameraScreenController.selectedModule == SelectedModule.camera ? "Camera" : "Gallery",
                     style: TextStyle(
                         fontFamily: "",
                         fontSize: 18,
@@ -144,8 +159,10 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    //Get.back();
+                  onTap: () async{
+                    await _capturePng();
+                    // saveImage();
+                    // Get.back();
                   },
                   child: Container(child: Icon(Icons.check_rounded)),
                 ),
@@ -178,6 +195,8 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                   child: SliderTheme(
                     data: SliderThemeData(
                       trackShape: GradientRectSliderTrackShape(gradient: gradient, darkenInactive: false),
+                      valueIndicatorTextStyle: TextStyle(fontFamily: ""),
+                      //accentTextTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
                     ),
                     child: Slider(
                       label: 'sat : ${sat.toStringAsFixed(2)}',
@@ -220,9 +239,10 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                   child: SliderTheme(
                     data: SliderThemeData(
                       trackShape: GradientRectSliderTrackShape(gradient: gradient, darkenInactive: false),
+                      valueIndicatorTextStyle: TextStyle(fontFamily: ""),
                     ),
                     child: Slider(
-                      label: '${bright.toStringAsFixed(2)}',
+                      label: 'bright : ${bright.toStringAsFixed(2)}',
                       onChanged: (double value) {
                         setState(() {
                           bright = value;
@@ -262,9 +282,10 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                   child: SliderTheme(
                     data: SliderThemeData(
                       trackShape: GradientRectSliderTrackShape(gradient: gradient, darkenInactive: false),
+                      valueIndicatorTextStyle: TextStyle(fontFamily: ""),
                     ),
                     child: Slider(
-                      label: 'con : ${con.toStringAsFixed(2)}',
+                      label: 'color : ${con.toStringAsFixed(2)}',
                       onChanged: (double value) {
                         setState(() {
                           con = value;
@@ -312,5 +333,64 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
     m[12] = contrast;
     return m;
   }
+
+  Future _capturePng() async {
+    try {
+      print('inside');
+      RenderRepaintBoundary boundary =
+      key.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      print(boundary);
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      print("image:===$image");
+      final directory = (await getApplicationDocumentsDirectory()).path;
+      ByteData? byteData =
+      await image.toByteData(format: ui.ImageByteFormat.png);
+      print("byte data:===$byteData");
+      Uint8List pngBytes = byteData!.buffer.asUint8List();
+      File imgFile = new File('$directory/photo.png');
+      await imgFile.writeAsBytes(pngBytes);
+      setState(() {
+        brightness = imgFile;
+      });
+      print("File path====:${brightness!.path}");
+      //collageScreenController.imageFileList = pngBytes;
+      //bs64 = base64Encode(pngBytes);
+      print("png Bytes:====$pngBytes");
+      //print("bs64:====$bs64");
+      //setState(() {});
+      await saveImage();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future saveImage() async {
+    // renameImage();
+    await GallerySaver.saveImage("${brightness!.path}",
+        albumName: "OTWPhotoEditingDemo");
+          Fluttertoast.showToast(
+              msg: "Save in to Gallery",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0
+          );
+  }
+
+  // Future saveImage() async {
+  //   // renameImage();
+  //   await GallerySaver.saveImage(widget.file.path, albumName: "OTWPhotoEditingDemo");
+  //   Fluttertoast.showToast(
+  //       msg: "Save in to Gallery",
+  //       toastLength: Toast.LENGTH_SHORT,
+  //       gravity: ToastGravity.BOTTOM,
+  //       timeInSecForIosWeb: 1,
+  //       backgroundColor: Colors.red,
+  //       textColor: Colors.white,
+  //       fontSize: 16.0
+  //   );
+  // }
 }
 

@@ -21,7 +21,7 @@ class _TrimVideoState extends State<TrimVideo> {
   final Trimmer _trimmer = Trimmer();
 
   double _startValue = 0.0;
-  double _endValue = 0.0;
+  double _endValue = 100.0;
   bool _isPlaying = false;
   bool _progressVisibility = false;
 
@@ -64,16 +64,60 @@ class _TrimVideoState extends State<TrimVideo> {
                     ),
                   ),
 
+                  // Expanded(
+                  //   child: Stack(
+                  //     alignment: Alignment.center,
+                  //     children: [
+                  //       Container(
+                  //         width: Get.width,
+                  //           decoration: BoxDecoration(
+                  //             borderRadius: BorderRadius.circular(20),
+                  //           ),
+                  //           child: VideoViewer(trimmer: _trimmer)
+                  //           // child: ClipRRect(
+                  //           //   borderRadius: BorderRadius.circular(20),
+                  //           //     child: VideoViewer(trimmer: _trimmer))
+                  //       ),
+                  //
+                  //       TextButton(
+                  //         child: _isPlaying
+                  //             ? Icon(
+                  //           Icons.pause,
+                  //           size: 80.0,
+                  //           color: Colors.white,
+                  //         )
+                  //             : Icon(
+                  //           Icons.play_arrow,
+                  //           size: 80.0,
+                  //           color: Colors.white,
+                  //         ),
+                  //         onPressed: () async {
+                  //           bool playbackState = await _trimmer.videPlaybackControl(
+                  //             startValue: _startValue,
+                  //             endValue: _endValue,
+                  //           );
+                  //           setState(() {
+                  //             _isPlaying = playbackState;
+                  //           });
+                  //         },
+                  //       ),
+                  //     ],
+                  //   ),
+                  //
+                  //
+                  // ),
                   Expanded(
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          width: Get.width,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 25, right: 25),
+                            width: Get.width,
+                            height: double.infinity,
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                                child: VideoViewer(trimmer: _trimmer))
-                        ),
+                                borderRadius: BorderRadius.circular(20),
+                                child: VideoViewer(trimmer: _trimmer)),
+                          ),
 
                         TextButton(
                           child: _isPlaying
@@ -91,16 +135,15 @@ class _TrimVideoState extends State<TrimVideo> {
                             bool playbackState = await _trimmer.videPlaybackControl(
                               startValue: _startValue,
                               endValue: _endValue,
+
                             );
                             setState(() {
                               _isPlaying = playbackState;
                             });
                           },
                         ),
-                      ],
-                    ),
-
-
+                        ],
+                      )
                   ),
 
                   SizedBox(height: 20,),
@@ -261,13 +304,12 @@ class _TrimVideoState extends State<TrimVideo> {
 
   trimVideo(){
     return Container(
-
       child: TrimEditor(
         durationTextStyle: TextStyle(fontFamily: "", fontSize: 16),
         trimmer: _trimmer,
         viewerHeight: 50.0,
         viewerWidth: MediaQuery.of(context).size.width,
-        maxVideoLength: Duration(seconds: 30),
+        maxVideoLength: Duration(seconds: 360),
         onChangeStart: (value) {
           _startValue = value;
         },
@@ -297,7 +339,7 @@ class _TrimVideoState extends State<TrimVideo> {
         _progressVisibility = false;
         _value = value;
       });
-      await GallerySaver.saveVideo(_value!, albumName: "OTWPhotoEditingDemo");
+      await GallerySaver.saveVideo("${_value!}", albumName: "OTWPhotoEditingDemo");
     });
 
     return _value;
