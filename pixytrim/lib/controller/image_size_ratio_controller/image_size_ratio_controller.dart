@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pixytrim/common/custom_image.dart';
@@ -13,420 +14,190 @@ class ImageSizeRatioController extends GetxController{
   double blurImage = 6;
 
   Widget sizeRatio1(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-            child: Image.file(file)),
-        ),
-
-        Container(
+    return Container(
         child: AspectRatio(
         aspectRatio:1/2,
-          child: Image.file(file)),
-        ),
-      ],
-
+          child: Image.file(file, fit: BoxFit.fill,)),
     );
+
   }
 
   Widget sizeRatio2(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
+    return Container(
+      width: Get.width / 1.2,
           child: AspectRatio(
               aspectRatio:2/3,
-              child: Image.file(file)),
-        ),
-      ],
-
-    );
+              child: Image.file(file, fit: BoxFit.fill,)),
+        );
   }
 
   Widget sizeRatio3(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
+    return Container(
+      padding: EdgeInsets.only(top: 40, bottom: 40),
+      // decoration: BoxDecoration(
+      //     borderRadius: BorderRadius.circular(20),
+      //     border: Border.all(color: Colors.grey)
+      // ),
           child: AspectRatio(
               aspectRatio:3/2,
-              child: Image.file(file)),
-        ),
-      ],
-
+              child: Image.file(file,fit: BoxFit.fill,)),
     );
   }
 
   Widget sizeRatio4(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
+    return Container(
+      padding: EdgeInsets.only(top: 15, bottom: 15),
+          //width: Get.width,
           child: Container(
-              child: Image.file(file)),
-        ),
+            width: Get.width/1.3,
 
-        Container(
-          child: AspectRatio(
-              aspectRatio:3/4,
-              child: Image.file(file)),
-        ),
-      ],
-
+            child: AspectRatio(
+                aspectRatio:3/4,
+                child: Image.file(file, fit: BoxFit.fill,)),
+          ),
     );
   }
 
   Widget sizeRatio5(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
+    return Container(
+      width: Get.width/1.2,
+      padding: EdgeInsets.only(top: 30, bottom: 30),
           child: AspectRatio(
               aspectRatio:4/3,
-              child: Image.file(file)),
-        ),
-      ],
-
+              child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
 
   Widget sizeRatio6(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
-          child: AspectRatio(
-              aspectRatio:5/4,
-              child: Image.file(file)),
-        ),
-      ],
-
+    return Container(
+      padding: EdgeInsets.only(top: 20, bottom: 20),
+      child: AspectRatio(
+          aspectRatio: 5/4,
+          child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
 
   Widget sizeRatio7(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
-          child: AspectRatio(
-              aspectRatio:9/16,
-              child: Image.file(file)),
-        ),
-      ],
-
+    return Container(
+      child: AspectRatio(
+          aspectRatio: 9/16,
+          child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
 
   Widget sizeRatio8(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
-          child: AspectRatio(
-              aspectRatio:16/9,
-              child: Image.file(file)),
-        ),
-      ],
-
+    return Container(
+      padding: EdgeInsets.only(top: 40, bottom: 40),
+      child: AspectRatio(
+          aspectRatio: 16/9,
+          child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
 
   Widget sizeRatio9(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
+    return Container(
+      width: Get.width/1.2,
           child: AspectRatio(
               aspectRatio:1/1.41,
-              child: Image.file(file)),
-        ),
-      ],
-
+              child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
 
   Widget sizeRatio10(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
+    return Container(
+      padding: EdgeInsets.only(top: 30, bottom: 30),
+      width: Get.width/1.3,
           child: AspectRatio(
               aspectRatio:1/1.41,
-              child: Image.file(file)),
-        ),
-      ],
+              child: Image.file(file, fit: BoxFit.fill,)),
 
     );
   }
 
   Widget sizeRatio11(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
+    return Container(
+      padding: EdgeInsets.only(top: 160, bottom: 160),
           child: AspectRatio(
               aspectRatio:16/9,
-              child: Image.file(file)),
-        ),
-      ],
-
+              child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
 
   Widget sizeRatio12(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
+    return Container(
+      padding: EdgeInsets.only(top: 100, bottom: 100),
           child: AspectRatio(
               aspectRatio:1.91/1,
-              child: Image.file(file)),
-        ),
-      ],
-
+              child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
 
   Widget sizeRatio13(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
+    return Container(
+      width: Get.width/2,
           child: AspectRatio(
               aspectRatio:9/16,
-              child: Image.file(file)),
-        ),
-      ],
-
+              child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
 
   Widget sizeRatio14(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
+    return Container(
           child: AspectRatio(
               aspectRatio:1/1,
-              child: Image.file(file)),
-        ),
-      ],
-
+              child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
 
   Widget sizeRatio15(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
+    return Container(
+      width: Get.width/1.3,
           child: AspectRatio(
               aspectRatio:4/5,
-              child: Image.file(file)),
-        ),
-      ],
-
+              child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
 
   Widget sizeRatio16(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
+    return Container(
+      padding: EdgeInsets.only(top: 180, bottom: 180),
           child: AspectRatio(
               aspectRatio:2.39/1,
-              child: Image.file(file)),
-        ),
-      ],
-
+              child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
 
   Widget sizeRatio17(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
-          child: AspectRatio(
-              aspectRatio:2/3,
-              child: Image.file(file)),
-        ),
-      ],
-
+    return Container(
+      width: Get.width/1.3,
+      child: AspectRatio(
+          aspectRatio:4/5,
+          child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
 
   Widget sizeRatio18(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
-          child: AspectRatio(
-              aspectRatio:3/1,
-              child: Image.file(file)),
-        ),
-      ],
-
+    return Container(
+      padding: EdgeInsets.only(top: 150, bottom: 150),
+      child: AspectRatio(
+          aspectRatio:2.39/1,
+          child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
   Widget sizeRatio19(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
-          child: AspectRatio(
-              aspectRatio:16/9,
-              child: Image.file(file)),
-        ),
-      ],
-
+    return Container(
+      padding: EdgeInsets.only(top: 130, bottom: 130),
+      child: AspectRatio(
+          aspectRatio:2.39/1,
+          child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
   Widget sizeRatio20(){
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        ImageFiltered(
-          imageFilter: ImageFilter.blur(
-              sigmaX: blurImage, sigmaY: blurImage),
-          child: Container(
-              child: Image.file(file)),
-        ),
-
-        Container(
-          child: AspectRatio(
-              aspectRatio:16/9,
-              child: Image.file(file)),
-        ),
-      ],
-
+    return Container(
+      padding: EdgeInsets.only(top: 180, bottom: 180),
+      child: AspectRatio(
+          aspectRatio:2.39/1,
+          child: Image.file(file, fit: BoxFit.fill,)),
     );
   }
 

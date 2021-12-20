@@ -155,10 +155,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
   Widget ratioImage(){
     return Obx(
       ()=> Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.grey)
-        ),
+
         child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: RepaintBoundary(

@@ -1,25 +1,18 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:math' as Math;
-//import 'package:crop_your_image/crop_your_image.dart';
+import 'package:crop_your_image/crop_your_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
-//import 'package:image_crop/image_crop.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_color.dart';
 import 'package:pixytrim/common/custom_gradient_slider.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'dart:ui' as ui;
-import 'dart:math' as math;
-import 'package:crop/crop.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-//import 'package: photo_view/photo_view.dart';
+
 
 class CropImageScreen extends StatefulWidget {
   //const CropImageScreen({Key? key}) : super(key: key);
@@ -34,19 +27,20 @@ class CropImageScreen extends StatefulWidget {
 class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProviderStateMixin {
 
   //final cropKey = GlobalKey<CropState>();
-  File? file;
+  File? imageFile;
   File? file2;
   final GlobalKey key = GlobalKey();
   //final _cropController = CropController();
-  Uint8List? _croppedData;
-  var _isCropping = false;
+  Uint8List? croppedImage;
+  var isCropping = false;
+  //File ? crop;
 
   int index = 0;
   bool showFront = true;
   double _rotation = 0;
-  final controller = CropController(aspectRatio: 1000 / 667.0);
+  final cropController = CropController();
   BoxShape shape = BoxShape.rectangle;
-
+  File? temp;
 
   LinearGradient gradient = LinearGradient(
       colors: <Color> [
@@ -55,6 +49,13 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
         AppColor.kBorderGradientColor3,
       ]
   );
+
+  // @override
+  // void initState() {
+  //   croppedData = Uint8List(0);
+  //   super.initState();
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,100 +68,70 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
             margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
             child: Column(
               children: [
-                SizedBox(
-                  height: 60,
-                ),
+                SizedBox(height: 60),
                 appBar(),
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
                 Expanded(
-                    child: Container(
-                      width: Get.width,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        // child:  _croppedData != null ?
-                        // RepaintBoundary(
-                        //   key: key,
-                        //   child: ClipRRect(
-                        //       borderRadius: BorderRadius.circular(20),
-                        //       child:  Image.memory(_croppedData!)),
-                        // ):
-                        // Crop(
-                        //   controller: _cropController,
-                        //   image: widget.file.readAsBytesSync(),
-                        //   onCropped: (croppedData) {
-                        //     setState(() {
-                        //       _croppedData = croppedData;
-                        //       _isCropping = false;
-                        //     });
-                        //   },
-                        //   //withCircleUi: _isCircleUi,
-                        //   // onStatusChanged: (status) => setState(() {
-                        //   //   _statusText = <CropStatus, String>{
-                        //   //     CropStatus.nothing: 'Crop has no image data',
-                        //   //     CropStatus.loading:
-                        //   //     'Crop is now loading given image',
-                        //   //     CropStatus.ready: 'Crop is now ready!',
-                        //   //     CropStatus.cropping:
-                        //   //     'Crop is now cropping image',
-                        //   //   }[status] ??
-                        //   //       '';
-                        //   // }),
-                        //   initialSize: 0.5,
-                        //  // maskColor: _isSumbnail ? Colors.white : null,
-                        //  //  cornerDotBuilder: (size, edgeAlignment) => _isSumbnail
-                        //  //      ? const SizedBox.shrink()
-                        //  //      : const DotControl(),
-                        // ),
-
-                        child: Crop(
-                          onChanged: (decomposition) {
-                            if (_rotation != decomposition.rotation) {
+                    child: RepaintBoundary(
+                      key: key,
+                      child: Container(
+                        width: Get.width,
+                        height: Get.height,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: croppedImage == null
+                              ? Crop(
+                            controller: cropController,
+                            image: widget.file.readAsBytesSync(),
+                            onCropped: (croppedData1) {
                               setState(() {
-                                _rotation = ((decomposition.rotation + 180) % 360) - 180;
+                                print('croppedData1 : $croppedData1');
+                                print('croppedData1 : ${croppedData1.runtimeType}');
+                                croppedImage = croppedData1;
+                                isCropping = false;
                               });
-                            }
-
-                            print(
-                                "Scale : ${decomposition.scale}, Rotation: ${decomposition.rotation}, translation: ${decomposition.translation}");
-                          },
-                          controller: controller,
-                          shape: shape,
-                          child: Image.file(widget.file),
-                          // foreground: IgnorePointer(
-                          //   child: Container(
-                          //     alignment: Alignment.bottomRight,
-                          //     child: Text(
-                          //       'Pixytrim',
-                          //       style: TextStyle(color: Colors.red),
-                          //     ),
-                          //   ),
-                          // ),
-                          helper: shape == BoxShape.rectangle
-                              ? Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 2),
-                            ),
+                            },
+                            //withCircleUi: _isCircleUi,
+                            // onStatusChanged: (status) => setState(() {
+                            //   _statusText = <CropStatus, String>{
+                            //     CropStatus.nothing: 'Crop has no image data',
+                            //     CropStatus.loading:
+                            //     'Crop is now loading given image',
+                            //     CropStatus.ready: 'Crop is now ready!',
+                            //     CropStatus.cropping:
+                            //     'Crop is now cropping image',
+                            //   }[status] ??
+                            //       '';
+                            // }),
+                            initialSize: 0.5,
+                           // maskColor: _isSumbnail ? Colors.white : null,
+                           //  cornerDotBuilder: (size, edgeAlignment) => _isSumbnail
+                           //      ? const SizedBox.shrink()
+                           //      : const DotControl(),
                           )
-                              : null,
+                              : Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: Colors.grey)
+                            ),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.memory(croppedImage!, fit: BoxFit.fill),
+                            ),
+                          ),
                         ),
                       ),
                     )
                 ),
 
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
 
                 index == 0 ? cropRatio() :
                 index == 1 ? rotateRatio() :
                 index == 2 ? scaleRatio()
                  : Container(),
 
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
 
                 resizeCropButton()
               ],
@@ -194,7 +165,8 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
             onChanged: (n) {
               setState(() {
                 _rotation = n.roundToDouble();
-                controller.rotation = _rotation;
+                //controller.rotation = _rotation;
+                //controller.rotation = _rotation;
               });
             },
           ),
@@ -226,7 +198,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
             onChanged: (n) {
               setState(() {
                 _rotation = n.roundToDouble();
-                controller.rotation = _rotation;
+                //controller.rotation = _rotation;
               });
             },
           ),
@@ -267,17 +239,24 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                 ),
                 GestureDetector(
                   onTap: () {
-                    //Get.back();
-                    //await _capturePng();
+                    temp = widget.file;
+                    print("temp file====$temp");
+                    cropController.crop();
+                     print("crop file====$croppedImage");
 
 
-                    // setState(() {
-                    //   _isCropping = true;
-                    // });
-                    // _cropController.crop();
-                    // _capturePng();
+                  },
+                  child: Container(
+                      child: Icon(Icons.check_rounded)
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () async{
 
-                     crop();
+                    //controller.crop();
+                   await _capturePng();
+
+                    //crop1();
                   },
                   child: Container(
                       child: Icon(Icons.check_rounded)
@@ -289,29 +268,29 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
     );
   }
 
-  void crop() async {
-    final pixelRatio = MediaQuery.of(context).devicePixelRatio;
-    final cropped = await controller.crop(pixelRatio: pixelRatio);
+  // void crop1() async {
+  //   final pixelRatio = MediaQuery.of(context).devicePixelRatio;
+  //   final cropped = await controller.crop(pixelRatio: pixelRatio);
+  //
+  //   final status = await Permission.storage.request();
+  //   if (status == PermissionStatus.granted) {
+  //     await _saveScreenShot(cropped);
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('Saved to gallery.'),
+  //       ),
+  //     );
+  //   }
+  // }
 
-    final status = await Permission.storage.request();
-    if (status == PermissionStatus.granted) {
-      await _saveScreenShot(cropped);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Saved to gallery.'),
-        ),
-      );
-    }
-  }
-
-  Future<dynamic> _saveScreenShot(ui.Image img) async {
-    var byteData = await img.toByteData(format: ui.ImageByteFormat.png);
-    var buffer = byteData!.buffer.asUint8List();
-    final result = await ImageGallerySaver.saveImage(buffer);
-    print(result);
-
-    return result;
-  }
+  // Future<dynamic> _saveScreenShot(ui.Image img) async {
+  //   var byteData = await img.toByteData(format: ui.ImageByteFormat.png);
+  //   var buffer = byteData!.buffer.asUint8List();
+  //   final result = await ImageGallerySaver.saveImage(buffer);
+  //   print(result);
+  //
+  //   return result;
+  // }
 
   Future _capturePng() async {
     try {
@@ -329,12 +308,9 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
       File imgFile = new File('$directory/photo.png');
       await imgFile.writeAsBytes(pngBytes);
       setState(() {
-        file = imgFile;
-        //file.writeAsBytesSync(bytes)
-          _croppedData = file!.readAsBytesSync();
-          //file2 = File.fromRawPath(_croppedData!);
+        imageFile = imgFile;
       });
-      print("File path====:$_croppedData");
+      print("File path====:${imageFile!.path}");
       //collageScreenController.imageFileList = pngBytes;
       //bs64 = base64Encode(pngBytes);
       print("png Bytes:====$pngBytes");
@@ -348,8 +324,8 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
 
   Future saveImage() async {
     // renameImage();
-    print("Save===== ${File('$_croppedData').path}");
-    await GallerySaver.saveImage("${File('$_croppedData').path}",
+    print("Save===== ${imageFile!.path}");
+    await GallerySaver.saveImage("${imageFile!.path}",
         albumName: "OTWPhotoEditingDemo");
   }
 
@@ -360,7 +336,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
         children: [
           GestureDetector(
             onTap: (){
-                controller.aspectRatio = 1;
+              cropController.aspectRatio = 1;
               //_cropController.aspectRatio = 1/1;
             },
             child: Container(
@@ -370,7 +346,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
           ),
           GestureDetector(
             onTap: (){
-              controller.aspectRatio = 3.0 / 2.0;
+              cropController.aspectRatio = 3.0 / 2.0;
              // _cropController.aspectRatio = 3/2;
             },
             child: Container(
@@ -379,8 +355,9 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
           ),
           GestureDetector(
             onTap: (){
+              cropController.aspectRatio = 1000 / 667.0;
               //_cropController.aspectRatio = 1/1;
-              controller.aspectRatio = 1000 / 667.0;
+
             },
             child: Container(
                 child: Text("Original", style: TextStyle(fontSize: 18, fontFamily: ""),)
@@ -388,7 +365,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
           ),
           GestureDetector(
             onTap: (){
-              controller.aspectRatio = 4.0 / 3.0;
+              cropController.aspectRatio = 4.0 / 3.0;
               //_cropController.aspectRatio = 4 / 3;
             },
             child: Container(
@@ -398,7 +375,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
           GestureDetector(
             onTap: (){
               //_isCircleUi = false;
-              controller.aspectRatio = 16.0 / 9.0;
+              cropController.aspectRatio = 16.0 / 9.0;
               //_cropController.aspectRatio = 16 / 9;
             },
             child: Container(
@@ -502,3 +479,4 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
     );
   }
 }
+
