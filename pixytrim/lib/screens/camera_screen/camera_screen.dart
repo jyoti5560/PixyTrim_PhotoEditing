@@ -265,9 +265,9 @@ class _CameraScreenState extends State<CameraScreen> {
         print('Camera Image Path : ${image.path}');
         //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
         //renameImage();
+        cameraScreenController.addCameraImageInList(
+            file: cameraScreenController.file);
       });
-      Get.to(() => CameraScreen(),
-          arguments: [cameraScreenController.file, SelectedModule.gallery]);
     } else {}
   }
 
@@ -275,7 +275,7 @@ class _CameraScreenState extends State<CameraScreen> {
   shareImage() async {
     try {
       // final ByteData bytes = await rootBundle.load('${file!.path}');
-      await Share.shareFiles(['${cameraScreenController.file.path}']);
+      await Share.shareFiles(['${cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value].path}']);
     } catch (e) {
       print('Share Error : $e');
     }
@@ -284,7 +284,7 @@ class _CameraScreenState extends State<CameraScreen> {
   // Image Save Module
   Future saveImage() async {
     // renameImage();
-    await GallerySaver.saveImage(cameraScreenController.file.path,
+    await GallerySaver.saveImage(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value].path,
         albumName: "OTWPhotoEditingDemo");
     Fluttertoast.showToast(
         msg: "Save in to Gallery",
@@ -310,7 +310,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
                 if (i == 0) {
                   Get.to(() => CropImageScreen(
-                        file: cameraScreenController.file,
+                        file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
                       ));
                   //cropImage();
                 } else if (i == 1) {
@@ -319,14 +319,14 @@ class _CameraScreenState extends State<CameraScreen> {
                   );
                 } else if (i == 2) {
                   Get.to(() => BrightnessScreen(
-                        file: cameraScreenController.file,
+                        file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
                       )); //todo
                 } else if (i == 3) {
                   Get.to(() => BlurScreen(file: cameraScreenController.file));
                 } else if (i == 4) {
                   compressImage(cameraScreenController.file).then((value) {
                     Get.to(() => CompressImageScreen(
-                              file: cameraScreenController.file,
+                              file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
                               compressFile: compressFile!,
                             ))!
                         .then((value) {
@@ -334,7 +334,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     });
                   });
                 } else if (i == 5) {
-                  resizeImage(cameraScreenController.file).then((value) {
+                  resizeImage(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]).then((value) {
                     /*Get.to(() => CompressImageScreen(
                       file: widget.file,
                       compressFile: compressFile!,
@@ -367,10 +367,10 @@ class _CameraScreenState extends State<CameraScreen> {
                   });
                 } else if (i == 6) {
                   Get.to(() =>
-                      ImageEditorScreen(file: cameraScreenController.file));
+                      ImageEditorScreen(file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]));
                 } else if (i == 7) {
                   Get.to(() => ImageSizeRatioScreen(),
-                      arguments: cameraScreenController.file);
+                      arguments: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]);
 
                   //Get.to(() => ImageEditorScreen(file: widget.file));
                 }
@@ -469,7 +469,7 @@ class _CameraScreenState extends State<CameraScreen> {
           title: 'Crop',
         ));
     if (croppedFile != null) {
-      cameraScreenController.file = croppedFile;
+      cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value] = croppedFile;
       setState(() {});
       //setState(() {
       // state = AppState.cropped;

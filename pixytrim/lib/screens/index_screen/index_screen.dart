@@ -300,7 +300,7 @@ class _IndexScreenState extends State<IndexScreen> {
         //renameImage();
       });
       Get.to(()=>
-          CameraScreen(/*file: file!*/), arguments: [file, SelectedModule.camera]);
+          CameraScreen(), arguments: [file, SelectedModule.camera]);
 
     } else {}
   }

@@ -210,21 +210,17 @@ class FilterScreenState extends State<FilterScreen> {
         csController.addImageFromCameraList[csController.selectedImage.value] = imgFile;
       });
       print("File path====:${csController.addImageFromCameraList[csController.selectedImage.value].path}");
-      //collageScreenController.imageFileList = pngBytes;
-      //bs64 = base64Encode(pngBytes);
-      // print("png Bytes:====$pngBytes");
-      //print("bs64:====$bs64");
-      //setState(() {});
-      await saveImage();
+
+      // await saveImage();
     } catch (e) {
       print(e);
     }
   }
 
-  Future saveImage() async {
-    await GallerySaver.saveImage("${csController.addImageFromCameraList[csController.selectedImage.value].path}",
-        albumName: "OTWPhotoEditingDemo");
-  }
+  // Future saveImage() async {
+  //   await GallerySaver.saveImage("${csController.addImageFromCameraList[csController.selectedImage.value].path}",
+  //       albumName: "OTWPhotoEditingDemo");
+  // }
 
 
 }
