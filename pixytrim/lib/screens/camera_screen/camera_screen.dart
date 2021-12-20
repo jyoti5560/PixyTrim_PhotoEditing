@@ -322,12 +322,12 @@ class _CameraScreenState extends State<CameraScreen> {
                         file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
                       )); //todo
                 } else if (i == 3) {
-                  Get.to(() => BlurScreen(file: cameraScreenController.file));
+                  Get.to(() => BlurScreen(file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]));
                 } else if (i == 4) {
                   compressImage(cameraScreenController.file).then((value) {
                     Get.to(() => CompressImageScreen(
                               file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
-                              compressFile: compressFile!,
+                              compressFile: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
                             ))!
                         .then((value) {
                       // setState(() {});

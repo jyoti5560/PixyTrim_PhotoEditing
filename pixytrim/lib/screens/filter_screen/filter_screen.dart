@@ -84,15 +84,15 @@ class FilterScreenState extends State<FilterScreen> {
                 GestureDetector(
                   onTap: () async {
                     await _capturePng().then((value) {
-                      Fluttertoast.showToast(
-                          msg: "Save In to Gallery",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 5,
-                          backgroundColor: Colors.blue,
-                          textColor: Colors.white,
-                          fontSize: 16.0
-                      );
+                      // Fluttertoast.showToast(
+                      //     msg: "Save In to Gallery",
+                      //     toastLength: Toast.LENGTH_SHORT,
+                      //     gravity: ToastGravity.BOTTOM,
+                      //     timeInSecForIosWeb: 5,
+                      //     backgroundColor: Colors.blue,
+                      //     textColor: Colors.white,
+                      //     fontSize: 16.0
+                      // );
                       Get.back();
                     });
                   },
