@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -21,21 +20,20 @@ import 'package:pixytrim/screens/image_size_ratio_screen/image_size_ratio_screen
 import 'package:share/share.dart';
 import 'package:image/image.dart' as imageLib;
 
-enum SelectedModule {camera, gallery}
+
+enum SelectedModule { camera, gallery }
 
 class CameraScreen extends StatefulWidget {
-  //CameraScreen({Key? key}) : super(key: key);
-
-  File file;
-
-  CameraScreen({required this.file});
+  // File file;
+  // CameraScreen({required this.file});
 
   @override
   _CameraScreenState createState() => _CameraScreenState();
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  CameraScreenController cameraScreenController = Get.put(CameraScreenController());
+  CameraScreenController cameraScreenController =
+      Get.put(CameraScreenController());
 
   final ImagePicker imagePicker = ImagePicker();
 
@@ -50,48 +48,111 @@ class _CameraScreenState extends State<CameraScreen> {
     Images.ic_image_ratio,
   ];
 
-  int ? i;
-  File ? compressFile;
-  imageLib.Image ? resize;
+  int? i;
+  File? compressFile;
+  imageLib.Image? resize;
 
   @override
   Widget build(BuildContext context) {
     print("path===${cameraScreenController.selectedModule}");
     return Scaffold(
-      body: Stack(
-        children: [
-          MainBackgroundWidget(),
-          Container(
-            margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 60,
-                ),
-                appBar(),
-                SizedBox(
-                  height: 20,
-                ),
-                Expanded(
-                    child: Container(
-                   width: Get.width,
-                  height: double.infinity,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: widget.file.toString().isNotEmpty
-                        ? Image.file(widget.file,
-                            height: 120, width: 120, fit: BoxFit.cover)
-                        : null,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            MainBackgroundWidget(),
+            Container(
+              margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+              child: Column(
+                children: [
+                  appBar(),
+                  SizedBox(height: 20),
+                  Container(
+                    child: Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            Obx(
+                              ()=> Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                child: cameraScreenController.addImageFromCameraList.length.isGreaterThan(0)
+                                    ? Image.file(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
+                                    height: 120, width: 120, fit: BoxFit.cover)
+                                    : null,
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 10, right: 10, bottom: 0.5),
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.black26,
+                              ),
+                              child: Obx(
+                                ()=> ListView.builder(
+                                  itemCount: cameraScreenController.addImageFromCameraList.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, i){
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 5),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            cameraScreenController.selectedImage.value = i;
+                                            print('selectedImage1 : ${cameraScreenController.selectedImage.value}');
+                                          });
+
+                                        },
+                                        child: Container(
+                                          height: 45,
+                                          width: 45,
+                                          child: Image.file(
+                                            cameraScreenController
+                                                .addImageFromCameraList[i],
+                                            fit: BoxFit.cover,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            border: cameraScreenController.selectedImage.value == i
+                                                ? Border.all(color: Colors.black)
+                                                : Border.all(color: Colors.transparent)
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              // child: Obx(
+                              //       () => Row(
+                              //     mainAxisAlignment: MainAxisAlignment.center,
+                              //     children: List.generate(
+                              //       cameraScreenController.addImageFromCameraList.length,
+                              //           (index) => Container(
+                              //         width: 30,
+                              //         height: 30,
+                              //         child: Image.file(
+                              //           cameraScreenController
+                              //               .addImageFromCameraList[index],
+                              //           fit: BoxFit.cover,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                )),
-                SizedBox(
-                  height: 20,
-                ),
-                editingIconList()
-              ],
-            ),
-          )
-        ],
+                  SizedBox(height: 20),
+                  editingIconList(),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -121,7 +182,11 @@ class _CameraScreenState extends State<CameraScreen> {
                   ),
                 ),
                 Container(
-                  child: Text(cameraScreenController.selectedModule == SelectedModule.camera ? "Camera" : "Gallery",
+                  child: Text(
+                    cameraScreenController.selectedModule ==
+                            SelectedModule.camera
+                        ? "Camera"
+                        : "Gallery",
                     style: TextStyle(
                         fontFamily: "",
                         fontSize: 18,
@@ -131,25 +196,25 @@ class _CameraScreenState extends State<CameraScreen> {
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: (){
-                        cameraScreenController.selectedModule == SelectedModule.camera
+                      onTap: () {
+                        cameraScreenController.selectedModule ==
+                                SelectedModule.camera
                             ? openCamera()
                             : openGallery();
                       },
                       child: Container(
                         child: Image.asset(
-                          cameraScreenController.selectedModule == SelectedModule.camera
+                          cameraScreenController.selectedModule ==
+                                  SelectedModule.camera
                               ? Images.ic_camera2
                               : Images.ic_gallery,
                           scale: 2.5,
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    SizedBox(width: 10),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         saveImage();
                       },
                       child: Container(
@@ -159,11 +224,9 @@ class _CameraScreenState extends State<CameraScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    SizedBox(width: 10),
                     GestureDetector(
-                      onTap: ()async{
+                      onTap: () async {
                         await shareImage();
                       },
                       child: Container(
@@ -184,14 +247,12 @@ class _CameraScreenState extends State<CameraScreen> {
   void openCamera() async {
     final image = await imagePicker.pickImage(source: ImageSource.camera);
     if (image != null) {
-      setState(() {
-        widget.file = File(image.path);
-        print('Camera File Path : ${widget.file}');
-        print('Camera Image Path : ${image.path}');
-        //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
-        //renameImage();
-      });
-      Get.to(()=> CameraScreen(file: widget.file,), arguments: SelectedModule.camera,);
+      // setState(() {
+      cameraScreenController.file = File(image.path);
+      print('Camera File Path : ${cameraScreenController.file}');
+      print('Camera Image Path : ${image.path}');
+      cameraScreenController.addCameraImageInList(
+          file: cameraScreenController.file);
     } else {}
   }
 
@@ -199,24 +260,23 @@ class _CameraScreenState extends State<CameraScreen> {
     final image = await imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       setState(() {
-        widget.file = File(image.path);
-        print('Camera File Path : ${widget.file}');
+        cameraScreenController.file = File(image.path);
+        print('Camera File Path : ${cameraScreenController.file}');
         print('Camera Image Path : ${image.path}');
         //Fluttertoast.showToast(msg: '${image.path}', toastLength: Toast.LENGTH_LONG);
         //renameImage();
       });
-      Get.to(()=>
-          CameraScreen(file: widget.file, ), arguments: SelectedModule.gallery
-      );
+      Get.to(() => CameraScreen(),
+          arguments: [cameraScreenController.file, SelectedModule.gallery]);
     } else {}
   }
 
   // Share The
   shareImage() async {
-    try{
+    try {
       // final ByteData bytes = await rootBundle.load('${file!.path}');
-      await Share.shareFiles(['${widget.file.path}']);
-    } catch(e) {
+      await Share.shareFiles(['${cameraScreenController.file.path}']);
+    } catch (e) {
       print('Share Error : $e');
     }
   }
@@ -224,7 +284,8 @@ class _CameraScreenState extends State<CameraScreen> {
   // Image Save Module
   Future saveImage() async {
     // renameImage();
-    await GallerySaver.saveImage(widget.file.path, albumName: "OTWPhotoEditingDemo");
+    await GallerySaver.saveImage(cameraScreenController.file.path,
+        albumName: "OTWPhotoEditingDemo");
     Fluttertoast.showToast(
         msg: "Save in to Gallery",
         toastLength: Toast.LENGTH_SHORT,
@@ -232,8 +293,7 @@ class _CameraScreenState extends State<CameraScreen> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
 
   editingIconList() {
@@ -248,29 +308,33 @@ class _CameraScreenState extends State<CameraScreen> {
               onTap: () {
                 i = index;
 
-                if(i == 0){
-                  Get.to(() => CropImageScreen(file: widget.file,));
+                if (i == 0) {
+                  Get.to(() => CropImageScreen(
+                        file: cameraScreenController.file,
+                      ));
                   //cropImage();
-                } else if(i == 1){
-                  Get.to(()=> FilterScreen(),
-                  arguments: widget.file);
-                }
-                else if(i == 2){
-                  Get.to(()=> BrightnessScreen(file: widget.file,));//todo
-                } else if(i == 3){
-                  Get.to(()=> BlurScreen(file: widget.file));
-                } else if(i == 4){
-                  compressImage(widget.file).then((value) {
+                } else if (i == 1) {
+                  Get.to(() => FilterScreen(),
+                      // arguments: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]
+                  );
+                } else if (i == 2) {
+                  Get.to(() => BrightnessScreen(
+                        file: cameraScreenController.file,
+                      )); //todo
+                } else if (i == 3) {
+                  Get.to(() => BlurScreen(file: cameraScreenController.file));
+                } else if (i == 4) {
+                  compressImage(cameraScreenController.file).then((value) {
                     Get.to(() => CompressImageScreen(
-                      file: widget.file,
-                      compressFile: compressFile!,
-                    ))!
+                              file: cameraScreenController.file,
+                              compressFile: compressFile!,
+                            ))!
                         .then((value) {
                       // setState(() {});
                     });
                   });
-                } else if(i == 5){
-                  resizeImage(widget.file).then((value) {
+                } else if (i == 5) {
+                  resizeImage(cameraScreenController.file).then((value) {
                     /*Get.to(() => CompressImageScreen(
                       file: widget.file,
                       compressFile: compressFile!,
@@ -286,8 +350,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         timeInSecForIosWeb: 5,
                         backgroundColor: Colors.blue,
                         textColor: Colors.white,
-                        fontSize: 16.0
-                    );
+                        fontSize: 16.0);
                     /*Get.to(() => ResizeScreen(
                                 resize: resize!
                               ))!.then((value) {
@@ -302,10 +365,12 @@ class _CameraScreenState extends State<CameraScreen> {
                                 );
                               });*/
                   });
-                } else if(i == 6){
-                  Get.to(() => ImageEditorScreen(file: widget.file));
-                } else if(i == 7){
-                  Get.to(() => ImageSizeRatioScreen(),arguments: widget.file);
+                } else if (i == 6) {
+                  Get.to(() =>
+                      ImageEditorScreen(file: cameraScreenController.file));
+                } else if (i == 7) {
+                  Get.to(() => ImageSizeRatioScreen(),
+                      arguments: cameraScreenController.file);
 
                   //Get.to(() => ImageEditorScreen(file: widget.file));
                 }
@@ -347,7 +412,6 @@ class _CameraScreenState extends State<CameraScreen> {
       file.absolute.path,
       outPath,
       quality: cameraScreenController.compressSize.value.toInt(),
-
     );
     print("Original path : ${file.lengthSync()}");
     print(file.absolute.path);
@@ -355,6 +419,7 @@ class _CameraScreenState extends State<CameraScreen> {
     setState(() {
       compressFile = result;
     });
+    // setState Required
     setState(() {});
     print("compressFile: ${compressFile!.lengthSync()}");
     // setState(() {
@@ -363,54 +428,51 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   imageLib.Image? imageTemp;
-  Future resizeImage(File file)async{
+
+  Future resizeImage(File file) async {
     imageTemp = imageLib.decodeImage(file.readAsBytesSync());
-    imageLib.Image resized_img = imageLib.copyResize(imageTemp!,height: 800);
-    resize= resized_img;
+    imageLib.Image resized_img = imageLib.copyResize(imageTemp!, height: 800);
+    resize = resized_img;
     print(resized_img.length);
     print(imageTemp!.length);
   }
 
   Future<Null> cropImage() async {
     File? croppedFile = await ImageCropper.cropImage(
-        sourcePath: widget.file.path,
+        sourcePath: cameraScreenController.file.path,
         aspectRatioPresets: Platform.isAndroid
-        ? [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
-        ]
-        : [
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio5x3,
-        CropAspectRatioPreset.ratio5x4,
-        CropAspectRatioPreset.ratio7x5,
-        CropAspectRatioPreset.ratio16x9
-        ],
+            ? [
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9
+              ]
+            : [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio5x3,
+                CropAspectRatioPreset.ratio5x4,
+                CropAspectRatioPreset.ratio7x5,
+                CropAspectRatioPreset.ratio16x9
+              ],
         androidUiSettings: AndroidUiSettings(
-            toolbarTitle: 'Crop',
-            toolbarColor: Colors.deepOrange,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false,
-
+          toolbarTitle: 'Crop',
+          toolbarColor: Colors.deepOrange,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false,
         ),
-
         iosUiSettings: IOSUiSettings(
           title: 'Crop',
         ));
     if (croppedFile != null) {
-      widget.file = croppedFile;
-      setState((){
-
-      });
+      cameraScreenController.file = croppedFile;
+      setState(() {});
       //setState(() {
-        // state = AppState.cropped;
+      // state = AppState.cropped;
       //});
     }
   }

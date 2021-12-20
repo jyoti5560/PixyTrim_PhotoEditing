@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
-import 'package:pixytrim/controller/filter_screen_controller/filter_screen_controller.dart';
+import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
 import 'dart:ui' as ui;
 
 class FilterScreen extends StatefulWidget {
@@ -18,12 +18,14 @@ class FilterScreen extends StatefulWidget {
   FilterScreenState createState() => FilterScreenState();
 }
 class FilterScreenState extends State<FilterScreen> {
-  FilterScreenController filterScreenController = Get.put(FilterScreenController());
+  // FilterScreenController filterScreenController = Get.put(FilterScreenController());
+  CameraScreenController csController = Get.find<CameraScreenController>();
   File? file;
   final GlobalKey key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
+    print('selectedImage : ${csController.selectedImage.value}');
     return Scaffold(
         body: Stack(
       children: [
@@ -32,17 +34,10 @@ class FilterScreenState extends State<FilterScreen> {
           margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
           child: Column(
             children: [
-              SizedBox(
-                height: 60,
-              ),
+              SizedBox(height: 60),
               appBar(),
-              SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                  child: filterImage()
-              ),
-
+              SizedBox(height: 20),
+              Expanded(child: filterImage()),
               SizedBox(height: 20),
               filterList()
             ],
@@ -113,16 +108,16 @@ class FilterScreenState extends State<FilterScreen> {
     return Container(
       height: Get.height / 6.5,
       child: ListView.builder(
-        itemCount: filterScreenController.filterOptions.length,
+        itemCount: csController.filterOptions.length,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: (){
               setState(() {
-                filterScreenController.selectedIndex.value = index;
+                csController.selectedIndex.value = index;
                 print(
-                    'selectedIndex : ${filterScreenController.selectedIndex.value}');
+                    'selectedIndex : ${csController.selectedIndex.value}');
               });
             },
             child: Container(
@@ -137,16 +132,16 @@ class FilterScreenState extends State<FilterScreen> {
                     child: Container(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                          child: filterScreenController.filterOptions[index].filterWidget,
+                          child: csController.filterOptions[index].filterWidget,
                     ),
                   ),
                   ),
                   SizedBox(height: 5),
                   Text(
-                    "${filterScreenController.filterOptions[index].filterName}",
+                    "${csController.filterOptions[index].filterName}",
                      style: TextStyle(fontFamily: "",
-                         color: filterScreenController.selectedIndex.value == index ? Colors.black87 : Colors.grey.shade600,
-                     fontWeight: filterScreenController.selectedIndex.value == index ? FontWeight.bold : FontWeight.normal),
+                         color: csController.selectedIndex.value == index ? Colors.black87 : Colors.grey.shade600,
+                     fontWeight: csController.selectedIndex.value == index ? FontWeight.bold : FontWeight.normal),
                   ),
                 ],
               ),
@@ -158,42 +153,46 @@ class FilterScreenState extends State<FilterScreen> {
   }
 
   Widget filterImage(){
-    return Container(
-      width: Get.width,
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: RepaintBoundary(
-            key: key,
-            child: filterScreenController.file.toString().isNotEmpty && filterScreenController.selectedIndex.value == 0
-                ? filterScreenController.filterOptions[0].filterWidget
-                : filterScreenController.file.toString().isNotEmpty && filterScreenController.selectedIndex.value == 1
-                ? filterScreenController.filterOptions[1].filterWidget
-                : filterScreenController.file.toString().isNotEmpty && filterScreenController.selectedIndex.value == 2
-                ? filterScreenController.filterOptions[2].filterWidget
-                : filterScreenController.file.toString().isNotEmpty && filterScreenController.selectedIndex.value == 3
-                ? filterScreenController.filterOptions[3].filterWidget
-                : filterScreenController.file.toString().isNotEmpty && filterScreenController.selectedIndex.value == 4
-                ? filterScreenController.filterOptions[4].filterWidget
-                : filterScreenController.file.toString().isNotEmpty && filterScreenController.selectedIndex.value == 5
-                ? filterScreenController.filterOptions[5].filterWidget
-                : filterScreenController.file.toString().isNotEmpty && filterScreenController.selectedIndex.value == 6
-                ? filterScreenController.filterOptions[6].filterWidget
-                : filterScreenController.file.toString().isNotEmpty && filterScreenController.selectedIndex.value == 7
-                ? filterScreenController.filterOptions[7].filterWidget
-                : filterScreenController.file.toString().isNotEmpty && filterScreenController.selectedIndex.value == 8
-                ? filterScreenController.filterOptions[8].filterWidget
-                : filterScreenController.file.toString().isNotEmpty && filterScreenController.selectedIndex.value == 9
-                ? filterScreenController.filterOptions[9].filterWidget
-                : filterScreenController.file.toString().isNotEmpty && filterScreenController.selectedIndex.value == 10
-                ? filterScreenController.filterOptions[10].filterWidget
-                : Container(),
-          )
+    return Obx(
+      ()=> Container(
+        width: Get.width,
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: RepaintBoundary(
+              key: key,
+              child: csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 0
+                  ? csController.filterOptions[0].filterWidget
+                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 1
+                  ? csController.filterOptions[1].filterWidget
+                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 2
+                  ? csController.filterOptions[2].filterWidget
+                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 3
+                  ? csController.filterOptions[3].filterWidget
+                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 4
+                  ? csController.filterOptions[4].filterWidget
+                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 5
+                  ? csController.filterOptions[5].filterWidget
+                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 6
+                  ? csController.filterOptions[6].filterWidget
+                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 7
+                  ? csController.filterOptions[7].filterWidget
+                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 8
+                  ? csController.filterOptions[8].filterWidget
+                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 9
+                  ? csController.filterOptions[9].filterWidget
+                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 10
+                  ? csController.filterOptions[10].filterWidget
+                  : Container(),
+            )
+        ),
       ),
     );
   }
 
   Future _capturePng() async {
     try {
+      DateTime time = DateTime.now();
+      String imgName = "${time.hour}-${time.minute}-${time.second}";
       print('inside');
       RenderRepaintBoundary boundary =
       key.currentContext!.findRenderObject() as RenderRepaintBoundary;
@@ -205,15 +204,15 @@ class FilterScreenState extends State<FilterScreen> {
       await image.toByteData(format: ui.ImageByteFormat.png);
       print("byte data:===$byteData");
       Uint8List pngBytes = byteData!.buffer.asUint8List();
-      File imgFile = new File('$directory/photo.png');
+      File imgFile = new File('$directory/$imgName.png');
       await imgFile.writeAsBytes(pngBytes);
       setState(() {
-        file = imgFile;
+        csController.addImageFromCameraList[csController.selectedImage.value] = imgFile;
       });
-      print("File path====:${file!.path}");
+      print("File path====:${csController.addImageFromCameraList[csController.selectedImage.value].path}");
       //collageScreenController.imageFileList = pngBytes;
       //bs64 = base64Encode(pngBytes);
-      print("png Bytes:====$pngBytes");
+      // print("png Bytes:====$pngBytes");
       //print("bs64:====$bs64");
       //setState(() {});
       await saveImage();
@@ -223,8 +222,7 @@ class FilterScreenState extends State<FilterScreen> {
   }
 
   Future saveImage() async {
-    // renameImage();
-    await GallerySaver.saveImage("${file!.path}",
+    await GallerySaver.saveImage("${csController.addImageFromCameraList[csController.selectedImage.value].path}",
         albumName: "OTWPhotoEditingDemo");
   }
 

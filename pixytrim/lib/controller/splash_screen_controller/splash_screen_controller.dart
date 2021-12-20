@@ -12,7 +12,6 @@ class SplashScreenController extends GetxController{
     Timer(Duration(seconds: 7), () => goToIndexScreen());
   }
 
-  goToIndexScreen(){
-    Get.to(()=> IndexScreen());
-  }
+  goToIndexScreen()=> Get.offAll(()=> IndexScreen());
+
 }
