@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_color.dart';
 import 'package:pixytrim/common/custom_gradient_slider.dart';
@@ -79,7 +80,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                         height: Get.height,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: croppedImage == null
+                          child: croppedImage == null && index == 0
                               ? Crop(
                             controller: cropController,
                             image: widget.file.readAsBytesSync(),
@@ -108,7 +109,15 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                            //  cornerDotBuilder: (size, edgeAlignment) => _isSumbnail
                            //      ? const SizedBox.shrink()
                            //      : const DotControl(),
-                          )
+                          ):
+                          index == 1 ?
+                              PhotoView(
+                                enableRotation: true,
+                                  imageProvider: FileImage(widget.file))
+                          : index == 2 ?
+                          PhotoView(
+                            //enableRotation: true,
+                              imageProvider: FileImage(widget.file))
                               : Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
