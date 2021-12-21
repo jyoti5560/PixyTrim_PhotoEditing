@@ -55,6 +55,7 @@ dependencies:
   image_crop:
   shared_preferences: 2.0.7
 
+
 # Extra Dependencies
   image_cropping: ^0.0.7
   flutter_easyloading: ^3.0.3

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';
@@ -14,6 +15,7 @@ import 'package:pixytrim/screens/collage_screen/border_width_screen/border_width
 import 'package:pixytrim/screens/collage_screen/layout_screen/layout_screen.dart';
 import 'dart:ui' as ui;
 import 'package:path_provider/path_provider.dart';
+import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 class CollageScreen extends StatefulWidget {
   //const CollageScreen({Key? key}) : super(key: key);
@@ -233,6 +235,16 @@ class ImageListModule extends StatefulWidget {
 class _ImageListModuleState extends State<ImageListModule> {
   CollageScreenController collageScreenController =
       Get.find<CollageScreenController>();
+  double _scale = 1.0;
+  double _previousScale = 1.0;
+
+  double _scale1 = 1.0;
+  double _previousScale1 = 1.0;
+  double _scale2 = 1.0;
+  double _previousScale2 = 1.0;
+  double _scale3 = 1.0;
+  double _previousScale3 = 1.0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -278,25 +290,63 @@ class _ImageListModuleState extends State<ImageListModule> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: collageScreenController.borderWidthValue.value,
-                          right: collageScreenController.borderWidthValue.value,
-                          top: collageScreenController.borderWidthValue.value,
-                          bottom:
-                          collageScreenController.borderWidthValue.value),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          //border: Border.all(width: collageScreenController.borderWidthValue.value),
-                          borderRadius: BorderRadius.circular(
-                              collageScreenController.borderRadiusValue.value),
-                          color: Colors.white,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: FileImage(File(
-                                  '${collageScreenController.imageFileList[0].path}'))),
+                    child: GestureDetector(
+                      onScaleStart: (ScaleStartDetails details) {
+                        print(details);
+                        _previousScale = _scale;
+                        setState(() {});
+                      },
+                      onScaleUpdate: (ScaleUpdateDetails details) {
+                        print(details);
+                        _scale = _previousScale * details.scale;
+                        setState(() {});
+                      },
+                      onScaleEnd: (ScaleEndDetails details) {
+                        print(details);
+
+                        _previousScale = 1.0;
+                        setState(() {});
+                      },
+                      child: RotatedBox(
+                        quarterTurns: 0,
+                        child: Transform(
+                          alignment: FractionalOffset.center,
+                          transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: collageScreenController.borderWidthValue.value,
+                                right: collageScreenController.borderWidthValue.value,
+                                top: collageScreenController.borderWidthValue.value,
+                                bottom:
+                                collageScreenController.borderWidthValue.value),
+                            child: Container(
+                               height: Get.height,
+                               width: double.infinity,
+                              decoration: BoxDecoration(
+                                //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                //color: Colors.white,
+                                // image: DecorationImage(
+                                //     fit: BoxFit.fill,
+                                //     image: FileImage(File(
+                                //         '${collageScreenController.imageFileList[0].path}')),
+                                // ),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                    collageScreenController.borderRadiusValue.value),
+                                child: Image.file(File('${collageScreenController.imageFileList[0].path}',),
+                                  fit: BoxFit.cover,),
+                              ),
+                              // child: PhotoView(
+                              //   enableRotation: true,
+                              //   imageProvider: FileImage(File(
+                              //                '${collageScreenController.imageFileList[0].path}')),
+                              // ),
+                            ),
+                              //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                            ),
                         ),
-                        //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
                       ),
                     ),
                   ),
@@ -304,25 +354,60 @@ class _ImageListModuleState extends State<ImageListModule> {
                     width: 5,
                   ),
                   Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: collageScreenController.borderWidthValue.value,
-                          right: collageScreenController.borderWidthValue.value,
-                          top: collageScreenController.borderWidthValue.value,
-                          bottom:
-                              collageScreenController.borderWidthValue.value),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          //border: Border.all(color: Colors.pink, width: 5),
-                          borderRadius: BorderRadius.circular(
-                              collageScreenController.borderRadiusValue.value),
-                          color: Colors.white,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: FileImage(File(
-                                  '${collageScreenController.imageFileList[1].path}'))),
+                    child: GestureDetector(
+                      onScaleStart: (ScaleStartDetails details) {
+                        print(details);
+                        _previousScale1 = _scale1;
+                        setState(() {});
+                      },
+                      onScaleUpdate: (ScaleUpdateDetails details) {
+                        print(details);
+                        _scale1 = _previousScale1 * details.scale;
+                        setState(() {});
+                      },
+                      onScaleEnd: (ScaleEndDetails details) {
+                        print(details);
+
+                        _previousScale1 = 1.0;
+                        setState(() {});
+                      },
+                      child: RotatedBox(
+                        quarterTurns: 0,
+                        child: Transform(
+                          alignment: FractionalOffset.center,
+                          transform: Matrix4.diagonal3(Vector3(_scale1, _scale1, _scale1)),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: collageScreenController.borderWidthValue.value,
+                                right: collageScreenController.borderWidthValue.value,
+                                top: collageScreenController.borderWidthValue.value,
+                                bottom:
+                                collageScreenController.borderWidthValue.value),
+                            child: Container(
+                              height: Get.height,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                // image: DecorationImage(
+                                //     fit: BoxFit.fill,
+                                //     image: FileImage(File(
+                                //         '${collageScreenController.imageFileList[0].path}')),
+                                // ),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                    collageScreenController.borderRadiusValue.value),
+                                child: Image.file(File('${collageScreenController.imageFileList[1].path}',),
+                                  fit: BoxFit.cover,),
+                              ),
+                              // child: PhotoView(
+                              //   enableRotation: true,
+                              //   imageProvider: FileImage(File(
+                              //                '${collageScreenController.imageFileList[0].path}')),
+                              // ),
+                            ),
+                            //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                          ),
                         ),
-                        //child: Image.file(File('${collageScreenController.imageFileList[1].path}')),
                       ),
                     ),
                   ),
@@ -341,29 +426,63 @@ class _ImageListModuleState extends State<ImageListModule> {
                   child: Column(
                     children: [
                       Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              left: collageScreenController
-                                  .borderWidthValue.value,
-                              right: collageScreenController
-                                  .borderWidthValue.value,
-                              top: collageScreenController
-                                  .borderWidthValue.value,
-                              bottom: collageScreenController
-                                  .borderWidthValue.value),
-                          child: Container(
-                            //width: Get.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  collageScreenController
-                                      .borderRadiusValue.value),
-                              color: Colors.white,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: FileImage(File(
-                                      '${collageScreenController.imageFileList[0].path}'))),
+                        child: GestureDetector(
+                          onScaleStart: (ScaleStartDetails details) {
+                            print(details);
+                            _previousScale2 = _scale2;
+                            setState(() {});
+                          },
+                          onScaleUpdate: (ScaleUpdateDetails details) {
+                            print(details);
+                            _scale2 = _previousScale2 * details.scale;
+                            setState(() {});
+                          },
+                          onScaleEnd: (ScaleEndDetails details) {
+                            print(details);
+
+                            _previousScale2 = 1.0;
+                            setState(() {});
+                          },
+                          child: RotatedBox(
+                            quarterTurns: 0,
+                            child: Transform(
+                              alignment: FractionalOffset.center,
+                              transform: Matrix4.diagonal3(Vector3(_scale2, _scale2, _scale2)),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: collageScreenController.borderWidthValue.value,
+                                    right: collageScreenController.borderWidthValue.value,
+                                    top: collageScreenController.borderWidthValue.value,
+                                    bottom:
+                                    collageScreenController.borderWidthValue.value),
+                                child: Container(
+                                  height: Get.height,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                    //color: Colors.white,
+                                    // image: DecorationImage(
+                                    //     fit: BoxFit.fill,
+                                    //     image: FileImage(File(
+                                    //         '${collageScreenController.imageFileList[0].path}')),
+                                    // ),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        collageScreenController.borderRadiusValue.value),
+                                    child: Image.file(File('${collageScreenController.imageFileList[0].path}',),
+                                      fit: BoxFit.cover,),
+                                  ),
+                                  // child: PhotoView(
+                                  //   enableRotation: true,
+                                  //   imageProvider: FileImage(File(
+                                  //                '${collageScreenController.imageFileList[0].path}')),
+                                  // ),
+                                ),
+                                //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                              ),
                             ),
-                            // child: Image.file(File('${collageScreenController.imageFileList[0].path}')),
                           ),
                         ),
                       ),
@@ -371,29 +490,63 @@ class _ImageListModuleState extends State<ImageListModule> {
                         height: 5,
                       ),
                       Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              left: collageScreenController
-                                  .borderWidthValue.value,
-                              right: collageScreenController
-                                  .borderWidthValue.value,
-                              top: collageScreenController
-                                  .borderWidthValue.value,
-                              bottom: collageScreenController
-                                  .borderWidthValue.value),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  collageScreenController
-                                      .borderRadiusValue.value),
-                              color: Colors.white,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: FileImage(File(
-                                      '${collageScreenController.imageFileList[1].path}'))),
+                        child: GestureDetector(
+                          onScaleStart: (ScaleStartDetails details) {
+                            print(details);
+                            _previousScale3 = _scale3;
+                            setState(() {});
+                          },
+                          onScaleUpdate: (ScaleUpdateDetails details) {
+                            print(details);
+                            _scale3 = _previousScale3 * details.scale;
+                            setState(() {});
+                          },
+                          onScaleEnd: (ScaleEndDetails details) {
+                            print(details);
+
+                            _previousScale3 = 1.0;
+                            setState(() {});
+                          },
+                          child: RotatedBox(
+                            quarterTurns: 0,
+                            child: Transform(
+                              alignment: FractionalOffset.center,
+                              transform: Matrix4.diagonal3(Vector3(_scale3, _scale3, _scale3)),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: collageScreenController.borderWidthValue.value,
+                                    right: collageScreenController.borderWidthValue.value,
+                                    top: collageScreenController.borderWidthValue.value,
+                                    bottom:
+                                    collageScreenController.borderWidthValue.value),
+                                child: Container(
+                                  height: Get.height,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                    //color: Colors.white,
+                                    // image: DecorationImage(
+                                    //     fit: BoxFit.fill,
+                                    //     image: FileImage(File(
+                                    //         '${collageScreenController.imageFileList[0].path}')),
+                                    // ),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        collageScreenController.borderRadiusValue.value),
+                                    child: Image.file(File('${collageScreenController.imageFileList[1].path}',),
+                                      fit: BoxFit.cover,),
+                                  ),
+                                  // child: PhotoView(
+                                  //   enableRotation: true,
+                                  //   imageProvider: FileImage(File(
+                                  //                '${collageScreenController.imageFileList[0].path}')),
+                                  // ),
+                                ),
+                                //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                              ),
                             ),
-                            // child:
-                            // Image.file(File('${collageScreenController.imageFileList[1].path}')),
                           ),
                         ),
                       ),
@@ -412,30 +565,64 @@ class _ImageListModuleState extends State<ImageListModule> {
                       child: Column(
                         children: [
                           Expanded(
-                            flex: 3,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: collageScreenController
-                                      .borderWidthValue.value,
-                                  right: collageScreenController
-                                      .borderWidthValue.value,
-                                  top: collageScreenController
-                                      .borderWidthValue.value,
-                                  bottom: collageScreenController
-                                      .borderWidthValue.value),
-                              child: Container(
-                                //width: Get.width,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      collageScreenController
-                                          .borderRadiusValue.value),
-                                  color: Colors.white,
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: FileImage(File(
-                                          '${collageScreenController.imageFileList[0].path}'))),
+                            flex:2,
+                            child: GestureDetector(
+                              onScaleStart: (ScaleStartDetails details) {
+                                print(details);
+                                _previousScale = _scale;
+                                setState(() {});
+                              },
+                              onScaleUpdate: (ScaleUpdateDetails details) {
+                                print(details);
+                                _scale = _previousScale * details.scale;
+                                setState(() {});
+                              },
+                              onScaleEnd: (ScaleEndDetails details) {
+                                print(details);
+
+                                _previousScale = 1.0;
+                                setState(() {});
+                              },
+                              child: RotatedBox(
+                                quarterTurns: 0,
+                                child: Transform(
+                                  alignment: FractionalOffset.center,
+                                  transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: collageScreenController.borderWidthValue.value,
+                                        right: collageScreenController.borderWidthValue.value,
+                                        top: collageScreenController.borderWidthValue.value,
+                                        bottom:
+                                        collageScreenController.borderWidthValue.value),
+                                    child: Container(
+                                      height: Get.height,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                        //color: Colors.white,
+                                        // image: DecorationImage(
+                                        //     fit: BoxFit.fill,
+                                        //     image: FileImage(File(
+                                        //         '${collageScreenController.imageFileList[0].path}')),
+                                        // ),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                            collageScreenController.borderRadiusValue.value),
+                                        child: Image.file(File('${collageScreenController.imageFileList[0].path}',),
+                                          fit: BoxFit.cover,),
+                                      ),
+                                      // child: PhotoView(
+                                      //   enableRotation: true,
+                                      //   imageProvider: FileImage(File(
+                                      //                '${collageScreenController.imageFileList[0].path}')),
+                                      // ),
+                                    ),
+                                    //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                                  ),
                                 ),
-                                // child: Image.file(File('${collageScreenController.imageFileList[0].path}')),
                               ),
                             ),
                           ),
@@ -443,30 +630,64 @@ class _ImageListModuleState extends State<ImageListModule> {
                             height: 5,
                           ),
                           Expanded(
-                            flex: 1,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: collageScreenController
-                                      .borderWidthValue.value,
-                                  right: collageScreenController
-                                      .borderWidthValue.value,
-                                  top: collageScreenController
-                                      .borderWidthValue.value,
-                                  bottom: collageScreenController
-                                      .borderWidthValue.value),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      collageScreenController
-                                          .borderRadiusValue.value),
-                                  color: Colors.white,
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: FileImage(File(
-                                          '${collageScreenController.imageFileList[1].path}'))),
+                            flex:1,
+                            child: GestureDetector(
+                              onScaleStart: (ScaleStartDetails details) {
+                                print(details);
+                                _previousScale2 = _scale2;
+                                setState(() {});
+                              },
+                              onScaleUpdate: (ScaleUpdateDetails details) {
+                                print(details);
+                                _scale2 = _previousScale2 * details.scale;
+                                setState(() {});
+                              },
+                              onScaleEnd: (ScaleEndDetails details) {
+                                print(details);
+
+                                _previousScale2 = 1.0;
+                                setState(() {});
+                              },
+                              child: RotatedBox(
+                                quarterTurns: 0,
+                                child: Transform(
+                                  alignment: FractionalOffset.center,
+                                  transform: Matrix4.diagonal3(Vector3(_scale2, _scale2, _scale2)),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: collageScreenController.borderWidthValue.value,
+                                        right: collageScreenController.borderWidthValue.value,
+                                        top: collageScreenController.borderWidthValue.value,
+                                        bottom:
+                                        collageScreenController.borderWidthValue.value),
+                                    child: Container(
+                                      height: Get.height,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                        //color: Colors.white,
+                                        // image: DecorationImage(
+                                        //     fit: BoxFit.fill,
+                                        //     image: FileImage(File(
+                                        //         '${collageScreenController.imageFileList[0].path}')),
+                                        // ),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                            collageScreenController.borderRadiusValue.value),
+                                        child: Image.file(File('${collageScreenController.imageFileList[1].path}',),
+                                          fit: BoxFit.cover,),
+                                      ),
+                                      // child: PhotoView(
+                                      //   enableRotation: true,
+                                      //   imageProvider: FileImage(File(
+                                      //                '${collageScreenController.imageFileList[0].path}')),
+                                      // ),
+                                    ),
+                                    //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                                  ),
                                 ),
-                                // child:
-                                // Image.file(File('${collageScreenController.imageFileList[1].path}')),
                               ),
                             ),
                           ),
@@ -485,30 +706,64 @@ class _ImageListModuleState extends State<ImageListModule> {
                           child: Column(
                             children: [
                               Expanded(
-                                flex: 1,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: collageScreenController
-                                          .borderWidthValue.value,
-                                      right: collageScreenController
-                                          .borderWidthValue.value,
-                                      top: collageScreenController
-                                          .borderWidthValue.value,
-                                      bottom: collageScreenController
-                                          .borderWidthValue.value),
-                                  child: Container(
-                                    //width: Get.width,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          collageScreenController
-                                              .borderRadiusValue.value),
-                                      color: Colors.white,
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: FileImage(File(
-                                              '${collageScreenController.imageFileList[0].path}'))),
+                                flex:1,
+                                child: GestureDetector(
+                                  onScaleStart: (ScaleStartDetails details) {
+                                    print(details);
+                                    _previousScale = _scale;
+                                    setState(() {});
+                                  },
+                                  onScaleUpdate: (ScaleUpdateDetails details) {
+                                    print(details);
+                                    _scale = _previousScale * details.scale;
+                                    setState(() {});
+                                  },
+                                  onScaleEnd: (ScaleEndDetails details) {
+                                    print(details);
+
+                                    _previousScale = 1.0;
+                                    setState(() {});
+                                  },
+                                  child: RotatedBox(
+                                    quarterTurns: 0,
+                                    child: Transform(
+                                      alignment: FractionalOffset.center,
+                                      transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: collageScreenController.borderWidthValue.value,
+                                            right: collageScreenController.borderWidthValue.value,
+                                            top: collageScreenController.borderWidthValue.value,
+                                            bottom:
+                                            collageScreenController.borderWidthValue.value),
+                                        child: Container(
+                                          height: Get.height,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                            //color: Colors.white,
+                                            // image: DecorationImage(
+                                            //     fit: BoxFit.fill,
+                                            //     image: FileImage(File(
+                                            //         '${collageScreenController.imageFileList[0].path}')),
+                                            // ),
+                                          ),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                collageScreenController.borderRadiusValue.value),
+                                            child: Image.file(File('${collageScreenController.imageFileList[0].path}',),
+                                              fit: BoxFit.cover,),
+                                          ),
+                                          // child: PhotoView(
+                                          //   enableRotation: true,
+                                          //   imageProvider: FileImage(File(
+                                          //                '${collageScreenController.imageFileList[0].path}')),
+                                          // ),
+                                        ),
+                                        //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                                      ),
                                     ),
-                                    // child: Image.file(File('${collageScreenController.imageFileList[0].path}')),
                                   ),
                                 ),
                               ),
@@ -516,30 +771,64 @@ class _ImageListModuleState extends State<ImageListModule> {
                                 height: 5,
                               ),
                               Expanded(
-                                flex: 3,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: collageScreenController
-                                          .borderWidthValue.value,
-                                      right: collageScreenController
-                                          .borderWidthValue.value,
-                                      top: collageScreenController
-                                          .borderWidthValue.value,
-                                      bottom: collageScreenController
-                                          .borderWidthValue.value),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          collageScreenController
-                                              .borderRadiusValue.value),
-                                      color: Colors.white,
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: FileImage(File(
-                                              '${collageScreenController.imageFileList[1].path}'))),
+                                flex:2,
+                                child: GestureDetector(
+                                  onScaleStart: (ScaleStartDetails details) {
+                                    print(details);
+                                    _previousScale2 = _scale2;
+                                    setState(() {});
+                                  },
+                                  onScaleUpdate: (ScaleUpdateDetails details) {
+                                    print(details);
+                                    _scale2 = _previousScale2 * details.scale;
+                                    setState(() {});
+                                  },
+                                  onScaleEnd: (ScaleEndDetails details) {
+                                    print(details);
+
+                                    _previousScale2 = 1.0;
+                                    setState(() {});
+                                  },
+                                  child: RotatedBox(
+                                    quarterTurns: 0,
+                                    child: Transform(
+                                      alignment: FractionalOffset.center,
+                                      transform: Matrix4.diagonal3(Vector3(_scale2, _scale2, _scale2)),
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: collageScreenController.borderWidthValue.value,
+                                            right: collageScreenController.borderWidthValue.value,
+                                            top: collageScreenController.borderWidthValue.value,
+                                            bottom:
+                                            collageScreenController.borderWidthValue.value),
+                                        child: Container(
+                                          height: Get.height,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                            //color: Colors.white,
+                                            // image: DecorationImage(
+                                            //     fit: BoxFit.fill,
+                                            //     image: FileImage(File(
+                                            //         '${collageScreenController.imageFileList[0].path}')),
+                                            // ),
+                                          ),
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                                collageScreenController.borderRadiusValue.value),
+                                            child: Image.file(File('${collageScreenController.imageFileList[1].path}',),
+                                              fit: BoxFit.cover,),
+                                          ),
+                                          // child: PhotoView(
+                                          //   enableRotation: true,
+                                          //   imageProvider: FileImage(File(
+                                          //                '${collageScreenController.imageFileList[0].path}')),
+                                          // ),
+                                        ),
+                                        //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                                      ),
                                     ),
-                                    // child:
-                                    // Image.file(File('${collageScreenController.imageFileList[1].path}')),
                                   ),
                                 ),
                               ),
@@ -559,29 +848,64 @@ class _ImageListModuleState extends State<ImageListModule> {
                               child: Row(
                                 children: [
                                   Expanded(
-                                    flex: 1,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          left: collageScreenController
-                                              .borderWidthValue.value,
-                                          right: collageScreenController
-                                              .borderWidthValue.value,
-                                          top: collageScreenController
-                                              .borderWidthValue.value,
-                                          bottom: collageScreenController
-                                              .borderWidthValue.value),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              collageScreenController
-                                                  .borderRadiusValue.value),
-                                          color: Colors.white,
-                                          image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: FileImage(File(
-                                                  '${collageScreenController.imageFileList[0].path}'))),
+                                    flex:1,
+                                    child: GestureDetector(
+                                      onScaleStart: (ScaleStartDetails details) {
+                                        print(details);
+                                        _previousScale = _scale;
+                                        setState(() {});
+                                      },
+                                      onScaleUpdate: (ScaleUpdateDetails details) {
+                                        print(details);
+                                        _scale = _previousScale * details.scale;
+                                        setState(() {});
+                                      },
+                                      onScaleEnd: (ScaleEndDetails details) {
+                                        print(details);
+
+                                        _previousScale = 1.0;
+                                        setState(() {});
+                                      },
+                                      child: RotatedBox(
+                                        quarterTurns: 0,
+                                        child: Transform(
+                                          alignment: FractionalOffset.center,
+                                          transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: collageScreenController.borderWidthValue.value,
+                                                right: collageScreenController.borderWidthValue.value,
+                                                top: collageScreenController.borderWidthValue.value,
+                                                bottom:
+                                                collageScreenController.borderWidthValue.value),
+                                            child: Container(
+                                              height: Get.height,
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                                //color: Colors.white,
+                                                // image: DecorationImage(
+                                                //     fit: BoxFit.fill,
+                                                //     image: FileImage(File(
+                                                //         '${collageScreenController.imageFileList[0].path}')),
+                                                // ),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(
+                                                    collageScreenController.borderRadiusValue.value),
+                                                child: Image.file(File('${collageScreenController.imageFileList[0].path}',),
+                                                  fit: BoxFit.cover,),
+                                              ),
+                                              // child: PhotoView(
+                                              //   enableRotation: true,
+                                              //   imageProvider: FileImage(File(
+                                              //                '${collageScreenController.imageFileList[0].path}')),
+                                              // ),
+                                            ),
+                                            //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                                          ),
                                         ),
-                                        //child: Image.file(File('${collageScreenController.imageFileList[0].path}')),
                                       ),
                                     ),
                                   ),
@@ -589,29 +913,64 @@ class _ImageListModuleState extends State<ImageListModule> {
                                     width: 5,
                                   ),
                                   Expanded(
-                                    flex: 3,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          left: collageScreenController
-                                              .borderWidthValue.value,
-                                          right: collageScreenController
-                                              .borderWidthValue.value,
-                                          top: collageScreenController
-                                              .borderWidthValue.value,
-                                          bottom: collageScreenController
-                                              .borderWidthValue.value),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              collageScreenController
-                                                  .borderRadiusValue.value),
-                                          color: Colors.white,
-                                          image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: FileImage(File(
-                                                  '${collageScreenController.imageFileList[1].path}'))),
+                                    flex:2,
+                                    child: GestureDetector(
+                                      onScaleStart: (ScaleStartDetails details) {
+                                        print(details);
+                                        _previousScale2 = _scale2;
+                                        setState(() {});
+                                      },
+                                      onScaleUpdate: (ScaleUpdateDetails details) {
+                                        print(details);
+                                        _scale2 = _previousScale2 * details.scale;
+                                        setState(() {});
+                                      },
+                                      onScaleEnd: (ScaleEndDetails details) {
+                                        print(details);
+
+                                        _previousScale2 = 1.0;
+                                        setState(() {});
+                                      },
+                                      child: RotatedBox(
+                                        quarterTurns: 0,
+                                        child: Transform(
+                                          alignment: FractionalOffset.center,
+                                          transform: Matrix4.diagonal3(Vector3(_scale2, _scale2, _scale2)),
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: collageScreenController.borderWidthValue.value,
+                                                right: collageScreenController.borderWidthValue.value,
+                                                top: collageScreenController.borderWidthValue.value,
+                                                bottom:
+                                                collageScreenController.borderWidthValue.value),
+                                            child: Container(
+                                              height: Get.height,
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                                //color: Colors.white,
+                                                // image: DecorationImage(
+                                                //     fit: BoxFit.fill,
+                                                //     image: FileImage(File(
+                                                //         '${collageScreenController.imageFileList[0].path}')),
+                                                // ),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(
+                                                    collageScreenController.borderRadiusValue.value),
+                                                child: Image.file(File('${collageScreenController.imageFileList[1].path}',),
+                                                  fit: BoxFit.cover,),
+                                              ),
+                                              // child: PhotoView(
+                                              //   enableRotation: true,
+                                              //   imageProvider: FileImage(File(
+                                              //                '${collageScreenController.imageFileList[0].path}')),
+                                              // ),
+                                            ),
+                                            //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                                          ),
                                         ),
-                                        //child: Image.file(File('${collageScreenController.imageFileList[1].path}')),
                                       ),
                                     ),
                                   ),
@@ -632,31 +991,64 @@ class _ImageListModuleState extends State<ImageListModule> {
                                   child: Row(
                                     children: [
                                       Expanded(
-                                        flex: 3,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              left: collageScreenController
-                                                  .borderWidthValue.value,
-                                              right: collageScreenController
-                                                  .borderWidthValue.value,
-                                              top: collageScreenController
-                                                  .borderWidthValue.value,
-                                              bottom: collageScreenController
-                                                  .borderWidthValue.value),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      collageScreenController
-                                                          .borderRadiusValue
-                                                          .value),
-                                              color: Colors.white,
-                                              image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: FileImage(File(
-                                                      '${collageScreenController.imageFileList[0].path}'))),
+                                        flex:2,
+                                        child: GestureDetector(
+                                          onScaleStart: (ScaleStartDetails details) {
+                                            print(details);
+                                            _previousScale = _scale;
+                                            setState(() {});
+                                          },
+                                          onScaleUpdate: (ScaleUpdateDetails details) {
+                                            print(details);
+                                            _scale = _previousScale * details.scale;
+                                            setState(() {});
+                                          },
+                                          onScaleEnd: (ScaleEndDetails details) {
+                                            print(details);
+
+                                            _previousScale = 1.0;
+                                            setState(() {});
+                                          },
+                                          child: RotatedBox(
+                                            quarterTurns: 0,
+                                            child: Transform(
+                                              alignment: FractionalOffset.center,
+                                              transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: collageScreenController.borderWidthValue.value,
+                                                    right: collageScreenController.borderWidthValue.value,
+                                                    top: collageScreenController.borderWidthValue.value,
+                                                    bottom:
+                                                    collageScreenController.borderWidthValue.value),
+                                                child: Container(
+                                                  height: Get.height,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                                    //color: Colors.white,
+                                                    // image: DecorationImage(
+                                                    //     fit: BoxFit.fill,
+                                                    //     image: FileImage(File(
+                                                    //         '${collageScreenController.imageFileList[0].path}')),
+                                                    // ),
+                                                  ),
+                                                  child: ClipRRect(
+                                                    borderRadius: BorderRadius.circular(
+                                                        collageScreenController.borderRadiusValue.value),
+                                                    child: Image.file(File('${collageScreenController.imageFileList[0].path}',),
+                                                      fit: BoxFit.cover,),
+                                                  ),
+                                                  // child: PhotoView(
+                                                  //   enableRotation: true,
+                                                  //   imageProvider: FileImage(File(
+                                                  //                '${collageScreenController.imageFileList[0].path}')),
+                                                  // ),
+                                                ),
+                                                //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                                              ),
                                             ),
-                                            //child: Image.file(File('${collageScreenController.imageFileList[0].path}')),
                                           ),
                                         ),
                                       ),
@@ -664,31 +1056,64 @@ class _ImageListModuleState extends State<ImageListModule> {
                                         width: 5,
                                       ),
                                       Expanded(
-                                        flex: 1,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              left: collageScreenController
-                                                  .borderWidthValue.value,
-                                              right: collageScreenController
-                                                  .borderWidthValue.value,
-                                              top: collageScreenController
-                                                  .borderWidthValue.value,
-                                              bottom: collageScreenController
-                                                  .borderWidthValue.value),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      collageScreenController
-                                                          .borderRadiusValue
-                                                          .value),
-                                              color: Colors.white,
-                                              image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: FileImage(File(
-                                                      '${collageScreenController.imageFileList[1].path}'))),
+                                        flex:1,
+                                        child: GestureDetector(
+                                          onScaleStart: (ScaleStartDetails details) {
+                                            print(details);
+                                            _previousScale2 = _scale2;
+                                            setState(() {});
+                                          },
+                                          onScaleUpdate: (ScaleUpdateDetails details) {
+                                            print(details);
+                                            _scale2 = _previousScale2 * details.scale;
+                                            setState(() {});
+                                          },
+                                          onScaleEnd: (ScaleEndDetails details) {
+                                            print(details);
+
+                                            _previousScale2 = 1.0;
+                                            setState(() {});
+                                          },
+                                          child: RotatedBox(
+                                            quarterTurns: 0,
+                                            child: Transform(
+                                              alignment: FractionalOffset.center,
+                                              transform: Matrix4.diagonal3(Vector3(_scale2, _scale2, _scale2)),
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: collageScreenController.borderWidthValue.value,
+                                                    right: collageScreenController.borderWidthValue.value,
+                                                    top: collageScreenController.borderWidthValue.value,
+                                                    bottom:
+                                                    collageScreenController.borderWidthValue.value),
+                                                child: Container(
+                                                  height: Get.height,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                                    //color: Colors.white,
+                                                    // image: DecorationImage(
+                                                    //     fit: BoxFit.fill,
+                                                    //     image: FileImage(File(
+                                                    //         '${collageScreenController.imageFileList[0].path}')),
+                                                    // ),
+                                                  ),
+                                                  child: ClipRRect(
+                                                    borderRadius: BorderRadius.circular(
+                                                        collageScreenController.borderRadiusValue.value),
+                                                    child: Image.file(File('${collageScreenController.imageFileList[1].path}',),
+                                                      fit: BoxFit.cover,),
+                                                  ),
+                                                  // child: PhotoView(
+                                                  //   enableRotation: true,
+                                                  //   imageProvider: FileImage(File(
+                                                  //                '${collageScreenController.imageFileList[0].path}')),
+                                                  // ),
+                                                ),
+                                                //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                                              ),
                                             ),
-                                            //child: Image.file(File('${collageScreenController.imageFileList[1].path}')),
                                           ),
                                         ),
                                       ),
@@ -716,37 +1141,63 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                   width: 5,
                                                 ),
                                                 Expanded(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left:
-                                                            collageScreenController
-                                                                .borderWidthValue
-                                                                .value,
-                                                        right:
-                                                            collageScreenController
-                                                                .borderWidthValue
-                                                                .value,
-                                                        top: collageScreenController
-                                                            .borderWidthValue
-                                                            .value,
-                                                        bottom:
-                                                            collageScreenController
-                                                                .borderWidthValue
-                                                                .value),
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                collageScreenController
-                                                                    .borderRadiusValue
-                                                                    .value),
-                                                        color: Colors.white,
-                                                        image: DecorationImage(
-                                                            fit: BoxFit.cover,
-                                                            image: FileImage(File(
-                                                                '${collageScreenController.imageFileList[0].path}'))),
+                                                  child: GestureDetector(
+                                                    onScaleStart: (ScaleStartDetails details) {
+                                                      print(details);
+                                                      _previousScale = _scale;
+                                                      setState(() {});
+                                                    },
+                                                    onScaleUpdate: (ScaleUpdateDetails details) {
+                                                      print(details);
+                                                      _scale = _previousScale * details.scale;
+                                                      setState(() {});
+                                                    },
+                                                    onScaleEnd: (ScaleEndDetails details) {
+                                                      print(details);
+
+                                                      _previousScale = 1.0;
+                                                      setState(() {});
+                                                    },
+                                                    child: RotatedBox(
+                                                      quarterTurns: 0,
+                                                      child: Transform(
+                                                        alignment: FractionalOffset.center,
+                                                        transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
+                                                        child: Padding(
+                                                          padding: EdgeInsets.only(
+                                                              left: collageScreenController.borderWidthValue.value,
+                                                              right: collageScreenController.borderWidthValue.value,
+                                                              top: collageScreenController.borderWidthValue.value,
+                                                              bottom:
+                                                              collageScreenController.borderWidthValue.value),
+                                                          child: Container(
+                                                            height: Get.height,
+                                                            width: double.infinity,
+                                                            decoration: BoxDecoration(
+                                                              //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                                              //color: Colors.white,
+                                                              // image: DecorationImage(
+                                                              //     fit: BoxFit.fill,
+                                                              //     image: FileImage(File(
+                                                              //         '${collageScreenController.imageFileList[0].path}')),
+                                                              // ),
+                                                            ),
+                                                            child: ClipRRect(
+                                                              borderRadius: BorderRadius.circular(
+                                                                  collageScreenController.borderRadiusValue.value),
+                                                              child: Image.file(File('${collageScreenController.imageFileList[0].path}',),
+                                                                fit: BoxFit.cover,),
+                                                            ),
+                                                            // child: PhotoView(
+                                                            //   enableRotation: true,
+                                                            //   imageProvider: FileImage(File(
+                                                            //                '${collageScreenController.imageFileList[0].path}')),
+                                                            // ),
+                                                          ),
+                                                          //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                                                        ),
                                                       ),
-                                                      //child: Image.file(File('${collageScreenController.imageFileList[0].path}')),
                                                     ),
                                                   ),
                                                 ),
@@ -757,37 +1208,64 @@ class _ImageListModuleState extends State<ImageListModule> {
                                             child: Row(
                                               children: [
                                                 Expanded(
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left:
-                                                            collageScreenController
-                                                                .borderWidthValue
-                                                                .value,
-                                                        right:
-                                                            collageScreenController
-                                                                .borderWidthValue
-                                                                .value,
-                                                        top: collageScreenController
-                                                            .borderWidthValue
-                                                            .value,
-                                                        bottom:
-                                                            collageScreenController
-                                                                .borderWidthValue
-                                                                .value),
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                collageScreenController
-                                                                    .borderRadiusValue
-                                                                    .value),
-                                                        color: Colors.white,
-                                                        image: DecorationImage(
-                                                            fit: BoxFit.cover,
-                                                            image: FileImage(File(
-                                                                '${collageScreenController.imageFileList[1].path}'))),
+                                                  flex:1,
+                                                  child: GestureDetector(
+                                                    onScaleStart: (ScaleStartDetails details) {
+                                                      print(details);
+                                                      _previousScale2 = _scale2;
+                                                      setState(() {});
+                                                    },
+                                                    onScaleUpdate: (ScaleUpdateDetails details) {
+                                                      print(details);
+                                                      _scale2 = _previousScale2 * details.scale;
+                                                      setState(() {});
+                                                    },
+                                                    onScaleEnd: (ScaleEndDetails details) {
+                                                      print(details);
+
+                                                      _previousScale2 = 1.0;
+                                                      setState(() {});
+                                                    },
+                                                    child: RotatedBox(
+                                                      quarterTurns: 0,
+                                                      child: Transform(
+                                                        alignment: FractionalOffset.center,
+                                                        transform: Matrix4.diagonal3(Vector3(_scale2, _scale2, _scale2)),
+                                                        child: Padding(
+                                                          padding: EdgeInsets.only(
+                                                              left: collageScreenController.borderWidthValue.value,
+                                                              right: collageScreenController.borderWidthValue.value,
+                                                              top: collageScreenController.borderWidthValue.value,
+                                                              bottom:
+                                                              collageScreenController.borderWidthValue.value),
+                                                          child: Container(
+                                                            height: Get.height,
+                                                            width: double.infinity,
+                                                            decoration: BoxDecoration(
+                                                              //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                                              //color: Colors.white,
+                                                              // image: DecorationImage(
+                                                              //     fit: BoxFit.fill,
+                                                              //     image: FileImage(File(
+                                                              //         '${collageScreenController.imageFileList[0].path}')),
+                                                              // ),
+                                                            ),
+                                                            child: ClipRRect(
+                                                              borderRadius: BorderRadius.circular(
+                                                                  collageScreenController.borderRadiusValue.value),
+                                                              child: Image.file(File('${collageScreenController.imageFileList[1].path}',),
+                                                                fit: BoxFit.cover,),
+                                                            ),
+                                                            // child: PhotoView(
+                                                            //   enableRotation: true,
+                                                            //   imageProvider: FileImage(File(
+                                                            //                '${collageScreenController.imageFileList[0].path}')),
+                                                            // ),
+                                                          ),
+                                                          //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                                                        ),
                                                       ),
-                                                      //child: Image.file(File('${collageScreenController.imageFileList[0].path}')),
                                                     ),
                                                   ),
                                                 ),
@@ -818,37 +1296,63 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                 child: Row(
                                                   children: [
                                                     Expanded(
-                                                      child: Padding(
-                                                        padding: EdgeInsets.only(
-                                                            left: collageScreenController
-                                                                .borderWidthValue
-                                                                .value,
-                                                            right: collageScreenController
-                                                                .borderWidthValue
-                                                                .value,
-                                                            top: collageScreenController
-                                                                .borderWidthValue
-                                                                .value,
-                                                            bottom: collageScreenController
-                                                                .borderWidthValue
-                                                                .value),
-                                                        child: Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    collageScreenController
-                                                                        .borderRadiusValue
-                                                                        .value),
-                                                            color: Colors.white,
-                                                            image: DecorationImage(
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                image: FileImage(
-                                                                    File(
-                                                                        '${collageScreenController.imageFileList[0].path}'))),
+                                                      child: GestureDetector(
+                                                        onScaleStart: (ScaleStartDetails details) {
+                                                          print(details);
+                                                          _previousScale = _scale;
+                                                          setState(() {});
+                                                        },
+                                                        onScaleUpdate: (ScaleUpdateDetails details) {
+                                                          print(details);
+                                                          _scale = _previousScale * details.scale;
+                                                          setState(() {});
+                                                        },
+                                                        onScaleEnd: (ScaleEndDetails details) {
+                                                          print(details);
+
+                                                          _previousScale = 1.0;
+                                                          setState(() {});
+                                                        },
+                                                        child: RotatedBox(
+                                                          quarterTurns: 0,
+                                                          child: Transform(
+                                                            alignment: FractionalOffset.center,
+                                                            transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
+                                                            child: Padding(
+                                                              padding: EdgeInsets.only(
+                                                                  left: collageScreenController.borderWidthValue.value,
+                                                                  right: collageScreenController.borderWidthValue.value,
+                                                                  top: collageScreenController.borderWidthValue.value,
+                                                                  bottom:
+                                                                  collageScreenController.borderWidthValue.value),
+                                                              child: Container(
+                                                                height: Get.height,
+                                                                width: double.infinity,
+                                                                decoration: BoxDecoration(
+                                                                  //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                                                  //color: Colors.white,
+                                                                  // image: DecorationImage(
+                                                                  //     fit: BoxFit.fill,
+                                                                  //     image: FileImage(File(
+                                                                  //         '${collageScreenController.imageFileList[0].path}')),
+                                                                  // ),
+                                                                ),
+                                                                child: ClipRRect(
+                                                                  borderRadius: BorderRadius.circular(
+                                                                      collageScreenController.borderRadiusValue.value),
+                                                                  child: Image.file(File('${collageScreenController.imageFileList[0].path}',),
+                                                                    fit: BoxFit.cover,),
+                                                                ),
+                                                                // child: PhotoView(
+                                                                //   enableRotation: true,
+                                                                //   imageProvider: FileImage(File(
+                                                                //                '${collageScreenController.imageFileList[0].path}')),
+                                                                // ),
+                                                              ),
+                                                              //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                                                            ),
                                                           ),
-                                                          //child: Image.file(File('${collageScreenController.imageFileList[0].path}')),
                                                         ),
                                                       ),
                                                     ),
@@ -869,37 +1373,64 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                       width: 5,
                                                     ),
                                                     Expanded(
-                                                      child: Padding(
-                                                        padding: EdgeInsets.only(
-                                                            left: collageScreenController
-                                                                .borderWidthValue
-                                                                .value,
-                                                            right: collageScreenController
-                                                                .borderWidthValue
-                                                                .value,
-                                                            top: collageScreenController
-                                                                .borderWidthValue
-                                                                .value,
-                                                            bottom: collageScreenController
-                                                                .borderWidthValue
-                                                                .value),
-                                                        child: Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    collageScreenController
-                                                                        .borderRadiusValue
-                                                                        .value),
-                                                            color: Colors.white,
-                                                            image: DecorationImage(
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                image: FileImage(
-                                                                    File(
-                                                                        '${collageScreenController.imageFileList[1].path}'))),
+                                                      flex:1,
+                                                      child: GestureDetector(
+                                                        onScaleStart: (ScaleStartDetails details) {
+                                                          print(details);
+                                                          _previousScale2 = _scale2;
+                                                          setState(() {});
+                                                        },
+                                                        onScaleUpdate: (ScaleUpdateDetails details) {
+                                                          print(details);
+                                                          _scale2 = _previousScale2 * details.scale;
+                                                          setState(() {});
+                                                        },
+                                                        onScaleEnd: (ScaleEndDetails details) {
+                                                          print(details);
+
+                                                          _previousScale2 = 1.0;
+                                                          setState(() {});
+                                                        },
+                                                        child: RotatedBox(
+                                                          quarterTurns: 0,
+                                                          child: Transform(
+                                                            alignment: FractionalOffset.center,
+                                                            transform: Matrix4.diagonal3(Vector3(_scale2, _scale2, _scale2)),
+                                                            child: Padding(
+                                                              padding: EdgeInsets.only(
+                                                                  left: collageScreenController.borderWidthValue.value,
+                                                                  right: collageScreenController.borderWidthValue.value,
+                                                                  top: collageScreenController.borderWidthValue.value,
+                                                                  bottom:
+                                                                  collageScreenController.borderWidthValue.value),
+                                                              child: Container(
+                                                                height: Get.height,
+                                                                width: double.infinity,
+                                                                decoration: BoxDecoration(
+                                                                  //border: Border.all(width: collageScreenController.borderWidthValue.value),
+
+                                                                  //color: Colors.white,
+                                                                  // image: DecorationImage(
+                                                                  //     fit: BoxFit.fill,
+                                                                  //     image: FileImage(File(
+                                                                  //         '${collageScreenController.imageFileList[0].path}')),
+                                                                  // ),
+                                                                ),
+                                                                child: ClipRRect(
+                                                                  borderRadius: BorderRadius.circular(
+                                                                      collageScreenController.borderRadiusValue.value),
+                                                                  child: Image.file(File('${collageScreenController.imageFileList[1].path}',),
+                                                                    fit: BoxFit.cover,),
+                                                                ),
+                                                                // child: PhotoView(
+                                                                //   enableRotation: true,
+                                                                //   imageProvider: FileImage(File(
+                                                                //                '${collageScreenController.imageFileList[0].path}')),
+                                                                // ),
+                                                              ),
+                                                              //child: Image.file(File('${collageScreenController.imageFileList[0].path}'), fit: BoxFit.fitHeight),
+                                                            ),
                                                           ),
-                                                          //child: Image.file(File('${collageScreenController.imageFileList[0].path}')),
                                                         ),
                                                       ),
                                                     ),

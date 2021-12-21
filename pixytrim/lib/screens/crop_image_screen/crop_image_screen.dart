@@ -243,20 +243,17 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                     print("temp file====$temp");
                     cropController.crop();
                      print("crop file====$croppedImage");
-
-
-                  },
+                     },
                   child: Container(
                       child: Icon(Icons.check_rounded)
                   ),
                 ),
                 GestureDetector(
                   onTap: () async{
-
                     //controller.crop();
                    await _capturePng();
 
-                    //crop1();
+                   //crop1();
                   },
                   child: Container(
                       child: Icon(Icons.check_rounded)
