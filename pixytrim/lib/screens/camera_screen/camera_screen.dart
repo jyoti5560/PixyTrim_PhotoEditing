@@ -32,8 +32,7 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  CameraScreenController cameraScreenController =
-      Get.put(CameraScreenController());
+  final cameraScreenController = Get.put(CameraScreenController());
 
   final ImagePicker imagePicker = ImagePicker();
 
@@ -319,15 +318,14 @@ class _CameraScreenState extends State<CameraScreen> {
                   );
                 } else if (i == 2) {
                   Get.to(() => BrightnessScreen(
-                        file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
+                        // file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
                       )); //todo
                 } else if (i == 3) {
-                  Get.to(() => BlurScreen(file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]));
+                  Get.to(() => BlurScreen());
                 } else if (i == 4) {
-                  compressImage(cameraScreenController.file).then((value) {
+                  compressImage(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]).then((value) {
                     Get.to(() => CompressImageScreen(
-                              file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
-                              compressFile: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
+                              compressFile: compressFile!,
                             ))!
                         .then((value) {
                       // setState(() {});
@@ -418,6 +416,7 @@ class _CameraScreenState extends State<CameraScreen> {
     print("Compress path : ${result!.lengthSync()}");
     setState(() {
       compressFile = result;
+      // cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value] = result;
     });
     // setState Required
     setState(() {});

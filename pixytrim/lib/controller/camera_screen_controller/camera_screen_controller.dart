@@ -4,6 +4,7 @@ import 'package:pixytrim/models/filter_screen_model/single_filter_option.dart';
 import 'package:flutter/material.dart';
 
 class CameraScreenController extends GetxController{
+  RxBool isLoading = false.obs;
   File file = Get.arguments[0];
   final selectedModule = Get.arguments[1];
 
@@ -12,7 +13,6 @@ class CameraScreenController extends GetxController{
   RxInt selectedImage = 0.obs;
 
   RxDouble compressSize = 61.0.obs;
-  RxList<File> compressFile = <File>[].obs;
   RxList<File> addImageFromCameraList = <File>[].obs;
 
 
@@ -228,5 +228,10 @@ class CameraScreenController extends GetxController{
                 height: 120, width: 120, fit: BoxFit.fill)),
       ),
     );
+  }
+
+  loading() {
+    isLoading(true);
+    isLoading(false);
   }
 }

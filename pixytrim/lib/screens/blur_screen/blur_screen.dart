@@ -19,16 +19,12 @@ import 'dart:ui' as ui;
 enum SelectedModule {camera, gallery}
 
 class BlurScreen extends StatefulWidget {
-  File file;
- // final selectedModule;
-  BlurScreen({required this.file});
-  //const BlurScreen({Key? key}) : super(key: key);
-
   @override
   _BlurScreenState createState() => _BlurScreenState();
 }
 
 class _BlurScreenState extends State<BlurScreen> {
+  final csController = Get.find<CameraScreenController>();
 
   LinearGradient gradient = LinearGradient(
       colors: <Color> [
@@ -45,43 +41,44 @@ class _BlurScreenState extends State<BlurScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          MainBackgroundWidget(),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            MainBackgroundWidget(),
 
-          Container(
-            margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-            child: Column(
-              children: [
-                SizedBox(height: 60),
-                appBar(),
-                SizedBox(height: 20),
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: RepaintBoundary(
-                      key: key,
-                      child: ImageFiltered(
-                            imageFilter: ImageFilter.blur(
-                                sigmaX: blurImage, sigmaY: blurImage),
-                            child: Container(
-                              color: Colors.transparent,
-                              child: widget.file.toString().isNotEmpty
-                                  ? Image.file(widget.file)
-                                  : null,
+            Container(
+              margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+              child: Column(
+                children: [
+                  appBar(),
+                  SizedBox(height: 20),
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: RepaintBoundary(
+                        key: key,
+                        child: ImageFiltered(
+                              imageFilter: ImageFilter.blur(
+                                  sigmaX: blurImage, sigmaY: blurImage),
+                              child: Container(
+                                color: Colors.transparent,
+                                child: csController.addImageFromCameraList[csController.selectedImage.value].toString().isNotEmpty
+                                    ? Image.file(csController.addImageFromCameraList[csController.selectedImage.value])
+                                    : null,
+                              ),
                             ),
-                          ),
+                      ),
                     ),
                   ),
-                ),
 
-                SizedBox(height: 20),
+                  SizedBox(height: 20),
 
-                blurSlider()
-              ],
-            ),
-          )
-        ],
+                  blurSlider()
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -116,8 +113,8 @@ class _BlurScreenState extends State<BlurScreen> {
                 GestureDetector(
                   onTap: ()async {
                     //saveImage();
-                    //Get.back();
                     await _capturePng();
+                    Get.back();
                   },
                   child: Container(child: Icon(Icons.check_rounded)),
                 ),
@@ -166,6 +163,8 @@ class _BlurScreenState extends State<BlurScreen> {
   Future _capturePng() async {
     try {
       print('inside');
+      DateTime time = DateTime.now();
+      final imgName = "${time.day}_${time.month}_${time.year}_${time.hour}_${time.minute}_${time.second}";
       RenderRepaintBoundary boundary =
       key.currentContext!.findRenderObject() as RenderRepaintBoundary;
       print(boundary);
@@ -176,10 +175,10 @@ class _BlurScreenState extends State<BlurScreen> {
       await image.toByteData(format: ui.ImageByteFormat.png);
       print("byte data:===$byteData");
       Uint8List pngBytes = byteData!.buffer.asUint8List();
-      File imgFile = new File('$directory/photo.png');
+      File imgFile = new File('$directory/$imgName.png');
       await imgFile.writeAsBytes(pngBytes);
       setState(() {
-        blur = imgFile;
+        csController.addImageFromCameraList[csController.selectedImage.value] = imgFile;
       });
       print("File path====:${blur!.path}");
       //collageScreenController.imageFileList = pngBytes;
