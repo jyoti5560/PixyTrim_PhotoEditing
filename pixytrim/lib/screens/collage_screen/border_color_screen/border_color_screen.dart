@@ -4,14 +4,11 @@ import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';
 
 class BorderColorScreen extends StatefulWidget {
-  //const BorderColorScreen({Key? key}) : super(key: key);
   @override
   _BorderColorScreenState createState() => _BorderColorScreenState();
 }
-
 class _BorderColorScreenState extends State<BorderColorScreen> {
-  CollageScreenController collageScreenController =
-  Get.find<CollageScreenController>();
+  final collageScreenController = Get.find<CollageScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +24,6 @@ class _BorderColorScreenState extends State<BorderColorScreen> {
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
           ),
-
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
@@ -38,9 +34,8 @@ class _BorderColorScreenState extends State<BorderColorScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
                   child: GestureDetector(
                     onTap: (){
+                      collageScreenController.isActiveWallpaper.value = false;
                       collageScreenController.activeColor.value = index;
-                      print(
-                          'selectedIndex : ${collageScreenController.borderColor[collageScreenController.activeColor.value]}');
                     },
                     child: Container(
                       height: 5, width: 28,
