@@ -38,25 +38,23 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: csController.isLoading.value
-            ? CircularProgressIndicator()
-            : SafeArea(
-                child: Stack(
-                  children: [
-                    MainBackgroundWidget(),
-                    Container(
-                      margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-                      child: Column(
-                        children: [
-                          appBar(),
-                          SizedBox(height: 20),
-                          imageList(),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            MainBackgroundWidget(),
+            Container(
+              margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+              child: Column(
+                children: [
+                  appBar(),
+                  SizedBox(height: 20),
+                  imageList(),
+                ],
               ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -160,10 +158,10 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
                 child: Column(
                   children: [
                     Container(
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.file(widget.compressFile),
-                        ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.file(widget.compressFile),
+                      ),
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -177,9 +175,9 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
                           : Text(
                               "${widget.compressFile.lengthSync()} kb",
                               style: TextStyle(
-                                  fontFamily: "",
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                fontFamily: "",
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                     ),
@@ -209,14 +207,15 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
                       () => SliderTheme(
                         data: SliderThemeData(
                           trackShape: GradientRectSliderTrackShape(
-                              gradient: gradient, darkenInactive: false),
+                              gradient: gradient, darkenInactive: false,
+                          ),
                         ),
                         child: Slider(
                           onChanged: (value) {
                             setState(() {
-                            print('value : $value');
-                            csController.compressSize.value = value;
-                            csController.loading();
+                              print('value : $value');
+                              csController.compressSize.value = value;
+                              csController.loading();
                             });
                           },
                           divisions: 70,
