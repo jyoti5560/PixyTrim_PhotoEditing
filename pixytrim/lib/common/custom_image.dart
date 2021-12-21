@@ -52,6 +52,7 @@ class Images{
   static const ic_google = '$root' + 'google.png';
   static const ic_facebook = '$root' + 'facebook.png';
 
+  static const ic_transparent_wallpaper1 = '$root' + 'transparent_wallpaper.jpg';
   static const ic_wallpaper1 = '$root' + 'wallpaper1.png';
   static const ic_wallpaper2 = '$root' + 'wallpaper2.png';
 

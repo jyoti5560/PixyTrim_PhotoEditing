@@ -22,6 +22,14 @@ class CollageScreenController extends GetxController{
   RxBool isLoading = false.obs;
   RxInt selectedIndex = 0.obs;
   RxDouble borderRadiusValue = 0.0.obs;
+  RxInt activeWallpaper = 0.obs;
+  RxBool isActiveWallpaper = false.obs;
+
+
+  List<String> wallpapers = [
+    Images.ic_wallpaper1,
+    Images.ic_wallpaper2,
+  ];
 
   List<String> twoImageLayout = [
     Images.ic_layout1,
