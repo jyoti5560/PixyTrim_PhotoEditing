@@ -330,7 +330,7 @@ class _IndexScreenState extends State<IndexScreen> {
       } else if(selectedImages.length == 1 ){
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Please select minimum 2 images"),
+          content: Text("Please Select Minimum 2 images"),
         ));
        // Get.snackbar("Please select minimum 2 image", "", snackPosition: SnackPosition.BOTTOM, );
       } else if(selectedImages.length >= 2 && selectedImages.length <= 7){
@@ -342,7 +342,7 @@ class _IndexScreenState extends State<IndexScreen> {
       } else if(selectedImages.length >= 8 ){
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Please select Maximum 7 images"),
+          content: Text("Please Select Maximum 7 images"),
         ));
         // Get.snackbar("Please select minimum 2 image", "", snackPosition: SnackPosition.BOTTOM, );
       }
