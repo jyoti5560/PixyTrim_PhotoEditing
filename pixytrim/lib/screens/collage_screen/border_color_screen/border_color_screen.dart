@@ -27,7 +27,6 @@ class _BorderColorScreenState extends State<BorderColorScreen> {
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
-              // physics: BouncingScrollPhysics(),
               itemCount: collageScreenController.borderColor.length,
               itemBuilder: (context, index){
                 return Padding(
@@ -48,6 +47,7 @@ class _BorderColorScreenState extends State<BorderColorScreen> {
                   ),
                 );
               })
-        ));
+        ),
+    );
   }
 }
