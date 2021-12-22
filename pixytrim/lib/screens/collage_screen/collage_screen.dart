@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';
@@ -210,6 +211,7 @@ class ImageListModule extends StatefulWidget {
 }
 
 class _ImageListModuleState extends State<ImageListModule> {
+  final ImagePicker imagePicker = ImagePicker();
   CollageScreenController collageScreenController =
       Get.find<CollageScreenController>();
   double _scale = 1.0;
@@ -275,7 +277,6 @@ class _ImageListModuleState extends State<ImageListModule> {
               Expanded(
                 child: Stack(
                     alignment: Alignment.topRight,
-                    // alignmemnt: Alignment.topRight,
                     children: [
                       GestureDetector(
                         onScaleStart: (ScaleStartDetails details) {
@@ -319,11 +320,17 @@ class _ImageListModuleState extends State<ImageListModule> {
                                   //         '${collageScreenController.imageFileList[0].path}')),
                                   // ),
                                 ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(
-                                      collageScreenController.borderRadiusValue.value),
-                                  child: Image.file(File('${collageScreenController.imageFileList[0].path}',),
-                                    fit: BoxFit.cover,),
+                                child: Obx(
+                                  ()=> ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        collageScreenController.borderRadiusValue.value),
+                                    child: collageScreenController.imageFileList[0].path.isNotEmpty
+                                        ? Image.file(File('${collageScreenController.imageFileList[0].path}',),
+                                      fit: BoxFit.cover,)
+                                    : Image.asset('${Images.ic_background1}',
+                                          fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
                                 // child: PhotoView(
                                 //   enableRotation: true,
@@ -338,10 +345,17 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
 
                       GestureDetector(
-                        onTap: (){
-                          setState((){
-                            collageScreenController.imageFileList.removeAt(0);
-                          });
+                        onTap: () async {
+                          // setState((){
+
+                            final image = await imagePicker.pickImage(source: ImageSource.gallery);
+                            if (image != null) {
+                              collageScreenController.imageFileList.removeAt(0);
+                              collageScreenController.imageFileList.insert(0, image);
+                            }
+
+                            print('New Length : ${collageScreenController.imageFileList.length}');
+                          // });
                         },
                         child: Container(
                             child: Icon(Icons.close, color: Colors.white)
