@@ -4357,9 +4357,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                        SizedBox(
-                          height: 5,
-                        ),
+                        SizedBox(height: 5),
                         Expanded(child: Container(),),
                 ],
               ),
@@ -5110,7 +5108,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -6124,7 +6122,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -6186,7 +6184,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -6594,9 +6592,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
+                  SizedBox(height: 5),
                   Expanded(
                       flex:1,
                     child: GestureDetector(
@@ -6662,7 +6658,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               flex: 1,
               child: Column(
@@ -7145,7 +7141,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               flex: 2,
               child: Column(
@@ -7212,7 +7208,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     flex: 1,
                     child: Row(
@@ -7278,7 +7274,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 5,),
+                        SizedBox(width: 5),
                         Expanded(
                           child: GestureDetector(
                             onScaleStart: (ScaleStartDetails details) {
@@ -7420,7 +7416,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -7485,7 +7481,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -7550,7 +7546,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -7686,7 +7682,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -7751,7 +7747,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -7816,7 +7812,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -7956,9 +7952,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -8023,7 +8017,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -8085,7 +8079,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -8221,7 +8215,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -8283,7 +8277,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -8348,9 +8342,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -8487,7 +8479,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -8549,7 +8541,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -8611,7 +8603,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -8745,7 +8737,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -8807,7 +8799,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -8869,7 +8861,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -9019,7 +9011,7 @@ class _ImageListModuleState extends State<ImageListModule> {
               ),
             ),
 
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -9096,7 +9088,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -9173,7 +9165,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -9328,7 +9320,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 5,),
+                        SizedBox(width: 5),
                         Expanded(
                           child: GestureDetector(
                             onScaleStart: (ScaleStartDetails details) {
@@ -9393,7 +9385,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Row(
                       children: [
@@ -9458,7 +9450,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 5,),
+                        SizedBox(width: 5),
                         Expanded(
                           child: GestureDetector(
                             onScaleStart: (ScaleStartDetails details) {
@@ -9612,7 +9604,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                       flex:1,
                     child: GestureDetector(
@@ -9678,7 +9670,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               flex: 2,
               child: Column(
@@ -9745,7 +9737,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     flex: 1,
                     child: Row(
@@ -9811,7 +9803,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 5,),
+                        SizedBox(width: 5),
                         Expanded(
                           child: GestureDetector(
                             onScaleStart: (ScaleStartDetails details) {
@@ -9956,7 +9948,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -10022,7 +10014,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
 
             Expanded(
               child: GestureDetector(
@@ -10085,7 +10077,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -10150,7 +10142,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                   flex:2,
                     child: GestureDetector(
@@ -10292,7 +10284,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -10358,7 +10350,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -10420,7 +10412,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -10486,7 +10478,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     flex:2,
                     child: GestureDetector(
@@ -10627,7 +10619,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -10692,7 +10684,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -10754,7 +10746,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -10819,7 +10811,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -10959,7 +10951,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     Expanded(
                       child: GestureDetector(
                         onScaleStart: (ScaleStartDetails details) {
@@ -11024,7 +11016,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ],
               )
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -11086,7 +11078,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
                 child: Column(
                   children: [
@@ -11151,7 +11143,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     Expanded(
                       child: GestureDetector(
                         onScaleStart: (ScaleStartDetails details) {
@@ -11291,7 +11283,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -11353,7 +11345,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -11419,7 +11411,7 @@ class _ImageListModuleState extends State<ImageListModule> {
               ),
             ),
 
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -11484,7 +11476,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -11624,7 +11616,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               flex: 1,
               child: Row(
@@ -11690,9 +11682,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -11754,9 +11744,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -11818,9 +11806,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -11961,7 +11947,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -12026,7 +12012,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ]
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               flex:1,
               child: Row(
@@ -12092,7 +12078,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(width: 5),
                     Expanded(
                       child: GestureDetector(
                         onScaleStart: (ScaleStartDetails details) {
@@ -12154,7 +12140,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(width: 5),
                     Expanded(
                       child: GestureDetector(
                         onScaleStart: (ScaleStartDetails details) {
@@ -12298,7 +12284,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -12363,7 +12349,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               flex: 1,
               child: Column(
@@ -12429,7 +12415,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -12491,7 +12477,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -12630,7 +12616,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -12695,7 +12681,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -12757,7 +12743,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -12822,7 +12808,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -12958,7 +12944,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -13023,7 +13009,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -13088,7 +13074,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -13153,7 +13139,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -13297,9 +13283,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
+                  SizedBox(height: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -13365,7 +13349,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -13431,9 +13415,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
+                  SizedBox(height: 5),
                   Expanded(
                     flex:2,
                     child: GestureDetector(
@@ -13499,7 +13481,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -13983,7 +13965,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               flex:2,
               child: Row(
@@ -14053,7 +14035,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 5,),
+                        SizedBox(width: 5),
                         Expanded(
                           flex:1,
                           child: GestureDetector(
@@ -14119,7 +14101,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ],
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: Column(
@@ -14186,7 +14168,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 5,),
+                        SizedBox(height: 5),
                         Expanded(
                           flex:2,
                           child: GestureDetector(
@@ -14330,7 +14312,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -14392,7 +14374,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -14457,7 +14439,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -14523,7 +14505,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:2,
                     child: GestureDetector(
@@ -14586,7 +14568,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: Container(),
                   )
@@ -14610,7 +14592,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   Expanded(
                     child: Container(),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -14672,7 +14654,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -14737,7 +14719,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -14802,7 +14784,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -14864,7 +14846,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -15002,7 +14984,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               flex:1,
               child: Column(
@@ -15068,7 +15050,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -15130,7 +15112,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -15192,7 +15174,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -15329,7 +15311,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               flex:2,
               child: Row(
@@ -15398,7 +15380,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 5,),
+                        SizedBox(height: 5),
                         Expanded(
                           child: GestureDetector(
                             onScaleStart: (ScaleStartDetails details) {
@@ -15463,7 +15445,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ],
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: Column(
                       children: [
@@ -15528,7 +15510,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 5,),
+                        SizedBox(height: 5),
                         Expanded(
                           child: GestureDetector(
                             onScaleStart: (ScaleStartDetails details) {
@@ -15668,7 +15650,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -15730,7 +15712,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -15792,7 +15774,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -15854,7 +15836,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: GestureDetector(
                 onScaleStart: (ScaleStartDetails details) {
@@ -15991,7 +15973,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -16056,7 +16038,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -16121,7 +16103,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -16183,7 +16165,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -16261,9 +16243,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -16330,7 +16310,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -16392,7 +16372,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -16457,7 +16437,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -16522,7 +16502,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -16584,7 +16564,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -16658,9 +16638,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -16727,7 +16705,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -16792,7 +16770,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -16857,7 +16835,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -16922,7 +16900,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -16987,7 +16965,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -17060,9 +17038,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
             Expanded(
@@ -17131,7 +17107,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     flex: 1,
                     child: Row(
@@ -17265,7 +17241,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               flex:1,
               child: Column(
@@ -17331,7 +17307,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -17393,7 +17369,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -17467,9 +17443,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
             Expanded(
@@ -17537,7 +17511,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -17599,7 +17573,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -17664,7 +17638,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               flex: 2,
               child: Column(
@@ -17799,7 +17773,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ]
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                       flex:2,
                     child: GestureDetector(
@@ -17874,9 +17848,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
             Expanded(
@@ -17944,7 +17916,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     Expanded(
                       flex:1,
                       child: GestureDetector(
@@ -18010,7 +17982,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ],
                 )
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
                 child: Column(
                   children: [
@@ -18075,7 +18047,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     Expanded(
                       child: GestureDetector(
                         onScaleStart: (ScaleStartDetails details) {
@@ -18140,7 +18112,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ],
                 )
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
                 child: Column(
                   children: [
@@ -18206,7 +18178,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     Expanded(
                       flex:2,
                       child: GestureDetector(
@@ -18280,9 +18252,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -18350,7 +18320,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -18417,7 +18387,7 @@ class _ImageListModuleState extends State<ImageListModule> {
               ),
             ),
 
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -18482,7 +18452,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -18548,7 +18518,7 @@ class _ImageListModuleState extends State<ImageListModule> {
               ),
             ),
 
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -18614,7 +18584,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:2,
                     child: GestureDetector(
@@ -18689,12 +18659,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
             Expanded(
@@ -18828,7 +18793,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ]
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                   children:[
@@ -18960,7 +18925,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ]
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                   children:[
@@ -19100,12 +19065,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -19173,7 +19133,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(width: 5),
                     Expanded(
                       flex:1,
                       child: GestureDetector(
@@ -19239,7 +19199,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ]
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                   children: [
@@ -19305,7 +19265,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(width: 5),
                     Expanded(
                       flex:2,
                       child: GestureDetector(
@@ -19371,7 +19331,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ]
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                   children: [
@@ -19437,7 +19397,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(width: 5),
                     Expanded(
                       flex:1,
                       child: GestureDetector(
@@ -19512,12 +19472,7 @@ class _ImageListModuleState extends State<ImageListModule> {
       borderRadius:
       BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -19584,7 +19539,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -19647,7 +19602,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -19713,7 +19668,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -19779,7 +19734,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:2,
                     child: GestureDetector(
@@ -19842,7 +19797,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -19908,7 +19863,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
                 child: Container()
             )
@@ -19922,18 +19877,13 @@ class _ImageListModuleState extends State<ImageListModule> {
       borderRadius:
       BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
             Expanded(
                 child: Container()
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -19998,7 +19948,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -20061,7 +20011,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -20127,7 +20077,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -20192,7 +20142,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -20254,7 +20204,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -20330,12 +20280,7 @@ class _ImageListModuleState extends State<ImageListModule> {
       borderRadius:
       BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -20403,7 +20348,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(width: 5),
                     Expanded(
                       flex:1,
                       child: GestureDetector(
@@ -20469,7 +20414,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ]
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               flex:1,
               child: Row(
@@ -20536,7 +20481,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -20598,7 +20543,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -20660,7 +20605,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -20737,14 +20682,7 @@ class _ImageListModuleState extends State<ImageListModule> {
       BorderRadius
           .circular(20),
       child: Container(
-        decoration:
-        BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor
-                .value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -20809,7 +20747,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               flex:1,
               child: Row(
@@ -20875,9 +20813,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -20940,9 +20876,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -21004,9 +20938,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -21068,9 +21000,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -21146,14 +21076,7 @@ class _ImageListModuleState extends State<ImageListModule> {
       BorderRadius
           .circular(20),
       child: Container(
-        decoration:
-        BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor
-                .value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -21557,9 +21480,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
 
@@ -21625,7 +21546,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               flex:2,
               child: Row(
@@ -21975,9 +21896,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -22041,7 +21960,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -22106,7 +22025,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -22169,7 +22088,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: GestureDetector(
                       onScaleStart: (ScaleStartDetails details) {
@@ -22234,7 +22153,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -22300,7 +22219,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -22374,9 +22293,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ?  ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -22443,7 +22360,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: Column(
                         children: [
@@ -22508,7 +22425,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 5,),
+                          SizedBox(height: 5),
                           Expanded(
                             flex:1,
                             child: GestureDetector(
@@ -22578,7 +22495,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -22712,7 +22629,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                           ]
                       )
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -22787,16 +22704,14 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
               flex:1,
               child: Container()
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               flex:2,
               child: Column(
@@ -22865,7 +22780,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 5,),
+                          SizedBox(width: 5),
                           Expanded(
                             child: GestureDetector(
                               onScaleStart: (ScaleStartDetails details) {
@@ -22927,7 +22842,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 5,),
+                          SizedBox(width: 5),
                           Expanded(
                             flex:1,
                             child: GestureDetector(
@@ -22993,7 +22908,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ]
                     ),
                  ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                        child: Row(
                         children:[
@@ -23058,7 +22973,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 5,),
+                          SizedBox(width: 5),
                           Expanded(
                             flex:1,
                             child: GestureDetector(
@@ -23121,7 +23036,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 5,),
+                          SizedBox(width: 5),
                           Expanded(
                             flex:1,
                             child: GestureDetector(
@@ -23190,7 +23105,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
                 flex:1,
                 child: Container()
@@ -23203,16 +23118,14 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
             Expanded(
                 flex:1,
                 child: Container()
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               flex:2,
               child: Column(
@@ -23281,7 +23194,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 5,),
+                          SizedBox(width: 5),
                           Expanded(
                             child: GestureDetector(
                               onScaleStart: (ScaleStartDetails details) {
@@ -23346,7 +23259,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ]
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Row(
                         children:[
@@ -23412,7 +23325,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 5,),
+                          SizedBox(width: 5),
                           Expanded(
                             child: GestureDetector(
                               onScaleStart: (ScaleStartDetails details) {
@@ -23477,7 +23390,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ]
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Row(
                         children:[
@@ -23543,7 +23456,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 5,),
+                          SizedBox(width: 5),
                           Expanded(
                             flex:1,
                             child: GestureDetector(
@@ -23612,7 +23525,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
                 flex:1,
                 child: Container()
@@ -23625,9 +23538,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
             Expanded(
@@ -23702,7 +23613,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ]
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                   children: [
@@ -23779,7 +23690,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ]
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                   children: [
@@ -23856,7 +23767,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ]
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                   children: [
@@ -23932,7 +23843,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ]
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                   children: [
@@ -24009,7 +23920,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ]
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                   children: [
@@ -24090,9 +24001,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -24157,7 +24066,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -24223,7 +24132,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -24290,7 +24199,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -24355,7 +24264,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -24418,7 +24327,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: GestureDetector(
@@ -24497,9 +24406,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -24529,7 +24436,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex: 1,
                     child: Padding(
@@ -24557,7 +24464,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -24585,7 +24492,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex: 2,
                     child: Padding(
@@ -24610,7 +24517,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex: 2,
                     child: Padding(
@@ -24638,7 +24545,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -24666,7 +24573,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex: 2,
                     child: Padding(
@@ -24702,9 +24609,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
             Expanded(
@@ -24734,7 +24639,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                       flex:1,
                     child: Padding(
@@ -24762,7 +24667,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -24789,7 +24694,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
 
                     child: Padding(
@@ -24814,7 +24719,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -24841,7 +24746,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -24869,7 +24774,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     flex:2,
                     child: Padding(
@@ -24905,9 +24810,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -24987,7 +24890,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -25065,7 +24968,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(
@@ -25097,9 +25000,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
             Expanded(
@@ -25128,7 +25029,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -25152,7 +25053,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -25179,7 +25080,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -25206,7 +25107,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -25230,7 +25131,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -25257,7 +25158,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(
@@ -25289,9 +25190,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
             Expanded(
@@ -25321,7 +25220,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -25345,7 +25244,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -25372,7 +25271,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ],
                 )
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
                 flex:1,
                 child: Column(
@@ -25400,7 +25299,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -25424,7 +25323,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -25448,7 +25347,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 5),
                     Expanded(
         child: Padding(
           padding: EdgeInsets.only(
@@ -25484,9 +25383,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -25516,7 +25413,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -25540,7 +25437,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -25568,7 +25465,7 @@ class _ImageListModuleState extends State<ImageListModule> {
               ),
             ),
 
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
                 flex:1,
               child: Row(
@@ -25596,7 +25493,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -25620,7 +25517,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -25644,7 +25541,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
         child: Padding(
           padding: EdgeInsets.only(
@@ -25680,12 +25577,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -25766,7 +25658,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ]
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               flex:1,
               child: Row(
@@ -25845,7 +25737,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ]
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                   children:[
@@ -26011,7 +25903,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               flex:1,
               child: Row(
@@ -26051,7 +25943,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(width: 5),
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -26087,7 +25979,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(width: 5),
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -26126,7 +26018,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                   ]
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
                 flex:1,
               child: Row(
@@ -26166,7 +26058,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(width: 5),
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -26202,7 +26094,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(width: 5),
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -26250,12 +26142,7 @@ class _ImageListModuleState extends State<ImageListModule> {
       borderRadius:
       BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
             Expanded(
@@ -26296,7 +26183,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -26332,7 +26219,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -26371,7 +26258,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(
@@ -26407,7 +26294,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ),
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -26446,7 +26333,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -26482,7 +26369,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -26531,12 +26418,7 @@ class _ImageListModuleState extends State<ImageListModule> {
       borderRadius:
       BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -26652,7 +26534,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                     ]
                 )
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
                 child: Row(
                     children:[
@@ -26730,7 +26612,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                     ]
                 )
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -26770,7 +26652,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:1,
                     child: Padding(
@@ -26821,12 +26703,7 @@ class _ImageListModuleState extends State<ImageListModule> {
       borderRadius:
       BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
              Expanded(
@@ -26867,7 +26744,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -26903,7 +26780,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -26942,7 +26819,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
             ),
              ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
                  child: Column(
                 children: [
@@ -26981,7 +26858,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -27020,7 +26897,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
@@ -27060,7 +26937,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Expanded(
                   flex:1,
                     child: Padding(
@@ -27112,14 +26989,7 @@ class _ImageListModuleState extends State<ImageListModule> {
       BorderRadius
           .circular(20),
       child: Container(
-        decoration:
-        BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor
-                .value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
             Expanded(
@@ -27178,7 +27048,7 @@ class _ImageListModuleState extends State<ImageListModule> {
               )
 
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
                 child: Column(
                     children: [
@@ -27259,7 +27129,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                     ]
                 )
             ),
-            SizedBox(width: 5,),
+            SizedBox(width: 5),
             Expanded(
                 child: Column(
                     children: [
@@ -27327,14 +27197,7 @@ class _ImageListModuleState extends State<ImageListModule> {
       BorderRadius
           .circular(20),
       child: Container(
-        decoration:
-        BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor
-                .value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -27531,9 +27394,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
 
@@ -27624,7 +27485,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               flex:2,
               child: Row(
@@ -27753,9 +27614,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ? ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -27815,7 +27674,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -27873,7 +27732,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
@@ -27962,9 +27821,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         ?  ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
-        decoration: BoxDecoration(
-            color: collageScreenController
-                .borderColor[collageScreenController.activeColor.value]),
+        decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
             Expanded(
@@ -27996,7 +27853,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                     flex:2,
                     child:
@@ -28026,7 +27883,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 5),
             Expanded(
               flex:2,
               child: Row(
@@ -28056,7 +27913,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(width: 5),
                   Expanded(
                       flex:2,
                     child: Column(
@@ -28078,11 +27935,15 @@ class _ImageListModuleState extends State<ImageListModule> {
                                       decoration:
                                       BoxDecoration(
                                         borderRadius:
-                                        BorderRadius.circular(collageScreenController.borderRadiusValue.value),
-                                        color:
-                                        Colors.white,
+                                        BorderRadius.circular(
+                                            collageScreenController
+                                                .borderRadiusValue.value),
+                                        color: Colors.white,
                                         image:
-                                        DecorationImage(fit: BoxFit.cover, image: FileImage(File('${collageScreenController.imageFileList[3].path}'))),
+                                        DecorationImage(fit: BoxFit.cover,
+                                            image: FileImage(
+                                                File('${collageScreenController
+                                                    .imageFileList[3].path}'))),
                                       ),
                                       //child: Image.file(File('${collageScreenController.imageFileList[0].path}')),
                                     ),
@@ -28116,7 +27977,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                               ]
                           ),
                         ),
-                        SizedBox(height: 5,),
+                        SizedBox(height: 5),
                         Expanded(
                           child: Row(
                               children: [
