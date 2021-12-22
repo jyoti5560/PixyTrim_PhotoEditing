@@ -4,6 +4,7 @@ import 'package:crop_your_image/crop_your_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,6 +14,8 @@ import 'package:pixytrim/common/custom_color.dart';
 import 'package:pixytrim/common/custom_gradient_slider.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'dart:ui' as ui;
+
+import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
 
 
 class CropImageScreen extends StatefulWidget {
@@ -26,7 +29,7 @@ class CropImageScreen extends StatefulWidget {
 }
 
 class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProviderStateMixin {
-
+  CameraScreenController csController = Get.find<CameraScreenController>();
   //final cropKey = GlobalKey<CropState>();
   File? imageFile;
   File? file2;
@@ -135,9 +138,9 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
 
                 SizedBox(height: 20),
 
-                index == 0 ? cropRatio() :
-                index == 1 ? rotateRatio() :
-                index == 2 ? scaleRatio()
+                index == 0 ? cropRatio()
+                //index == 1 ? rotateRatio() :
+                //index == 2 ? scaleRatio()
                  : Container(),
 
                 SizedBox(height: 20),
@@ -247,27 +250,28 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async{
                     temp = widget.file;
                     print("temp file====$temp");
-                    cropController.crop();
+                    //cropController.crop();
+                    await _capturePng();
                      print("crop file====$croppedImage");
                      },
                   child: Container(
                       child: Icon(Icons.check_rounded)
                   ),
                 ),
-                GestureDetector(
-                  onTap: () async{
-                    //controller.crop();
-                   await _capturePng();
-
-                   //crop1();
-                  },
-                  child: Container(
-                      child: Icon(Icons.check_rounded)
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () async{
+                //     //controller.crop();
+                //    await _capturePng();
+                //
+                //    //crop1();
+                //   },
+                //   child: Container(
+                //       child: Icon(Icons.check_rounded)
+                //   ),
+                // ),
               ],
             )),
       ),
@@ -300,6 +304,8 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
 
   Future _capturePng() async {
     try {
+      DateTime time = DateTime.now();
+      String imgName = "${time.hour}-${time.minute}-${time.second}";
       print('inside');
       RenderRepaintBoundary boundary =
       key.currentContext!.findRenderObject() as RenderRepaintBoundary;
@@ -311,7 +317,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
       await image.toByteData(format: ui.ImageByteFormat.png);
       print("byte data:===$byteData");
       Uint8List pngBytes = byteData!.buffer.asUint8List();
-      File imgFile = new File('$directory/photo.png');
+      File imgFile = new File('$directory/$imgName.png');
       await imgFile.writeAsBytes(pngBytes);
       setState(() {
         imageFile = imgFile;
@@ -333,6 +339,16 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
     print("Save===== ${imageFile!.path}");
     await GallerySaver.saveImage("${imageFile!.path}",
         albumName: "OTWPhotoEditingDemo");
+    Get.back();
+    Fluttertoast.showToast(
+            msg: "Save In to Gallery",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 5,
+            backgroundColor: Colors.blue,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
   }
 
   Widget cropRatio(){
@@ -404,6 +420,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
               setState(() {
                 index = 0;
               });
+              cropController.crop();
             },
             child: Container(
               padding: EdgeInsets.all(2),
