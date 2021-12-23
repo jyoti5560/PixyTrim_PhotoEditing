@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';
+import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
 import 'package:pixytrim/screens/signin_screen/signin_screen.dart';
@@ -336,7 +337,9 @@ class _IndexScreenState extends State<IndexScreen> {
       } else if(selectedImages.length >= 2 && selectedImages.length <= 7){
         setState(() {
           collageScreenController.imageFileList.clear();
-          collageScreenController.imageFileList.addAll(selectedImages);
+          for(int i =0; i< selectedImages.length; i++){
+            collageScreenController.imageFileList.add(ImageFileItem(file: selectedImages[i]));
+          }
         });
         Get.to(()=> CollageScreen());
       } else if(selectedImages.length >= 8 ){

@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
+import 'package:vector_math/vector_math_64.dart' show Vector3;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';
 
 final collageScreenController = Get.find<CollageScreenController>();
@@ -14,4 +19,132 @@ BoxDecoration collageMainImageBoxDecoration() {
       fit: BoxFit.fill,
     ) : null,
   );
+}
+
+class SingleImageShowModule extends StatefulWidget {
+  double scale;
+  double previousScale;
+  int index;
+  int? flex;
+
+  SingleImageShowModule({
+    required this.scale,
+    required this.previousScale,
+    required this.index,
+    this.flex,
+  });
+
+  @override
+  _SingleImageShowModuleState createState() => _SingleImageShowModuleState();
+}
+class _SingleImageShowModuleState extends State<SingleImageShowModule> {
+  final ImagePicker imagePicker = ImagePicker();
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      ()=> Expanded(
+        flex: widget.flex ?? 1,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  // onLongPressModule(index: widget.index);
+                  collageScreenController.imageFileList[widget.index].isVisible
+                  = !collageScreenController.imageFileList[widget.index].isVisible;
+                  print('isVisible : ${collageScreenController.imageFileList[widget.index].isVisible}');
+                });
+              },
+              onScaleStart: (ScaleStartDetails details) {
+                print(details);
+                setState(() {
+                  widget.previousScale = widget.scale;
+                });
+              },
+              onScaleUpdate: (ScaleUpdateDetails details) {
+                print(details);
+                setState(() {
+                  widget.scale = widget.previousScale * details.scale;
+                });
+              },
+              onScaleEnd: (ScaleEndDetails details) {
+                print(details);
+                setState(() {
+                  widget.previousScale = 1.0;
+                });
+              },
+              child: RotatedBox(
+                quarterTurns: 0,
+                child: Transform(
+                  alignment: FractionalOffset.center,
+                  transform: Matrix4.diagonal3(Vector3(widget.scale, widget.scale, widget.scale)),
+                  child: Obx(
+                    ()=> Padding(
+                      padding: EdgeInsets.all(collageScreenController.borderWidthValue.value),
+                      child: Container(
+                        height: Get.height,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                        ),
+                        child: Obx(
+                              ()=> ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                                collageScreenController.borderRadiusValue.value),
+                            child: Image.file(File('${collageScreenController.imageFileList[widget.index].file.path}',),
+                              fit: BoxFit.cover,),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: collageScreenController.imageFileList[widget.index].isVisible,
+              child: Container(
+                color: Colors.black45,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.close_rounded, size: 30),
+                      color: Colors.white,
+                      onPressed: () {
+                        setState(() {
+                          collageScreenController.imageFileList[widget.index].isVisible
+                          = !collageScreenController.imageFileList[widget.index].isVisible;
+                        });
+                      },
+                    ),
+
+                    IconButton(
+                      icon: Icon(Icons.image, size: 30),
+                      color: Colors.white,
+                      onPressed: () async {
+                        final image = await imagePicker.pickImage(source: ImageSource.gallery);
+                        if (image != null) {
+                          collageScreenController.imageFileList.removeAt(widget.index);
+                          collageScreenController.imageFileList.insert(widget.index, ImageFileItem(file: image));
+
+                        }
+                        setState(() {
+                          collageScreenController.imageFileList[widget.index].isVisible
+                          = false;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }

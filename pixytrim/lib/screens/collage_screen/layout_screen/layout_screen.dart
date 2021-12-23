@@ -10,30 +10,27 @@ class LayoutScreen extends StatefulWidget {
 }
 
 class _LayoutScreenState extends State<LayoutScreen> {
-
   CollageScreenController collageScreenController =
-  Get.find<CollageScreenController>();
-
-
+      Get.find<CollageScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return collageScreenController.imageFileList.length == 2
-        ? twoImageSelectCollageModule() :
-          collageScreenController.imageFileList.length == 3
-            ? threeImageSelectCollageModule() :
-                collageScreenController.imageFileList.length == 4
-                  ? fourImageSelectCollageModule() :
-                collageScreenController.imageFileList.length == 5
-                    ? fiveImageSelectCollageModule() :
-                collageScreenController.imageFileList.length == 6
-                    ? sixImageSelectCollageModule() :
-                collageScreenController.imageFileList.length == 7
-                    ? sevenImageSelectCollageModule() :
-              Container();
+        ? twoImageSelectCollageModule()
+        : collageScreenController.imageFileList.length == 3
+            ? threeImageSelectCollageModule()
+            : collageScreenController.imageFileList.length == 4
+                ? fourImageSelectCollageModule()
+                : collageScreenController.imageFileList.length == 5
+                    ? fiveImageSelectCollageModule()
+                    : collageScreenController.imageFileList.length == 6
+                        ? sixImageSelectCollageModule()
+                        : collageScreenController.imageFileList.length == 7
+                            ? sevenImageSelectCollageModule()
+                            : Container();
   }
 
-  Widget twoImageSelectCollageModule(){
+  Widget twoImageSelectCollageModule() {
     return ListView.builder(
       itemCount: collageScreenController.twoImageLayout.length,
       scrollDirection: Axis.horizontal,
@@ -51,24 +48,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
               });
             },
             child: Container(
-                child: Image.asset(collageScreenController.twoImageLayout[index]),
-            // child: Container(
-            //   padding: EdgeInsets.all(2),
-            //   height: 60,
-            //   width: 60,
-            //   margin: EdgeInsets.only(right: 8),
-            //   decoration: borderGradientDecoration(),
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(10),
-            //       color: Colors.white,
-            //     ),
-            //     //margin: EdgeInsets.only(left: 10, right: 10),
-            //
-            //     child: Center(
-            //         child: Text(index.toString(),
-            //           style: TextStyle(fontFamily: "", fontSize: 18),)),
-            //   ),
+              child: Image.asset(collageScreenController.twoImageLayout[index]),
             ),
           ),
         );
@@ -76,12 +56,11 @@ class _LayoutScreenState extends State<LayoutScreen> {
     );
   }
 
-  Widget threeImageSelectCollageModule(){
+  Widget threeImageSelectCollageModule() {
     return ListView.builder(
       itemCount: collageScreenController.threeImageLayout.length,
       scrollDirection: Axis.horizontal,
       shrinkWrap: true,
-      //physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
@@ -94,24 +73,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
               });
             },
             child: Container(
-              child: Image.asset(collageScreenController.threeImageLayout[index]),
-              // child: Container(
-              //   padding: EdgeInsets.all(2),
-              //   height: 60,
-              //   width: 60,
-              //   margin: EdgeInsets.only(right: 8),
-              //   decoration: borderGradientDecoration(),
-              //   child: Container(
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(10),
-              //       color: Colors.white,
-              //     ),
-              //     //margin: EdgeInsets.only(left: 10, right: 10),
-              //
-              //     child: Center(
-              //         child: Text(index.toString(),
-              //           style: TextStyle(fontFamily: "", fontSize: 18),)),
-              //   ),
+              child:
+                  Image.asset(collageScreenController.threeImageLayout[index]),
             ),
           ),
         );
@@ -119,12 +82,11 @@ class _LayoutScreenState extends State<LayoutScreen> {
     );
   }
 
-  Widget fourImageSelectCollageModule(){
+  Widget fourImageSelectCollageModule() {
     return ListView.builder(
       itemCount: collageScreenController.fourImageLayout.length,
       scrollDirection: Axis.horizontal,
       shrinkWrap: true,
-      //physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
@@ -137,24 +99,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
               });
             },
             child: Container(
-              child: Image.asset(collageScreenController.fourImageLayout[index]),
-              // child: Container(
-              //   padding: EdgeInsets.all(2),
-              //   height: 60,
-              //   width: 60,
-              //   margin: EdgeInsets.only(right: 8),
-              //   decoration: borderGradientDecoration(),
-              //   child: Container(
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(10),
-              //       color: Colors.white,
-              //     ),
-              //     //margin: EdgeInsets.only(left: 10, right: 10),
-              //
-              //     child: Center(
-              //         child: Text(index.toString(),
-              //           style: TextStyle(fontFamily: "", fontSize: 18),)),
-              //   ),
+              child:
+                  Image.asset(collageScreenController.fourImageLayout[index]),
             ),
           ),
         );
@@ -162,12 +108,11 @@ class _LayoutScreenState extends State<LayoutScreen> {
     );
   }
 
-  Widget fiveImageSelectCollageModule(){
+  Widget fiveImageSelectCollageModule() {
     return ListView.builder(
       itemCount: collageScreenController.fiveImageLayout.length,
       scrollDirection: Axis.horizontal,
       shrinkWrap: true,
-      //physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
@@ -180,24 +125,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
               });
             },
             child: Container(
-              child: Image.asset(collageScreenController.fiveImageLayout[index]),
-              // child: Container(
-              //   padding: EdgeInsets.all(2),
-              //   height: 60,
-              //   width: 60,
-              //   margin: EdgeInsets.only(right: 8),
-              //   decoration: borderGradientDecoration(),
-              //   child: Container(
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(10),
-              //       color: Colors.white,
-              //     ),
-              //     //margin: EdgeInsets.only(left: 10, right: 10),
-              //
-              //     child: Center(
-              //         child: Text(index.toString(),
-              //           style: TextStyle(fontFamily: "", fontSize: 18),)),
-              //   ),
+              child:
+                  Image.asset(collageScreenController.fiveImageLayout[index]),
             ),
           ),
         );
@@ -205,12 +134,11 @@ class _LayoutScreenState extends State<LayoutScreen> {
     );
   }
 
-  Widget sixImageSelectCollageModule(){
+  Widget sixImageSelectCollageModule() {
     return ListView.builder(
       itemCount: collageScreenController.sixImageLayout.length,
       scrollDirection: Axis.horizontal,
       shrinkWrap: true,
-      //physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
@@ -224,23 +152,6 @@ class _LayoutScreenState extends State<LayoutScreen> {
             },
             child: Container(
               child: Image.asset(collageScreenController.sixImageLayout[index]),
-              // child: Container(
-              //   padding: EdgeInsets.all(2),
-              //   height: 60,
-              //   width: 60,
-              //   margin: EdgeInsets.only(right: 8),
-              //   decoration: borderGradientDecoration(),
-              //   child: Container(
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(10),
-              //       color: Colors.white,
-              //     ),
-              //     //margin: EdgeInsets.only(left: 10, right: 10),
-              //
-              //     child: Center(
-              //         child: Text(index.toString(),
-              //           style: TextStyle(fontFamily: "", fontSize: 18),)),
-              //   ),
             ),
           ),
         );
@@ -248,12 +159,11 @@ class _LayoutScreenState extends State<LayoutScreen> {
     );
   }
 
-  Widget sevenImageSelectCollageModule(){
+  Widget sevenImageSelectCollageModule() {
     return ListView.builder(
       itemCount: collageScreenController.sevenImageLayout.length,
       scrollDirection: Axis.horizontal,
       shrinkWrap: true,
-      //physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
@@ -266,29 +176,12 @@ class _LayoutScreenState extends State<LayoutScreen> {
               });
             },
             child: Container(
-              child: Image.asset(collageScreenController.sevenImageLayout[index]),
-              // child: Container(
-              //   padding: EdgeInsets.all(2),
-              //   height: 60,
-              //   width: 60,
-              //   margin: EdgeInsets.only(right: 8),
-              //   decoration: borderGradientDecoration(),
-              //   child: Container(
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(10),
-              //       color: Colors.white,
-              //     ),
-              //     //margin: EdgeInsets.only(left: 10, right: 10),
-              //
-              //     child: Center(
-              //         child: Text(index.toString(),
-              //           style: TextStyle(fontFamily: "", fontSize: 18),)),
-              //   ),
+              child:
+                  Image.asset(collageScreenController.sevenImageLayout[index]),
             ),
           ),
         );
       },
     );
   }
-
 }

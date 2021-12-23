@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pixytrim/common/custom_image.dart';
+import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 
 class CollageScreenController extends GetxController{
   RxDouble borderWidthValue = 0.0.obs;
@@ -17,13 +18,36 @@ class CollageScreenController extends GetxController{
     Colors.yellow,
     Colors.blueAccent
   ];
-  RxList<XFile> imageFileList = <XFile>[].obs;
+  RxList<ImageFileItem> imageFileList = <ImageFileItem>[].obs;
   RxInt activeColor = 0.obs;
   RxBool isLoading = false.obs;
   RxInt selectedIndex = 0.obs;
   RxDouble borderRadiusValue = 0.0.obs;
   RxInt activeWallpaper = 0.obs;
   RxBool isActiveWallpaper = false.obs;
+
+  RxBool isNewImageSelected = false.obs;
+
+  RxDouble scale = 1.0.obs;
+  RxDouble previousScale = 1.0.obs;
+
+  RxDouble scale1 = 1.0.obs;
+  RxDouble previousScale1 = 1.0.obs;
+  RxDouble scale2 = 1.0.obs;
+  RxDouble previousScale2 = 1.0.obs;
+  RxDouble scale3 = 1.0.obs;
+  RxDouble previousScale3 = 1.0.obs;
+  RxDouble scale4 = 1.0.obs;
+  RxDouble previousScale4 = 1.0.obs;
+  RxDouble scale5 = 1.0.obs;
+  RxDouble previousScale5 = 1.0.obs;
+  RxDouble scale6 = 1.0.obs;
+  RxDouble previousScale6 = 1.0.obs;
+  RxDouble scale7 = 1.0.obs;
+  RxDouble previousScale7 = 1.0.obs;
+  RxDouble scale8 = 1.0.obs;
+  RxDouble previousScale8 = 1.0.obs;
+
 
 
   List<String> wallpapers = [
