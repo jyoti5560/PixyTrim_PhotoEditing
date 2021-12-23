@@ -1,11 +1,11 @@
 import 'dart:io';
-
 import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';
+import 'click_functions.dart';
 
 final collageScreenController = Get.find<CollageScreenController>();
 
@@ -42,8 +42,7 @@ class _SingleImageShowModuleState extends State<SingleImageShowModule> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      ()=> Expanded(
+    return Expanded(
         flex: widget.flex ?? 1,
         child: Stack(
           alignment: Alignment.center,
@@ -54,7 +53,15 @@ class _SingleImageShowModuleState extends State<SingleImageShowModule> {
                   // onLongPressModule(index: widget.index);
                   collageScreenController.imageFileList[widget.index].isVisible
                   = !collageScreenController.imageFileList[widget.index].isVisible;
-                  print('isVisible : ${collageScreenController.imageFileList[widget.index].isVisible}');
+
+                  for(int i = 0; i< collageScreenController.imageFileList.length; i++){
+                    setState(() {
+                      if(i != widget.index) {
+                        collageScreenController.imageFileList[i].isVisible = false;
+                      }
+                    });
+                  }
+
                 });
               },
               onScaleStart: (ScaleStartDetails details) {
@@ -130,7 +137,6 @@ class _SingleImageShowModuleState extends State<SingleImageShowModule> {
                         if (image != null) {
                           collageScreenController.imageFileList.removeAt(widget.index);
                           collageScreenController.imageFileList.insert(widget.index, ImageFileItem(file: image));
-
                         }
                         setState(() {
                           collageScreenController.imageFileList[widget.index].isVisible
@@ -144,7 +150,6 @@ class _SingleImageShowModuleState extends State<SingleImageShowModule> {
             )
           ],
         ),
-      ),
     );
   }
 }
