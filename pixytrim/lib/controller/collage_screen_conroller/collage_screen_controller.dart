@@ -172,4 +172,9 @@ class CollageScreenController extends GetxController{
     Images.ic_layout98,
     Images.ic_layout99,
   ];
+
+  loadingModule() {
+    isLoading(true);
+    isLoading(false);
+  }
 }

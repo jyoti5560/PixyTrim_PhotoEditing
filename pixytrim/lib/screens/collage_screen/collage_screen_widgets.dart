@@ -48,22 +48,8 @@ class _SingleImageShowModuleState extends State<SingleImageShowModule> {
           alignment: Alignment.center,
           children: [
             GestureDetector(
-              onTap: () {
-                setState(() {
-                  // onLongPressModule(index: widget.index);
-                  collageScreenController.imageFileList[widget.index].isVisible
-                  = !collageScreenController.imageFileList[widget.index].isVisible;
+              onTap: () => onTapModule(index: widget.index),
 
-                  for(int i = 0; i< collageScreenController.imageFileList.length; i++){
-                    setState(() {
-                      if(i != widget.index) {
-                        collageScreenController.imageFileList[i].isVisible = false;
-                      }
-                    });
-                  }
-
-                });
-              },
               onScaleStart: (ScaleStartDetails details) {
                 print(details);
                 setState(() {
