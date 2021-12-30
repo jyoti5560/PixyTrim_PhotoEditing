@@ -106,7 +106,7 @@ class _LiveCameraFramesCaptureScreenState extends State<LiveCameraFramesCaptureS
                       child: Image.file(lCFCScreenController.newFile!),
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(width: 5),
                   Expanded(
                     child: Container(
                       child: Image.file(lCFCScreenController.newFile!),
@@ -126,7 +126,7 @@ class _LiveCameraFramesCaptureScreenState extends State<LiveCameraFramesCaptureS
                       child: Image.file(lCFCScreenController.newFile!),
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(width: 5),
                   Expanded(
                     child: Container(
                       child: Image.file(lCFCScreenController.newFile!),
@@ -137,6 +137,25 @@ class _LiveCameraFramesCaptureScreenState extends State<LiveCameraFramesCaptureS
             ),
           ),
         ],
+      ),
+    );
+  }
+
+
+  Widget imageSaveButton() {
+    return Container(
+      height: 50,
+      width: 50,
+      decoration: liveCameraFramesButtonDecoration(),
+      child: IconButton(
+        onPressed: () async {
+          await imageSaveFunction();
+        },
+        icon: Icon(
+          Icons.check_rounded,
+          color: Colors.white60,
+          size: 30,
+        ),
       ),
     );
   }

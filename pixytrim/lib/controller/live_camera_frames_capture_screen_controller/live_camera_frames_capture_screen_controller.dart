@@ -14,8 +14,6 @@ class LiveCameraFramesCaptureScreenController extends GetxController {
     Images.ic_layout1,
     Images.ic_layout2,
     Images.ic_layout27,
-    // Images.ic_layout42,
-    // Images.ic_layout43,
   ];
 
 }

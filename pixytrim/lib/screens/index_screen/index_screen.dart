@@ -12,6 +12,7 @@ import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dar
 import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
 import 'package:pixytrim/screens/live_camera_frames_screen/live_camera_frames_screen.dart';
+import 'package:pixytrim/screens/pdf_screen/pdf_screen.dart';
 import 'package:pixytrim/screens/trim_video_screen/trim_video_screen.dart';
 
 
@@ -264,6 +265,45 @@ class _IndexScreenState extends State<IndexScreen> {
                                         ),
                                         Text(
                                           "Camera Frames",
+                                          style: TextStyle(
+                                            fontFamily: "",
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: GestureDetector(
+                            onTap: (){
+                              Get.to(() => PDFScreen());
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Container(
+                                decoration: borderGradientDecoration(),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3),
+                                  child: Container(
+                                    decoration: containerBackgroundGradient(),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          Images.ic_layout,
+                                          scale: 3.2,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          "PDF Maker",
                                           style: TextStyle(
                                             fontFamily: "",
                                             fontSize: 20,
