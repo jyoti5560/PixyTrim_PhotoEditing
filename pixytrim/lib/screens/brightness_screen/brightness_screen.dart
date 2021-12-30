@@ -125,9 +125,14 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.back();
+                    //Get.back();
+                    showAlertDialog();
                   },
-                  child: Container(child: Icon(Icons.close)),
+                  child: Container(
+                      child: Image.asset(
+                    Images.ic_left_arrow,
+                    scale: 2.5,
+                  )),
                 ),
                 Container(
                   child: Text(csController.selectedModule == SelectedModule.camera ? "Camera" : "Gallery",
@@ -350,6 +355,44 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
               textColor: Colors.white,
               fontSize: 16.0
           );
+  }
+
+  showAlertDialog() {
+
+    Widget cancelButton = TextButton(
+      child: Text("Cancel", style: TextStyle(fontFamily: ""),),
+      onPressed:  () {
+        Get.back();
+        Get.back();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Ok", style: TextStyle(fontFamily: ""),),
+      onPressed:  () async{
+        await _capturePng().then((value) {
+          Get.back();
+          Get.back();
+        });
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      //title: Text("AlertDialog"),
+      content: Text("Do You want to save?", style: TextStyle(fontFamily: ""),),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   // Future saveImage() async {

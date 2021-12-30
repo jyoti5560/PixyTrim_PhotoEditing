@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
@@ -8,7 +10,9 @@ import 'package:path_provider/path_provider.dart';
 //import 'package:image_painter/image_painter.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
+import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
 import 'package:pixytrim/screens/image_editor_screen/_paint_over_image.dart';
+import 'dart:ui' as ui;
 
 class ImageEditorScreen extends StatefulWidget {
   //const ImageEditorScreen({Key? key}) : super(key: key);
@@ -21,6 +25,9 @@ class ImageEditorScreen extends StatefulWidget {
 
 class _ImageEditorScreenState extends State<ImageEditorScreen> {
   final _imageKey = GlobalKey<ImagePainterState>();
+  final GlobalKey key = GlobalKey();
+  final csController = Get.find<CameraScreenController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,17 +84,20 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                 SizedBox(height: 20,),
 
                 Expanded(
-                  child: ImagePainter.file(
-                    widget.file,
-                    key: _imageKey,
-                    scalable: false,
+                  child: RepaintBoundary(
+                    key: key,
+                    child: ImagePainter.file(
+                      widget.file,
+                      key: _imageKey,
+                      scalable: false,
 
-                    initialStrokeWidth: 2,
-                    initialColor: Colors.green,
-                    initialPaintMode: PaintMode.freeStyle,
-                    // placeholderWidget: Container(
-                    //   child: Text("jdjdh"),
-                    // ),
+                      initialStrokeWidth: 2,
+                      initialColor: Colors.green,
+                      initialPaintMode: PaintMode.freeStyle,
+                      // placeholderWidget: Container(
+                      //   child: Text("jdjdh"),
+                      // ),
+                    ),
                   ),
                 ),
 
@@ -115,7 +125,8 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.back();
+                    //Get.back();
+                    showAlertDialog();
                   },
                   child: Container(
                       child: Image.asset(Images.ic_left_arrow, scale: 2.5,)
@@ -133,18 +144,20 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                 GestureDetector(
                   onTap: () async{
                     //Get.back();
-                    await renameAndSaveImage().then((value) {
-                      Fluttertoast.showToast(
-                          msg: "Save in to Gallery",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 5,
-                          backgroundColor: Colors.blue,
-                          textColor: Colors.white,
-                          fontSize: 16.0
-                      );
-                      Get.back();
-                    });
+                    // await renameAndSaveImage().then((value) {
+                    //   Fluttertoast.showToast(
+                    //       msg: "Save in to Gallery",
+                    //       toastLength: Toast.LENGTH_SHORT,
+                    //       gravity: ToastGravity.BOTTOM,
+                    //       timeInSecForIosWeb: 5,
+                    //       backgroundColor: Colors.blue,
+                    //       textColor: Colors.white,
+                    //       fontSize: 16.0
+                    //   );
+                    //   Get.back();
+                    // });
+                    await _capturePng();
+                    Get.back();
                   },
                   child: Container(
                       child: Image.asset(Images.ic_downloading, scale: 2,)
@@ -271,19 +284,6 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
 
   // Rename & Save Capture Image
   Future renameAndSaveImage() async {
-    // var image = await _imageKey.currentState!.exportImage().toString();
-    // String ogPath = _imageKey.currentState!.exportImage().toString();
-    // String frontPath = ogPath.split('cache')[0];
-    // print('frontPath: $frontPath');
-    // List<String> ogPathList = ogPath.split('/');
-    // print('ogPathList: $ogPathList');
-    // String ogExt = ogPathList[ogPathList.length - 1].split('.')[1];
-    // print('ogExt: $ogExt');
-    // DateTime today = new DateTime.now();
-    // String dateSlug = "${today.day.toString().padLeft(2, '0')}-${today.month.toString().padLeft(2, '0')}-${today.year.toString()}_${today.hour.toString().padLeft(2, '0')}-${today.minute.toString().padLeft(2, '0')}-${today.second.toString().padLeft(2, '0')}";
-    // widget.file = await widget.file.rename("${frontPath}cache/PhotoEditingDemo_$dateSlug.$ogExt");
-    // print('File : ${widget.file}');
-    // print('File Path : ${widget.file.path}');
     final image = await _imageKey.currentState!.exportImage();
     final directory = (await getApplicationDocumentsDirectory()).path;
     await Directory('$directory/sample').create(recursive: true);
@@ -291,6 +291,78 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
     final imgFile = File('$fullPath');
     imgFile.writeAsBytesSync(image!);
     await GallerySaver.saveImage(imgFile.path, albumName: "OTWPhotoEditingDemo");
+
+
+  }
+
+  Future _capturePng() async {
+    try {
+      print('inside');
+      DateTime time = DateTime.now();
+      final imgName = "${time.day}_${time.month}_${time.year}_${time.hour}_${time.minute}_${time.second}";
+      RenderRepaintBoundary boundary =
+      key.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      print(boundary);
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      print("image:===$image");
+      final directory = (await getApplicationDocumentsDirectory()).path;
+      ByteData? byteData =
+      await image.toByteData(format: ui.ImageByteFormat.png);
+      print("byte data:===$byteData");
+      Uint8List pngBytes = byteData!.buffer.asUint8List();
+      File imgFile = new File('$directory/$imgName.png');
+      await imgFile.writeAsBytes(pngBytes);
+      setState(() {
+        csController.addImageFromCameraList[csController.selectedImage.value] = imgFile;
+      });
+      //print("File path====:${blur!.path}");
+      //collageScreenController.imageFileList = pngBytes;
+      //bs64 = base64Encode(pngBytes);
+      print("png Bytes:====$pngBytes");
+      //print("bs64:====$bs64");
+      //setState(() {});
+      //await saveImage();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  showAlertDialog() {
+
+    Widget cancelButton = TextButton(
+      child: Text("Cancel", style: TextStyle(fontFamily: ""),),
+      onPressed:  () {
+        Get.back();
+        Get.back();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Ok", style: TextStyle(fontFamily: ""),),
+      onPressed:  () async{
+        await _capturePng().then((value) {
+          Get.back();
+          Get.back();
+        });
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      //title: Text("AlertDialog"),
+      content: Text("Do You want to save?", style: TextStyle(fontFamily: ""),),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
 

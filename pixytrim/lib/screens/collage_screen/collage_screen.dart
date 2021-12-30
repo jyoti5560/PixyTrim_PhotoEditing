@@ -94,9 +94,12 @@ class _CollageScreenState extends State<CollageScreen> with SingleTickerProvider
                     collageScreenController.borderWidthValue.value = 0.0;
                     collageScreenController.activeColor.value = 0;
                     collageScreenController.borderRadiusValue.value = 0.0;
+                    collageScreenController.isActiveWallpaper.value = false;
+
                     Get.back();
                   },
-                  child: Container(child: Icon(Icons.close)),
+                  child: Container(
+                      child: Image.asset(Images.ic_left_arrow, scale: 2.5,)),
                 ),
                 Container(
                   child: Text(

@@ -45,7 +45,7 @@ class _CameraScreenState extends State<CameraScreen> {
     Images.ic_resize,
     Images.ic_edit_image,
     Images.ic_image_ratio,
-    Images.ic_image_ratio,
+    //Images.ic_image_ratio,
   ];
 
   int? i;
@@ -374,12 +374,12 @@ class _CameraScreenState extends State<CameraScreen> {
 
                   //Get.to(() => ImageEditorScreen(file: widget.file));
                 }
-                else if (i == 8) {
-                  Get.to(() => ImageSizeRatioScreen(),
-                      arguments: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]);
-
-                  //Get.to(() => ImageEditorScreen(file: widget.file));
-                }
+                // else if (i == 8) {
+                //   Get.to(() => ImageSizeRatioScreen(),
+                //       arguments: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]);
+                //
+                //   //Get.to(() => ImageEditorScreen(file: widget.file));
+                // }
               },
               child: Container(
                 padding: EdgeInsets.all(2),

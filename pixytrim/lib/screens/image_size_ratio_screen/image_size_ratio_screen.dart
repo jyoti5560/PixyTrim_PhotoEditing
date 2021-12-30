@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
+import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
 import 'package:pixytrim/controller/image_size_ratio_controller/image_size_ratio_controller.dart';
 import 'dart:ui' as ui;
 
@@ -27,7 +28,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
   ImageSizeRatioController imageSizeRatioController = Get.put(ImageSizeRatioController());
   int ? imageRatioIndex;
   File? file;
-
+  final csController = Get.find<CameraScreenController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +77,8 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.back();
+                    //Get.back();
+                    showAlertDialog();
                   },
                   child: Container(
                       child: Image.asset(
@@ -132,7 +134,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
       File imgFile = new File('$directory/photo.png');
       await imgFile.writeAsBytes(pngBytes);
       setState(() {
-        file = imgFile;
+        csController.addImageFromCameraList[csController.selectedImage.value] = imgFile;
       });
       print("File path====:${file!.path}");
       //collageScreenController.imageFileList = pngBytes;
@@ -261,6 +263,44 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
           );
         },
       ),
+    );
+  }
+
+  showAlertDialog() {
+
+    Widget cancelButton = TextButton(
+      child: Text("Cancel", style: TextStyle(fontFamily: ""),),
+      onPressed:  () {
+        Get.back();
+        Get.back();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Ok", style: TextStyle(fontFamily: ""),),
+      onPressed:  () async{
+        await _capturePng().then((value) {
+          Get.back();
+          Get.back();
+        });
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      //title: Text("AlertDialog"),
+      content: Text("Do You want to save?", style: TextStyle(fontFamily: ""),),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
