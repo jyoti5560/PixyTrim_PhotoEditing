@@ -44,3 +44,19 @@ class MainBackgroundWidget extends StatelessWidget {
     );
   }
 }
+
+BoxDecoration liveCameraFramesButtonDecoration() {
+  return BoxDecoration(
+    shape: BoxShape.circle,
+    color: Colors.black38
+    // gradient: LinearGradient(
+    //   colors: [
+    //     AppColor.kBorderGradientColor1,
+    //     AppColor.kBorderGradientColor2,
+    //     AppColor.kBorderGradientColor3,
+    //   ],
+    //   begin: Alignment.topLeft,
+    //   end: Alignment.bottomRight,
+    // ),
+  );
+}
