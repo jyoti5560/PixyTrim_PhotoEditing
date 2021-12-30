@@ -14,6 +14,7 @@ import 'package:pixytrim/common/custom_color.dart';
 import 'package:pixytrim/common/custom_gradient_slider.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'dart:ui' as ui;
+import 'dart:math' as Math;
 
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
 
@@ -42,6 +43,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
   int index = 0;
   bool showFront = true;
   double _rotation = 0;
+  double _scale = 0;
   final cropController = CropController();
   BoxShape shape = BoxShape.rectangle;
   File? temp;
@@ -60,7 +62,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
   //   super.initState();
   // }
 
-
+  Image ? cardFront;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,6 +96,11 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                                 croppedImage = croppedData1;
                                 isCropping = false;
                               });
+                              if (this.mounted) {
+                                setState(() {
+                                  // Your state change code goes here
+                                });
+                              }
                             },
                             //withCircleUi: _isCircleUi,
                             // onStatusChanged: (status) => setState(() {
@@ -114,13 +121,30 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                            //      : const DotControl(),
                           ):
                           index == 1 ?
-                              PhotoView(
-                                enableRotation: true,
-                                  imageProvider: FileImage(widget.file))
+                          Transform(
+                            transform: Matrix4.rotationX(
+                                (_rotation) * Math.pi / 2
+                            ),
+                            alignment: Alignment.center,
+                            child: Container(
+                              height: MediaQuery.of(context).size.height - 130,
+                              alignment: Alignment.center,
+                              child: Image.file(widget.file),
+                            ),
+                          )
                           : index == 2 ?
-                          PhotoView(
-                            //enableRotation: true,
-                              imageProvider: FileImage(widget.file))
+                          // PhotoView(
+                          //   //enableRotation: true,
+                          //     imageProvider: FileImage(widget.file))
+                          Transform(
+                            transform: Matrix4.identity()..scale(_scale, _scale),
+                            alignment: Alignment.center,
+                            child: Container(
+                              height: MediaQuery.of(context).size.height - 130,
+                              alignment: Alignment.center,
+                              child: Image.file(widget.file),
+                            ),
+                          )
                               : Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
@@ -138,9 +162,9 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
 
                 SizedBox(height: 20),
 
-                index == 0 ? cropRatio()
-                //index == 1 ? rotateRatio() :
-                //index == 2 ? scaleRatio()
+                index == 0 ? cropRatio() :
+                index == 1 ? rotateRatio() :
+                index == 2 ? scaleRatio()
                  : Container(),
 
                 SizedBox(height: 20),
@@ -169,10 +193,10 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
             trackShape: GradientRectSliderTrackShape(gradient: gradient, darkenInactive: false),
           ),
           child: Slider(
-            divisions: 360,
+            divisions: 20,
             value: _rotation,
-            min: -180,
-            max: 180,
+            min: 0,
+            max: 100,
             label: '$_rotation°',
             onChanged: (n) {
               setState(() {
@@ -180,6 +204,11 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                 //controller.rotation = _rotation;
                 //controller.rotation = _rotation;
               });
+              if (this.mounted) {
+                setState(() {
+                  // Your state change code goes here
+                });
+              }
             },
           ),
         ),
@@ -202,14 +231,14 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
             trackShape: GradientRectSliderTrackShape(gradient: gradient, darkenInactive: false),
           ),
           child: Slider(
-            divisions: 360,
-            value: _rotation,
+            divisions: 100,
+            value: _scale,
             min: -180,
             max: 180,
-            label: '$_rotation°',
+            label: '$_scale°',
             onChanged: (n) {
               setState(() {
-                _rotation = n.roundToDouble();
+                _scale = n.roundToDouble();
                 //controller.rotation = _rotation;
               });
             },
@@ -249,29 +278,37 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () async{
-                    temp = widget.file;
-                    print("temp file====$temp");
-                    //cropController.crop();
-                    await _capturePng();
-                     print("crop file====$croppedImage");
-                     },
-                  child: Container(
-                      child: Icon(Icons.check_rounded)
-                  ),
-                ),
-                // GestureDetector(
-                //   onTap: () async{
-                //     //controller.crop();
-                //    await _capturePng();
-                //
-                //    //crop1();
-                //   },
-                //   child: Container(
-                //       child: Icon(Icons.check_rounded)
-                //   ),
-                // ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () async{
+                        temp = widget.file;
+                        print("temp file====$temp");
+                        cropController.crop();
+                        print("crop file====$croppedImage");
+                      },
+                      child: Container(
+                          child: Icon(Icons.crop)
+                      ),
+                    ),
+                    SizedBox(width: 15,),
+                    GestureDetector(
+                      onTap: () async{
+                        //controller.crop();
+                        await _capturePng().then((value) {
+                          Get.back();
+                        });
+
+                        //crop1();
+                      },
+                      child: Container(
+                          child: Icon(Icons.check_rounded)
+                      ),
+                    ),
+                  ],
+                )
+                
+                
               ],
             )),
       ),
@@ -320,7 +357,8 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
       File imgFile = new File('$directory/$imgName.png');
       await imgFile.writeAsBytes(pngBytes);
       setState(() {
-        imageFile = imgFile;
+        //imageFile = imgFile;
+        csController.addImageFromCameraList[csController.selectedImage.value] = imgFile;
       });
       print("File path====:${imageFile!.path}");
       //collageScreenController.imageFileList = pngBytes;
@@ -328,7 +366,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
       print("png Bytes:====$pngBytes");
       //print("bs64:====$bs64");
       //setState(() {});
-      await saveImage();
+      //await saveImage();
     } catch (e) {
       print(e);
     }
@@ -420,7 +458,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
               setState(() {
                 index = 0;
               });
-              cropController.crop();
+             // cropController.crop();
             },
             child: Container(
               padding: EdgeInsets.all(2),

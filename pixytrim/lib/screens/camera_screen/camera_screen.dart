@@ -45,6 +45,7 @@ class _CameraScreenState extends State<CameraScreen> {
     Images.ic_resize,
     Images.ic_edit_image,
     Images.ic_image_ratio,
+    Images.ic_image_ratio,
   ];
 
   int? i;
@@ -207,7 +208,8 @@ class _CameraScreenState extends State<CameraScreen> {
                                   SelectedModule.camera
                               ? Images.ic_camera2
                               : Images.ic_gallery,
-                          scale: 2.5,
+                          scale: cameraScreenController.selectedModule ==
+                              SelectedModule.camera ? 1.7 : 3.5,
                         ),
                       ),
                     ),
@@ -219,7 +221,7 @@ class _CameraScreenState extends State<CameraScreen> {
                       child: Container(
                         child: Image.asset(
                           Images.ic_downloading,
-                          scale: 2,
+                          scale: 1.7,
                         ),
                       ),
                     ),
@@ -231,7 +233,7 @@ class _CameraScreenState extends State<CameraScreen> {
                       child: Container(
                         child: Image.asset(
                           Images.ic_sharing,
-                          scale: 2,
+                          scale: 1.7,
                         ),
                       ),
                     ),
@@ -367,6 +369,12 @@ class _CameraScreenState extends State<CameraScreen> {
                   Get.to(() =>
                       ImageEditorScreen(file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]));
                 } else if (i == 7) {
+                  Get.to(() => ImageSizeRatioScreen(),
+                      arguments: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]);
+
+                  //Get.to(() => ImageEditorScreen(file: widget.file));
+                }
+                else if (i == 8) {
                   Get.to(() => ImageSizeRatioScreen(),
                       arguments: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]);
 
