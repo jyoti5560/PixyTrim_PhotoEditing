@@ -56,6 +56,21 @@ class Images{
   static const ic_wallpaper1 = '$root' + 'wallpaper1.png';
   static const ic_wallpaper2 = '$root' + 'wallpaper2.png';
   static const ic_wallpaper3 = '$root' + 'wallpaper3.png';
+  static const ic_wallpaper4 = '$root' + 'wallpaper4.png';
+  static const ic_wallpaper5 = '$root' + 'wallpaper5.png';
+  static const ic_wallpaper6 = '$root' + 'wallpaper6.png';
+  static const ic_wallpaper7 = '$root' + 'wallpaper7.png';
+  static const ic_wallpaper8 = '$root' + 'wallpaper8.png';
+  static const ic_wallpaper9 = '$root' + 'wallpaper9.png';
+  static const ic_wallpaper10 = '$root' + 'wallpaper10.png';
+  static const ic_wallpaper11 = '$root' + 'wallpaper11.png';
+  static const ic_wallpaper12 = '$root' + 'wallpaper12.png';
+  static const ic_wallpaper13 = '$root' + 'wallpaper13.png';
+  static const ic_wallpaper14 = '$root' + 'wallpaper14.png';
+  static const ic_wallpaper15 = '$root' + 'wallpaper15.png';
+  static const ic_wallpaper16 = '$root' + 'wallpaper16.png';
+  static const ic_wallpaper17 = '$root' + 'wallpaper17.png';
+  static const ic_wallpaper18 = '$root' + 'wallpaper18.png';
 
   // Two image layout
   static const ic_layout1 = '$root1' + '1.png';

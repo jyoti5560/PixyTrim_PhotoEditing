@@ -53,6 +53,21 @@ class CollageScreenController extends GetxController{
     Images.ic_wallpaper1,
     Images.ic_wallpaper2,
     Images.ic_wallpaper3,
+    Images.ic_wallpaper4,
+    Images.ic_wallpaper5,
+    Images.ic_wallpaper6,
+    Images.ic_wallpaper7,
+    Images.ic_wallpaper8,
+    Images.ic_wallpaper9,
+    Images.ic_wallpaper10,
+    Images.ic_wallpaper11,
+    Images.ic_wallpaper12,
+    Images.ic_wallpaper13,
+    Images.ic_wallpaper14,
+    Images.ic_wallpaper15,
+    Images.ic_wallpaper16,
+    Images.ic_wallpaper17,
+    Images.ic_wallpaper18,
   ];
 
   List<String> twoImageLayout = [

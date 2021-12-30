@@ -11,11 +11,19 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/live_camera_frames_capture_screen_controller/live_camera_frames_capture_screen_controller.dart';
 
-class LiveCameraFramesCaptureScreen extends StatelessWidget {
+class LiveCameraFramesCaptureScreen extends StatefulWidget {
   // File imgPath;
   LiveCameraFramesCaptureScreen({/*required this.imgPath,*/Key? key}) : super(key: key);
+
+  @override
+  _LiveCameraFramesCaptureScreenState createState() => _LiveCameraFramesCaptureScreenState();
+}
+
+class _LiveCameraFramesCaptureScreenState extends State<LiveCameraFramesCaptureScreen> {
   final lCFCScreenController = Get.find<LiveCameraFramesCaptureScreenController>();
+
   final GlobalKey repaintKey = GlobalKey();
+
   File? file;
 
   @override
@@ -50,7 +58,6 @@ class LiveCameraFramesCaptureScreen extends StatelessWidget {
       ),
     );
   }
-
 
   Widget imageShowModule() {
     return Container(
@@ -134,25 +141,6 @@ class LiveCameraFramesCaptureScreen extends StatelessWidget {
     );
   }
 
-  Widget imageSaveButton() {
-    return Container(
-      height: 50,
-      width: 50,
-      decoration: liveCameraFramesButtonDecoration(),
-      child: IconButton(
-        onPressed: () async {
-          await imageSaveFunction();
-        },
-        icon: Icon(
-          Icons.check_rounded,
-          color: Colors.white60,
-          size: 30,
-        ),
-      ),
-    );
-  }
-
-
   Widget appBar() {
     return Container(
       height: 50,
@@ -167,8 +155,9 @@ class LiveCameraFramesCaptureScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Get.back();
+                  onTap: () async{
+                    //Get.back();
+                    showAlertDialog();
                   },
                   child: Container(child: Icon(Icons.close)),
                 ),
@@ -188,6 +177,7 @@ class LiveCameraFramesCaptureScreen extends StatelessWidget {
       ),
     );
   }
+
   Future imageSaveFunction() async {
     try {
       print('inside');
@@ -211,11 +201,49 @@ class LiveCameraFramesCaptureScreen extends StatelessWidget {
       print('Collage Saving Error : $e');
     }
   }
+
   Future saveImage(String filePath) async {
     await GallerySaver.saveImage("$filePath",
         albumName: "LiveCameraPhotoFrames");
     print('Path : $filePath');
-    Fluttertoast.showToast(msg: 'Photo Saved at $filePath');
+    Fluttertoast.showToast(msg: 'Photo Saved into Gallery');
   }
 
+  showAlertDialog() {
+
+    Widget cancelButton = TextButton(
+      child: Text("Cancel", style: TextStyle(fontFamily: ""),),
+      onPressed:  () {
+        Get.back();
+        Get.back();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Ok", style: TextStyle(fontFamily: ""),),
+      onPressed:  () async{
+        await imageSaveFunction().then((value) {
+          Get.back();
+          Get.back();
+        });
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      //title: Text("AlertDialog"),
+      content: Text("Do You want to save?", style: TextStyle(fontFamily: ""),),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }
