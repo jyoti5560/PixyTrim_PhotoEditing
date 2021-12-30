@@ -79,8 +79,6 @@ class _SingleImageShowModuleState extends State<SingleImageShowModule> {
                       child: Container(
                         height: Get.height,
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                        ),
                         child: Obx(
                               ()=> ClipRRect(
                             borderRadius: BorderRadius.circular(
