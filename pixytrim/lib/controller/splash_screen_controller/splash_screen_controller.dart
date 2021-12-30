@@ -9,7 +9,7 @@ class SplashScreenController extends GetxController{
   void onInit() {
     super.onInit();
     print('Splash Controller Init Method');
-    Timer(Duration(seconds: 7), () => goToIndexScreen());
+    Timer(Duration(seconds: 3), () => goToIndexScreen());
   }
 
   goToIndexScreen()=> Get.offAll(()=> IndexScreen());

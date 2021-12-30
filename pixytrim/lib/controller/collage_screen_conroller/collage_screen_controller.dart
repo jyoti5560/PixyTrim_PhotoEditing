@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 

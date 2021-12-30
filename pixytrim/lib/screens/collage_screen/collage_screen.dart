@@ -167,6 +167,8 @@ class _CollageScreenState extends State<CollageScreen> with SingleTickerProvider
   Future _capturePng() async {
     try {
       print('inside');
+      DateTime time = DateTime.now();
+      String photoName = "${time.day}_${time.month}_${time.year}_${time.second}_${time.minute}_${time.hour}";
       RenderRepaintBoundary boundary =
           key.currentContext!.findRenderObject() as RenderRepaintBoundary;
       print(boundary);
@@ -177,7 +179,7 @@ class _CollageScreenState extends State<CollageScreen> with SingleTickerProvider
           await image.toByteData(format: ui.ImageByteFormat.png);
       print("byte data:===$byteData");
       Uint8List pngBytes = byteData!.buffer.asUint8List();
-      File imgFile = new File('$directory/photo.png');
+      File imgFile = new File('$directory/$photoName.jpg');
       await imgFile.writeAsBytes(pngBytes);
       setState(() {
         file = imgFile;

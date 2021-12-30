@@ -11,7 +11,7 @@ import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_cont
 import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
-import 'package:pixytrim/screens/signin_screen/signin_screen.dart';
+import 'package:pixytrim/screens/live_camera_frames_screen/live_camera_frames_screen.dart';
 import 'package:pixytrim/screens/trim_video_screen/trim_video_screen.dart';
 
 
@@ -242,7 +242,7 @@ class _IndexScreenState extends State<IndexScreen> {
                           flex: 3,
                           child: GestureDetector(
                             onTap: (){
-                              Get.to(() => SignInScreen());
+                              Get.to(() => LiveCameraFramesScreen());
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(5),
@@ -263,7 +263,7 @@ class _IndexScreenState extends State<IndexScreen> {
                                           width: 10,
                                         ),
                                         Text(
-                                          "Login",
+                                          "Camera Frames",
                                           style: TextStyle(
                                             fontFamily: "",
                                             fontSize: 20,
