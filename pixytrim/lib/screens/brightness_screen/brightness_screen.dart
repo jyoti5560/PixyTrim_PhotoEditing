@@ -61,43 +61,45 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                   Expanded(
                       child: RepaintBoundary(
                         key: key,
-                        child: ColorFiltered(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            child: ColorFiltered(
                     colorFilter: ColorFilter.matrix(calculateContrastMatrix(con)),
                     child: ColorFiltered(
-                        colorFilter:
-                            ColorFilter.matrix(calculateSaturationMatrix(sat)),
-                        child: Container(
-                          //width: Get.width,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: ExtendedImage(
-                              color: bright > 0
-                                  ? Colors.white.withOpacity(bright)
-                                  : Colors.black.withOpacity(-bright),
-                              colorBlendMode: bright > 0
-                                  ? BlendMode.lighten
-                                  : BlendMode.darken,
-                              image: ExtendedFileImageProvider(csController.addImageFromCameraList[csController.selectedImage.value]),
-                              extendedImageEditorKey: editorKey,
-                              /*child: Container(
-                                width: Get.width,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: widget.file.toString().isNotEmpty
-                                      ? Image.file(
-                                          widget.file,
-                                          height: 120,
-                                          width: 120,
-                                          fit: BoxFit.fill,
-                                        )
-                                      : null,
-                                ),
-                              ),*/
+                            colorFilter:
+                                ColorFilter.matrix(calculateSaturationMatrix(sat)),
+                            child: Container(
+                              //width: Get.width,
+                              child: ExtendedImage(
+                                color: bright > 0
+                                    ? Colors.white.withOpacity(bright)
+                                    : Colors.black.withOpacity(-bright),
+                                colorBlendMode: bright > 0
+                                    ? BlendMode.lighten
+                                    : BlendMode.darken,
+                                image: ExtendedFileImageProvider(csController.addImageFromCameraList[csController.selectedImage.value]),
+                                extendedImageEditorKey: editorKey,
+                                /*child: Container(
+                                  width: Get.width,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: widget.file.toString().isNotEmpty
+                                        ? Image.file(
+                                            widget.file,
+                                            height: 120,
+                                            width: 120,
+                                            fit: BoxFit.fill,
+                                          )
+                                        : null,
+                                  ),
+                                ),*/
+                              ),
                             ),
-                          ),
-                        ),
                     ),
                   ),
+                          ),
+                        ),
                       )),
                   SizedBox(height: 20),
                   brightnessList()
@@ -232,8 +234,8 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                       },
                       divisions: 50,
                       value: bright,
-                      min: -1,
-                      max: 1,
+                      min: -0.5,
+                      max: 0.50,
                     ),
                   ),
                 )
@@ -274,8 +276,8 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                       },
                       divisions: 50,
                       value: con,
-                      min: 0,
-                      max: 4,
+                      min: 0.60,
+                      max: 3,
                     ),
                   ),
                 )
