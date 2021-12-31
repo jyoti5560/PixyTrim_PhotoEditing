@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pixytrim/common/custom_image.dart';
 
 class LiveCameraFramesCaptureScreenController extends GetxController {

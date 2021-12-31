@@ -8,14 +8,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_color.dart';
 import 'package:pixytrim/common/custom_gradient_slider.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'dart:ui' as ui;
 import 'dart:math' as Math;
-
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
 
 
@@ -102,23 +100,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                                 });
                               }
                             },
-                            //withCircleUi: _isCircleUi,
-                            // onStatusChanged: (status) => setState(() {
-                            //   _statusText = <CropStatus, String>{
-                            //     CropStatus.nothing: 'Crop has no image data',
-                            //     CropStatus.loading:
-                            //     'Crop is now loading given image',
-                            //     CropStatus.ready: 'Crop is now ready!',
-                            //     CropStatus.cropping:
-                            //     'Crop is now cropping image',
-                            //   }[status] ??
-                            //       '';
-                            // }),
                             initialSize: 0.5,
-                           // maskColor: _isSumbnail ? Colors.white : null,
-                           //  cornerDotBuilder: (size, edgeAlignment) => _isSumbnail
-                           //      ? const SizedBox.shrink()
-                           //      : const DotControl(),
                           ):
                           index == 1 ?
                           Transform(
@@ -285,20 +267,22 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () async{
-                        temp = widget.file;
-                        print("temp file====$temp");
-                        cropController.crop();
-                        print("crop file====$croppedImage");
-                      },
+                      // onTap: () async{
+                      //   temp = widget.file;
+                      //   print("temp file====$temp");
+                      //   cropController.crop();
+                      //
+                      //   print("crop file====$croppedImage");
+                      // },
                       child: Container(
                           child: Icon(Icons.crop)
                       ),
                     ),
                     SizedBox(width: 15,),
                     GestureDetector(
-                      onTap: () async{
-                        //controller.crop();
+                      onTap: () async {
+                        cropController.crop();
+                        await Future.delayed(Duration(seconds: 3));
                         await _capturePng().then((value) {
                           Get.back();
                         });

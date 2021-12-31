@@ -2,17 +2,14 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_color.dart';
 import 'package:pixytrim/common/custom_gradient_slider.dart';
 import 'package:pixytrim/common/custom_image.dart';
-
 import '_image_painter.dart';
 import '_ported_interactive_viewer.dart';
 import 'delegates/text_delegate.dart';
@@ -143,6 +140,7 @@ class ImagePainter extends StatefulWidget {
   factory ImagePainter.file(
     File file, {
     required Key key,
+        required Key repaintKey,
     double? height,
     double? width,
     bool? scalable,
