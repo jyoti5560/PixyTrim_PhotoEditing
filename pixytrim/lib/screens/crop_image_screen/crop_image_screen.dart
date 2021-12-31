@@ -534,23 +534,25 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
       child: Text("Cancel", style: TextStyle(fontFamily: ""),),
       onPressed:  () {
         Get.back();
-        Get.back();
+        //Get.back();
       },
     );
     Widget continueButton = TextButton(
       child: Text("Ok", style: TextStyle(fontFamily: ""),),
       onPressed:  () async{
-        await _capturePng().then((value) {
-          Get.back();
-          Get.back();
-        });
+        // await _capturePng().then((value) {
+        //   Get.back();
+        //   Get.back();
+        // });
+        Get.back();
+        Get.back();
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       //title: Text("AlertDialog"),
-      content: Text("Do You want to save?", style: TextStyle(fontFamily: ""),),
+      content: Text("Do you want to exit?", style: TextStyle(fontFamily: ""),),
       actions: [
         cancelButton,
         continueButton,
