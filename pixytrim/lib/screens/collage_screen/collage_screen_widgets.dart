@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:photo_view/photo_view.dart';
 import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 import 'package:flutter/material.dart';
@@ -22,14 +23,14 @@ BoxDecoration collageMainImageBoxDecoration() {
 }
 
 class SingleImageShowModule extends StatefulWidget {
-  double scale;
-  double previousScale;
+  // double scale;
+  // double previousScale;
   int index;
   int? flex;
 
   SingleImageShowModule({
-    required this.scale,
-    required this.previousScale,
+    // required this.scale,
+    // required this.previousScale,
     required this.index,
     this.flex,
   });
@@ -50,43 +51,42 @@ class _SingleImageShowModuleState extends State<SingleImageShowModule> {
             GestureDetector(
               onTap: () => onTapModule(index: widget.index),
 
-              onScaleStart: (ScaleStartDetails details) {
-                print(details);
-                setState(() {
-                  widget.previousScale = widget.scale;
-                });
-              },
-              onScaleUpdate: (ScaleUpdateDetails details) {
-                print(details);
-                setState(() {
-                  widget.scale = widget.previousScale * details.scale;
-                });
-              },
-              onScaleEnd: (ScaleEndDetails details) {
-                print(details);
-                setState(() {
-                  widget.previousScale = 1.0;
-                });
-              },
-              child: RotatedBox(
-                quarterTurns: 0,
-                child: Transform(
-                  alignment: FractionalOffset.center,
-                  transform: Matrix4.diagonal3(Vector3(widget.scale, widget.scale, widget.scale)),
-                  child: Obx(
-                    ()=> Padding(
-                      padding: EdgeInsets.all(collageScreenController.borderWidthValue.value),
-                      child: Container(
-                        height: Get.height,
-                        width: double.infinity,
-                        child: Obx(
-                              ()=> ClipRRect(
-                            borderRadius: BorderRadius.circular(
-                                collageScreenController.borderRadiusValue.value),
-                            child: Image.file(File('${collageScreenController.imageFileList[widget.index].file.path}',),
-                              fit: BoxFit.cover,),
-                          ),
-                        ),
+              // onScaleStart: (ScaleStartDetails details) {
+              //   print(details);
+              //   setState(() {
+              //     widget.previousScale = widget.scale;
+              //   });
+              // },
+              // onScaleUpdate: (ScaleUpdateDetails details) {
+              //   print(details);
+              //   setState(() {
+              //     widget.scale = widget.previousScale * details.scale;
+              //   });
+              // },
+              // onScaleEnd: (ScaleEndDetails details) {
+              //   print(details);
+              //   setState(() {
+              //     widget.previousScale = 1.0;
+              //   });
+              // },
+              child: Obx(
+                ()=> Padding(
+                  padding: EdgeInsets.all(collageScreenController.borderWidthValue.value),
+                  child: Container(
+                    height: Get.height,
+                    width: double.infinity,
+                    child: Obx(
+                          ()=> ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                            collageScreenController.borderRadiusValue.value),
+                        // child: Image.file(File('${collageScreenController.imageFileList[widget.index].file.path}',),
+                        //   fit: BoxFit.cover,),
+                            child: PhotoView(
+                                imageProvider: FileImage(File('${collageScreenController.imageFileList[widget.index].file.path}',),),
+                              //customSize: Size.fromHeight(MediaQuery.of(context).size.height),
+                              customSize: Size.fromRadius(320),
+
+                            ),
                       ),
                     ),
                   ),

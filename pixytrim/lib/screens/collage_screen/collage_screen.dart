@@ -16,12 +16,13 @@ import 'package:path_provider/path_provider.dart';
 import 'collage_screen_widgets.dart';
 import 'wallpaper_screen/wallpapers_screen.dart';
 
-
 class CollageScreen extends StatefulWidget {
   @override
   _CollageScreenState createState() => _CollageScreenState();
 }
-class _CollageScreenState extends State<CollageScreen> with SingleTickerProviderStateMixin {
+
+class _CollageScreenState extends State<CollageScreen>
+    with SingleTickerProviderStateMixin {
   final collageScreenController = Get.find<CollageScreenController>();
 
   late TabController _tabController;
@@ -99,7 +100,10 @@ class _CollageScreenState extends State<CollageScreen> with SingleTickerProvider
                     Get.back();
                   },
                   child: Container(
-                      child: Image.asset(Images.ic_left_arrow, scale: 2.5,)),
+                      child: Image.asset(
+                    Images.ic_left_arrow,
+                    scale: 2.5,
+                  )),
                 ),
                 Container(
                   child: Text(
@@ -171,7 +175,8 @@ class _CollageScreenState extends State<CollageScreen> with SingleTickerProvider
     try {
       print('inside');
       DateTime time = DateTime.now();
-      String photoName = "${time.day}_${time.month}_${time.year}_${time.second}_${time.minute}_${time.hour}";
+      String photoName =
+          "${time.day}_${time.month}_${time.year}_${time.second}_${time.minute}_${time.hour}";
       RenderRepaintBoundary boundary =
           key.currentContext!.findRenderObject() as RenderRepaintBoundary;
       print(boundary);
@@ -212,9 +217,9 @@ class ImageListModule extends StatefulWidget {
   @override
   _ImageListModuleState createState() => _ImageListModuleState();
 }
+
 class _ImageListModuleState extends State<ImageListModule> {
   final collageScreenController = Get.find<CollageScreenController>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -222,8 +227,9 @@ class _ImageListModuleState extends State<ImageListModule> {
       () => collageScreenController.imageFileList.length == 2
           ? twoImageSelectedModule(collageScreenController.selectedIndex.value)
           : collageScreenController.imageFileList.length == 3
-          ? threeImageSelectedModule(collageScreenController.selectedIndex.value)
-          : collageScreenController.imageFileList.length == 4
+              ? threeImageSelectedModule(
+                  collageScreenController.selectedIndex.value)
+              : collageScreenController.imageFileList.length == 4
           ? fourImageSelectedModule(collageScreenController.selectedIndex.value)
           : collageScreenController.imageFileList.length == 5
           ? fiveImageSelectedModule(collageScreenController.selectedIndex.value)
@@ -231,7 +237,7 @@ class _ImageListModuleState extends State<ImageListModule> {
           ? sixImageSelectedModule(collageScreenController.selectedIndex.value)
           : collageScreenController.imageFileList.length == 7
           ? sevenImageSelectedModule(collageScreenController.selectedIndex.value)
-          : Container(),
+              : Container(),
     );
   }
 
@@ -243,157 +249,147 @@ class _ImageListModuleState extends State<ImageListModule> {
               decoration: collageMainImageBoxDecoration(),
               child: Row(
                 children: [
-                  Obx(
-                    ()=> SingleImageShowModule(
-                            scale: collageScreenController.scale.value,
-                            previousScale:
-                                collageScreenController.previousScale.value,
-                            index: 0),
-                  ),
-
+                  SingleImageShowModule(
+                      // scale: collageScreenController.scale.value,
+                      // previousScale:
+                      //     collageScreenController.previousScale.value,
+                      index: 0),
                   SizedBox(width: 5),
-                  Obx(
-                    ()=> SingleImageShowModule(
-                            scale: collageScreenController.scale1.value,
-                            previousScale:
-                                collageScreenController.previousScale1.value,
-                            index: 1),
-                  ),
+                  SingleImageShowModule(
+                      // scale: collageScreenController.scale1.value,
+                      // previousScale:
+                      //     collageScreenController.previousScale1.value,
+                      index: 1),
                 ],
               ),
             ),
           )
         : selectedIndex == 1
-        ? ClipRRect(
+            ? ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
                   decoration: collageMainImageBoxDecoration(),
                   child: Column(
                     children: [
                       SingleImageShowModule(
-                            scale: collageScreenController.scale.value,
-                            previousScale:
-                                collageScreenController.previousScale.value,
-                            index: 0),
-
+                          // scale: collageScreenController.scale.value,
+                          // previousScale:
+                          //     collageScreenController.previousScale.value,
+                          index: 0),
                       SizedBox(height: 5),
-                       SingleImageShowModule(
-                            scale: collageScreenController.scale1.value,
-                            previousScale:
-                                collageScreenController.previousScale1.value,
-                            index: 1),
-
+                      SingleImageShowModule(
+                          // scale: collageScreenController.scale1.value,
+                          // previousScale:
+                          //     collageScreenController.previousScale1.value,
+                          index: 1),
                     ],
                   ),
                 ),
               )
-        : selectedIndex == 2
-        ? ClipRRect(
+            : selectedIndex == 2
+                ? ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Container(
                       decoration: collageMainImageBoxDecoration(),
                       child: Column(
                         children: [
-                             SingleImageShowModule(
-                                scale: collageScreenController.scale.value,
-                                previousScale:
-                                    collageScreenController.previousScale.value,
-                                index: 0, flex: 2,),
-
+                          SingleImageShowModule(
+                            // scale: collageScreenController.scale.value,
+                            // previousScale:
+                            //     collageScreenController.previousScale.value,
+                            index: 0, flex: 2,
+                          ),
                           SizedBox(height: 5),
-
-                           SingleImageShowModule(
-                                scale: collageScreenController.scale1.value,
-                                previousScale: collageScreenController
-                                    .previousScale1.value,
-                                index: 1, flex: 1,),
-
+                          SingleImageShowModule(
+                            // scale: collageScreenController.scale1.value,
+                            // previousScale: collageScreenController
+                            //     .previousScale1.value,
+                            index: 1, flex: 1,
+                          ),
                         ],
                       ),
                     ),
                   )
-        : selectedIndex == 3
-        ? ClipRRect(
+                : selectedIndex == 3
+                    ? ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: Container(
                           decoration: collageMainImageBoxDecoration(),
                           child: Column(
                             children: [
-
-                                SingleImageShowModule(
-                                    scale: collageScreenController.scale.value,
-                                    previousScale: collageScreenController
-                                        .previousScale.value,
-                                    index: 0, flex: 1,),
-
-                              SizedBox(height: 5),
-
                               SingleImageShowModule(
-                                    scale: collageScreenController.scale1.value,
-                                    previousScale: collageScreenController
-                                        .previousScale1.value,
-                                    index: 1, flex: 2,),
-
+                                // scale: collageScreenController.scale.value,
+                                // previousScale: collageScreenController
+                                //     .previousScale.value,
+                                index: 0, flex: 1,
+                              ),
+                              SizedBox(height: 5),
+                              SingleImageShowModule(
+                                // scale: collageScreenController.scale1.value,
+                                // previousScale: collageScreenController
+                                //     .previousScale1.value,
+                                index: 1, flex: 2,
+                              ),
                             ],
                           ),
                         ),
                       )
-        : selectedIndex == 4
-        ? ClipRRect(
+                    : selectedIndex == 4
+                        ? ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: Container(
                               decoration: collageMainImageBoxDecoration(),
                               child: Row(
                                 children: [
-                                 SingleImageShowModule(
-                                        scale:
-                                            collageScreenController.scale.value,
-                                        previousScale: collageScreenController
-                                            .previousScale.value,
-                                        index: 0, flex: 1,),
-
+                                  SingleImageShowModule(
+                                    // scale:
+                                    //     collageScreenController.scale.value,
+                                    // previousScale: collageScreenController
+                                    //     .previousScale.value,
+                                    index: 0, flex: 1,
+                                  ),
                                   SizedBox(width: 5),
-                               SingleImageShowModule(
-                                        scale: collageScreenController
-                                            .scale1.value,
-                                        previousScale: collageScreenController
-                                            .previousScale1.value,
-                                        index: 1, flex: 2,),
-
+                                  SingleImageShowModule(
+                                    // scale: collageScreenController
+                                    //     .scale1.value,
+                                    // previousScale: collageScreenController
+                                    //     .previousScale1.value,
+                                    index: 1, flex: 2,
+                                  ),
                                 ],
                               ),
                             ),
                           )
-        : selectedIndex == 5
-        ? ClipRRect(
+                        : selectedIndex == 5
+                            ? ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: Container(
                                   decoration: collageMainImageBoxDecoration(),
                                   child: Row(
                                     children: [
-                                     SingleImageShowModule(
-                                            scale: collageScreenController
-                                                .scale.value,
-                                            previousScale:
-                                                collageScreenController
-                                                    .previousScale.value,
-                                            index: 0,flex: 2,),
-
+                                      SingleImageShowModule(
+                                        // scale: collageScreenController
+                                        //     .scale.value,
+                                        // previousScale:
+                                        //     collageScreenController
+                                        //         .previousScale.value,
+                                        index: 0, flex: 2,
+                                      ),
                                       SizedBox(width: 5),
-                                    SingleImageShowModule(
-                                            scale: collageScreenController
-                                                .scale1.value,
-                                            previousScale:
-                                                collageScreenController
-                                                    .previousScale1.value,
-                                            index: 1, flex: 1,),
-
+                                      SingleImageShowModule(
+                                        // scale: collageScreenController
+                                        //     .scale1.value,
+                                        // previousScale:
+                                        //     collageScreenController
+                                        //         .previousScale1.value,
+                                        index: 1, flex: 1,
+                                      ),
                                     ],
                                   ),
                                 ),
                               )
-        : selectedIndex == 6
-        ? ClipRRect(
+                            : selectedIndex == 6
+                                ? ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
                                     child: Container(
                                       decoration:
@@ -405,31 +401,31 @@ class _ImageListModuleState extends State<ImageListModule> {
                                               children: [
                                                 Expanded(child: Container()),
                                                 SingleImageShowModule(
-                                                      scale:
-                                                          collageScreenController
-                                                              .scale.value,
-                                                      previousScale:
-                                                          collageScreenController
-                                                              .previousScale
-                                                              .value,
-                                                      index: 0, flex: 1,),
-
+                                                  // scale:
+                                                  //     collageScreenController
+                                                  //         .scale.value,
+                                                  // previousScale:
+                                                  //     collageScreenController
+                                                  //         .previousScale
+                                                  //         .value,
+                                                  index: 0, flex: 1,
+                                                ),
                                               ],
                                             ),
                                           ),
                                           Expanded(
                                             child: Row(
                                               children: [
-                                               SingleImageShowModule(
-                                                      scale:
-                                                          collageScreenController
-                                                              .scale1.value,
-                                                      previousScale:
-                                                          collageScreenController
-                                                              .previousScale1
-                                                              .value,
-                                                      index: 1, flex: 1,),
-
+                                                SingleImageShowModule(
+                                                  // scale:
+                                                  //     collageScreenController
+                                                  //         .scale1.value,
+                                                  // previousScale:
+                                                  //     collageScreenController
+                                                  //         .previousScale1
+                                                  //         .value,
+                                                  index: 1, flex: 1,
+                                                ),
                                                 Expanded(child: Container()),
                                               ],
                                             ),
@@ -438,8 +434,8 @@ class _ImageListModuleState extends State<ImageListModule> {
                                       ),
                                     ),
                                   )
-        : selectedIndex == 7
-        ? ClipRRect(
+                                : selectedIndex == 7
+                                    ? ClipRRect(
                                         borderRadius: BorderRadius.circular(20),
                                         child: Container(
                                           decoration:
@@ -449,17 +445,16 @@ class _ImageListModuleState extends State<ImageListModule> {
                                               Expanded(
                                                 child: Row(
                                                   children: [
-
-                                                      SingleImageShowModule(
-                                                          scale:
-                                                              collageScreenController
-                                                                  .scale.value,
-                                                          previousScale:
-                                                              collageScreenController
-                                                                  .previousScale
-                                                                  .value,
-                                                          index: 0,flex: 1,),
-
+                                                    SingleImageShowModule(
+                                                      // scale:
+                                                      //     collageScreenController
+                                                      //         .scale.value,
+                                                      // previousScale:
+                                                      //     collageScreenController
+                                                      //         .previousScale
+                                                      //         .value,
+                                                      index: 0, flex: 1,
+                                                    ),
                                                     Expanded(
                                                         child: Container()),
                                                   ],
@@ -472,14 +467,15 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                         child: Container()),
                                                     // SizedBox(width: 5),
                                                     SingleImageShowModule(
-                                                        scale:
-                                                            collageScreenController
-                                                                .scale1.value,
-                                                        previousScale:
-                                                            collageScreenController
-                                                                .previousScale1
-                                                                .value,
-                                                        index: 1,flex: 1,),
+                                                      // scale:
+                                                      //     collageScreenController
+                                                      //         .scale1.value,
+                                                      // previousScale:
+                                                      //     collageScreenController
+                                                      //         .previousScale1
+                                                      //         .value,
+                                                      index: 1, flex: 1,
+                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -487,8 +483,8 @@ class _ImageListModuleState extends State<ImageListModule> {
                                           ),
                                         ),
                                       )
-        : selectedIndex == 8
-        ? ClipRRect(
+                                    : selectedIndex == 8
+                                        ? ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                             child: Container(
@@ -504,15 +500,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                             child: Container()),
                                                         SizedBox(width: 5),
                                                         SingleImageShowModule(
-                                                            scale:
-                                                                collageScreenController
-                                                                    .scale
-                                                                    .value,
-                                                            previousScale:
-                                                                collageScreenController
-                                                                    .previousScale
-                                                                    .value,
-                                                            index: 0, flex: 2,),
+                                                          index: 0,
+                                                          flex: 2,
+                                                        ),
                                                       ],
                                                     ),
                                                   ),
@@ -521,15 +511,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                     child: Column(
                                                       children: [
                                                         SingleImageShowModule(
-                                                            scale:
-                                                                collageScreenController
-                                                                    .scale1
-                                                                    .value,
-                                                            previousScale:
-                                                                collageScreenController
-                                                                    .previousScale1
-                                                                    .value,
-                                                            index: 1, flex: 2,),
+                                                          index: 1,
+                                                          flex: 2,
+                                                        ),
                                                         SizedBox(width: 5),
                                                         Expanded(
                                                             flex: 1,
@@ -541,8 +525,8 @@ class _ImageListModuleState extends State<ImageListModule> {
                                               ),
                                             ),
                                           )
-        : selectedIndex == 9
-        ? ClipRRect(
+                                        : selectedIndex == 9
+                                            ? ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(20),
                                                 child: Container(
@@ -554,15 +538,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                         child: Row(
                                                           children: [
                                                             SingleImageShowModule(
-                                                                scale:
-                                                                    collageScreenController
-                                                                        .scale
-                                                                        .value,
-                                                                previousScale:
-                                                                    collageScreenController
-                                                                        .previousScale
-                                                                        .value,
-                                                                index: 0, flex: 2,),
+                                                              index: 0,
+                                                              flex: 2,
+                                                            ),
                                                             SizedBox(width: 5),
                                                             Expanded(
                                                                 flex: 1,
@@ -581,15 +559,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                                     Container()),
                                                             SizedBox(width: 5),
                                                             SingleImageShowModule(
-                                                                scale:
-                                                                    collageScreenController
-                                                                        .scale1
-                                                                        .value,
-                                                                previousScale:
-                                                                    collageScreenController
-                                                                        .previousScale1
-                                                                        .value,
-                                                                index: 1, flex: 2,),
+                                                              index: 1,
+                                                              flex: 2,
+                                                            ),
                                                           ],
                                                         ),
                                                       ),
@@ -597,8 +569,8 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                   ),
                                                 ),
                                               )
-        : selectedIndex == 10
-        ? ClipRRect(
+                                            : selectedIndex == 10
+                                                ? ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             20),
@@ -614,23 +586,15 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                             child: Row(
                                                               children: [
                                                                 SingleImageShowModule(
-                                                                    scale: collageScreenController
-                                                                        .scale
-                                                                        .value,
-                                                                    previousScale: collageScreenController
-                                                                        .previousScale
-                                                                        .value,
-                                                                    index: 0,flex: 1,),
+                                                                  index: 0,
+                                                                  flex: 1,
+                                                                ),
                                                                 SizedBox(
                                                                     width: 5),
                                                                 SingleImageShowModule(
-                                                                    scale: collageScreenController
-                                                                        .scale1
-                                                                        .value,
-                                                                    previousScale: collageScreenController
-                                                                        .previousScale1
-                                                                        .value,
-                                                                    index: 1, flex: 1,),
+                                                                  index: 1,
+                                                                  flex: 1,
+                                                                ),
                                                               ],
                                                             ),
                                                           ),
@@ -641,541 +605,453 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                       ),
                                                     ),
                                                   )
-        : selectedIndex == 11
-        ? ClipRRect(
-                                                        borderRadius: BorderRadius.circular(20),
+                                                : selectedIndex == 11
+                                                    ? ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
                                                         child: Container(
-                                                          decoration: collageMainImageBoxDecoration(),
+                                                          decoration:
+                                                              collageMainImageBoxDecoration(),
                                                           child: Row(
                                                             children: [
                                                               Expanded(
                                                                 child: Column(
                                                                   children: [
                                                                     SingleImageShowModule(
-                                                                        scale: collageScreenController.scale.value,
-                                                                        previousScale: collageScreenController
-                                                                            .previousScale.value,
-                                                                        index: 0),
-                                                                    SizedBox(height: 5),
+                                                                        index:
+                                                                            0),
+                                                                    SizedBox(
+                                                                        height:
+                                                                            5),
                                                                     SingleImageShowModule(
-                                                                        scale: collageScreenController.scale1.value,
-                                                                        previousScale: collageScreenController
-                                                                            .previousScale1.value,
-                                                                        index: 1),
+                                                                        index:
+                                                                            1),
                                                                   ],
                                                                 ),
                                                               ),
-                                                              Expanded(child: Container()),
+                                                              Expanded(
+                                                                  child:
+                                                                      Container()),
                                                             ],
                                                           ),
                                                         ),
                                                       )
-        : Container());
+                                                    : Container());
   }
 
   Widget threeImageSelectedModule(int selectedIndex) {
-    return Obx(() =>
-      selectedIndex == 0
+    return Obx(() => selectedIndex == 0
         ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
-            SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale1.value,
-                previousScale: collageScreenController.previousScale1.value,
-                index: 1),
-            SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale2.value,
-                previousScale: collageScreenController.previousScale2.value,
-                index: 2),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 1
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
-            SizedBox(height: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale1.value,
-                previousScale: collageScreenController.previousScale1.value,
-                index: 1),
-            SizedBox(height: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale2.value,
-                previousScale: collageScreenController.previousScale2.value,
-                index: 2),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 2
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
-            SizedBox(height: 5),
-            Expanded(
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              decoration: collageMainImageBoxDecoration(),
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
-                ],
-              ),
-            )
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 3
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
-            SizedBox(height: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale2.value,
-                previousScale: collageScreenController.previousScale2.value,
-                index: 2),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 4
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale2.value,
-                previousScale: collageScreenController.previousScale2.value,
-                index: 2),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 5
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 6
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Row(
-                children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Container(),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 7
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                    flex:1,
-                    child: Container()
-                  ),
-
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0,flex:2,),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                      flex:1,
-                      child: Container()
-                  ),
-
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1,flex:2,),
-
-                  Expanded(
-                      flex:1,
-                      child: Container()
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2, flex:2,),
-                  Expanded(
-                      flex:1,
-                      child: Container()
-                  ),
-
-
-                ],
-              ),
-            ),
-          ],
-        )
-
-      ),
-    )
-        : selectedIndex == 8
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
-                  Expanded(
-                    child: Container(),
-                  ),
-                  Expanded(
-                    child: Container(),
-                  )
-                ],
-              ),
-            ),
-
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(),
-                  ),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
-
-                  Expanded(
-                    child: Container(),
-                  )
-                ],
-              ),
-            ),
-
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(),
-                  ),
-                  Expanded(
-                    child: Container(),
-                  ),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 9
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1, flex:1,),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2, flex:2,),
-                ],
-              ),
-            )
-          ],
-        )
-
-      ),
-    )
-        : selectedIndex == 10
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(),
-                    ),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale.value,
-                        previousScale: collageScreenController
-                            .previousScale.value,
-                        index: 0, flex:2,),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              SingleImageShowModule(
-                  scale: collageScreenController.scale1.value,
-                  previousScale: collageScreenController.previousScale1.value,
-                  index: 1),
-              SizedBox(width: 5),
-              SingleImageShowModule(
-                  scale: collageScreenController.scale2.value,
-                  previousScale: collageScreenController.previousScale2.value,
-                  index: 2),
-            ],
           )
-
-      ),
-    )
-        : selectedIndex == 11
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius
-          .circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
-                        SizedBox(height: 5),
-                        Expanded(child: Container(),),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 12
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius
-          .circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
-            SizedBox(width: 5),
-            Expanded(
-              flex: 2,
-              child: Column(
-                children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 13
-        ? ClipRRect(
+        : selectedIndex == 1
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  decoration: collageMainImageBoxDecoration(),
+                  child: Column(
+                    children: [
+                      SingleImageShowModule(index: 0),
+                      SizedBox(height: 5),
+                      SingleImageShowModule(index: 1),
+                      SizedBox(height: 5),
+                      SingleImageShowModule(index: 2),
+                    ],
+                  ),
+                ),
+              )
+            : selectedIndex == 2
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      decoration: collageMainImageBoxDecoration(),
+                      child: Column(
+                        children: [
+                          SingleImageShowModule(index: 0),
+                          SizedBox(height: 5),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                SingleImageShowModule(index: 1),
+                                SizedBox(width: 5),
+                                SingleImageShowModule(index: 2),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                : selectedIndex == 3
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Container(
+                          decoration: collageMainImageBoxDecoration(),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    SingleImageShowModule(index: 0),
+                                    SizedBox(width: 5),
+                                    SingleImageShowModule(index: 1),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              SingleImageShowModule(index: 2),
+                            ],
+                          ),
+                        ),
+                      )
+                    : selectedIndex == 4
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              decoration: collageMainImageBoxDecoration(),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        SingleImageShowModule(index: 0),
+                                        SizedBox(height: 5),
+                                        SingleImageShowModule(index: 1),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: 5),
+                                  SingleImageShowModule(index: 2),
+                                ],
+                              ),
+                            ),
+                          )
+                        : selectedIndex == 5
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  decoration: collageMainImageBoxDecoration(),
+                                  child: Row(
+                                    children: [
+                                      SingleImageShowModule(index: 0),
+                                      SizedBox(width: 5),
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            SingleImageShowModule(index: 1),
+                                            SizedBox(height: 5),
+                                            SingleImageShowModule(index: 2),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : selectedIndex == 6
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Container(
+                                      decoration:
+                                          collageMainImageBoxDecoration(),
+                                      child: Column(
+                                        children: [
+                                          Expanded(
+                                            flex: 3,
+                                            child: Row(
+                                              children: [
+                                                SingleImageShowModule(index: 0),
+                                                SizedBox(width: 5),
+                                                SingleImageShowModule(index: 1),
+                                                SizedBox(width: 5),
+                                                SingleImageShowModule(index: 2),
+                                              ],
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Container(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : selectedIndex == 7
+                                    ? ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Container(
+                                            decoration:
+                                                collageMainImageBoxDecoration(),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Column(
+                                                    children: [
+                                                      Expanded(
+                                                          flex: 1,
+                                                          child: Container()),
+                                                      SingleImageShowModule(
+                                                        index: 0,
+                                                        flex: 2,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                SizedBox(width: 5),
+                                                Expanded(
+                                                  child: Column(
+                                                    children: [
+                                                      Expanded(
+                                                          flex: 1,
+                                                          child: Container()),
+                                                      SingleImageShowModule(
+                                                        index: 1,
+                                                        flex: 2,
+                                                      ),
+                                                      Expanded(
+                                                          flex: 1,
+                                                          child: Container()),
+                                                    ],
+                                                  ),
+                                                ),
+                                                SizedBox(width: 5),
+                                                Expanded(
+                                                  child: Column(
+                                                    children: [
+                                                      SingleImageShowModule(
+                                                        index: 2,
+                                                        flex: 2,
+                                                      ),
+                                                      Expanded(
+                                                          flex: 1,
+                                                          child: Container()),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
+                                      )
+                                    : selectedIndex == 8
+                                        ? ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Container(
+                                              decoration:
+                                                  collageMainImageBoxDecoration(),
+                                              child: Column(
+                                                children: [
+                                                  Expanded(
+                                                    child: Row(
+                                                      children: [
+                                                        SingleImageShowModule(
+                                                            index: 0),
+                                                        Expanded(
+                                                          child: Container(),
+                                                        ),
+                                                        Expanded(
+                                                          child: Container(),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: Container(),
+                                                        ),
+                                                        SingleImageShowModule(
+                                                            index: 1),
+                                                        Expanded(
+                                                          child: Container(),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: Container(),
+                                                        ),
+                                                        Expanded(
+                                                          child: Container(),
+                                                        ),
+                                                        SingleImageShowModule(
+                                                            index: 2),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        : selectedIndex == 9
+                                            ? ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                child: Container(
+                                                    decoration:
+                                                        collageMainImageBoxDecoration(),
+                                                    child: Row(
+                                                      children: [
+                                                        SingleImageShowModule(
+                                                            index: 0),
+                                                        SizedBox(width: 5),
+                                                        Expanded(
+                                                          child: Column(
+                                                            children: [
+                                                              SingleImageShowModule(
+                                                                index: 1,
+                                                                flex: 1,
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                              SingleImageShowModule(
+                                                                index: 2,
+                                                                flex: 2,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      ],
+                                                    )),
+                                              )
+                                            : selectedIndex == 10
+                                                ? ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                    child: Container(
+                                                        decoration:
+                                                            collageMainImageBoxDecoration(),
+                                                        child: Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: Column(
+                                                                children: [
+                                                                  Expanded(
+                                                                    flex: 1,
+                                                                    child:
+                                                                        Container(),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          5),
+                                                                  SingleImageShowModule(
+                                                                    index: 0,
+                                                                    flex: 2,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            SizedBox(width: 5),
+                                                            SingleImageShowModule(
+                                                                index: 1),
+                                                            SizedBox(width: 5),
+                                                            SingleImageShowModule(
+                                                                index: 2),
+                                                          ],
+                                                        )),
+                                                  )
+                                                : selectedIndex == 11
+                                                    ? ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        child: Container(
+                                                          decoration:
+                                                              collageMainImageBoxDecoration(),
+                                                          child: Column(
+                                                            children: [
+                                                              Expanded(
+                                                                child: Row(
+                                                                  children: [
+                                                                    SingleImageShowModule(
+                                                                        index:
+                                                                            0),
+                                                                    SizedBox(
+                                                                        height:
+                                                                            5),
+                                                                    Expanded(
+                                                                      child:
+                                                                          Container(),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                              Expanded(
+                                                                child: Row(
+                                                                  children: [
+                                                                    SingleImageShowModule(
+                                                                        index:
+                                                                            1),
+                                                                    SizedBox(
+                                                                        width:
+                                                                            5),
+                                                                    SingleImageShowModule(
+                                                                        index:
+                                                                            2),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : selectedIndex == 12
+                                                        ? ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            child: Container(
+                                                              decoration:
+                                                                  collageMainImageBoxDecoration(),
+                                                              child: Row(
+                                                                children: [
+                                                                  SingleImageShowModule(
+                                                                      index: 0),
+                                                                  SizedBox(
+                                                                      width: 5),
+                                                                  Expanded(
+                                                                    flex: 2,
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        SingleImageShowModule(
+                                                                            index:
+                                                                                1),
+                                                                        SizedBox(
+                                                                            height:
+                                                                                5),
+                                                                        SingleImageShowModule(
+                                                                            index:
+                                                                                2),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : selectedIndex == 13
+                                                            ? ClipRRect(
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
@@ -1187,48 +1063,30 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                                   child: Row(
                                                                     children: [
                                                                       SingleImageShowModule(
-                                                                          scale: collageScreenController
-                                                                              .scale
-                                                                              .value,
-                                                                          previousScale: collageScreenController
-                                                                              .previousScale
-                                                                              .value,
                                                                           index:
                                                                               0),
                                                                       SizedBox(
                                                                           width:
                                                                               5),
                                                                       SingleImageShowModule(
-                                                                        scale: collageScreenController
-                                                                            .scale1
-                                                                            .value,
-                                                                        previousScale: collageScreenController
-                                                                            .previousScale1
-                                                                            .value,
-                                                                        index:
-                                                                            1,
-                                                                        flex: 2,
-                                                                      ),
+                                                                          index:
+                                                                              1,
+                                                                          flex:
+                                                                              2),
                                                                       SizedBox(
                                                                           width:
                                                                               5),
                                                                       SingleImageShowModule(
-                                                                          scale: collageScreenController
-                                                                              .scale2
-                                                                              .value,
-                                                                          previousScale: collageScreenController
-                                                                              .previousScale2
-                                                                              .value,
                                                                           index:
                                                                               2),
                                                                     ],
                                                                   ),
                                                                 ),
                                                               )
-          : Container());
+                                                            : Container());
   }
 
-  Widget fourImageSelectedModule(int selectedIndex){
+Widget fourImageSelectedModule(int selectedIndex){
     return Obx(() =>
     selectedIndex == 0
         ? ClipRRect(
@@ -1240,16 +1098,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
@@ -1257,15 +1108,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                 ],
               ),
             ),
@@ -1283,16 +1128,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1,  flex:2,),
+                  SingleImageShowModule(index: 1,  flex:2,),
                 ],
               ),
             ),
@@ -1300,15 +1138,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2,  flex:2,),
+                  SingleImageShowModule(index: 2,  flex:2,),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                 ],
               ),
             ),
@@ -1326,16 +1158,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1,  flex:2,),
+                  SingleImageShowModule(index: 1,  flex:2,),
                 ],
               ),
             ),
@@ -1343,15 +1168,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2,  flex:2,),
+                  SingleImageShowModule(index: 2,  flex:2,),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                 ],
               ),
             ),
@@ -1366,29 +1185,16 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                 ],
               ),
             ),
@@ -1403,29 +1209,16 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                 ],
               ),
             ),
@@ -1443,30 +1236,17 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
 
             SizedBox(height: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale3.value,
-                previousScale: collageScreenController.previousScale3.value,
-                index: 3),
+            SingleImageShowModule(index: 3),
 
           ],
         ),
@@ -1483,16 +1263,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 2,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0,  flex:2,),
+                  SingleImageShowModule(index: 0,  flex:2,),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
@@ -1501,15 +1274,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 1,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2,  flex:2,),
+                  SingleImageShowModule(index: 2,  flex:2,),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                 ],
               ),
             ),
@@ -1528,16 +1295,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 1,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1,  flex:2,),
+                  SingleImageShowModule(index: 1,  flex:2,),
                 ],
               ),
             ),
@@ -1546,15 +1306,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 2,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3,  flex:2,),
+                  SingleImageShowModule(index: 3,  flex:2,),
                 ],
               ),
             ),
@@ -1570,34 +1324,21 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(width: 5),
             Expanded(
               flex: 2,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1,  flex:2,),
+                  SingleImageShowModule(index: 1,  flex:2,),
                   SizedBox(height: 5),
                   Expanded(
                     flex: 1,
                     child: Row(
                       children: [
-                        SingleImageShowModule(
-                            scale: collageScreenController.scale2.value,
-                            previousScale: collageScreenController.previousScale2.value,
-                            index: 2),
+                        SingleImageShowModule(index: 2),
                         SizedBox(width: 5),
-                        SingleImageShowModule(
-                            scale: collageScreenController.scale3.value,
-                            previousScale: collageScreenController.previousScale3.value,
-                            index: 3),
+                        SingleImageShowModule(index: 3),
                       ],
                     ),
                   )
@@ -1617,32 +1358,19 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
             SizedBox(height: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale3.value,
-                previousScale: collageScreenController.previousScale3.value,
-                index: 3),
+            SingleImageShowModule(index: 3),
 
           ],
         ),
@@ -1656,32 +1384,19 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
             SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale3.value,
-                previousScale: collageScreenController.previousScale3.value,
-                index: 3),
+            SingleImageShowModule(index: 3),
 
           ],
         ),
@@ -1699,29 +1414,16 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
             SizedBox(height: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale2.value,
-                previousScale: collageScreenController.previousScale2.value,
-                index: 2),
+            SingleImageShowModule(index: 2),
             SizedBox(height: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale3.value,
-                previousScale: collageScreenController.previousScale3.value,
-                index: 3),
+            SingleImageShowModule(index: 3),
           ],
         ),
       ),
@@ -1735,29 +1437,16 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(height: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale1.value,
-                previousScale: collageScreenController.previousScale1.value,
-                index: 1),
+            SingleImageShowModule(index: 1),
             SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                 ],
               ),
             ),
@@ -1772,26 +1461,13 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale1.value,
-                previousScale: collageScreenController.previousScale1.value,
-                index: 1),
+            SingleImageShowModule(index: 1),
             SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale2.value,
-                previousScale: collageScreenController.previousScale2.value,
-                index: 2),
+            SingleImageShowModule(index: 2),
             SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale3.value,
-                previousScale: collageScreenController.previousScale3.value,
-                index: 3),
+            SingleImageShowModule(index: 3),
           ],
         ),
       ),
@@ -1803,26 +1479,13 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(height: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale1.value,
-                previousScale: collageScreenController.previousScale1.value,
-                index: 1),
+            SingleImageShowModule(index: 1),
             SizedBox(height: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale2.value,
-                previousScale: collageScreenController.previousScale2.value,
-                index: 2),
+            SingleImageShowModule(index: 2),
             SizedBox(height: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale3.value,
-                previousScale: collageScreenController.previousScale3.value,
-                index: 3),
+            SingleImageShowModule(index: 3),
           ],
         ),
       ),
@@ -1841,11 +1504,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                     flex: 4,
                     child: Container(),
                   ),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0, flex:4,),
+                  SingleImageShowModule(index: 0, flex:4,),
                   Expanded(
                     flex: 1,
                     child: Container(),
@@ -1862,10 +1521,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                     flex: 3,
                     child: Container(),
                   ),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1, flex:4,),
+                  SingleImageShowModule(index: 1, flex:4,),
                   Expanded(
                     flex: 2,
                     child: Container(),
@@ -1881,10 +1537,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                     flex: 2,
                     child: Container(),
                   ),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2, flex:4,),
+                  SingleImageShowModule(index: 2, flex:4,),
                   Expanded(
                     flex: 3,
                     child: Container(),
@@ -1900,10 +1553,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                     flex: 1,
                     child: Container(),
                   ),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3, flex:4,),
+                  SingleImageShowModule(index: 3, flex:4,),
                   Expanded(
                     flex: 4,
                     child: Container(),
@@ -1928,16 +1578,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                 Expanded(
                   child: Row(
                     children: [
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale.value,
-                          previousScale: collageScreenController
-                              .previousScale.value,
-                          index: 0),
+                      SingleImageShowModule(index: 0),
                       SizedBox(width: 5),
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale1.value,
-                          previousScale: collageScreenController.previousScale1.value,
-                          index: 1),
+                      SingleImageShowModule(index: 1),
                     ],
                   ),
                 ),
@@ -1945,15 +1588,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                 Expanded(
                   child: Row(
                     children: [
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale2.value,
-                          previousScale: collageScreenController.previousScale2.value,
-                          index: 2),
+                      SingleImageShowModule(index: 2),
                       SizedBox(width: 5),
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale3.value,
-                          previousScale: collageScreenController.previousScale3.value,
-                          index: 3),
+                      SingleImageShowModule(index: 3),
                     ],
                   ),
                 ),
@@ -1971,7 +1608,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         : Container());
   }
 
-  Widget fiveImageSelectedModule(int selectedIndex){
+Widget fiveImageSelectedModule(int selectedIndex){
     return Obx(() =>
     selectedIndex == 0
         ? ClipRRect(
@@ -1984,16 +1621,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 1,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0, flex:2,),
+                  SingleImageShowModule(index: 0, flex:2,),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
@@ -2002,24 +1632,15 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 2,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2, flex:2,),
+                  SingleImageShowModule(index: 2, flex:2,),
                   SizedBox(height: 5),
                   Expanded(
                     flex: 1,
                     child: Row(
                       children: [
-                        SingleImageShowModule(
-                            scale: collageScreenController.scale3.value,
-                            previousScale: collageScreenController.previousScale3.value,
-                            index: 3),
+                        SingleImageShowModule(index: 3),
                         SizedBox(width: 5),
-                        SingleImageShowModule(
-                            scale: collageScreenController.scale4.value,
-                            previousScale: collageScreenController.previousScale4.value,
-                            index: 4),
+                        SingleImageShowModule(index: 4),
                       ],
                     ),
                   )
@@ -2041,38 +1662,22 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0, flex:2,),
+                  SingleImageShowModule(index: 0, flex:2,),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
             SizedBox(height: 5),
 
-            SingleImageShowModule(
-                scale: collageScreenController.scale2.value,
-                previousScale: collageScreenController.previousScale2.value,
-                index: 2),
+            SingleImageShowModule(index: 2),
             SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4, flex:2,),
+                  SingleImageShowModule(index: 4, flex:2,),
                 ],
               ),
             ),
@@ -2090,37 +1695,21 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0, flex:2,),
+                  SingleImageShowModule(index: 0, flex:2,),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
             SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale2.value,
-                previousScale: collageScreenController.previousScale2.value,
-                index: 2),
+            SingleImageShowModule(index: 2),
             SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4, flex:2,),
+                  SingleImageShowModule(index: 4, flex:2,),
                 ],
               ),
             ),
@@ -2138,37 +1727,21 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
             SizedBox(height: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale2.value,
-                previousScale: collageScreenController.previousScale2.value,
-                index: 2),
+            SingleImageShowModule(index: 2),
             SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                 ],
               ),
             ),
@@ -2186,37 +1759,21 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
                 child: Column(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale.value,
-                        previousScale: collageScreenController
-                            .previousScale.value,
-                        index: 0),
+                    SingleImageShowModule(index: 0),
                     SizedBox(height: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale1.value,
-                        previousScale: collageScreenController.previousScale1.value,
-                        index: 1),
+                    SingleImageShowModule(index: 1),
                   ],
                 )
             ),
             SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale2.value,
-                previousScale: collageScreenController.previousScale2.value,
-                index: 2),
+            SingleImageShowModule(index: 2),
             SizedBox(width: 5),
             Expanded(
                 child: Column(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale3.value,
-                        previousScale: collageScreenController.previousScale3.value,
-                        index: 3),
+                    SingleImageShowModule(index: 3),
                     SizedBox(height: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale4.value,
-                        previousScale: collageScreenController.previousScale4.value,
-                        index: 4),
+                    SingleImageShowModule(index: 4),
                   ],
                 )
             ),
@@ -2234,21 +1791,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
@@ -2257,15 +1804,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
 
                 ],
               ),
@@ -2282,35 +1823,19 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0, flex:2,),
+            SingleImageShowModule(index: 0, flex:2,),
             SizedBox(height: 5),
             Expanded(
               flex: 1,
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                 ],
               ),
             ),
@@ -2329,16 +1854,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:2,
               child: Row(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale.value,
-                        previousScale: collageScreenController
-                            .previousScale.value,
-                        index: 0),
+                    SingleImageShowModule(index: 0),
                     SizedBox(width: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale1.value,
-                        previousScale: collageScreenController.previousScale1.value,
-                        index: 1),
+                    SingleImageShowModule(index: 1),
                   ]
               ),
             ),
@@ -2347,20 +1865,11 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:1,
               child: Row(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale2.value,
-                        previousScale: collageScreenController.previousScale2.value,
-                        index: 2),
+                    SingleImageShowModule(index: 2),
                     SizedBox(width: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale3.value,
-                        previousScale: collageScreenController.previousScale3.value,
-                        index: 3),
+                    SingleImageShowModule(index: 3),
                     SizedBox(width: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale4.value,
-                        previousScale: collageScreenController.previousScale4.value,
-                        index: 4),
+                    SingleImageShowModule(index: 4),
                   ]
               ),
             ),
@@ -2382,16 +1891,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 2,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
@@ -2400,20 +1902,11 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 1,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                 ],
               ),
             ),
@@ -2430,36 +1923,21 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                 ],
               ),
             ),
             SizedBox(width: 5),
             SingleImageShowModule(
-                scale: collageScreenController.scale4.value,
-                previousScale: collageScreenController.previousScale4.value,
                 index: 4),
 
           ],
@@ -2474,24 +1952,14 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
@@ -2499,15 +1967,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                 ],
               ),
             ),
@@ -2528,16 +1990,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0, flex:2,),
+                  SingleImageShowModule(index: 0, flex:2,),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
@@ -2545,23 +2000,14 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3, flex:2,),
+                  SingleImageShowModule(index: 3, flex:2,),
                 ],
               ),
             ),
             SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale4.value,
-                previousScale: collageScreenController.previousScale4.value,
-                index: 4),
+            SingleImageShowModule(index: 4),
           ],
         ),
       ),
@@ -2579,25 +2025,15 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 2,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0, flex:2,),
+                  SingleImageShowModule(index: 0, flex:2,),
                   SizedBox(height:5),
                   Expanded(
                       flex:1,
                       child: Row(
                           children:[
-                            SingleImageShowModule(
-                                scale: collageScreenController.scale1.value,
-                                previousScale: collageScreenController.previousScale1.value,
-                                index: 1),
+                            SingleImageShowModule(index: 1),
                             SizedBox(width:5),
-                            SingleImageShowModule(
-                                scale: collageScreenController.scale2.value,
-                                previousScale: collageScreenController.previousScale2.value,
-                                index: 2),
+                            SingleImageShowModule(index: 2),
                           ]
                       )
                   )
@@ -2609,15 +2045,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 1,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(height:5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4, flex:2,),
+                  SingleImageShowModule(index: 4, flex:2,),
 
                 ],
               ),
@@ -2634,11 +2064,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(height: 5),
             Expanded(
               flex:2,
@@ -2648,15 +2074,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                     flex:2,
                     child: Row(
                       children: [
-                        SingleImageShowModule(
-                            scale: collageScreenController.scale1.value,
-                            previousScale: collageScreenController.previousScale1.value,
-                            index: 1),
+                        SingleImageShowModule(index: 1),
                         SizedBox(width: 5),
-                        SingleImageShowModule(
-                            scale: collageScreenController.scale2.value,
-                            previousScale: collageScreenController.previousScale2.value,
-                            index: 2),
+                        SingleImageShowModule(index: 2),
                       ],
                     ),
                   ),
@@ -2665,15 +2085,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                     flex:1,
                     child: Column(
                       children: [
-                        SingleImageShowModule(
-                            scale: collageScreenController.scale3.value,
-                            previousScale: collageScreenController.previousScale3.value,
-                            index: 3),
+                        SingleImageShowModule(index: 3),
                         SizedBox(height: 5),
-                        SingleImageShowModule(
-                            scale: collageScreenController.scale4.value,
-                            previousScale: collageScreenController.previousScale4.value,
-                            index: 4, flex:2,),
+                        SingleImageShowModule(index: 4, flex:2,),
                       ],
                     ),
                   ),
@@ -2694,21 +2108,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
@@ -2716,15 +2120,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4, flex:2,),
+                  SingleImageShowModule(index: 4, flex:2,),
                   SizedBox(width: 5),
                   Expanded(
                     child: Container(),
@@ -2750,16 +2148,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                     child: Container(),
                   ),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
@@ -2767,20 +2158,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                 ],
               ),
             ),
@@ -2795,35 +2177,19 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0, flex:2,),
+            SingleImageShowModule(index: 0, flex:2,),
             SizedBox(width: 5),
             Expanded(
               flex:1,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                 ],
               ),
             ),
@@ -2838,11 +2204,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(height: 5),
             Expanded(
               flex:2,
@@ -2851,15 +2213,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                   Expanded(
                     child: Column(
                       children: [
-                        SingleImageShowModule(
-                            scale: collageScreenController.scale1.value,
-                            previousScale: collageScreenController.previousScale1.value,
-                            index: 1),
+                        SingleImageShowModule(index: 1),
                         SizedBox(height: 5),
-                        SingleImageShowModule(
-                            scale: collageScreenController.scale2.value,
-                            previousScale: collageScreenController.previousScale2.value,
-                            index: 2),
+                        SingleImageShowModule(index: 2),
                       ],
                     ),
                   ),
@@ -2867,15 +2223,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                   Expanded(
                     child: Column(
                       children: [
-                        SingleImageShowModule(
-                            scale: collageScreenController.scale3.value,
-                            previousScale: collageScreenController.previousScale3.value,
-                            index: 3),
+                        SingleImageShowModule(index: 3),
                         SizedBox(height: 5),
-                        SingleImageShowModule(
-                            scale: collageScreenController.scale4.value,
-                            previousScale: collageScreenController.previousScale4.value,
-                            index: 4),
+                        SingleImageShowModule(index: 4),
                       ],
                     ),
                   ),
@@ -2893,31 +2243,15 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Row(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale1.value,
-                previousScale: collageScreenController.previousScale1.value,
-                index: 1),
+            SingleImageShowModule(index: 1),
             SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale2.value,
-                previousScale: collageScreenController.previousScale2.value,
-                index: 2),
+            SingleImageShowModule(index: 2),
             SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale3.value,
-                previousScale: collageScreenController.previousScale3.value,
-                index: 3),
+            SingleImageShowModule(index: 3),
             SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale4.value,
-                previousScale: collageScreenController.previousScale4.value,
-                index: 4),
+            SingleImageShowModule(index: 4),
           ],
         ),
       ),
@@ -2932,16 +2266,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
@@ -2949,20 +2276,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                 ],
               ),
             ),
@@ -2973,7 +2291,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         : Container());
   }
 
-  Widget sixImageSelectedModule(int selectedIndex){
+Widget sixImageSelectedModule(int selectedIndex){
     return Obx(() =>
     selectedIndex == 0
         ? ClipRRect(
@@ -2985,21 +2303,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
@@ -3007,20 +2315,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
 
                 ],
               ),
@@ -3039,16 +2338,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
@@ -3056,15 +2348,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                 ],
               ),
             ),
@@ -3072,15 +2358,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                 ],
               ),
             ),
@@ -3099,25 +2379,15 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:2,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0, flex:2,),
+                  SingleImageShowModule(index: 0, flex:2,),
                   SizedBox(height: 5),
                   Expanded(
                     flex: 1,
                     child: Row(
                         children: [
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale1.value,
-                              previousScale: collageScreenController.previousScale1.value,
-                              index: 1),
+                          SingleImageShowModule(index: 1),
                           SizedBox(width:5),
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale2.value,
-                              previousScale: collageScreenController.previousScale2.value,
-                              index: 2),
+                          SingleImageShowModule(index: 2),
                         ]
                     ),
                   ),
@@ -3129,20 +2399,11 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:1,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
 
                 ],
               ),
@@ -3162,21 +2423,11 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:1,
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
@@ -3189,23 +2440,14 @@ class _ImageListModuleState extends State<ImageListModule> {
                     flex:1,
                     child: Row(
                         children: [
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale3.value,
-                              previousScale: collageScreenController.previousScale3.value,
-                              index: 3),
+                          SingleImageShowModule(index: 3),
                           SizedBox(width:5),
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale4.value,
-                              previousScale: collageScreenController.previousScale4.value,
-                              index: 4),
+                          SingleImageShowModule(index: 4),
                         ]
                     ),
                   ),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5, flex:2,),
+                  SingleImageShowModule(index: 5, flex:2,),
 
                 ],
               ),
@@ -3224,16 +2466,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
                 child: Column(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale.value,
-                        previousScale: collageScreenController
-                            .previousScale.value,
-                        index: 0, flex:2,),
+                    SingleImageShowModule(index: 0, flex:2,),
                     SizedBox(height: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale1.value,
-                        previousScale: collageScreenController.previousScale1.value,
-                        index: 1),
+                    SingleImageShowModule(index: 1),
                   ],
                 )
             ),
@@ -3241,15 +2476,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
                 child: Column(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale2.value,
-                        previousScale: collageScreenController.previousScale2.value,
-                        index: 2),
+                    SingleImageShowModule(index: 2),
                     SizedBox(height: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale3.value,
-                        previousScale: collageScreenController.previousScale3.value,
-                        index: 3),
+                    SingleImageShowModule(index: 3),
                   ],
                 )
             ),
@@ -3257,15 +2486,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
                 child: Column(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale4.value,
-                        previousScale: collageScreenController.previousScale4.value,
-                        index: 4),
+                    SingleImageShowModule(index: 4),
                     SizedBox(height: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale5.value,
-                        previousScale: collageScreenController.previousScale5.value,
-                        index: 5, flex:2,),
+                    SingleImageShowModule(index: 5, flex:2,),
                   ],
                 )
             ),
@@ -3283,16 +2506,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0, flex:2,),
+                  SingleImageShowModule(index: 0, flex:2,),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
@@ -3301,15 +2517,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                 ],
               ),
             ),
@@ -3318,15 +2528,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5, flex:2,),
+                  SingleImageShowModule(index: 5, flex:2,),
                 ],
               ),
             ),
@@ -3345,16 +2549,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                   children:[
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale.value,
-                        previousScale: collageScreenController
-                            .previousScale.value,
-                        index: 0, flex:2,),
+                    SingleImageShowModule(index: 0, flex:2,),
                     SizedBox(height:5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale1.value,
-                        previousScale: collageScreenController.previousScale1.value,
-                        index: 1),
+                    SingleImageShowModule(index: 1),
                   ]
               ),
             ),
@@ -3362,15 +2559,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                   children:[
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale2.value,
-                        previousScale: collageScreenController.previousScale2.value,
-                        index: 2),
+                    SingleImageShowModule(index: 2),
                     SizedBox(height:5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale3.value,
-                        previousScale: collageScreenController.previousScale3.value,
-                        index: 3, flex:2,),
+                    SingleImageShowModule(index: 3, flex:2,),
                   ]
               ),
             ),
@@ -3378,15 +2569,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                   children:[
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale4.value,
-                        previousScale: collageScreenController.previousScale4.value,
-                        index: 4, flex:2,),
+                    SingleImageShowModule(index: 4, flex:2,),
                     SizedBox(height:5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale5.value,
-                        previousScale: collageScreenController.previousScale5.value,
-                        index: 5),
+                    SingleImageShowModule(index: 5),
                   ]
               ),
             ),
@@ -3404,16 +2589,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale.value,
-                        previousScale: collageScreenController
-                            .previousScale.value,
-                        index: 0, flex:2,),
+                    SingleImageShowModule(index: 0, flex:2,),
                     SizedBox(width: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale1.value,
-                        previousScale: collageScreenController.previousScale1.value,
-                        index: 1),
+                    SingleImageShowModule(index: 1),
                   ]
               ),
             ),
@@ -3421,15 +2599,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale2.value,
-                        previousScale: collageScreenController.previousScale2.value,
-                        index: 2),
+                    SingleImageShowModule(index: 2),
                     SizedBox(width: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale3.value,
-                        previousScale: collageScreenController.previousScale3.value,
-                        index: 3, flex:2,),
+                    SingleImageShowModule(index: 3, flex:2,),
                   ]
               ),
             ),
@@ -3437,15 +2609,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale4.value,
-                        previousScale: collageScreenController.previousScale4.value,
-                        index: 4, flex:2,),
+                    SingleImageShowModule(index: 4, flex:2,),
                     SizedBox(width: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale5.value,
-                        previousScale: collageScreenController.previousScale5.value,
-                        index: 5),
+                    SingleImageShowModule(index: 5),
                   ]
               ),
             ),
@@ -3464,21 +2630,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
@@ -3486,20 +2642,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3, flex:2,),
+                  SingleImageShowModule(index: 3, flex:2,),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4, flex:2,),
+                  SingleImageShowModule(index: 4, flex:2,),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                 ],
               ),
             ),
@@ -3527,21 +2674,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
@@ -3549,20 +2686,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                 ],
               ),
             ),
@@ -3584,16 +2712,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 2,
               child: Row(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale.value,
-                        previousScale: collageScreenController
-                            .previousScale.value,
-                        index: 0),
+                    SingleImageShowModule(index: 0),
                     SizedBox(width: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale1.value,
-                        previousScale: collageScreenController.previousScale1.value,
-                        index: 1),
+                    SingleImageShowModule(index: 1),
                   ]
               ),
             ),
@@ -3602,25 +2723,13 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:1,
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                 ],
               ),
             ),
@@ -3639,40 +2748,21 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0, flex:2,),
+            SingleImageShowModule(index: 0, flex:2,),
             SizedBox(height: 5),
             Expanded(
               flex:1,
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                 ],
               ),
             ),
@@ -3694,16 +2784,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 1,
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width:5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
@@ -3712,15 +2795,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 2,
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width:5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                 ],
               ),
             ),
@@ -3729,15 +2806,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex: 1,
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(width:5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                 ],
               ),
             ),
@@ -3753,11 +2824,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         child: Column(
           children: [
 
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(height: 5),
             Expanded(
               flex:2,
@@ -3770,15 +2837,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                             Expanded(
                               child: Row(
                                   children: [
-                                    SingleImageShowModule(
-                                        scale: collageScreenController.scale1.value,
-                                        previousScale: collageScreenController.previousScale1.value,
-                                        index: 1),
+                                    SingleImageShowModule(index: 1),
                                     SizedBox(width:5),
-                                    SingleImageShowModule(
-                                        scale: collageScreenController.scale2.value,
-                                        previousScale: collageScreenController.previousScale2.value,
-                                        index: 2),
+                                    SingleImageShowModule(index: 2),
 
                                   ]
                               ),
@@ -3787,15 +2848,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                             Expanded(
                               child: Row(
                                   children: [
-                                    SingleImageShowModule(
-                                        scale: collageScreenController.scale3.value,
-                                        previousScale: collageScreenController.previousScale3.value,
-                                        index: 3),
+                                    SingleImageShowModule(index: 3),
                                     SizedBox(width:5),
-                                    SingleImageShowModule(
-                                        scale: collageScreenController.scale4.value,
-                                        previousScale: collageScreenController.previousScale4.value,
-                                        index: 4),
+                                    SingleImageShowModule(index: 4),
 
                                   ]
                               ),
@@ -3804,10 +2859,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                       )
                   ),
                   SizedBox(width:5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                 ],
               ),
             ),
@@ -3823,29 +2875,16 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                 ],
               ),
             ),
@@ -3853,15 +2892,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                 ],
               ),
             ),
@@ -3879,24 +2912,14 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
                   Expanded(
                       child: Column(
                           children: [
-                            SingleImageShowModule(
-                                scale: collageScreenController.scale1.value,
-                                previousScale: collageScreenController.previousScale1.value,
-                                index: 1),
+                            SingleImageShowModule(index: 1),
                             SizedBox(height: 5),
-                            SingleImageShowModule(
-                                scale: collageScreenController.scale2.value,
-                                previousScale: collageScreenController.previousScale2.value,
-                                index: 2),
+                            SingleImageShowModule(index: 2),
                           ]
                       )
                   ),
@@ -3911,23 +2934,14 @@ class _ImageListModuleState extends State<ImageListModule> {
                   Expanded(
                       child: Column(
                           children: [
-                            SingleImageShowModule(
-                                scale: collageScreenController.scale3.value,
-                                previousScale: collageScreenController.previousScale3.value,
-                                index: 3),
+                            SingleImageShowModule(index: 3),
                             SizedBox(height:5),
-                            SingleImageShowModule(
-                                scale: collageScreenController.scale4.value,
-                                previousScale: collageScreenController.previousScale4.value,
-                                index: 4),
+                            SingleImageShowModule(index: 4),
                           ]
                       )
                   ),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
 
                 ],
               ),
@@ -3955,21 +2969,11 @@ class _ImageListModuleState extends State<ImageListModule> {
                   Expanded(
                     child: Row(
                         children:[
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale.value,
-                              previousScale: collageScreenController
-                                  .previousScale.value,
-                              index: 0),
+                          SingleImageShowModule(index: 0),
                           SizedBox(width: 5),
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale1.value,
-                              previousScale: collageScreenController.previousScale1.value,
-                              index: 1),
+                          SingleImageShowModule(index: 1),
                           SizedBox(width: 5),
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale2.value,
-                              previousScale: collageScreenController.previousScale2.value,
-                              index: 2),
+                          SingleImageShowModule(index: 2),
                         ]
                     ),
                   ),
@@ -3977,20 +2981,11 @@ class _ImageListModuleState extends State<ImageListModule> {
                   Expanded(
                     child: Row(
                         children:[
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale3.value,
-                              previousScale: collageScreenController.previousScale3.value,
-                              index: 3),
+                          SingleImageShowModule(index: 3),
                           SizedBox(width: 5),
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale4.value,
-                              previousScale: collageScreenController.previousScale4.value,
-                              index: 4),
+                          SingleImageShowModule(index: 4),
                           SizedBox(width: 5),
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale5.value,
-                              previousScale: collageScreenController.previousScale5.value,
-                              index: 5),
+                          SingleImageShowModule(index: 5),
                         ]
                     ),
                   )
@@ -4025,16 +3020,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                   Expanded(
                     child: Row(
                         children:[
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale.value,
-                              previousScale: collageScreenController
-                                  .previousScale.value,
-                              index: 0),
+                          SingleImageShowModule(index: 0),
                           SizedBox(width: 5),
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale1.value,
-                              previousScale: collageScreenController.previousScale1.value,
-                              index: 1),
+                          SingleImageShowModule(index: 1),
                         ]
                     ),
                   ),
@@ -4042,15 +3030,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                   Expanded(
                     child: Row(
                         children:[
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale2.value,
-                              previousScale: collageScreenController.previousScale2.value,
-                              index: 2),
+                          SingleImageShowModule(index: 2),
                           SizedBox(width: 5),
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale3.value,
-                              previousScale: collageScreenController.previousScale3.value,
-                              index: 3),
+                          SingleImageShowModule(index: 3),
                         ]
                     ),
                   ),
@@ -4058,15 +3040,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                   Expanded(
                     child: Row(
                         children:[
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale4.value,
-                              previousScale: collageScreenController.previousScale4.value,
-                              index: 4),
+                          SingleImageShowModule(index: 4),
                           SizedBox(width: 5),
-                          SingleImageShowModule(
-                              scale: collageScreenController.scale5.value,
-                              previousScale: collageScreenController.previousScale5.value,
-                              index: 5),
+                          SingleImageShowModule(index: 5),
                         ]
                     ),
                   )
@@ -4096,11 +3072,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         flex:3,
                         child: Container()
                     ),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale.value,
-                        previousScale: collageScreenController
-                            .previousScale.value,
-                        index: 0),
+                    SingleImageShowModule(index: 0),
                   ]
               ),
             ),
@@ -4112,10 +3084,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         flex:2,
                         child: Container()
                     ),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale1.value,
-                        previousScale: collageScreenController.previousScale1.value,
-                        index: 1),
+                    SingleImageShowModule(index: 1),
                     Expanded(
                         flex:1,
                         child: Container()
@@ -4131,10 +3100,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         flex:1,
                         child: Container()
                     ),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale2.value,
-                        previousScale: collageScreenController.previousScale2.value,
-                        index: 2),
+                    SingleImageShowModule(index: 2),
                     Expanded(
                         flex:1,
                         child: Container()
@@ -4150,10 +3116,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         flex:1,
                         child: Container()
                     ),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale3.value,
-                        previousScale: collageScreenController.previousScale3.value,
-                        index: 3),
+                    SingleImageShowModule(index: 3),
                     Expanded(
                         flex:2,
                         child: Container()
@@ -4169,10 +3132,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                         flex:1,
                         child: Container()
                     ),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale4.value,
-                        previousScale: collageScreenController.previousScale4.value,
-                        index: 4),
+                    SingleImageShowModule(index: 4),
                     Expanded(
                         flex:3,
                         child: Container()
@@ -4184,10 +3144,7 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale5.value,
-                        previousScale: collageScreenController.previousScale5.value,
-                        index: 5),
+                    SingleImageShowModule(index: 5),
                     Expanded(
                         flex:3,
                         child: Container()
@@ -4206,24 +3163,14 @@ class _ImageListModuleState extends State<ImageListModule> {
         decoration: collageMainImageBoxDecoration(),
         child: Column(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0),
+            SingleImageShowModule(index: 0),
             SizedBox(height: 5),
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
 
                 ],
               ),
@@ -4232,20 +3179,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                 ],
               ),
             ),
@@ -4256,7 +3194,7 @@ class _ImageListModuleState extends State<ImageListModule> {
         : Container());
   }
 
-  Widget sevenImageSelectedModule(int selectedIndex){
+Widget sevenImageSelectedModule(int selectedIndex){
     return Obx(() =>
     selectedIndex == 0
         ? ClipRRect(
@@ -4268,16 +3206,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0, flex:2,),
+                  SingleImageShowModule(index: 0, flex:2,),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
@@ -4285,20 +3216,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                 ],
               ),
             ),
@@ -4306,15 +3228,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale6.value,
-                      previousScale: collageScreenController.previousScale6.value,
-                      index: 6, flex:2,),
+                  SingleImageShowModule(index: 6, flex:2,),
                 ],
               ),
             ),
@@ -4332,16 +3248,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0, flex:2,),
+                  SingleImageShowModule(index: 0, flex:2,),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                 ],
               ),
             ),
@@ -4349,20 +3258,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                 ],
               ),
             ),
@@ -4370,15 +3270,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale6.value,
-                      previousScale: collageScreenController.previousScale6.value,
-                      index: 6, flex:2,),
+                  SingleImageShowModule(index: 6, flex:2,),
                 ],
               ),
             ),
@@ -4396,21 +3290,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width:5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width:5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
@@ -4418,28 +3302,16 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width:5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(width:5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                 ],
               ),
             ),
             SizedBox(height: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale6.value,
-                previousScale: collageScreenController.previousScale6.value,
-                index: 6),
+            SingleImageShowModule(index: 6),
           ],
         ),
       ),
@@ -4454,21 +3326,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
@@ -4476,28 +3338,16 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                 ],
               ),
             ),
             SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale6.value,
-                previousScale: collageScreenController.previousScale6.value,
-                index: 6),
+            SingleImageShowModule(index: 6),
           ],
         ),
       ),
@@ -4513,21 +3363,11 @@ class _ImageListModuleState extends State<ImageListModule> {
                 flex:2,
                 child: Column(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale.value,
-                        previousScale: collageScreenController
-                            .previousScale.value,
-                        index: 0),
+                    SingleImageShowModule(index: 0),
                     SizedBox(height: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale1.value,
-                        previousScale: collageScreenController.previousScale1.value,
-                        index: 1),
+                    SingleImageShowModule(index: 1),
                     SizedBox(height: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale2.value,
-                        previousScale: collageScreenController.previousScale2.value,
-                        index: 2),
+                    SingleImageShowModule(index: 2),
                   ],
                 )
             ),
@@ -4536,25 +3376,13 @@ class _ImageListModuleState extends State<ImageListModule> {
                 flex:1,
                 child: Column(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale3.value,
-                        previousScale: collageScreenController.previousScale3.value,
-                        index: 3),
+                    SingleImageShowModule(index: 3),
                     SizedBox(height: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale4.value,
-                        previousScale: collageScreenController.previousScale4.value,
-                        index: 4),
+                    SingleImageShowModule(index: 4),
                     SizedBox(height: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale5.value,
-                        previousScale: collageScreenController.previousScale5.value,
-                        index: 5),
+                    SingleImageShowModule(index: 5),
                     SizedBox(height: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale6.value,
-                        previousScale: collageScreenController.previousScale6.value,
-                        index: 6),
+                    SingleImageShowModule(index: 6),
                   ],
                 )
             ),
@@ -4574,21 +3402,11 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:2,
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
@@ -4598,25 +3416,13 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:1,
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale6.value,
-                      previousScale: collageScreenController.previousScale6.value,
-                      index: 6),
+                  SingleImageShowModule(index: 6),
                 ],
               ),
             ),
@@ -4636,16 +3442,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:2,
               child: Row(
                   children:[
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale.value,
-                        previousScale: collageScreenController
-                            .previousScale.value,
-                        index: 0),
+                    SingleImageShowModule(index: 0),
                     SizedBox(width:5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale1.value,
-                        previousScale: collageScreenController.previousScale1.value,
-                        index: 1),
+                    SingleImageShowModule(index: 1),
                   ]
               ),
             ),
@@ -4654,15 +3453,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:1,
               child: Row(
                   children:[
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale2.value,
-                        previousScale: collageScreenController.previousScale2.value,
-                        index: 2),
+                    SingleImageShowModule(index: 2),
                     SizedBox(width:5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale3.value,
-                        previousScale: collageScreenController.previousScale3.value,
-                        index: 3),
+                    SingleImageShowModule(index: 3),
                   ]
               ),
             ),
@@ -4670,20 +3463,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                   children:[
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale4.value,
-                        previousScale: collageScreenController.previousScale4.value,
-                        index: 4),
+                    SingleImageShowModule(index: 4),
                     SizedBox(width:5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale5.value,
-                        previousScale: collageScreenController.previousScale5.value,
-                        index: 5),
+                    SingleImageShowModule(index: 5),
                     SizedBox(width:5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale6.value,
-                        previousScale: collageScreenController.previousScale6.value,
-                        index: 6),
+                    SingleImageShowModule(index: 6),
                   ]
               ),
             ),
@@ -4703,30 +3487,17 @@ class _ImageListModuleState extends State<ImageListModule> {
                 .activeColor.value]),
         child: Column(
           children: [
-            SingleImageShowModule(
-                scale: collageScreenController.scale.value,
-                previousScale: collageScreenController
-                    .previousScale.value,
-                index: 0, flex:2,),
+            SingleImageShowModule(index: 0, flex:2,),
             SizedBox(height: 5),
             Expanded(
               flex:1,
               child: Row(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale1.value,
-                        previousScale: collageScreenController.previousScale1.value,
-                        index: 1),
+                    SingleImageShowModule(index: 1),
                     SizedBox(width: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale2.value,
-                        previousScale: collageScreenController.previousScale2.value,
-                        index: 2),
+                    SingleImageShowModule(index: 2),
                     SizedBox(width: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale3.value,
-                        previousScale: collageScreenController.previousScale3.value,
-                        index: 3),
+                    SingleImageShowModule(index: 3),
                   ]
               ),
             ),
@@ -4735,20 +3506,11 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:1,
               child: Row(
                   children: [
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale4.value,
-                        previousScale: collageScreenController.previousScale4.value,
-                        index: 4),
+                    SingleImageShowModule(index: 4),
                     SizedBox(width: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale5.value,
-                        previousScale: collageScreenController.previousScale5.value,
-                        index: 5),
+                    SingleImageShowModule(index: 5),
                     SizedBox(width: 5),
-                    SingleImageShowModule(
-                        scale: collageScreenController.scale6.value,
-                        previousScale: collageScreenController.previousScale6.value,
-                        index: 6),
+                    SingleImageShowModule(index: 6),
                   ]
               ),
             ),
@@ -4767,47 +3529,25 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
             SizedBox(width: 5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale3.value,
-                previousScale: collageScreenController.previousScale3.value,
-                index: 3),
+            SingleImageShowModule(index: 3),
             SizedBox(width: 5),
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale6.value,
-                      previousScale: collageScreenController.previousScale6.value,
-                      index: 6),
+                  SingleImageShowModule(index: 6),
                 ],
               ),
             ),
@@ -4827,21 +3567,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
                 child: Row(
                     children:[
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale.value,
-                          previousScale: collageScreenController
-                              .previousScale.value,
-                          index: 0),
+                      SingleImageShowModule(index: 0),
                       SizedBox(width:5),
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale1.value,
-                          previousScale: collageScreenController.previousScale1.value,
-                          index: 1),
+                      SingleImageShowModule(index: 1),
                       SizedBox(width:5),
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale2.value,
-                          previousScale: collageScreenController.previousScale2.value,
-                          index: 2),
+                      SingleImageShowModule(index: 2),
                     ]
                 )
             ),
@@ -4849,15 +3579,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
                 child: Row(
                     children:[
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale3.value,
-                          previousScale: collageScreenController.previousScale3.value,
-                          index: 3),
+                      SingleImageShowModule(index: 3),
                       SizedBox(width:5),
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale4.value,
-                          previousScale: collageScreenController.previousScale4.value,
-                          index: 4),
+                      SingleImageShowModule(index: 4),
                     ]
                 )
             ),
@@ -4865,15 +3589,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5, flex:2,),
+                  SingleImageShowModule(index: 5, flex:2,),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale6.value,
-                      previousScale: collageScreenController.previousScale6.value,
-                      index: 6),
+                  SingleImageShowModule(index: 6),
                 ],
               ),
             ),
@@ -4892,21 +3610,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
@@ -4914,15 +3622,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                 ],
               ),
             ),
@@ -4930,15 +3632,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Column(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5, flex:2,),
+                  SingleImageShowModule(index: 5, flex:2,),
                   SizedBox(height: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale6.value,
-                      previousScale: collageScreenController.previousScale6.value,
-                      index: 6),
+                  SingleImageShowModule(index: 6),
                 ],
               ),
             ),
@@ -4960,16 +3656,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
                 child: Column(
                     children: [
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale.value,
-                          previousScale: collageScreenController
-                              .previousScale.value,
-                          index: 0),
+                      SingleImageShowModule(index: 0),
                       SizedBox(height:5),
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale1.value,
-                          previousScale: collageScreenController.previousScale1.value,
-                          index: 1),
+                      SingleImageShowModule(index: 1),
                     ]
                 )
 
@@ -4978,20 +3667,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
                 child: Column(
                     children: [
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale2.value,
-                          previousScale: collageScreenController.previousScale2.value,
-                          index: 2),
+                      SingleImageShowModule(index: 2),
                       SizedBox(height:5),
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale3.value,
-                          previousScale: collageScreenController.previousScale3.value,
-                          index: 3),
+                      SingleImageShowModule(index: 3),
                       SizedBox(height:5),
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale4.value,
-                          previousScale: collageScreenController.previousScale4.value,
-                          index: 4),
+                      SingleImageShowModule(index: 4),
                     ]
                 )
             ),
@@ -4999,15 +3679,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
                 child: Column(
                     children: [
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale5.value,
-                          previousScale: collageScreenController.previousScale5.value,
-                          index: 5),
+                      SingleImageShowModule(index: 5),
                       SizedBox(height:5),
-                      SingleImageShowModule(
-                          scale: collageScreenController.scale6.value,
-                          previousScale: collageScreenController.previousScale6.value,
-                          index: 6),
+                      SingleImageShowModule(index: 6),
                     ]
                 )
 
@@ -5029,47 +3703,25 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width:5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1),
+                  SingleImageShowModule(index: 1),
                   SizedBox(width:5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                 ],
               ),
             ),
             SizedBox(height:5),
-            SingleImageShowModule(
-                scale: collageScreenController.scale3.value,
-                previousScale: collageScreenController.previousScale3.value,
-                index: 3),
+            SingleImageShowModule(index: 3),
             SizedBox(height:5),
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(width:5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                   SizedBox(width:5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale6.value,
-                      previousScale: collageScreenController.previousScale6.value,
-                      index: 6),
+                  SingleImageShowModule(index: 6),
                 ],
               ),
             ),
@@ -5089,24 +3741,14 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:1,
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width:5),
                   Expanded(
                       child: Row(
                           children:[
-                            SingleImageShowModule(
-                                scale: collageScreenController.scale1.value,
-                                previousScale: collageScreenController.previousScale1.value,
-                                index: 1),
+                            SingleImageShowModule(index: 1),
                             SizedBox(width:5),
-                            SingleImageShowModule(
-                                scale: collageScreenController.scale2.value,
-                                previousScale: collageScreenController.previousScale2.value,
-                                index: 2),
+                            SingleImageShowModule(index: 2),
                           ]
                       )
                   )
@@ -5118,31 +3760,19 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:2,
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3),
+                  SingleImageShowModule(index: 3),
                   SizedBox(width:5),
                   Expanded(
                       child: Column(
                           children: [
-                            SingleImageShowModule(
-                                scale: collageScreenController.scale4.value,
-                                previousScale: collageScreenController.previousScale4.value,
-                                index: 4),
+                            SingleImageShowModule(index: 4),
                             SizedBox(height:5),
                             Expanded(
                                 child: Row(
                                     children: [
-                                      SingleImageShowModule(
-                                          scale: collageScreenController.scale5.value,
-                                          previousScale: collageScreenController.previousScale5.value,
-                                          index: 5),
+                                      SingleImageShowModule(index: 5),
                                       SizedBox(width:5),
-                                      SingleImageShowModule(
-                                          scale: collageScreenController.scale6.value,
-                                          previousScale: collageScreenController.previousScale6.value,
-                                          index: 6),
+                                      SingleImageShowModule(index: 6),
                                     ]
                                 )
                             )
@@ -5168,16 +3798,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1,flex:2,),
+                  SingleImageShowModule(index: 1,flex:2,),
                 ],
               ),
             ),
@@ -5185,15 +3808,9 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale3.value,
-                      previousScale: collageScreenController.previousScale3.value,
-                      index: 3, flex:2,),
+                  SingleImageShowModule(index: 3, flex:2,),
                 ],
               ),
             ),
@@ -5201,20 +3818,11 @@ class _ImageListModuleState extends State<ImageListModule> {
             Expanded(
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale4.value,
-                      previousScale: collageScreenController.previousScale4.value,
-                      index: 4),
+                  SingleImageShowModule(index: 4),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale5.value,
-                      previousScale: collageScreenController.previousScale5.value,
-                      index: 5),
+                  SingleImageShowModule(index: 5),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale6.value,
-                      previousScale: collageScreenController.previousScale6.value,
-                      index: 6),
+                  SingleImageShowModule(index: 6),
                 ],
               ),
             ),
@@ -5233,16 +3841,9 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:1,
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale.value,
-                      previousScale: collageScreenController
-                          .previousScale.value,
-                      index: 0),
+                  SingleImageShowModule(index: 0),
                   SizedBox(width: 5),
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale1.value,
-                      previousScale: collageScreenController.previousScale1.value,
-                      index: 1, flex:2,),
+                  SingleImageShowModule(index: 1, flex:2,),
 
                 ],
               ),
@@ -5252,10 +3853,7 @@ class _ImageListModuleState extends State<ImageListModule> {
               flex:2,
               child: Row(
                 children: [
-                  SingleImageShowModule(
-                      scale: collageScreenController.scale2.value,
-                      previousScale: collageScreenController.previousScale2.value,
-                      index: 2),
+                  SingleImageShowModule(index: 2),
                   SizedBox(width: 5),
                   Expanded(
                       flex:2,
@@ -5264,15 +3862,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                             Expanded(
                               child: Row(
                                   children: [
-                                    SingleImageShowModule(
-                                        scale: collageScreenController.scale3.value,
-                                        previousScale: collageScreenController.previousScale3.value,
-                                        index: 3),
+                                    SingleImageShowModule(index: 3),
                                     SizedBox(width:5),
-                                    SingleImageShowModule(
-                                        scale: collageScreenController.scale4.value,
-                                        previousScale: collageScreenController.previousScale4.value,
-                                        index: 4),
+                                    SingleImageShowModule(index: 4),
                                   ]
                               ),
                             ),
@@ -5280,15 +3872,9 @@ class _ImageListModuleState extends State<ImageListModule> {
                             Expanded(
                               child: Row(
                                   children: [
-                                    SingleImageShowModule(
-                                        scale: collageScreenController.scale5.value,
-                                        previousScale: collageScreenController.previousScale5.value,
-                                        index: 5),
+                                    SingleImageShowModule(index: 5),
                                     SizedBox(width:5),
-                                    SingleImageShowModule(
-                                        scale: collageScreenController.scale6.value,
-                                        previousScale: collageScreenController.previousScale6.value,
-                                        index: 6),
+                                    SingleImageShowModule(index: 6),
                                   ]
                               ),
                             )

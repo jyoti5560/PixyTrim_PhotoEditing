@@ -172,7 +172,7 @@ class _CameraScreenState extends State<CameraScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.back();
+                    //Get.back();
                   },
                   child: Container(
                     child: Image.asset(

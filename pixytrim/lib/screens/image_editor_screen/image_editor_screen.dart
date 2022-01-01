@@ -27,42 +27,40 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: Stack(
-        children: [
-          MainBackgroundWidget(),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            MainBackgroundWidget(),
 
-          Container(
-            margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-            child: Column(
-              children: [
-              SizedBox(
-                height: 60,
-              ),
+            Container(
+              margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+              child: Column(
+                children: [
+                  appBar(),
 
-                appBar(),
+                  SizedBox(height: 20,),
 
-                SizedBox(height: 20,),
-
-                Expanded(
-                  child: ImagePainter.file(
-                    widget.file,
-                    repaintKey: repaintKey,
-                    key: _imageKey,
-                    scalable: false,
-                    initialStrokeWidth: 2,
-                    initialColor: Colors.green,
-                    initialPaintMode: PaintMode.freeStyle,
-                    // placeholderWidget: Container(
-                    //   child: Text("jdjdh"),
-                    // ),
+                  Expanded(
+                    child: ImagePainter.file(
+                      widget.file,
+                      repaintKey: repaintKey,
+                      key: _imageKey,
+                      scalable: false,
+                      initialStrokeWidth: 2,
+                      initialColor: Colors.green,
+                      initialPaintMode: PaintMode.freeStyle,
+                      // placeholderWidget: Container(
+                      //   child: Text("jdjdh"),
+                      // ),
+                    ),
                   ),
-                ),
 
-              ],
-            ),
-          )
+                ],
+              ),
+            )
 
-        ],
+          ],
+        ),
       ),
     );
   }

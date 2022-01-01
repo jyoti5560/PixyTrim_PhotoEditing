@@ -32,32 +32,31 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          MainBackgroundWidget(),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            MainBackgroundWidget(),
 
-          Container(
-            margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 60,
-                ),
-                appBar(),
-                SizedBox(
-                  height: 20,
-                ),
-                Expanded(
-                    child: ratioImage()
-                ),
+            Container(
+              margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+              child: Column(
+                children: [
+                  appBar(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                      child: ratioImage()
+                  ),
 
-                SizedBox(height: 20),
+                  SizedBox(height: 20),
 
-                ratioList()
-              ],
-            ),
-          )
-        ],
+                  ratioList()
+                ],
+              ),
+            )
+          ],
+        ),
       )
     );
   }

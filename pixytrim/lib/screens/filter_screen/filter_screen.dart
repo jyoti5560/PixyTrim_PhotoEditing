@@ -27,24 +27,25 @@ class FilterScreenState extends State<FilterScreen> {
   Widget build(BuildContext context) {
     print('selectedImage : ${csController.selectedImage.value}');
     return Scaffold(
-        body: Stack(
+        body: SafeArea(
+          child: Stack(
       children: [
-        MainBackgroundWidget(),
-        Container(
-          margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
-          child: Column(
-            children: [
-              SizedBox(height: 60),
-              appBar(),
-              SizedBox(height: 20),
-              Expanded(child: filterImage()),
-              SizedBox(height: 20),
-              filterList()
-            ],
-          ),
-        )
+          MainBackgroundWidget(),
+          Container(
+            margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+            child: Column(
+              children: [
+                appBar(),
+                SizedBox(height: 20),
+                Expanded(child: filterImage()),
+                SizedBox(height: 20),
+                filterList()
+              ],
+            ),
+          )
       ],
-    ));
+    ),
+        ));
   }
 
 
