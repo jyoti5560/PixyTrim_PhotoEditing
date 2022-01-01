@@ -60,102 +60,106 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
   //   super.initState();
   // }
 
+
   Image ? cardFront;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          MainBackgroundWidget(),
+    return WillPopScope(
+      onWillPop: () async {return false;},
+      child: Scaffold(
+        body: Stack(
+          children: [
+            MainBackgroundWidget(),
 
-          Container(
-            margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-            child: Column(
-              children: [
-                SizedBox(height: 60),
-                appBar(),
-                SizedBox(height: 20),
-                Expanded(
-                    child: RepaintBoundary(
-                      key: key,
-                      child: Container(
-                        width: Get.width,
-                        height: Get.height,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: croppedImage == null && index == 0
-                              ? Crop(
-                            controller: cropController,
-                            image: widget.file.readAsBytesSync(),
-                            onCropped: (croppedData1) {
-                              setState(() {
-                                print('croppedData1 : $croppedData1');
-                                print('croppedData1 : ${croppedData1.runtimeType}');
-                                croppedImage = croppedData1;
-                                isCropping = false;
-                              });
-                              if (this.mounted) {
+            Container(
+              margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+              child: Column(
+                children: [
+                  SizedBox(height: 60),
+                  appBar(),
+                  SizedBox(height: 20),
+                  Expanded(
+                      child: RepaintBoundary(
+                        key: key,
+                        child: Container(
+                          width: Get.width,
+                          height: Get.height,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: croppedImage == null && index == 0
+                                ? Crop(
+                              controller: cropController,
+                              image: widget.file.readAsBytesSync(),
+                              onCropped: (croppedData1) {
                                 setState(() {
-                                  // Your state change code goes here
+                                  print('croppedData1 : $croppedData1');
+                                  print('croppedData1 : ${croppedData1.runtimeType}');
+                                  croppedImage = croppedData1;
+                                  isCropping = false;
                                 });
-                              }
-                            },
-                            initialSize: 0.5,
-                          ):
-                          index == 1 ?
-                          Transform(
-                            transform: Matrix4.rotationX(
-                                (_rotation) * Math.pi / 2
-                            ),
-                            alignment: Alignment.center,
-                            child: Container(
-                              height: MediaQuery.of(context).size.height - 130,
+                                if (this.mounted) {
+                                  setState(() {
+                                    // Your state change code goes here
+                                  });
+                                }
+                              },
+                              initialSize: 0.5,
+                            ):
+                            index == 1 ?
+                            Transform(
+                              transform: Matrix4.rotationX(
+                                  (_rotation) * Math.pi / 2
+                              ),
                               alignment: Alignment.center,
-                              child: Image.file(widget.file),
-                            ),
-                          )
-                          : index == 2 ?
-                          // PhotoView(
-                          //   //enableRotation: true,
-                          //     imageProvider: FileImage(widget.file))
-                          Transform(
-                            transform: Matrix4.identity()..scale(_scale, _scale),
-                            alignment: Alignment.center,
-                            child: Container(
-                              height: MediaQuery.of(context).size.height - 130,
+                              child: Container(
+                                height: MediaQuery.of(context).size.height - 130,
+                                alignment: Alignment.center,
+                                child: Image.file(widget.file),
+                              ),
+                            )
+                            : index == 2 ?
+                            // PhotoView(
+                            //   //enableRotation: true,
+                            //     imageProvider: FileImage(widget.file))
+                            Transform(
+                              transform: Matrix4.identity()..scale(_scale, _scale),
                               alignment: Alignment.center,
-                              child: Image.file(widget.file),
-                            ),
-                          )
-                              : Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                              border: Border.all(color: Colors.grey)
-                            ),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.memory(croppedImage!, fit: BoxFit.fill),
+                              child: Container(
+                                height: MediaQuery.of(context).size.height - 130,
+                                alignment: Alignment.center,
+                                child: Image.file(widget.file),
+                              ),
+                            )
+                                : Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: Colors.grey)
+                              ),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.memory(croppedImage!, fit: BoxFit.fill),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                ),
+                      )
+                  ),
 
-                SizedBox(height: 20),
+                  SizedBox(height: 20),
 
-                index == 0 ? cropRatio() :
-                index == 1 ? rotateRatio() :
-                index == 2 ? scaleRatio()
-                 : Container(),
+                  index == 0 ? cropRatio() :
+                  index == 1 ? rotateRatio() :
+                  index == 2 ? scaleRatio()
+                   : Container(),
 
-                SizedBox(height: 20),
+                  SizedBox(height: 20),
 
-                resizeCropButton()
-              ],
-            ),
-          )
-        ],
+                  resizeCropButton()
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -492,7 +496,8 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                     child: Image.asset(
                       Images.ic_rotate,
                       scale: 2,
-                    )),
+                    ),
+                ),
               ),
             ),
           ),
@@ -565,5 +570,13 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
       },
     );
   }
+
+  // @override
+  // void dispose() {
+  //   showAlertDialog();
+  //   super.dispose();
+  // }
+
+
 }
 

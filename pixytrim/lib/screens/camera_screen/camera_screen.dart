@@ -45,7 +45,6 @@ class _CameraScreenState extends State<CameraScreen> {
     Images.ic_resize,
     Images.ic_edit_image,
     Images.ic_image_ratio,
-    //Images.ic_image_ratio,
   ];
 
   int? i;
@@ -79,7 +78,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                 height: double.infinity,
                                 child: cameraScreenController.addImageFromCameraList.length.isGreaterThan(0)
                                     ? Image.file(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
-                                    height: 120, width: 120, fit: BoxFit.cover)
+                                    height: 120, width: 120, fit: BoxFit.fill)
                                     : null,
                               ),
                             ),
