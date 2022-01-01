@@ -1,15 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
-//import 'package:get/get.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:video_trimmer/video_trimmer.dart';
 
 class TrimVideo extends StatefulWidget {
-  //const TrimVideo({Key? key}) : super(key: key);
   final File file;
   TrimVideo({required this.file});
 
@@ -39,209 +35,70 @@ class _TrimVideoState extends State<TrimVideo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Builder(
-        builder: (context) => Center(
-          child: SafeArea(
-            child: Stack(
-              children: [
-                MainBackgroundWidget(),
 
-                Column(
-                  children: [
-
-                    appBar(),
-
-                    SizedBox(
-                      height: 20,
-                    ),
-
-                    Visibility(
-                      visible: _progressVisibility,
-                      child: LinearProgressIndicator(
-                        backgroundColor: Colors.red,
-                      ),
-                    ),
-
-                    // Expanded(
-                    //   child: Stack(
-                    //     alignment: Alignment.center,
-                    //     children: [
-                    //       Container(
-                    //         width: Get.width,
-                    //           decoration: BoxDecoration(
-                    //             borderRadius: BorderRadius.circular(20),
-                    //           ),
-                    //           child: VideoViewer(trimmer: _trimmer)
-                    //           // child: ClipRRect(
-                    //           //   borderRadius: BorderRadius.circular(20),
-                    //           //     child: VideoViewer(trimmer: _trimmer))
-                    //       ),
-                    //
-                    //       TextButton(
-                    //         child: _isPlaying
-                    //             ? Icon(
-                    //           Icons.pause,
-                    //           size: 80.0,
-                    //           color: Colors.white,
-                    //         )
-                    //             : Icon(
-                    //           Icons.play_arrow,
-                    //           size: 80.0,
-                    //           color: Colors.white,
-                    //         ),
-                    //         onPressed: () async {
-                    //           bool playbackState = await _trimmer.videPlaybackControl(
-                    //             startValue: _startValue,
-                    //             endValue: _endValue,
-                    //           );
-                    //           setState(() {
-                    //             _isPlaying = playbackState;
-                    //           });
-                    //         },
-                    //       ),
-                    //     ],
-                    //   ),
-                    //
-                    //
-                    // ),
-                    Expanded(
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 25, right: 25),
-                              width: Get.width,
-                              height: double.infinity,
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: VideoViewer(trimmer: _trimmer)),
+      body: SafeArea(
+        child: Builder(
+            builder: (context) => Center(
+                  child: Stack(
+                    children: [
+                      MainBackgroundWidget(),
+                      Column(
+                        children: [
+                          appBar(),
+                          SizedBox(height: 20),
+                          Visibility(
+                            visible: _progressVisibility,
+                            child: LinearProgressIndicator(
+                              backgroundColor: Colors.red,
                             ),
-
-                          TextButton(
-                            child: _isPlaying
-                                ? Icon(
-                              Icons.pause,
-                              size: 80.0,
-                              color: Colors.white,
-                            )
-                                : Icon(
-                              Icons.play_arrow,
-                              size: 80.0,
-                              color: Colors.white,
-                            ),
-                            onPressed: () async {
-                              bool playbackState = await _trimmer.videPlaybackControl(
-                                startValue: _startValue,
-                                endValue: _endValue,
-
-                              );
-                              setState(() {
-                                _isPlaying = playbackState;
-                              });
-                            },
                           ),
-                          ],
-                        )
-                    ),
-
-                    SizedBox(height: 20,),
-
-                    trimVideo(),
-                    SizedBox(height: 20,),
-
-                  ],
+                          Expanded(
+                              child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 25, right: 25),
+                                width: Get.width,
+                                height: double.infinity,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: VideoViewer(trimmer: _trimmer)),
+                              ),
+                              TextButton(
+                                child: _isPlaying
+                                    ? Icon(
+                                        Icons.pause,
+                                        size: 80.0,
+                                        color: Colors.white,
+                                      )
+                                    : Icon(
+                                        Icons.play_arrow,
+                                        size: 80.0,
+                                        color: Colors.white,
+                                      ),
+                                onPressed: () async {
+                                  bool playbackState =
+                                      await _trimmer.videPlaybackControl(
+                                    startValue: _startValue,
+                                    endValue: _endValue,
+                                  );
+                                  setState(() {
+                                    _isPlaying = playbackState;
+                                  });
+                                },
+                              ),
+                            ],
+                          )),
+                          SizedBox(height: 20),
+                          trimVideo(),
+                          SizedBox(height: 20),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-
-            ),
-          ),
-        )
-
-
-
+        ),
       ),
-
-      // body: SafeArea(
-      //   child: Builder(
-      //     builder: (context) => Center(
-      //       child: Container(
-      //         padding: EdgeInsets.only(bottom: 30.0),
-      //         color: Colors.black,
-      //         child: Column(
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           mainAxisSize: MainAxisSize.max,
-      //           children: <Widget>[
-      //             Visibility(
-      //               visible: _progressVisibility,
-      //               child: LinearProgressIndicator(
-      //                 backgroundColor: Colors.red,
-      //               ),
-      //             ),
-      //             ElevatedButton(
-      //               onPressed: _progressVisibility
-      //                   ? null
-      //                   : () async {
-      //                 // _saveVideo().then((outputPath) {
-      //                 //   print('OUTPUT PATH: $outputPath');
-      //                 //   final snackBar = SnackBar(
-      //                 //       content: Text('Video Saved successfully'));
-      //                 //   ScaffoldMessenger.of(context).showSnackBar(
-      //                 //     snackBar,
-      //                 //   );
-      //                 // });
-      //               },
-      //               child: Text("SAVE"),
-      //             ),
-      //             Expanded(
-      //               child: VideoViewer(trimmer: _trimmer),
-      //             ),
-      //             Center(
-      //               child: TrimEditor(
-      //                 trimmer: _trimmer,
-      //                 viewerHeight: 50.0,
-      //                 viewerWidth: MediaQuery.of(context).size.width,
-      //                 maxVideoLength: Duration(seconds: 120),
-      //                 onChangeStart: (value) {
-      //                   _startValue = value;
-      //                 },
-      //                 onChangeEnd: (value) {
-      //                   _endValue = value;
-      //                 },
-      //                 onChangePlaybackState: (value) {
-      //                   setState(() {
-      //                     _isPlaying = value;
-      //                   });
-      //                 },
-      //               ),
-      //             ),
-      //             TextButton(
-      //               child: _isPlaying
-      //                   ? Icon(
-      //                 Icons.pause,
-      //                 size: 80.0,
-      //                 color: Colors.white,
-      //               )
-      //                   : Icon(
-      //                 Icons.play_arrow,
-      //                 size: 80.0,
-      //                 color: Colors.white,
-      //               ),
-      //               onPressed: () async {
-      //                 bool playbackState = await _trimmer.videPlaybackControl(
-      //                   startValue: _startValue,
-      //                   endValue: _endValue,
-      //                 );
-      //                 setState(() {
-      //                   _isPlaying = playbackState;
-      //                 });
-      //               },
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ),
     );
   }
 
@@ -264,8 +121,10 @@ class _TrimVideoState extends State<TrimVideo> {
                     Get.back();
                   },
                   child: Container(
-                      child: Image.asset(Images.ic_left_arrow, scale: 2.5,)
-                  ),
+                      child: Image.asset(
+                    Images.ic_left_arrow,
+                    scale: 2.5,
+                  )),
                 ),
                 Container(
                   child: Text(
@@ -277,31 +136,25 @@ class _TrimVideoState extends State<TrimVideo> {
                   ),
                 ),
                 GestureDetector(
-                  onTap:  _progressVisibility ? null : ()async{
-                    //Get.back();
-                    //await _capturePng();
-                    _saveVideo().then((outputPath) {
-                      print('OUTPUT PATH: $outputPath');
-                      final snackBar = SnackBar(
-                          content: Text('Video Saved successfully'));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        snackBar,
-                      );
-                    });
-                  },
+                  onTap: _progressVisibility
+                      ? null
+                      : () async {
+                          await _saveVideo();
+                        },
                   child: Container(
                       child: Image.asset(
-                        Images.ic_downloading,
-                        scale: 2,
-                      )),
+                    Images.ic_downloading,
+                    scale: 2,
+                  )),
                 ),
               ],
-            )),
+            ),
+        ),
       ),
     );
   }
 
-  trimVideo(){
+  trimVideo() {
     return Container(
       child: TrimEditor(
         durationTextStyle: TextStyle(fontFamily: "", fontSize: 16),
@@ -324,24 +177,27 @@ class _TrimVideoState extends State<TrimVideo> {
     );
   }
 
-  Future<String?> _saveVideo() async {
+  Future _saveVideo() async {
     setState(() {
       _progressVisibility = true;
     });
 
-    String? _value;
+    String _value = "";
 
     await _trimmer
         .saveTrimmedVideo(startValue: _startValue, endValue: _endValue)
         .then((value) async {
       setState(() {
-        _progressVisibility = false;
+        print('value : $value');
         _value = value;
-
+        print('_value :: $_value');
       });
-      await GallerySaver.saveVideo("${_value!}", albumName: "OTWPhotoEditingDemo");
+      // await GallerySaver.saveVideo(_value,
+      //     albumName: "OTWPhotoEditingDemo");
     });
-
-    return _value;
+    setState(() {
+      _progressVisibility = false;
+    });
   }
+
 }

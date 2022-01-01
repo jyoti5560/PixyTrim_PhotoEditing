@@ -62,12 +62,14 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
   //   super.initState();
   // }
 
+
   Image ? cardFront;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
+    return WillPopScope(
+      onWillPop: () async {return false;},
+      child: Scaffold(
+        body: Stack(
           children: [
             MainBackgroundWidget(),
 
@@ -75,6 +77,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
               margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
               child: Column(
                 children: [
+                  SizedBox(height: 60),
                   appBar(),
                   SizedBox(height: 20),
                   Expanded(
@@ -116,7 +119,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                                 child: Image.file(widget.file),
                               ),
                             )
-                            : index == 2 ?
+                                : index == 2 ?
                             PhotoView(
                               //enableRotation: true,
                                 imageProvider: FileImage(widget.file))
@@ -154,14 +157,26 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                             //     child: Image.file(widget.file,fit: BoxFit.cover,),
                             //   ),
                             // )
+                            // PhotoView(
+                            //   //enableRotation: true,
+                            //     imageProvider: FileImage(widget.file))
+                            // Transform(
+                            //   transform: Matrix4.identity()..scale(_scale, _scale),
+                            //   alignment: Alignment.center,
+                            //   child: Container(
+                            //     height: MediaQuery.of(context).size.height - 130,
+                            //     alignment: Alignment.center,
+                            //     child: Image.file(widget.file),
+                            //   ),
+                            // )
                                 : Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                border: Border.all(color: Colors.grey)
+                                  border: Border.all(color: Colors.grey)
                               ),
                               child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Image.memory(croppedImage!, fit: BoxFit.fill),
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.memory(croppedImage!, fit: BoxFit.fill),
                               ),
                             ),
                           ),
@@ -172,9 +187,10 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                   SizedBox(height: 20),
 
                   index == 0 ? cropRatio() :
-                  index == 1 ? rotateRatio()
-                  //index == 2 ? scaleRatio()
-                   : Container(),
+
+                  index == 1 ? rotateRatio() :
+                  index == 2 ? scaleRatio()
+                      : Container(),
 
                   SizedBox(height: 20),
 
@@ -520,7 +536,8 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                     child: Image.asset(
                       Images.ic_rotate,
                       scale: 2,
-                    )),
+                    ),
+                ),
               ),
             ),
           ),
@@ -595,5 +612,13 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
       },
     );
   }
+
+  // @override
+  // void dispose() {
+  //   showAlertDialog();
+  //   super.dispose();
+  // }
+
+
 }
 

@@ -14,10 +14,6 @@ import 'package:pixytrim/controller/image_size_ratio_controller/image_size_ratio
 import 'dart:ui' as ui;
 
 class ImageSizeRatioScreen extends StatefulWidget {
-  //File file;
-  //ImageSizeRatioScreen({required this.file});
-  //const ImageSizeRatioScreen({Key? key}) : super(key: key);
-
   @override
   _ImageSizeRatioScreenState createState() => _ImageSizeRatioScreenState();
 }
@@ -29,6 +25,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
   int ? imageRatioIndex;
   File? file;
   final csController = Get.find<CameraScreenController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +46,18 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
                       child: ratioImage()
                   ),
 
-                  SizedBox(height: 20),
+          Container(
+            margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+            child: Column(
+              children: [
+                SizedBox(height: 60),
+                appBar(),
+                SizedBox(height: 20),
+                Expanded(
+                    child: ratioImage(),
+                ),
+             SizedBox(height: 20),
+
 
                   ratioList()
                 ],
@@ -57,8 +65,11 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
             )
           ],
         ),
-      )
-    );
+
+
+            ),
+        ],
+      ), ) , );
   }
 
   Widget appBar() {
@@ -156,7 +167,6 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
   Widget ratioImage(){
     return Obx(
       ()=> Container(
-
         child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: RepaintBoundary(
