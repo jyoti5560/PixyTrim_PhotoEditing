@@ -365,11 +365,10 @@ class _IndexScreenState extends State<IndexScreen> {
   // Select Multiple Images From Gallery
   void selectImages() async {
     final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
-    print('${selectedImages!.length}');
+    // print('${selectedImages!.length}');
     try{
-      if(selectedImages.isEmpty){
+      if(selectedImages!.isEmpty){
       } else if(selectedImages.length == 1 ){
-
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Please Select Minimum 2 images"),
         ));

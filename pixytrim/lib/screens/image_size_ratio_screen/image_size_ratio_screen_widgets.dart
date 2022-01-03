@@ -13,7 +13,7 @@ class SizeRatio1 extends StatelessWidget {
     return Container(
       child: AspectRatio(
         aspectRatio: 1 / 2,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -29,7 +29,7 @@ class SizeRatio2 extends StatelessWidget {
       width: Get.width / 1.2,
       child: AspectRatio(
         aspectRatio: 2 / 3,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -49,7 +49,7 @@ class SizeRatio3 extends StatelessWidget {
       // ),
       child: AspectRatio(
         aspectRatio: 3 / 2,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -68,7 +68,7 @@ class SizeRatio4 extends StatelessWidget {
         width: Get.width / 1.3,
         child: AspectRatio(
           aspectRatio: 3 / 4,
-          child: Image.file(controller.file, fit: BoxFit.fill),
+          child: Image.file(controller.file, fit: BoxFit.cover),
         ),
       ),
     );
@@ -86,7 +86,7 @@ class SizeRatio5 extends StatelessWidget {
       padding: EdgeInsets.only(top: 30, bottom: 30),
       child: AspectRatio(
         aspectRatio: 4 / 3,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -102,7 +102,7 @@ class SizeRatio6 extends StatelessWidget {
       padding: EdgeInsets.only(top: 20, bottom: 20),
       child: AspectRatio(
         aspectRatio: 5 / 4,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -117,7 +117,7 @@ class SizeRatio7 extends StatelessWidget {
     return Container(
       child: AspectRatio(
         aspectRatio: 9 / 16,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -133,7 +133,7 @@ class SizeRatio8 extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 120),
       child: AspectRatio(
         aspectRatio: 20 / 5,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -149,7 +149,7 @@ class SizeRatio9 extends StatelessWidget {
       width: Get.width / 1.2,
       child: AspectRatio(
         aspectRatio: 1 / 1.41,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -166,7 +166,7 @@ class SizeRatio10 extends StatelessWidget {
       width: Get.width / 1.3,
       child: AspectRatio(
         aspectRatio: 1 / 1.41,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -202,7 +202,7 @@ class SizeRatio11 extends StatelessWidget {
     //   ),
     // );
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 180),
+      padding: EdgeInsets.symmetric(vertical: 200),
       child: AspectRatio(
         aspectRatio: 14 / 2,
         child: Image.file(controller.file, fit: BoxFit.cover),
@@ -221,7 +221,7 @@ class SizeRatio12 extends StatelessWidget {
       padding: EdgeInsets.only(top: 100, bottom: 100),
       child: AspectRatio(
         aspectRatio: 1.91 / 1,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -234,10 +234,10 @@ class SizeRatio13 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: Get.width / 2,
+      width: Get.width / 1.4,
       child: AspectRatio(
         aspectRatio: 9 / 16,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -252,7 +252,7 @@ class SizeRatio14 extends StatelessWidget {
     return Container(
       child: AspectRatio(
         aspectRatio: 1 / 1,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -268,7 +268,7 @@ class SizeRatio15 extends StatelessWidget {
       width: Get.width / 1.3,
       child: AspectRatio(
         aspectRatio: 4 / 5,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -283,8 +283,8 @@ class SizeRatio16 extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 180, bottom: 180),
       child: AspectRatio(
-        aspectRatio: 2.39 / 1,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        aspectRatio: 3 / 1.1,
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -300,7 +300,7 @@ class SizeRatio17 extends StatelessWidget {
       width: Get.width / 1.3,
       child: AspectRatio(
         aspectRatio: 4 / 5,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -316,7 +316,7 @@ class SizeRatio18 extends StatelessWidget {
       padding: EdgeInsets.only(top: 150, bottom: 150),
       child: AspectRatio(
         aspectRatio: 2.39 / 1,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -332,7 +332,7 @@ class SizeRatio19 extends StatelessWidget {
       padding: EdgeInsets.only(top: 130, bottom: 130),
       child: AspectRatio(
         aspectRatio: 2.39 / 1,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
@@ -348,7 +348,7 @@ class SizeRatio20 extends StatelessWidget {
       padding: EdgeInsets.only(top: 180, bottom: 180),
       child: AspectRatio(
         aspectRatio: 2.39 / 1,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );
   }
