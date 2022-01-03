@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
@@ -13,11 +14,12 @@ import 'package:pixytrim/controller/camera_screen_controller/camera_screen_contr
 enum SelectedModule { camera, gallery }
 
 class CompressImageScreen extends StatefulWidget {
-  // File file;
   File compressFile;
+  int index;
 
   CompressImageScreen({
     required this.compressFile,
+    required this.index,
   });
 
   @override
@@ -73,6 +75,8 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
+                    widget.compressFile.delete();
+                    csController.compressSize.value;
                     Get.back();
                   },
                   child: Container(
@@ -94,8 +98,8 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    //
                     await saveImage();
+                    csController.compressSize.value = 61;
                     Get.back();
                   },
                   child: Container(
@@ -121,6 +125,7 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
         backgroundColor: Colors.red,
         textColor: Colors.white,
         fontSize: 16.0);
+    widget.compressFile.delete();
   }
 
   Widget imageList() {
@@ -216,6 +221,8 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
                             setState(() {
                               print('value : $value');
                               csController.compressSize.value = value;
+                              compressImage(csController.addImageFromCameraList[widget.index]);
+                              print('Compressed Index : ${widget.index}');
                               csController.loading();
                             });
                           },
@@ -235,4 +242,34 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
       ),
     );
   }
+
+  Future compressImage(File file) async {
+    print("file: $file");
+    final filePath = file.absolute.path;
+    // Create output file path
+    // eg:- "Volume/VM/abcd_out.jpeg"
+    final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
+    print("last inde: $lastIndex");
+    final splitted = filePath.substring(0, (lastIndex));
+    final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
+    var result = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path,
+      outPath,
+      quality: csController.compressSize.value.toInt(),
+    );
+    print("Original path : ${file.lengthSync()}");
+    print(file.absolute.path);
+    print("Compress path : ${result!.lengthSync()}");
+    setState(() {
+      widget.compressFile = result;
+      //cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value] = result;
+    });
+    // setState Required
+    setState(() {});
+    print("compressFile: ${widget.compressFile.lengthSync()}");
+    // setState(() {
+    //
+    // });
+  }
+
 }

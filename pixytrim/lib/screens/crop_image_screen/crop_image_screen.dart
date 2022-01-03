@@ -387,7 +387,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
       await image.toByteData(format: ui.ImageByteFormat.png);
       print("byte data:===$byteData");
       Uint8List pngBytes = byteData!.buffer.asUint8List();
-      File imgFile = new File('$directory/$imgName.png');
+      File imgFile = new File('$directory/$imgName.jpg');
       await imgFile.writeAsBytes(pngBytes);
       setState(() {
         //imageFile = imgFile;

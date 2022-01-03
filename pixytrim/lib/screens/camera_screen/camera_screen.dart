@@ -330,10 +330,11 @@ class _CameraScreenState extends State<CameraScreen> {
                   Get.to(() => BlurScreen());
                 } else if (i == 4) {
                   compressImage(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]).then((value) {
+                    print('index index : ${cameraScreenController.selectedImage.value}');
                     Get.to(() => CompressImageScreen(
                               compressFile: compressFile!,
-                            ))!
-                        .then((value) {});
+                              index: cameraScreenController.selectedImage.value,
+                            ));
                   });
                 } else if (i == 5) {
                   resizeImage(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]).then((value) {
@@ -414,6 +415,7 @@ class _CameraScreenState extends State<CameraScreen> {
     // Create output file path
     // eg:- "Volume/VM/abcd_out.jpeg"
     final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
+    print("last inde: $lastIndex");
     final splitted = filePath.substring(0, (lastIndex));
     final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
     var result = await FlutterImageCompress.compressAndGetFile(

@@ -41,67 +41,70 @@ class _BlurScreenState extends State<BlurScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            MainBackgroundWidget(),
+    return WillPopScope(
+      onWillPop: () async {return false;},
+      child: Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: [
+              MainBackgroundWidget(),
 
-            Container(
-              margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-              child: Column(
-                children: [
-                  appBar(),
-                  SizedBox(height: 20),
-                  // Expanded(
-                  //   child: ClipRRect(
-                  //     borderRadius: BorderRadius.circular(20),
-                  //     child: Container(
-                  //       decoration: BoxDecoration(
-                  //         image: DecorationImage(
-                  //           image: FileImage(csController.addImageFromCameraList[csController.selectedImage.value]),
-                  //           fit: BoxFit.cover,
-                  //         ),
-                  //       ),
-                  //       child: RepaintBoundary(
-                  //         key: key,
-                  //         child: BackdropFilter(
-                  //               filter: ImageFilter.blur(
-                  //                   sigmaX: blurImage, sigmaY: blurImage),
-                  //               child: Container(
-                  //                 color: Colors.black.withOpacity(0.1),
-                  //               ),
-                  //             ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: RepaintBoundary(
-                        key: key,
-                        child: ImageFiltered(
-                          imageFilter: ImageFilter.blur(
-                              sigmaX: blurImage, sigmaY: blurImage),
-                          child: Container(
-                            color: Colors.transparent,
-                            child: csController.addImageFromCameraList[csController.selectedImage.value].toString().isNotEmpty
-                                ? Image.file(csController.addImageFromCameraList[csController.selectedImage.value])
-                                : null,
+              Container(
+                margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                child: Column(
+                  children: [
+                    appBar(),
+                    SizedBox(height: 20),
+                    // Expanded(
+                    //   child: ClipRRect(
+                    //     borderRadius: BorderRadius.circular(20),
+                    //     child: Container(
+                    //       decoration: BoxDecoration(
+                    //         image: DecorationImage(
+                    //           image: FileImage(csController.addImageFromCameraList[csController.selectedImage.value]),
+                    //           fit: BoxFit.cover,
+                    //         ),
+                    //       ),
+                    //       child: RepaintBoundary(
+                    //         key: key,
+                    //         child: BackdropFilter(
+                    //               filter: ImageFilter.blur(
+                    //                   sigmaX: blurImage, sigmaY: blurImage),
+                    //               child: Container(
+                    //                 color: Colors.black.withOpacity(0.1),
+                    //               ),
+                    //             ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: RepaintBoundary(
+                          key: key,
+                          child: ImageFiltered(
+                            imageFilter: ImageFilter.blur(
+                                sigmaX: blurImage, sigmaY: blurImage),
+                            child: Container(
+                              color: Colors.transparent,
+                              child: csController.addImageFromCameraList[csController.selectedImage.value].toString().isNotEmpty
+                                  ? Image.file(csController.addImageFromCameraList[csController.selectedImage.value])
+                                  : null,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
 
-                  SizedBox(height: 20),
+                    SizedBox(height: 20),
 
-                  blurSlider()
-                ],
-              ),
-            )
-          ],
+                    blurSlider()
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -205,7 +208,7 @@ class _BlurScreenState extends State<BlurScreen> {
       await image.toByteData(format: ui.ImageByteFormat.png);
       print("byte data:===$byteData");
       Uint8List pngBytes = byteData!.buffer.asUint8List();
-      File imgFile = new File('$directory/$imgName.png');
+      File imgFile = new File('$directory/$imgName.jpg');
       await imgFile.writeAsBytes(pngBytes);
       setState(() {
         csController.addImageFromCameraList[csController.selectedImage.value] = imgFile;
@@ -240,14 +243,13 @@ class _BlurScreenState extends State<BlurScreen> {
   showAlertDialog() {
 
     Widget cancelButton = TextButton(
-      child: Text("Cancel", style: TextStyle(fontFamily: ""),),
+      child: Text("No", style: TextStyle(fontFamily: ""),),
       onPressed:  () {
-        Get.back();
         Get.back();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Ok", style: TextStyle(fontFamily: ""),),
+      child: Text("Yes", style: TextStyle(fontFamily: ""),),
       onPressed:  () async{
         await _capturePng().then((value) {
           Get.back();
@@ -259,7 +261,7 @@ class _BlurScreenState extends State<BlurScreen> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       //title: Text("AlertDialog"),
-      content: Text("Do You want to save?", style: TextStyle(fontFamily: ""),),
+      content: Text("Do you want to exit?", style: TextStyle(fontFamily: ""),),
       actions: [
         cancelButton,
         continueButton,
