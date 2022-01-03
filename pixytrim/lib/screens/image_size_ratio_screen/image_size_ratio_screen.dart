@@ -302,10 +302,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
                   Container(
                     height: Get.height / 8,
                     child: Image.asset(
-                        imageSizeRatioController.sizeOptions[index].image),
-
-
-                  ),
+                        imageSizeRatioController.sizeOptions[index].image)),
                   SizedBox(height: 5),
                   Text(
                     "${imageSizeRatioController.sizeOptions[index].sizeName}",

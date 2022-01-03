@@ -181,6 +181,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 GestureDetector(
                   onTap: () {
                     //Get.back();
+                    showAlertDialog();
                   },
                   child: Container(
                     child: Image.asset(
@@ -250,6 +251,45 @@ class _CameraScreenState extends State<CameraScreen> {
               ],
             )),
       ),
+    );
+  }
+
+  showAlertDialog() {
+
+    Widget cancelButton = TextButton(
+      child: Text("No", style: TextStyle(fontFamily: ""),),
+      onPressed:  () {
+        Get.back();
+        //Get.back();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Yes", style: TextStyle(fontFamily: ""),),
+      onPressed:  () async{
+        // await _capturePng().then((value) {
+        //   Get.back();
+        //   Get.back();
+        // });
+
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      //title: Text("AlertDialog"),
+      content: Text("Do you want to save?", style: TextStyle(fontFamily: ""),),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 
@@ -487,4 +527,6 @@ class _CameraScreenState extends State<CameraScreen> {
       //});
     }
   }
+
+
 }

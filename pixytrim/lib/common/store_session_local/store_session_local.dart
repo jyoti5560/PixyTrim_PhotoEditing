@@ -1,13 +1,12 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+List<List<String>> allSessionStoreList = [];
 
-singleSessionStore(List<String> imgList) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.remove('SSSKey');
-  prefs.setStringList('SSSKey', imgList);
-}
-
-allSessionStore() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  List<String>? allSessionList = prefs.getStringList('SSSKey');
-}
+// allSessionStore(List<String> singleSessionList) async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   // Old List get from SharedPreference
+//   allSessionStoreList = prefs.getStringList('AllSessionList');
+//   allSessionStoreList.add(singleSessionList);
+//   // New List set in SharedPreference
+//   prefs.setStringList('AllSessionList', allSessionStoreList);
+// }
