@@ -373,7 +373,6 @@ class _IndexScreenState extends State<IndexScreen> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Please Select Minimum 2 images"),
         ));
-       // Get.snackbar("Please select minimum 2 image", "", snackPosition: SnackPosition.BOTTOM, );
       } else if(selectedImages.length >= 2 && selectedImages.length <= 7){
         setState(() {
           collageScreenController.imageFileList.clear();

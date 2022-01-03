@@ -10,8 +10,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
+// import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';
+// import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 import 'package:pixytrim/screens/blur_screen/blur_screen.dart';
 import 'package:pixytrim/screens/brightness_screen/brightness_screen.dart';
+// import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
 import 'package:pixytrim/screens/compress_image_screen/compress_image_screen.dart';
 import 'package:pixytrim/screens/crop_image_screen/crop_image_screen.dart';
 import 'package:pixytrim/screens/filter_screen/filter_screen.dart';
@@ -33,6 +36,7 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   final cameraScreenController = Get.put(CameraScreenController());
+  // final collageScreenController = Get.put(CollageScreenController());
 
   final ImagePicker imagePicker = ImagePicker();
 
@@ -45,6 +49,7 @@ class _CameraScreenState extends State<CameraScreen> {
     Images.ic_resize,
     Images.ic_edit_image,
     Images.ic_image_ratio,
+    Images.ic_layout,
   ];
 
   int? i;
@@ -101,7 +106,6 @@ class _CameraScreenState extends State<CameraScreen> {
                                             cameraScreenController.selectedImage.value = i;
                                             print('selectedImage1 : ${cameraScreenController.selectedImage.value}');
                                           });
-
                                         },
                                         child: Container(
                                           height: 45,
@@ -302,7 +306,7 @@ class _CameraScreenState extends State<CameraScreen> {
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
-          itemCount: iconList.length,
+          itemCount: cameraScreenController.addImageFromCameraList.length > 1 ? iconList.length : 8,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
@@ -314,13 +318,9 @@ class _CameraScreenState extends State<CameraScreen> {
                       ));
                   //cropImage();
                 } else if (i == 1) {
-                  Get.to(() => FilterScreen(),
-                      // arguments: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]
-                  );
+                  Get.to(() => FilterScreen());
                 } else if (i == 2) {
-                  Get.to(() => BrightnessScreen(
-                        // file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
-                      )); //todo
+                  Get.to(() => BrightnessScreen());
                 } else if (i == 3) {
                   Get.to(() => BlurScreen());
                 } else if (i == 4) {
@@ -328,9 +328,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     Get.to(() => CompressImageScreen(
                               compressFile: compressFile!,
                             ))!
-                        .then((value) {
-                      // setState(() {});
-                    });
+                        .then((value) {});
                   });
                 } else if (i == 5) {
                   resizeImage(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]).then((value) {
@@ -372,13 +370,14 @@ class _CameraScreenState extends State<CameraScreen> {
                       arguments: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]);
 
                   //Get.to(() => ImageEditorScreen(file: widget.file));
-                }
-                // else if (i == 8) {
-                //   Get.to(() => ImageSizeRatioScreen(),
-                //       arguments: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]);
-                //
-                //   //Get.to(() => ImageEditorScreen(file: widget.file));
-                // }
+                } /*else if(i == 8) {
+                  for(int i =0; i <= cameraScreenController.addImageFromCameraList.length; i++){
+                    collageScreenController.imageFileList.add(ImageFileItem(file: cameraScreenController.addImageFromCameraList[i]));
+                  }
+                  // collageScreenController.imageFileList.addAll(cameraScreenController.addImageFromCameraList);
+                  Get.to(()=> CollageScreen());
+                }*/
+              
               },
               child: Container(
                 padding: EdgeInsets.all(2),
@@ -391,13 +390,12 @@ class _CameraScreenState extends State<CameraScreen> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
-                  //margin: EdgeInsets.only(left: 10, right: 10),
-
                   child: Center(
-                      child: Image.asset(
-                    iconList[index],
-                    scale: 2,
-                  )),
+                    child: Image.asset(
+                      iconList[index],
+                      scale: 2,
+                    ),
+                  ),
                 ),
               ),
             );
