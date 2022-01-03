@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,7 +13,8 @@ import 'package:pixytrim/screens/image_editor_screen/_paint_over_image.dart';
 class ImageEditorScreen extends StatefulWidget {
   //const ImageEditorScreen({Key? key}) : super(key: key);
   File file;
-  ImageEditorScreen({required this.file});
+  int index;
+  ImageEditorScreen({required this.file, required this.index});
 
   @override
   _ImageEditorScreenState createState() => _ImageEditorScreenState();
@@ -25,41 +27,44 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {return false;},
+      child: Scaffold(
 
-      body: SafeArea(
-        child: Stack(
-          children: [
-            MainBackgroundWidget(),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              MainBackgroundWidget(),
 
-            Container(
-              margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-              child: Column(
-                children: [
-                  appBar(),
+              Container(
+                margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                child: Column(
+                  children: [
+                    appBar(),
 
-                  SizedBox(height: 20,),
+                    SizedBox(height: 20,),
 
-                  Expanded(
-                    child: ImagePainter.file(
-                      widget.file,
-                      repaintKey: repaintKey,
-                      key: _imageKey,
-                      scalable: false,
-                      initialStrokeWidth: 2,
-                      initialColor: Colors.green,
-                      initialPaintMode: PaintMode.freeStyle,
-                      // placeholderWidget: Container(
-                      //   child: Text("jdjdh"),
-                      // ),
+                    Expanded(
+                      child: ImagePainter.file(
+                        widget.file,
+                        repaintKey: repaintKey,
+                        key: _imageKey,
+                        scalable: false,
+                        initialStrokeWidth: 2,
+                        initialColor: Colors.green,
+                        initialPaintMode: PaintMode.freeStyle,
+                        // placeholderWidget: Container(
+                        //   child: Text("jdjdh"),
+                        // ),
+                      ),
                     ),
-                  ),
 
-                ],
-              ),
-            )
+                  ],
+                ),
+              )
 
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -98,9 +103,20 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                 ),
                 GestureDetector(
                   onTap: () async{
-                    renameAndSaveImage();
+                    await renameAndSaveImage().then((value) {
+                      Fluttertoast.showToast(
+                          msg: "Save in to Gallery",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0
+                      );
+                      Get.back();
+                    });
                     // await _capturePng();
-                    Get.back();
+
                   },
                   child: Container(
                       child: Image.asset(Images.ic_downloading, scale: 2,)
@@ -227,13 +243,15 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
 
   // Rename & Save Capture Image
   Future renameAndSaveImage() async {
+    DateTime time = DateTime.now();
+    final imgName = "${time.day}_${time.month}_${time.year}_${time.hour}_${time.minute}_${time.second}";
     final image = await _imageKey.currentState!.exportImage();
     final directory = (await getApplicationDocumentsDirectory()).path;
     await Directory('$directory/sample').create(recursive: true);
-    final fullPath = '$directory/sample/${DateTime.now().millisecondsSinceEpoch}.jpg';
+    final fullPath = '$directory/sample/$imgName.jpg';
     final imgFile = File('$fullPath');
     imgFile.writeAsBytesSync(image!);
-    csController.addImageFromCameraList[csController.selectedIndex.value] = imgFile;
+    csController.addImageFromCameraList[widget.index] = imgFile;
     await GallerySaver.saveImage(imgFile.path, albumName: "OTWPhotoEditingDemo");
 
 
@@ -274,26 +292,25 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
   showAlertDialog() {
 
     Widget cancelButton = TextButton(
-      child: Text("Cancel", style: TextStyle(fontFamily: ""),),
+      child: Text("No", style: TextStyle(fontFamily: ""),),
       onPressed:  () {
-        Get.back();
         Get.back();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Ok", style: TextStyle(fontFamily: ""),),
+      child: Text("Yes", style: TextStyle(fontFamily: ""),),
       onPressed:  () async{
-        await renameAndSaveImage().then((value) {
+        //await renameAndSaveImage().then((value) {
           Get.back();
           Get.back();
-        });
+        //});
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       //title: Text("AlertDialog"),
-      content: Text("Do You want to save?", style: TextStyle(fontFamily: ""),),
+      content: Text("Do you want to exit?", style: TextStyle(fontFamily: ""),),
       actions: [
         cancelButton,
         continueButton,

@@ -29,30 +29,33 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            MainBackgroundWidget(),
-            Container(
-              margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
-              child: Column(
-                children: [
-                  appBar(),
-                  SizedBox(height: 20),
-                  Expanded(
-                    child: ratioImage(),
-                  ),
-                  SizedBox(height: 20),
-                  ratioList(),
-                ],
-              ),
-            )
-          ],
-        ),
+    return WillPopScope(
+      onWillPop: () async {return false;},
+      child: Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: [
+              MainBackgroundWidget(),
+              Container(
+                margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                child: Column(
+                  children: [
+                    appBar(),
+                    SizedBox(height: 20),
+                    Expanded(
+                      child: ratioImage(),
+                    ),
+                    SizedBox(height: 20),
+                    ratioList(),
+                  ],
+                ),
+              )
+            ],
+          ),
 
 
-      ),);
+        ),),
+    );
   }
 
   Widget appBar() {
@@ -324,26 +327,25 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
 
   showAlertDialog() {
     Widget cancelButton = TextButton(
-      child: Text("Cancel", style: TextStyle(fontFamily: ""),),
+      child: Text("No", style: TextStyle(fontFamily: ""),),
       onPressed: () {
-        Get.back();
         Get.back();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Ok", style: TextStyle(fontFamily: ""),),
+      child: Text("Yes", style: TextStyle(fontFamily: ""),),
       onPressed: () async {
-        await _capturePng().then((value) {
+        //await _capturePng().then((value) {
           Get.back();
           Get.back();
-        });
+        //});
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       //title: Text("AlertDialog"),
-      content: Text("Do You want to save?", style: TextStyle(fontFamily: ""),),
+      content: Text("Do You want to exit?", style: TextStyle(fontFamily: ""),),
       actions: [
         cancelButton,
         continueButton,

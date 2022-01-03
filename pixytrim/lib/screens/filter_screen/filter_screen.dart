@@ -226,16 +226,16 @@ class FilterScreenState extends State<FilterScreen> {
       child: Text("No", style: TextStyle(fontFamily: ""),),
       onPressed:  () {
         Get.back();
-        Get.back();
+        //Get.back();
       },
     );
     Widget continueButton = TextButton(
       child: Text("Yes", style: TextStyle(fontFamily: ""),),
       onPressed:  () async{
-        await _capturePng().then((value) {
+        //await _capturePng().then((value) {
           Get.back();
           Get.back();
-        });
+        //});
       },
     );
 

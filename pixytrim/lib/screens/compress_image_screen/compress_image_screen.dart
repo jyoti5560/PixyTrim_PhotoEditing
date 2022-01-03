@@ -39,22 +39,25 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            MainBackgroundWidget(),
-            Container(
-              margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-              child: Column(
-                children: [
-                  appBar(),
-                  SizedBox(height: 20),
-                  imageList(),
-                ],
-              ),
-            )
-          ],
+    return WillPopScope(
+      onWillPop: () async {return false;},
+      child: Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: [
+              MainBackgroundWidget(),
+              Container(
+                margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                child: Column(
+                  children: [
+                    appBar(),
+                    SizedBox(height: 20),
+                    imageList(),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -75,9 +78,11 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    widget.compressFile.delete();
-                    csController.compressSize.value;
-                    Get.back();
+
+                    //widget.compressFile.delete();
+                    //csController.compressSize.value;
+                    showAlertDialog();
+                    //Get.back();
                   },
                   child: Container(
                       child: Image.asset(
@@ -270,6 +275,41 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
     // setState(() {
     //
     // });
+  }
+
+  showAlertDialog() {
+
+    Widget cancelButton = TextButton(
+      child: Text("No", style: TextStyle(fontFamily: ""),),
+      onPressed:  () {
+        Get.back();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Yes", style: TextStyle(fontFamily: ""),),
+      onPressed:  () async{
+          Get.back();
+          Get.back();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      //title: Text("AlertDialog"),
+      content: Text("Do you want to exit?", style: TextStyle(fontFamily: ""),),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
 }

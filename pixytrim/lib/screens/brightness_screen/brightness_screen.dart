@@ -373,10 +373,10 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
     Widget continueButton = TextButton(
       child: Text("Yes", style: TextStyle(fontFamily: ""),),
       onPressed:  () async{
-        await _capturePng().then((value) {
+        //await _capturePng().then((value) {
           Get.back();
           Get.back();
-        });
+        //});
       },
     );
 
