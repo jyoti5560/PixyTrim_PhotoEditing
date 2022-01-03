@@ -27,17 +27,17 @@ class CameraScreenController extends GetxController{
 
     // Add All Filter in List
     filterOptions = [
-      SingleFilterOption(filterWidget: noFilter(),filterName: 'No Filter'),
-      SingleFilterOption(filterWidget: filter1(),filterName: 'Filter 1'),
-      SingleFilterOption(filterWidget: filter2(),filterName: 'Filter 2'),
-      SingleFilterOption(filterWidget: filter3(),filterName: 'Filter 3'),
-      SingleFilterOption(filterWidget: filter4(),filterName: 'Filter 4'),
-      SingleFilterOption(filterWidget: filter5(),filterName: 'Filter 5'),
-      SingleFilterOption(filterWidget: filter6(),filterName: 'Filter 6'),
-      SingleFilterOption(filterWidget: filter7(),filterName: 'Filter 7'),
-      SingleFilterOption(filterWidget: filter8(),filterName: 'Filter 8'),
-      SingleFilterOption(filterWidget: filter9(),filterName: 'Filter 9'),
-      SingleFilterOption(filterWidget: filter10(),filterName: 'Filter 10'),
+      SingleFilterOption(filterWidget: noFilter(),filterName: 'No Filter', filterListWidget: noFilter(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter1(),filterName: 'Filter 1', filterListWidget: filter1(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter2(),filterName: 'Filter 2', filterListWidget: filter2(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter3(),filterName: 'Filter 3', filterListWidget: filter3(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter4(),filterName: 'Filter 4', filterListWidget: filter4(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter5(),filterName: 'Filter 5', filterListWidget: filter5(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter6(),filterName: 'Filter 6', filterListWidget: filter6(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter7(),filterName: 'Filter 7', filterListWidget: filter7(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter8(),filterName: 'Filter 8', filterListWidget: filter8(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter9(),filterName: 'Filter 9', filterListWidget: filter9(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter10(),filterName: 'Filter 10', filterListWidget: filter10(width: 100, height: 100, fit: BoxFit.cover)),
     ];
     super.onInit();
   }
@@ -50,17 +50,25 @@ class CameraScreenController extends GetxController{
 
   List<SingleFilterOption> filterOptions = [];
 
-  Widget noFilter(){
+  Widget noFilter({double? width, double? height, BoxFit? fit}){
     return Obx(
       ()=> Container(
-        child: Image.file(addImageFromCameraList[selectedImage.value], height: 120, width: 120, fit: BoxFit.fill),
+        width: width ?? null,
+        height: height ?? null,
+        child: Image.file(addImageFromCameraList[selectedImage.value],
+          width: width ?? null,
+          height: height ?? null,
+          fit: fit ?? null,
+        ),
       ),
     );
   }
 
-  Widget filter1(){
+  Widget filter1({double? width, double? height, BoxFit? fit}){
     return Obx(
       ()=> Container(
+        width: width ?? null,
+        height: height ?? null,
         child: ColorFiltered(
             colorFilter: ColorFilter.matrix([
               0.9,0.5,0.1,0.0,0.0,
@@ -70,15 +78,18 @@ class CameraScreenController extends GetxController{
             ]),
             child: Image.file(
                 addImageFromCameraList[selectedImage.value],
-                height: 120, width: 120, fit: BoxFit.fill),
+              width: width ?? null,
+              height: height ?? null,fit: fit ?? null,),
         ),
       ),
     );
   }
 
-  Widget filter2(){
+  Widget filter2({double? width, double? height, BoxFit? fit}){
     return Obx(
       ()=> Container(
+        width: width ?? null,
+        height: height ?? null,
         child: ColorFiltered(
             colorFilter: ColorFilter.matrix([
               0.3,-0.3,1.1,0.0,0.0,
@@ -88,14 +99,17 @@ class CameraScreenController extends GetxController{
             ]),
             child: Image.file(
               addImageFromCameraList[selectedImage.value],
-              height: 120, width: 120, fit: BoxFit.fill),),
+              width: width ?? null,
+              height: height ?? null,fit: fit ?? null,),),
       ),
     );
   }
 
-  Widget filter3(){
+  Widget filter3({double? width, double? height, BoxFit? fit}){
     return Obx(
       ()=> Container(
+        width: width ?? null,
+        height: height ?? null,
         child: ColorFiltered(
             colorFilter: ColorFilter.matrix([
               2.1,0.0,0.0,0.0,0.0,
@@ -105,15 +119,18 @@ class CameraScreenController extends GetxController{
             ]),
             child: Image.file(
                 addImageFromCameraList[selectedImage.value],
-                height: 120, width: 120, fit: BoxFit.fill),
+              width: width ?? null,
+              height: height ?? null,fit: fit ?? null,),
         ),
       ),
     );
   }
 
-  Widget filter4(){
+  Widget filter4({double? width, double? height, BoxFit? fit}){
     return Obx(
       ()=> Container(
+        width: width ?? null,
+        height: height ?? null,
         child: ColorFiltered(
             colorFilter: ColorFilter.matrix([
               0.0,1.0,0.0,0.0,0.0,
@@ -123,14 +140,18 @@ class CameraScreenController extends GetxController{
             ]),
             child: Image.file(
                 addImageFromCameraList[selectedImage.value],
-                height: 120, width: 120, fit: BoxFit.fill)),
+              width: width ?? null,
+              height: height ?? null,fit: fit ?? null,
+            )),
       ),
     );
   }
 
-  Widget filter5(){
+  Widget filter5({double? width, double? height, BoxFit? fit}){
     return Obx(
       ()=> Container(
+        width: width ?? null,
+        height: height ?? null,
         child: ColorFiltered(
             colorFilter: ColorFilter.matrix([
               0.8, 0.5, 0.0, 0.0, 0.0,
@@ -140,14 +161,17 @@ class CameraScreenController extends GetxController{
             ]),
             child: Image.file(
                 addImageFromCameraList[selectedImage.value],
-                height: 120, width: 120, fit: BoxFit.fill)),
+              width: width ?? null,
+              height: height ?? null,fit: fit ?? null,)),
       ),
     );
   }
 
-  Widget filter6(){
+  Widget filter6({double? width, double? height, BoxFit? fit}){
     return Obx(
       ()=> Container(
+        width: width ?? null,
+        height: height ?? null,
         child: ColorFiltered(
             colorFilter: ColorFilter.matrix([
               1.1, 0.0, 0.0, 0.0, 0.0,
@@ -157,14 +181,17 @@ class CameraScreenController extends GetxController{
             ]),
             child: Image.file(
                 addImageFromCameraList[selectedImage.value],
-                height: 120, width: 120, fit: BoxFit.fill)),
+              width: width ?? null,
+              height: height ?? null,fit: fit ?? null,)),
       ),
     );
   }
 
-  Widget filter7(){
+  Widget filter7({double? width, double? height, BoxFit? fit}){
     return Obx(
       ()=> Container(
+        width: width ?? null,
+        height: height ?? null,
         child: ColorFiltered(
             colorFilter: ColorFilter.matrix([
               1.2, 0.1, 0.5, 0.0, 0.0,
@@ -174,14 +201,17 @@ class CameraScreenController extends GetxController{
             ]),
             child: Image.file(
                 addImageFromCameraList[selectedImage.value],
-                height: 120, width: 120, fit: BoxFit.fill)),
+              width: width ?? null,
+              height: height ?? null,fit: fit ?? null,)),
       ),
     );
   }
 
-  Widget filter8(){
+  Widget filter8({double? width, double? height, BoxFit? fit}){
     return Obx(
       ()=> Container(
+        width: width ?? null,
+        height: height ?? null,
         child: ColorFiltered(
             colorFilter: ColorFilter.matrix([
               0.4, 0.4, -0.3, 0.0, 0.0,
@@ -191,14 +221,17 @@ class CameraScreenController extends GetxController{
             ]),
             child: Image.file(
                 addImageFromCameraList[selectedImage.value],
-                height: 120, width: 120, fit: BoxFit.fill)),
+              width: width ?? null,
+              height: height ?? null,fit: fit ?? null,)),
       ),
     );
   }
 
-  Widget filter9(){
+  Widget filter9({double? width, double? height, BoxFit? fit}){
     return Obx(
       ()=> Container(
+        width: width ?? null,
+        height: height ?? null,
         child: ColorFiltered(
             colorFilter: ColorFilter.matrix([
               1.0, 0.0, 0.2, 0.0, 0.0,
@@ -208,14 +241,17 @@ class CameraScreenController extends GetxController{
             ]),
             child: Image.file(
                 addImageFromCameraList[selectedImage.value],
-                height: 120, width: 120, fit: BoxFit.fill)),
+              width: width ?? null,
+              height: height ?? null,fit: fit ?? null,)),
       ),
     );
   }
 
-  Widget filter10(){
+  Widget filter10({double? width, double? height, BoxFit? fit}){
     return Obx(
       ()=> Container(
+        width: width ?? null,
+        height: height ?? null,
         child: ColorFiltered(
             colorFilter: ColorFilter.matrix([
               0.2126, 0.7152, 0.0722, 0.0, 0.0,
@@ -225,7 +261,8 @@ class CameraScreenController extends GetxController{
             ]),
             child: Image.file(
                 addImageFromCameraList[selectedImage.value],
-                height: 120, width: 120, fit: BoxFit.fill)),
+              width: width ?? null,
+              height: height ?? null,fit: fit ?? null,)),
       ),
     );
   }

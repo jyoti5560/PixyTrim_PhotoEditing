@@ -69,20 +69,18 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
     return WillPopScope(
       onWillPop: () async {return false;},
       child: Scaffold(
-        body: Stack(
-          children: [
-            MainBackgroundWidget(),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              MainBackgroundWidget(),
 
-            Container(
-              margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-              child: Column(
-                children: [
-                  SizedBox(height: 60),
-                  appBar(),
-                  SizedBox(height: 20),
-                  Expanded(
-                      child: RepaintBoundary(
-                        key: key,
+              Container(
+                margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                child: Column(
+                  children: [
+                    appBar(),
+                    SizedBox(height: 20),
+                    Expanded(
                         child: Container(
                           width: Get.width,
                           height: Get.height,
@@ -176,29 +174,32 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
-                                child: Image.memory(croppedImage!, fit: BoxFit.fill),
+                                child: RepaintBoundary(
+                                    key: key,
+                                    child: Container(child: Image.memory(croppedImage!)),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      )
-                  ),
+                        )
+                    ),
 
-                  SizedBox(height: 20),
+                    SizedBox(height: 20),
 
-                  index == 0 ? cropRatio() :
+                    index == 0 ? cropRatio() :
 
-                  index == 1 ? rotateRatio() :
-                  index == 2 ? scaleRatio()
-                      : Container(),
+                    index == 1 ? rotateRatio() :
+                   // index == 2 ? scaleRatio()
+                         Container(),
 
-                  SizedBox(height: 20),
+                    SizedBox(height: 20),
 
-                  resizeCropButton()
-                ],
-              ),
-            )
-          ],
+                    resizeCropButton()
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -576,14 +577,14 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
   showAlertDialog() {
 
     Widget cancelButton = TextButton(
-      child: Text("Cancel", style: TextStyle(fontFamily: ""),),
+      child: Text("No", style: TextStyle(fontFamily: ""),),
       onPressed:  () {
         Get.back();
         //Get.back();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Ok", style: TextStyle(fontFamily: ""),),
+      child: Text("Yes", style: TextStyle(fontFamily: ""),),
       onPressed:  () async{
         // await _capturePng().then((value) {
         //   Get.back();

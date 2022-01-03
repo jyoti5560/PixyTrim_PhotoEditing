@@ -94,8 +94,9 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    //Get.back();
+                    //
                     await saveImage();
+                    Get.back();
                   },
                   child: Container(
                       child: Image.asset(

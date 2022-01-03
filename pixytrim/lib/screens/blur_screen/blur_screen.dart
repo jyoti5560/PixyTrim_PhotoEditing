@@ -53,25 +53,43 @@ class _BlurScreenState extends State<BlurScreen> {
                 children: [
                   appBar(),
                   SizedBox(height: 20),
+                  // Expanded(
+                  //   child: ClipRRect(
+                  //     borderRadius: BorderRadius.circular(20),
+                  //     child: Container(
+                  //       decoration: BoxDecoration(
+                  //         image: DecorationImage(
+                  //           image: FileImage(csController.addImageFromCameraList[csController.selectedImage.value]),
+                  //           fit: BoxFit.cover,
+                  //         ),
+                  //       ),
+                  //       child: RepaintBoundary(
+                  //         key: key,
+                  //         child: BackdropFilter(
+                  //               filter: ImageFilter.blur(
+                  //                   sigmaX: blurImage, sigmaY: blurImage),
+                  //               child: Container(
+                  //                 color: Colors.black.withOpacity(0.1),
+                  //               ),
+                  //             ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Expanded(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: FileImage(csController.addImageFromCameraList[csController.selectedImage.value]),
-                            fit: BoxFit.cover,
+                      child: RepaintBoundary(
+                        key: key,
+                        child: ImageFiltered(
+                          imageFilter: ImageFilter.blur(
+                              sigmaX: blurImage, sigmaY: blurImage),
+                          child: Container(
+                            color: Colors.transparent,
+                            child: csController.addImageFromCameraList[csController.selectedImage.value].toString().isNotEmpty
+                                ? Image.file(csController.addImageFromCameraList[csController.selectedImage.value])
+                                : null,
                           ),
-                        ),
-                        child: RepaintBoundary(
-                          key: key,
-                          child: BackdropFilter(
-                                filter: ImageFilter.blur(
-                                    sigmaX: blurImage, sigmaY: blurImage),
-                                child: Container(
-                                  color: Colors.black.withOpacity(0.1),
-                                ),
-                              ),
                         ),
                       ),
                     ),
@@ -198,7 +216,7 @@ class _BlurScreenState extends State<BlurScreen> {
       print("png Bytes:====$pngBytes");
       //print("bs64:====$bs64");
       //setState(() {});
-      await saveImage();
+      //await saveImage();
     } catch (e) {
       print(e);
     }

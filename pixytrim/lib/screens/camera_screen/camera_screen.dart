@@ -78,13 +78,18 @@ class _CameraScreenState extends State<CameraScreen> {
                           alignment: Alignment.bottomCenter,
                           children: [
                             Obx(
-                              ()=> Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                child: cameraScreenController.addImageFromCameraList.length.isGreaterThan(0)
-                                    ? Image.file(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
-                                    height: 120, width: 120, fit: BoxFit.fill)
-                                    : null,
+                              ()=> Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      child: cameraScreenController.addImageFromCameraList.length.isGreaterThan(0)
+                                          ? Image.file(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
+                                          )
+                                          : null,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             Container(
@@ -421,7 +426,7 @@ class _CameraScreenState extends State<CameraScreen> {
     print("Compress path : ${result!.lengthSync()}");
     setState(() {
       compressFile = result;
-      // cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value] = result;
+       //cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value] = result;
     });
     // setState Required
     setState(() {});

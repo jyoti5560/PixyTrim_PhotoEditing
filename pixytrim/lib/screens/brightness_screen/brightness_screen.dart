@@ -47,66 +47,69 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            MainBackgroundWidget(),
-            Container(
-              margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-              child: Column(
-                children: [
-                  appBar(),
-                  SizedBox(height: 20),
-                  Expanded(
-                      child: RepaintBoundary(
-                        key: key,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Container(
-                            child: ColorFiltered(
-                    colorFilter: ColorFilter.matrix(calculateContrastMatrix(con)),
-                    child: ColorFiltered(
-                            colorFilter:
-                                ColorFilter.matrix(calculateSaturationMatrix(sat)),
+    return WillPopScope(
+      onWillPop: () async {return false;},
+      child: Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: [
+              MainBackgroundWidget(),
+              Container(
+                margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                child: Column(
+                  children: [
+                    appBar(),
+                    SizedBox(height: 20),
+                    Expanded(
+                        child: RepaintBoundary(
+                          key: key,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
                             child: Container(
-                              //width: Get.width,
-                              child: ExtendedImage(
-                                color: bright > 0
-                                    ? Colors.white.withOpacity(bright)
-                                    : Colors.black.withOpacity(-bright),
-                                colorBlendMode: bright > 0
-                                    ? BlendMode.lighten
-                                    : BlendMode.darken,
-                                image: ExtendedFileImageProvider(csController.addImageFromCameraList[csController.selectedImage.value]),
-                                extendedImageEditorKey: editorKey,
-                                /*child: Container(
-                                  width: Get.width,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: widget.file.toString().isNotEmpty
-                                        ? Image.file(
-                                            widget.file,
-                                            height: 120,
-                                            width: 120,
-                                            fit: BoxFit.fill,
-                                          )
-                                        : null,
-                                  ),
-                                ),*/
+                              child: ColorFiltered(
+                      colorFilter: ColorFilter.matrix(calculateContrastMatrix(con)),
+                      child: ColorFiltered(
+                              colorFilter:
+                                  ColorFilter.matrix(calculateSaturationMatrix(sat)),
+                              child: Container(
+                                //width: Get.width,
+                                child: ExtendedImage(
+                                  color: bright > 0
+                                      ? Colors.white.withOpacity(bright)
+                                      : Colors.black.withOpacity(-bright),
+                                  colorBlendMode: bright > 0
+                                      ? BlendMode.lighten
+                                      : BlendMode.darken,
+                                  image: ExtendedFileImageProvider(csController.addImageFromCameraList[csController.selectedImage.value]),
+                                  extendedImageEditorKey: editorKey,
+                                  /*child: Container(
+                                    width: Get.width,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: widget.file.toString().isNotEmpty
+                                          ? Image.file(
+                                              widget.file,
+                                              height: 120,
+                                              width: 120,
+                                              fit: BoxFit.fill,
+                                            )
+                                          : null,
+                                    ),
+                                  ),*/
+                                ),
                               ),
-                            ),
+                      ),
                     ),
-                  ),
+                            ),
                           ),
-                        ),
-                      )),
-                  SizedBox(height: 20),
-                  brightnessList()
-                ],
-              ),
-            )
-          ],
+                        )),
+                    SizedBox(height: 20),
+                    brightnessList()
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -185,7 +188,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                       //accentTextTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
                     ),
                     child: Slider(
-                      label: 'sat : ${sat.toStringAsFixed(2)}',
+                      label: 'saturation : ${sat.toStringAsFixed(2)}',
                       onChanged: (double value) {
                         setState(() {
                           sat = value;
@@ -226,7 +229,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                       valueIndicatorTextStyle: TextStyle(fontFamily: ""),
                     ),
                     child: Slider(
-                      label: 'bright : ${bright.toStringAsFixed(2)}',
+                      label: 'brightness : ${bright.toStringAsFixed(2)}',
                       onChanged: (double value) {
                         setState(() {
                           bright = value;
@@ -268,7 +271,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                       valueIndicatorTextStyle: TextStyle(fontFamily: ""),
                     ),
                     child: Slider(
-                      label: 'color : ${con.toStringAsFixed(2)}',
+                      label: 'contrast : ${con.toStringAsFixed(2)}',
                       onChanged: (double value) {
                         setState(() {
                           con = value;
@@ -276,8 +279,8 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                       },
                       divisions: 50,
                       value: con,
-                      min: 0.60,
-                      max: 3,
+                      min: 0.50,
+                      max: 1.50,
                     ),
                   ),
                 )
@@ -362,14 +365,13 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
   showAlertDialog() {
 
     Widget cancelButton = TextButton(
-      child: Text("Cancel", style: TextStyle(fontFamily: ""),),
+      child: Text("No", style: TextStyle(fontFamily: ""),),
       onPressed:  () {
-        Get.back();
         Get.back();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Ok", style: TextStyle(fontFamily: ""),),
+      child: Text("Yes", style: TextStyle(fontFamily: ""),),
       onPressed:  () async{
         await _capturePng().then((value) {
           Get.back();
@@ -381,7 +383,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       //title: Text("AlertDialog"),
-      content: Text("Do You want to save?", style: TextStyle(fontFamily: ""),),
+      content: Text("Do you want to exit?", style: TextStyle(fontFamily: ""),),
       actions: [
         cancelButton,
         continueButton,

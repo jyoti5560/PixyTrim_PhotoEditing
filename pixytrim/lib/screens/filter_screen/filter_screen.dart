@@ -1,17 +1,15 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
 import 'dart:ui' as ui;
+
 
 class FilterScreen extends StatefulWidget {
   @override
@@ -26,26 +24,29 @@ class FilterScreenState extends State<FilterScreen> {
   @override
   Widget build(BuildContext context) {
     print('selectedImage : ${csController.selectedImage.value}');
-    return Scaffold(
-        body: SafeArea(
-          child: Stack(
-      children: [
-          MainBackgroundWidget(),
-          Container(
-            margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
-            child: Column(
-              children: [
-                appBar(),
-                SizedBox(height: 20),
-                Expanded(child: filterImage()),
-                SizedBox(height: 20),
-                filterList()
-              ],
-            ),
-          )
-      ],
-    ),
-        ));
+    return WillPopScope(
+      onWillPop: () async {return false;},
+      child: Scaffold(
+          body: SafeArea(
+            child: Stack(
+        children: [
+            MainBackgroundWidget(),
+            Container(
+              margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+              child: Column(
+                children: [
+                  appBar(),
+                  SizedBox(height: 20),
+                  Expanded(child: filterImage()),
+                  SizedBox(height: 20),
+                  filterList()
+                ],
+              ),
+            )
+        ],
+      ),
+          )),
+    );
   }
 
 
@@ -134,7 +135,7 @@ class FilterScreenState extends State<FilterScreen> {
                     child: Container(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                          child: csController.filterOptions[index].filterWidget,
+                          child: csController.filterOptions[index].filterListWidget,
                     ),
                   ),
                   ),
@@ -157,7 +158,7 @@ class FilterScreenState extends State<FilterScreen> {
   Widget filterImage(){
     return Obx(
       ()=> Container(
-        width: Get.width,
+        // width: Get.width,
         child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: RepaintBoundary(
@@ -222,14 +223,14 @@ class FilterScreenState extends State<FilterScreen> {
   showAlertDialog() {
 
     Widget cancelButton = TextButton(
-      child: Text("Cancel", style: TextStyle(fontFamily: ""),),
+      child: Text("No", style: TextStyle(fontFamily: ""),),
       onPressed:  () {
         Get.back();
         Get.back();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Ok", style: TextStyle(fontFamily: ""),),
+      child: Text("Yes", style: TextStyle(fontFamily: ""),),
       onPressed:  () async{
         await _capturePng().then((value) {
           Get.back();
@@ -241,7 +242,7 @@ class FilterScreenState extends State<FilterScreen> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       //title: Text("AlertDialog"),
-      content: Text("Do You want to save?", style: TextStyle(fontFamily: ""),),
+      content: Text("Do you want to exit?", style: TextStyle(fontFamily: ""),),
       actions: [
         cancelButton,
         continueButton,
