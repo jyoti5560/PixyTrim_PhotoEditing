@@ -117,6 +117,8 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
   Future _capturePng() async {
     try {
       print('inside');
+      DateTime time = DateTime.now();
+      String imgName = "${time.hour}-${time.minute}-${time.second}";
       RenderRepaintBoundary boundary =
       key.currentContext!.findRenderObject() as RenderRepaintBoundary;
       print(boundary);
@@ -127,7 +129,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
       await image.toByteData(format: ui.ImageByteFormat.png);
       print("byte data:===$byteData");
       Uint8List pngBytes = byteData!.buffer.asUint8List();
-      File imgFile = new File('$directory/photo.png');
+      File imgFile = new File('$directory/$imgName.jpg');
       await imgFile.writeAsBytes(pngBytes);
       setState(() {
         csController.addImageFromCameraList[csController.selectedImage.value] =

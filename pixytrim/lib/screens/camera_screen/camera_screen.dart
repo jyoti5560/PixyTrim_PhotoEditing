@@ -268,7 +268,6 @@ class _CameraScreenState extends State<CameraScreen> {
       child: Text("No", style: TextStyle(fontFamily: ""),),
       onPressed:  () {
         Get.back();
-        Get.back();
       },
     );
     Widget continueButton = TextButton(
@@ -285,7 +284,7 @@ class _CameraScreenState extends State<CameraScreen> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       //title: Text("AlertDialog"),
-      content: Text("Do you want to save?", style: TextStyle(fontFamily: ""),),
+      content: Text("Do you want to exit?", style: TextStyle(fontFamily: ""),),
       actions: [
         cancelButton,
         continueButton,
