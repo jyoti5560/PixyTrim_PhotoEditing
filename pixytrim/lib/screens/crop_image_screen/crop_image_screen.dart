@@ -16,7 +16,7 @@ import 'package:pixytrim/common/custom_image.dart';
 import 'dart:ui' as ui;
 import 'dart:math' as Math;
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
-import 'package:vector_math/vector_math_64.dart' show Vector3;
+
 
 class CropImageScreen extends StatefulWidget {
   //const CropImageScreen({Key? key}) : super(key: key);
@@ -541,8 +541,6 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
                 ),
-                //margin: EdgeInsets.only(left: 10, right: 10),
-
                 child: Center(
                     child: Image.asset(
                       Images.ic_rotate,
@@ -569,8 +567,6 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
                 ),
-                //margin: EdgeInsets.only(left: 10, right: 10),
-
                 child: Center(
                     child: Image.asset(
                       Images.ic_scale,
