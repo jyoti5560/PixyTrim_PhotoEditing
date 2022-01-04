@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:pixytrim/models/filter_screen_model/single_filter_option.dart';
 import 'package:flutter/material.dart';
-import 'package:pixytrim/screens/filter_screen/filter_screen_widgets.dart';
 
 class CameraScreenController extends GetxController{
   RxBool isLoading = false.obs;
@@ -28,23 +27,22 @@ class CameraScreenController extends GetxController{
 
     // Add All Filter in List
     filterOptions = [
-      SingleFilterOption(filterWidget: noFilter(),filterName: 'No Filter', filterListWidget: noFilterList(width: 95, height: 95, fit: BoxFit.cover)),
-      SingleFilterOption(filterWidget: filter1(),filterName: 'Filter 1', filterListWidget: filter1List(width: 95, height: 95, fit: BoxFit.cover)),
-      SingleFilterOption(filterWidget: filter2(),filterName: 'Filter 2', filterListWidget: filter2List(width: 95, height: 95, fit: BoxFit.cover)),
-      SingleFilterOption(filterWidget: filter3(),filterName: 'Filter 3', filterListWidget: filter3(width: 95, height: 95, fit: BoxFit.cover)),
-      SingleFilterOption(filterWidget: filter4(),filterName: 'Filter 4', filterListWidget: filter4(width: 95, height: 95, fit: BoxFit.cover)),
-      SingleFilterOption(filterWidget: filter5(),filterName: 'Filter 5', filterListWidget: filter5(width: 95, height: 95, fit: BoxFit.cover)),
-      SingleFilterOption(filterWidget: filter6(),filterName: 'Filter 6', filterListWidget: filter6(width: 95, height: 95, fit: BoxFit.cover)),
-      SingleFilterOption(filterWidget: filter7(),filterName: 'Filter 7', filterListWidget: filter7(width: 95, height: 95, fit: BoxFit.cover)),
-      SingleFilterOption(filterWidget: filter8(),filterName: 'Filter 8', filterListWidget: filter8(width: 95, height: 95, fit: BoxFit.cover)),
-      SingleFilterOption(filterWidget: filter9(),filterName: 'Filter 9', filterListWidget: filter9(width: 95, height: 95, fit: BoxFit.cover)),
-      SingleFilterOption(filterWidget: filter10(),filterName: 'Filter 10', filterListWidget: filter10(width: 95, height: 95, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: noFilter(),filterName: 'No Filter', filterListWidget: noFilter(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter1(),filterName: 'Filter 1', filterListWidget: filter1(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter2(),filterName: 'Filter 2', filterListWidget: filter2(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter3(),filterName: 'Filter 3', filterListWidget: filter3(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter4(),filterName: 'Filter 4', filterListWidget: filter4(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter5(),filterName: 'Filter 5', filterListWidget: filter5(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter6(),filterName: 'Filter 6', filterListWidget: filter6(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter7(),filterName: 'Filter 7', filterListWidget: filter7(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter8(),filterName: 'Filter 8', filterListWidget: filter8(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter9(),filterName: 'Filter 9', filterListWidget: filter9(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter10(),filterName: 'Filter 10', filterListWidget: filter10(width: 100, height: 100, fit: BoxFit.cover)),
     ];
     super.onInit();
   }
 
   addCameraImageInList({required File file}) {
-
     addImageFromCameraList.add(file);
     print('addImageFromCameraList : ${addImageFromCameraList.length}');
   }

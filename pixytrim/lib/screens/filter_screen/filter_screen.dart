@@ -128,7 +128,8 @@ class FilterScreenState extends State<FilterScreen> {
               child: Column(
                 children: [
                   Container(
-                    height: 95,
+                    height: Get.height / 8,
+
                     padding: EdgeInsets.all(4),
                     margin: EdgeInsets.only(right: 10),
                     decoration: borderGradientDecoration(),
@@ -137,9 +138,10 @@ class FilterScreenState extends State<FilterScreen> {
                       width: 95,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                          child: csController.filterOptions[index].filterListWidget,
+                        child:
+                            csController.filterOptions[index].filterListWidget,
+                      ),
                     ),
-                  ),
                   ),
                   SizedBox(height: 5),
                   Text(
