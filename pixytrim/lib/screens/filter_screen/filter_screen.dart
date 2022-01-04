@@ -109,7 +109,7 @@ class FilterScreenState extends State<FilterScreen> {
 
   Widget filterList() {
     return Container(
-      height: Get.height / 6.5,
+      height: 120,
       child: ListView.builder(
         itemCount: csController.filterOptions.length,
         shrinkWrap: true,
@@ -124,15 +124,17 @@ class FilterScreenState extends State<FilterScreen> {
               });
             },
             child: Container(
-              width: Get.width/3.5,
+              // width: 100,
               child: Column(
                 children: [
                   Container(
-                    height: Get.height/8,
+                    height: 95,
                     padding: EdgeInsets.all(4),
                     margin: EdgeInsets.only(right: 10),
                     decoration: borderGradientDecoration(),
                     child: Container(
+                      height: 95,
+                      width: 95,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                           child: csController.filterOptions[index].filterListWidget,

@@ -40,3 +40,26 @@ Widget filter1List({required double width, required double height, required BoxF
     ),
   );
 }
+
+Widget filter2List({required double width, required double height, required BoxFit fit}){
+  return Obx(
+        ()=> Container(
+      width: width,
+      height: height,
+      child: ColorFiltered(
+        colorFilter: ColorFilter.matrix([
+          0.3,-0.3,1.1,0.0,0.0,
+          0.0,0.8,0.2,0.0,0.0,
+          0.0,0.0,0.8,0.2,0.0,
+          0.0,0.0,0.0,1.0,0.0
+        ]),
+        child: Container(
+          width: width,
+          height: height,
+          child: Image.file(
+            controller.addImageFromCameraList[controller.selectedImage.value],
+              fit: BoxFit.fitHeight),
+        ),),
+    ),
+  );
+}

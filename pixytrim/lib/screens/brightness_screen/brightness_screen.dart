@@ -61,18 +61,18 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                     appBar(),
                     SizedBox(height: 20),
                     Expanded(
-                        child: RepaintBoundary(
-                          key: key,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              child: ColorFiltered(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            child: ColorFiltered(
                       colorFilter: ColorFilter.matrix(calculateContrastMatrix(con)),
                       child: ColorFiltered(
-                              colorFilter:
-                                  ColorFilter.matrix(calculateSaturationMatrix(sat)),
-                              child: Container(
-                                //width: Get.width,
+                            colorFilter:
+                                ColorFilter.matrix(calculateSaturationMatrix(sat)),
+                            child: Container(
+                              //width: Get.width,
+                              child: RepaintBoundary(
+                                key: key,
                                 child: ExtendedImage(
                                   color: bright > 0
                                       ? Colors.white.withOpacity(bright)
@@ -98,9 +98,9 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                                   ),*/
                                 ),
                               ),
+                            ),
                       ),
                     ),
-                            ),
                           ),
                         )),
                     SizedBox(height: 20),

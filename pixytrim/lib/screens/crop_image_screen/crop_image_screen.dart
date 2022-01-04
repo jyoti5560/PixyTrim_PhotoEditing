@@ -38,6 +38,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
   Uint8List? croppedImage;
   var isCropping = false;
   //File ? crop;
+  // bool isLoading=true;
 
   int index = 0;
   bool showFront = true;
@@ -74,130 +75,135 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
             children: [
               MainBackgroundWidget(),
 
-              Container(
-                margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-                child: Column(
-                  children: [
-                    appBar(),
-                    SizedBox(height: 20),
-                    Expanded(
-                        child: Container(
-                          width: Get.width,
-                          height: Get.height,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: croppedImage == null && index == 0
-                                ? Crop(
-                              controller: cropController,
-                              image: widget.file.readAsBytesSync(),
-                              onCropped: (croppedData1) {
-                                setState(() {
-                                  print('croppedData1 : $croppedData1');
-                                  print('croppedData1 : ${croppedData1.runtimeType}');
-                                  croppedImage = croppedData1;
-                                  isCropping = false;
-                                });
-                                if (this.mounted) {
-                                  setState(() {
-                                    // Your state change code goes here
-                                  });
-                                }
-                              },
-                              initialSize: 0.5,
-                            ):
-                            index == 1 ?
-                            Transform(
-                              transform: Matrix4.rotationX(
-                                  (_rotation) * Math.pi / 2
-                              ),
-                              alignment: Alignment.center,
-                              child: Container(
-                                height: MediaQuery.of(context).size.height - 130,
-                                alignment: Alignment.center,
-                                child: Image.file(widget.file),
-                              ),
-                            )
-                                : index == 2 ?
-                            PhotoView(
-                              //enableRotation: true,
-                                imageProvider: FileImage(widget.file))
-
-                            // Transform(
-                            //   transform: Matrix4.identity()..scale(_scale, _scale),
-                            //   alignment: Alignment.center,
-                            //   child: Container(
-                            //     height: MediaQuery.of(context).size.height - 130,
-                            //     alignment: Alignment.center,
-                            //     child: Image.file(widget.file),
-                            //   ),
-                            // )
-
-                            // GestureDetector(
-                            //   onScaleStart: (ScaleStartDetails details) {
-                            //     print(details);
-                            //     previousScale = _scale;
-                            //     setState(() {});
-                            //   },
-                            //   onScaleUpdate: (ScaleUpdateDetails details) {
-                            //     print(details);
-                            //     _scale = previousScale * details.scale;
-                            //     setState(() {});
-                            //   },
-                            //   onScaleEnd: (ScaleEndDetails details) {
-                            //     print(details);
-                            //
-                            //     previousScale = 1.0;
-                            //     setState(() {});
-                            //   },
-                            //   child: Transform(
-                            //     alignment: FractionalOffset.center,
-                            //     transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
-                            //     child: Image.file(widget.file,fit: BoxFit.cover,),
-                            //   ),
-                            // )
-                            // PhotoView(
-                            //   //enableRotation: true,
-                            //     imageProvider: FileImage(widget.file))
-                            // Transform(
-                            //   transform: Matrix4.identity()..scale(_scale, _scale),
-                            //   alignment: Alignment.center,
-                            //   child: Container(
-                            //     height: MediaQuery.of(context).size.height - 130,
-                            //     alignment: Alignment.center,
-                            //     child: Image.file(widget.file),
-                            //   ),
-                            // )
-                                : Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(color: Colors.grey)
-                              ),
+              Obx(
+                      ()=> csController.isLoading.value
+                      ? Center(child: CircularProgressIndicator())
+                      : Container(
+                  margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                  child: Column(
+                    children: [
+                      appBar(),
+                      SizedBox(height: 20),
+                      Expanded(
+                            child: Container(
+                              width: Get.width,
+                              height: Get.height,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
-                                child: RepaintBoundary(
-                                    key: key,
-                                    child: Container(child: Image.memory(croppedImage!)),
+                                child: croppedImage == null && index == 0
+                                    ? Crop(
+                                  controller: cropController,
+                                  image: widget.file.readAsBytesSync(),
+                                  onCropped: (croppedData1) {
+                                    setState(() {
+                                      print('croppedData1 : $croppedData1');
+                                      print('croppedData1 : ${croppedData1.runtimeType}');
+                                      croppedImage = croppedData1;
+                                      isCropping = false;
+                                    });
+                                    // if (this.mounted) {
+                                    //   setState(() {
+                                    //     // Your state change code goes here
+                                    //   });
+                                    // }
+                                  },
+                                  initialSize: 0.5,
+                                ):
+                                index == 1 ?
+                                Transform(
+                                  transform: Matrix4.rotationX(
+                                      (_rotation) * Math.pi / 2
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height - 130,
+                                    alignment: Alignment.center,
+                                    child: Image.file(widget.file),
+                                  ),
+                                )
+                                    : index == 2 ?
+                                PhotoView(
+                                  //enableRotation: true,
+                                    imageProvider: FileImage(widget.file))
+
+                                // Transform(
+                                //   transform: Matrix4.identity()..scale(_scale, _scale),
+                                //   alignment: Alignment.center,
+                                //   child: Container(
+                                //     height: MediaQuery.of(context).size.height - 130,
+                                //     alignment: Alignment.center,
+                                //     child: Image.file(widget.file),
+                                //   ),
+                                // )
+
+                                // GestureDetector(
+                                //   onScaleStart: (ScaleStartDetails details) {
+                                //     print(details);
+                                //     previousScale = _scale;
+                                //     setState(() {});
+                                //   },
+                                //   onScaleUpdate: (ScaleUpdateDetails details) {
+                                //     print(details);
+                                //     _scale = previousScale * details.scale;
+                                //     setState(() {});
+                                //   },
+                                //   onScaleEnd: (ScaleEndDetails details) {
+                                //     print(details);
+                                //
+                                //     previousScale = 1.0;
+                                //     setState(() {});
+                                //   },
+                                //   child: Transform(
+                                //     alignment: FractionalOffset.center,
+                                //     transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
+                                //     child: Image.file(widget.file,fit: BoxFit.cover,),
+                                //   ),
+                                // )
+                                // PhotoView(
+                                //   //enableRotation: true,
+                                //     imageProvider: FileImage(widget.file))
+                                // Transform(
+                                //   transform: Matrix4.identity()..scale(_scale, _scale),
+                                //   alignment: Alignment.center,
+                                //   child: Container(
+                                //     height: MediaQuery.of(context).size.height - 130,
+                                //     alignment: Alignment.center,
+                                //     child: Image.file(widget.file),
+                                //   ),
+                                // )
+                                    : Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(color: Colors.grey)
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: RepaintBoundary(
+                                        key: key,
+                                        child: Container(child: Image.memory(croppedImage!)),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
-                    ),
 
-                    SizedBox(height: 20),
+                      ),
 
-                    index == 0 ? cropRatio() :
+                      SizedBox(height: 20),
 
-                    index == 1 ? rotateRatio() :
-                   // index == 2 ? scaleRatio()
-                         Container(),
+                      index == 0 ? cropRatio() :
 
-                    SizedBox(height: 20),
+                      index == 1 ? rotateRatio() :
+                     // index == 2 ? scaleRatio()
+                           Container(),
 
-                    resizeCropButton()
-                  ],
+                      SizedBox(height: 20),
+
+                      resizeCropButton()
+                    ],
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -327,10 +333,14 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                     GestureDetector(
                       onTap: () async {
                         cropController.crop();
-                        await Future.delayed(Duration(seconds: 3));
+
+                        await Future.delayed(Duration(seconds: 3)).then((value) => csController.isLoading(true));
+
                         await _capturePng().then((value) {
+                          csController.isLoading(false);
                           Get.back();
                         });
+
 
                         //crop1();
                       },

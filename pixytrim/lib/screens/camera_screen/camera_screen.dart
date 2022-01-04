@@ -49,7 +49,7 @@ class _CameraScreenState extends State<CameraScreen> {
     Images.ic_resize,
     Images.ic_edit_image,
     Images.ic_image_ratio,
-    Images.ic_layout,
+    // Images.ic_layout,
   ];
 
   int? i;
