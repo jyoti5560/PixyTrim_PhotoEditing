@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:pixytrim/controller/image_size_ratio_controller/image_size_ratio_controller.dart';
 
 final controller = Get.find<ImageSizeRatioController>();
@@ -26,7 +25,7 @@ class SizeRatio1 extends StatelessWidget {
           child: Image(
             image: FileImage(controller.file),
 
-            fit: BoxFit.fill, // use this
+            fit: BoxFit.cover, // use this
           ),
         ),
       ),
@@ -55,7 +54,7 @@ class SizeRatio2 extends StatelessWidget {
           child: Image(
             image: FileImage(controller.file),
 
-            fit: BoxFit.fill, // use this
+            fit: BoxFit.cover, // use this
           ),
         ),
       ),
@@ -91,7 +90,7 @@ class SizeRatio3 extends StatelessWidget {
               child: Image(
                 image: FileImage(controller.file),
 
-                fit: BoxFit.fill, // use this
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -129,7 +128,7 @@ class SizeRatio4 extends StatelessWidget {
               child: Image(
                 image: FileImage(controller.file),
 
-                fit: BoxFit.fill, // use this
+                fit: BoxFit.cover, // use this
               ),
             ),
           ),
@@ -164,7 +163,7 @@ class SizeRatio5 extends StatelessWidget {
               child: Image(
                 image: FileImage(controller.file),
 
-                fit: BoxFit.fill, // use this
+                fit: BoxFit.cover, // use this
               ),
             ),
           ),
@@ -198,7 +197,7 @@ class SizeRatio6 extends StatelessWidget {
               child: Image(
                 image: FileImage(controller.file),
 
-                fit: BoxFit.fill, // use this
+                fit: BoxFit.cover, // use this
               ),
             ),
           ),
@@ -228,7 +227,7 @@ class SizeRatio7 extends StatelessWidget {
           child: Image(
             image: FileImage(controller.file),
 
-            fit: BoxFit.fill, // use this
+            fit: BoxFit.cover, // use this
           ),
         ),
       ),
@@ -260,7 +259,7 @@ class SizeRatio8 extends StatelessWidget {
               child: Image(
                 image: FileImage(controller.file),
 
-                fit: BoxFit.fill, // use this
+                fit: BoxFit.cover, // use this
               ),
             ),
           ),
@@ -291,7 +290,7 @@ class SizeRatio9 extends StatelessWidget {
           child: Image(
             image: FileImage(controller.file),
 
-            fit: BoxFit.fill, // use this
+            fit: BoxFit.cover, // use this
           ),
         ),
       ),
@@ -321,7 +320,7 @@ class SizeRatio10 extends StatelessWidget {
           child: Image(
             image: FileImage(controller.file),
 
-            fit: BoxFit.fill, // use this
+            fit: BoxFit.cover, // use this
           ),
         ),
       ),
@@ -376,7 +375,7 @@ class SizeRatio11 extends StatelessWidget {
               child: Image(
                 image: FileImage(controller.file),
 
-                fit: BoxFit.fill, // use this
+                fit: BoxFit.cover, // use this
               ),
             ),
           ),
@@ -410,7 +409,7 @@ class SizeRatio12 extends StatelessWidget {
               child: Image(
                 image: FileImage(controller.file),
 
-                fit: BoxFit.fill, // use this
+                fit: BoxFit.cover, // use this
               ),
             ),
           ),
@@ -430,7 +429,7 @@ class SizeRatio13 extends StatelessWidget {
       width: Get.width / 1.4,
       child: AspectRatio(
         aspectRatio: 9 / 16,
-        child: Image.file(controller.file, fit: BoxFit.fill),
+        child: Image.file(controller.file, fit: BoxFit.cover),
       ),
     );*/
     return Container(
@@ -441,7 +440,7 @@ class SizeRatio13 extends StatelessWidget {
           child: Image(
             image: FileImage(controller.file),
 
-            fit: BoxFit.fill, // use this
+            fit: BoxFit.cover, // use this
           ),
         ),
       ),
@@ -472,7 +471,7 @@ class SizeRatio14 extends StatelessWidget {
               child: Image(
                 image: FileImage(controller.file),
 
-                fit: BoxFit.fill, // use this
+                fit: BoxFit.cover, // use this
               ),
             ),
           ),
@@ -497,7 +496,7 @@ class SizeRatio15 extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: AspectRatio(
               aspectRatio: 4 / 5,
-              child: Image.file(controller.file, fit: BoxFit.fill),
+              child: Image.file(controller.file, fit: BoxFit.cover),
             ),
           ),
         ),
@@ -509,7 +508,7 @@ class SizeRatio15 extends StatelessWidget {
         child: Image(
           image: FileImage(controller.file),
 
-          fit: BoxFit.fill, // use this
+          fit: BoxFit.cover, // use this
         ),
       ),
     );*/
@@ -540,7 +539,7 @@ class SizeRatio16 extends StatelessWidget {
               child: Image(
                 image: FileImage(controller.file),
 
-                fit: BoxFit.fill, // use this
+                fit: BoxFit.cover, // use this
               ),
             ),
           ),
@@ -571,7 +570,7 @@ class SizeRatio17 extends StatelessWidget {
           child: Image(
             image: FileImage(controller.file),
 
-            fit: BoxFit.fill, // use this
+            fit: BoxFit.cover, // use this
           ),
         ),
       ),
@@ -605,7 +604,7 @@ class SizeRatio18 extends StatelessWidget {
               aspectRatio: 3.0 /1.0,
               child: Image(
                 image: FileImage(controller.file),
-                fit: BoxFit.fill, // use this
+                fit: BoxFit.cover, // use this
               ),
             ),
           ),
@@ -638,7 +637,7 @@ class SizeRatio19 extends StatelessWidget {
               aspectRatio: 16.0 /9.0,
               child: Image(
                 image: FileImage(controller.file),
-                fit: BoxFit.fill, // use this
+                fit: BoxFit.cover, // use this
               ),
             ),
           ),
@@ -671,7 +670,7 @@ class SizeRatio20 extends StatelessWidget {
               aspectRatio: 16.0 /9.0,
               child: Image(
                 image: FileImage(controller.file),
-                fit: BoxFit.fill, // use this
+                fit: BoxFit.cover, // use this
               ),
             ),
           ),

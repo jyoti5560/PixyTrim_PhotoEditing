@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +10,6 @@ import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_cont
 import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
-import 'package:pixytrim/screens/live_camera_frames_screen/live_camera_frames_screen.dart';
-import 'package:pixytrim/screens/pdf_screen/pdf_screen.dart';
 import 'package:pixytrim/screens/trim_video_screen/trim_video_screen.dart';
 
 
@@ -52,7 +49,7 @@ class _IndexScreenState extends State<IndexScreen> {
                     ),
                   ),
                   Container(
-                    height: Get.height * 0.45,
+                    height: Get.height * 0.32,
                     margin: EdgeInsets.only(left: 10, right: 10),
                     child: Column(
                       children: [
@@ -109,7 +106,6 @@ class _IndexScreenState extends State<IndexScreen> {
                                       Expanded(
                                         child: GestureDetector(
                                             onTap: (){
-                                              //Get.to(() => CameraScreen());
                                               openCamera();
                                             },
                                             child: Padding(
@@ -127,9 +123,7 @@ class _IndexScreenState extends State<IndexScreen> {
                                                           Images.ic_camera,
                                                           scale: 2.5,
                                                         ),
-                                                        SizedBox(
-                                                          width: 10,
-                                                        ),
+                                                        SizedBox(width: 10),
                                                         Text(
                                                           "Camera",
                                                           style: TextStyle(
@@ -150,7 +144,6 @@ class _IndexScreenState extends State<IndexScreen> {
                                       Expanded(
                                         child: GestureDetector(
                                           onTap: () async {
-                                            //Get.to(()=> TrimVideo(file: file!,));
                                             FilePickerResult? result = await FilePicker.platform.pickFiles(
                                               type: FileType.video,
                                               allowCompression: false,
@@ -203,7 +196,6 @@ class _IndexScreenState extends State<IndexScreen> {
                           flex: 3,
                           child: GestureDetector(
                             onTap: (){
-                              //camera();
                               selectImages();
                             },
                             child: Padding(
@@ -239,7 +231,7 @@ class _IndexScreenState extends State<IndexScreen> {
                             ),
                           ),
                         ),
-                        Expanded(
+                        /*Expanded(
                           flex: 3,
                           child: GestureDetector(
                             onTap: (){
@@ -316,7 +308,7 @@ class _IndexScreenState extends State<IndexScreen> {
                               ),
                             ),
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
