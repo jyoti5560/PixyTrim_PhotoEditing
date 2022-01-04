@@ -59,107 +59,110 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     print("path===${cameraScreenController.selectedModule}");
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            MainBackgroundWidget(),
-            Container(
-              margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-              child: Column(
-                children: [
-                  appBar(),
-                  SizedBox(height: 20),
-                  Container(
-                    child: Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            Obx(
-                              ()=> Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      child: cameraScreenController.addImageFromCameraList.length.isGreaterThan(0)
-                                          ? Image.file(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
-                                          )
-                                          : null,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(left: 10, right: 10, bottom: 0.5),
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.black26,
-                              ),
-                              child: Obx(
-                                ()=> ListView.builder(
-                                  itemCount: cameraScreenController.addImageFromCameraList.length,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, i){
-                                    return Padding(
-                                      padding: const EdgeInsets.only(right: 5),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            cameraScreenController.selectedImage.value = i;
-                                            print('selectedImage1 : ${cameraScreenController.selectedImage.value}');
-                                          });
-                                        },
-                                        child: Container(
-                                          height: 45,
-                                          width: 45,
-                                          child: Image.file(
-                                            cameraScreenController
-                                                .addImageFromCameraList[i],
-                                            fit: BoxFit.cover,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            border: cameraScreenController.selectedImage.value == i
-                                                ? Border.all(color: Colors.black)
-                                                : Border.all(color: Colors.transparent)
-                                          ),
-                                        ),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: [
+              MainBackgroundWidget(),
+              Container(
+                margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                child: Column(
+                  children: [
+                    appBar(),
+                    SizedBox(height: 20),
+                    Container(
+                      child: Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Stack(
+                            alignment: Alignment.bottomCenter,
+                            children: [
+                              Obx(
+                                ()=> Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        child: cameraScreenController.addImageFromCameraList.length.isGreaterThan(0)
+                                            ? Image.file(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
+                                            )
+                                            : null,
                                       ),
-                                    );
-                                  },
+                                    ),
+                                  ],
                                 ),
                               ),
-                              // child: Obx(
-                              //       () => Row(
-                              //     mainAxisAlignment: MainAxisAlignment.center,
-                              //     children: List.generate(
-                              //       cameraScreenController.addImageFromCameraList.length,
-                              //           (index) => Container(
-                              //         width: 30,
-                              //         height: 30,
-                              //         child: Image.file(
-                              //           cameraScreenController
-                              //               .addImageFromCameraList[index],
-                              //           fit: BoxFit.cover,
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                            ),
-                          ],
+                              Container(
+                                padding: EdgeInsets.only(left: 10, right: 10, bottom: 0.5),
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Colors.black26,
+                                ),
+                                child: Obx(
+                                  ()=> ListView.builder(
+                                    itemCount: cameraScreenController.addImageFromCameraList.length,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, i){
+                                      return Padding(
+                                        padding: const EdgeInsets.only(right: 5),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              cameraScreenController.selectedImage.value = i;
+                                              print('selectedImage1 : ${cameraScreenController.selectedImage.value}');
+                                            });
+                                          },
+                                          child: Container(
+                                            height: 45,
+                                            width: 45,
+                                            child: Image.file(
+                                              cameraScreenController
+                                                  .addImageFromCameraList[i],
+                                              fit: BoxFit.cover,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: cameraScreenController.selectedImage.value == i
+                                                  ? Border.all(color: Colors.black)
+                                                  : Border.all(color: Colors.transparent)
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                // child: Obx(
+                                //       () => Row(
+                                //     mainAxisAlignment: MainAxisAlignment.center,
+                                //     children: List.generate(
+                                //       cameraScreenController.addImageFromCameraList.length,
+                                //           (index) => Container(
+                                //         width: 30,
+                                //         height: 30,
+                                //         child: Image.file(
+                                //           cameraScreenController
+                                //               .addImageFromCameraList[index],
+                                //           fit: BoxFit.cover,
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  editingIconList(),
-                ],
-              ),
-            )
-          ],
+                    SizedBox(height: 20),
+                    editingIconList(),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
