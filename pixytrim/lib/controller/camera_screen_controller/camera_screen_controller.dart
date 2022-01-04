@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:pixytrim/models/filter_screen_model/single_filter_option.dart';
 import 'package:flutter/material.dart';
+import 'package:pixytrim/screens/filter_screen/filter_screen_widgets.dart';
 
 class CameraScreenController extends GetxController{
   RxBool isLoading = false.obs;
@@ -27,8 +28,8 @@ class CameraScreenController extends GetxController{
 
     // Add All Filter in List
     filterOptions = [
-      SingleFilterOption(filterWidget: noFilter(),filterName: 'No Filter', filterListWidget: noFilter(width: 100, height: 100, fit: BoxFit.cover)),
-      SingleFilterOption(filterWidget: filter1(),filterName: 'Filter 1', filterListWidget: filter1(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: noFilter(),filterName: 'No Filter', filterListWidget: noFilterList(width: 100, height: 100, fit: BoxFit.cover)),
+      SingleFilterOption(filterWidget: filter1(),filterName: 'Filter 1', filterListWidget: filter1List(width: 100, height: 100, fit: BoxFit.cover)),
       SingleFilterOption(filterWidget: filter2(),filterName: 'Filter 2', filterListWidget: filter2(width: 100, height: 100, fit: BoxFit.cover)),
       SingleFilterOption(filterWidget: filter3(),filterName: 'Filter 3', filterListWidget: filter3(width: 100, height: 100, fit: BoxFit.cover)),
       SingleFilterOption(filterWidget: filter4(),filterName: 'Filter 4', filterListWidget: filter4(width: 100, height: 100, fit: BoxFit.cover)),
