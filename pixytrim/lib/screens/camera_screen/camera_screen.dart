@@ -410,7 +410,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   });
                 } else if (i == 6) {
                   Get.to(() =>
-                      ImageEditorScreen(file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value], index: cameraScreenController.selectedImage.value));
+                      ImageEditorScreen(file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value], newIndex: cameraScreenController.selectedImage.value));
                 } else if (i == 7) {
                   Get.to(() => ImageSizeRatioScreen(),
                       arguments: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]);

@@ -13,8 +13,8 @@ import 'package:pixytrim/screens/image_editor_screen/_paint_over_image.dart';
 class ImageEditorScreen extends StatefulWidget {
   //const ImageEditorScreen({Key? key}) : super(key: key);
   File file;
-  int index;
-  ImageEditorScreen({required this.file, required this.index});
+  int newIndex;
+  ImageEditorScreen({required this.file, required this.newIndex});
 
   @override
   _ImageEditorScreenState createState() => _ImageEditorScreenState();
@@ -251,7 +251,7 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
     final fullPath = '$directory/sample/$imgName.jpg';
     final imgFile = File('$fullPath');
     imgFile.writeAsBytesSync(image!);
-    csController.addImageFromCameraList[widget.index] = imgFile;
+    csController.addImageFromCameraList[widget.newIndex] = imgFile;
     await GallerySaver.saveImage(imgFile.path, albumName: "OTWPhotoEditingDemo");
 
 
