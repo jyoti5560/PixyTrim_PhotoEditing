@@ -263,15 +263,15 @@ class _CameraScreenState extends State<CameraScreen> {
       child: Text("No", style: TextStyle(fontFamily: ""),),
       onPressed:  () {
         Get.back();
-        //Get.back();
+        Get.back();
       },
     );
     Widget continueButton = TextButton(
       child: Text("Yes", style: TextStyle(fontFamily: ""),),
       onPressed:  () async{
         // await _capturePng().then((value) {
-        //   Get.back();
-        //   Get.back();
+          Get.back();
+          Get.back();
         // });
 
       },
