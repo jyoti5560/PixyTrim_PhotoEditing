@@ -272,15 +272,26 @@ class _CameraScreenState extends State<CameraScreen> {
          // todo
 
         if(cameraScreenController.addImageFromCameraList.isNotEmpty){
-          for(int i = 0; i < cameraScreenController.addImageFromCameraList.length; i++){
+          for(int i = 0; i < cameraScreenController.addImageFromCameraList.length; i++) {
             localList.add(cameraScreenController.addImageFromCameraList[i].path);
           }
           print('localList : $localList');
           if(localList.isNotEmpty){
-            localStorage.storeMainList(localList);
+            await localStorage.storeMainList(localList);
           }
           Get.back();
         }
+
+        // if(cameraScreenController.addImageFromCameraList.isNotEmpty){
+        //   for(int i = 0; i < cameraScreenController.addImageFromCameraList.length; i++){
+        //     localList.add(cameraScreenController.addImageFromCameraList[i].path);
+        //   }
+        //   print('localList : $localList');
+        //   if(localList.isNotEmpty){
+        //     localStorage.storeMainList(localList);
+        //   }
+        //   Get.back();
+        // }
         Get.back();
       },
     );

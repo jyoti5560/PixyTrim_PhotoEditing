@@ -70,7 +70,7 @@ class PreviousSessionScreen extends StatelessWidget {
                               child: GestureDetector(
                                 onTap: () {
                                   if(controller.localSessionList.isNotEmpty){
-                                    Get.to(()=> CameraScreen(), arguments: [File('${controller.localSessionList[index]}'), SelectedModule.gallery]);
+                                    Get.off(()=> CameraScreen(), arguments: [File('${controller.localSessionList[index]}'), SelectedModule.gallery]);
                                   }
                                 },
                                 child: Container(

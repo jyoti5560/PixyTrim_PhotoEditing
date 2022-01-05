@@ -6,9 +6,9 @@ class PreviousSessionScreenController extends GetxController {
   LocalStorage localStorage = LocalStorage();
   List<String> localSessionList = [];
 
-  getLocalSessionList() {
+  getLocalSessionList() async {
     isLoading(true);
-    localSessionList = localStorage.getMainList();
+    localSessionList = await localStorage.getMainList();
     if(localSessionList.isEmpty){
       localSessionList = [];
     }
@@ -17,8 +17,8 @@ class PreviousSessionScreenController extends GetxController {
 
 
   @override
-  void onInit() {
-    getLocalSessionList();
+  void onInit() async {
+    await getLocalSessionList();
     super.onInit();
   }
 

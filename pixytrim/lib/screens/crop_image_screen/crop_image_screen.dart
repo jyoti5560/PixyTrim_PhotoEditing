@@ -177,7 +177,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                                     borderRadius: BorderRadius.circular(20),
                                     child: RepaintBoundary(
                                         key: key,
-                                        child: Container(child: Image.memory(croppedImage!)),
+                                        child: Image.memory(croppedImage!),
                                     ),
                                   ),
                                 ),
@@ -330,17 +330,15 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                     GestureDetector(
                       onTap: () async {
                         cropController.crop();
-
-                        await Future.delayed(Duration(seconds: 3)).then((value) {
-                          Fluttertoast.showToast(
-                              msg: "Please wait",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 5,
-                              backgroundColor: Colors.blue,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
-                        });
+                        Fluttertoast.showToast(
+                            msg: "Please wait",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 5,
+                            backgroundColor: Colors.blue,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        await Future.delayed(Duration(seconds: 3));
 
                         await _capturePng().then((value) {
                           csController.isLoading(false);
