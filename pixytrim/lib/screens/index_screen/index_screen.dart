@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +10,8 @@ import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_cont
 import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
-import 'package:pixytrim/screens/trim_video_screen/trim_video_screen.dart';
+import 'package:pixytrim/screens/previous_session_screen/previous_session_screen.dart';
+// import 'package:pixytrim/screens/trim_video_screen/trim_video_screen.dart';
 
 
 class IndexScreen extends StatefulWidget {
@@ -23,10 +24,9 @@ class IndexScreen extends StatefulWidget {
 class _IndexScreenState extends State<IndexScreen> {
   final ImagePicker imagePicker = ImagePicker();
 
-  //IndexScreenController indexScreenController = Get.put(IndexScreenController());
   CollageScreenController collageScreenController = Get.put(CollageScreenController());
 
-  File ? file;
+  File? file;
   File? compressFile;
 
   @override
@@ -142,16 +142,58 @@ class _IndexScreenState extends State<IndexScreen> {
 
                                       // Trim Video Module
                                       Expanded(
+                                        // child: GestureDetector(
+                                        //   onTap: () async {
+                                        //     // FilePickerResult? result = await FilePicker.platform.pickFiles(
+                                        //     //   type: FileType.video,
+                                        //     //   allowCompression: false,
+                                        //     // );
+                                        //     // if (result != null) {
+                                        //     //   File file1 = File(result.files.single.path!);
+                                        //     //   Get.to(()=> TrimVideo(file: file1,));
+                                        //     // }
+                                        //   },
+                                        //   child: Padding(
+                                        //     padding: const EdgeInsets.all(5),
+                                        //     child: Container(
+                                        //       decoration: borderGradientDecoration(),
+                                        //       child: Padding(
+                                        //         padding: const EdgeInsets.all(3),
+                                        //         child: Container(
+                                        //           decoration: containerBackgroundGradient(),
+                                        //           child: Padding(
+                                        //             padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                        //             child: Row(
+                                        //               mainAxisAlignment: MainAxisAlignment.center,
+                                        //               children: [
+                                        //                 Image.asset(
+                                        //                   Images.ic_trim_video,
+                                        //                   scale: 2.5,
+                                        //                 ),
+                                        //                 SizedBox(
+                                        //                   width: 10,
+                                        //                 ),
+                                        //                 Expanded(
+                                        //                   child: Text(
+                                        //                     "Previous Session",
+                                        //                     maxLines: 1,
+                                        //                     // overflow: TextOverflow.ellipsis,
+                                        //                     style: TextStyle(
+                                        //                         fontFamily: "",
+                                        //                         fontSize: 20),
+                                        //                   ),
+                                        //                 ),
+                                        //               ],
+                                        //             ),
+                                        //           ),
+                                        //         ),
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // ),
                                         child: GestureDetector(
-                                          onTap: () async {
-                                            FilePickerResult? result = await FilePicker.platform.pickFiles(
-                                              type: FileType.video,
-                                              allowCompression: false,
-                                            );
-                                            if (result != null) {
-                                              File file1 = File(result.files.single.path!);
-                                              Get.to(()=> TrimVideo(file: file1,));
-                                            }
+                                          onTap: (){
+                                            selectImages();
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(5),
@@ -165,17 +207,18 @@ class _IndexScreenState extends State<IndexScreen> {
                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
                                                       Image.asset(
-                                                        Images.ic_trim_video,
-                                                        scale: 2.5,
+                                                        Images.ic_layout,
+                                                        scale: 3.2,
                                                       ),
                                                       SizedBox(
                                                         width: 10,
                                                       ),
                                                       Text(
-                                                        "Trim Video",
+                                                        "Collage",
                                                         style: TextStyle(
-                                                            fontFamily: "",
-                                                            fontSize: 20),
+                                                          fontFamily: "",
+                                                          fontSize: 20,
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -196,7 +239,7 @@ class _IndexScreenState extends State<IndexScreen> {
                           flex: 3,
                           child: GestureDetector(
                             onTap: (){
-                              selectImages();
+                              Get.to(()=> PreviousSessionScreen());
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(5),
@@ -209,15 +252,15 @@ class _IndexScreenState extends State<IndexScreen> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Image.asset(
-                                          Images.ic_layout,
-                                          scale: 3.2,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
+                                        // Image.asset(
+                                        //   Images.ic_layout,
+                                        //   scale: 3.2,
+                                        // ),
+                                        // SizedBox(
+                                        //   width: 10,
+                                        // ),
                                         Text(
-                                          "Collage",
+                                          "Previous Session",
                                           style: TextStyle(
                                             fontFamily: "",
                                             fontSize: 20,

@@ -9,12 +9,10 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
+import 'package:pixytrim/common/store_session_local/store_session_local.dart';
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
-// import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';
-// import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 import 'package:pixytrim/screens/blur_screen/blur_screen.dart';
 import 'package:pixytrim/screens/brightness_screen/brightness_screen.dart';
-// import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
 import 'package:pixytrim/screens/compress_image_screen/compress_image_screen.dart';
 import 'package:pixytrim/screens/crop_image_screen/crop_image_screen.dart';
 import 'package:pixytrim/screens/filter_screen/filter_screen.dart';
@@ -27,17 +25,14 @@ import 'package:image/image.dart' as imageLib;
 enum SelectedModule { camera, gallery }
 
 class CameraScreen extends StatefulWidget {
-  // File file;
-  // CameraScreen({required this.file});
-
   @override
   _CameraScreenState createState() => _CameraScreenState();
 }
 
 class _CameraScreenState extends State<CameraScreen> {
   final cameraScreenController = Get.put(CameraScreenController());
-  // final collageScreenController = Get.put(CollageScreenController());
-
+  LocalStorage localStorage = LocalStorage();
+  List<String> localList = [];
   final ImagePicker imagePicker = ImagePicker();
 
   List<String> iconList = [
@@ -268,23 +263,32 @@ class _CameraScreenState extends State<CameraScreen> {
       child: Text("No", style: TextStyle(fontFamily: ""),),
       onPressed:  () {
         Get.back();
+        Get.back();
       },
     );
     Widget continueButton = TextButton(
       child: Text("Yes", style: TextStyle(fontFamily: ""),),
-      onPressed:  () async{
-        // await _capturePng().then((value) {
-          Get.back();
-          Get.back();
-        // });
+      onPressed: () async {
+         // todo
 
+        if(cameraScreenController.addImageFromCameraList.isNotEmpty){
+          for(int i = 0; i < cameraScreenController.addImageFromCameraList.length; i++){
+            localList.add(cameraScreenController.addImageFromCameraList[i].path);
+          }
+          print('localList : $localList');
+          if(localList.isNotEmpty){
+            localStorage.storeMainList(localList);
+          }
+          Get.back();
+        }
+        Get.back();
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       //title: Text("AlertDialog"),
-      content: Text("Do you want to exit?", style: TextStyle(fontFamily: ""),),
+      content: Text("Do you want to save this session ?", style: TextStyle(fontFamily: ""),),
       actions: [
         cancelButton,
         continueButton,

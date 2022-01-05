@@ -38,7 +38,7 @@ dependencies:
   path_provider: ^2.0.2
   crop_your_image:
   file_picker: ^4.2.7
-  video_trimmer: ^0.5.4
+  # video_trimmer: ^0.5.4
   photo_view: ^0.13.0
   camera: ^0.9.2
   get_storage: ^2.0.2
