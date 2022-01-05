@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pixytrim/common/common_widgets.dart';
@@ -27,7 +26,7 @@ class PreviousSessionScreen extends StatelessWidget {
                   margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
                   child: Column(
                     children: [
-                      appBar(),
+                      appBar(context),
                       const SizedBox(height: 20),
                       Container(
                         child: controller.localSessionList.length == 0
@@ -73,6 +72,11 @@ class PreviousSessionScreen extends StatelessWidget {
                                     Get.off(()=> CameraScreen(), arguments: [File('${controller.localSessionList[index]}'), SelectedModule.gallery]);
                                   }
                                 },
+
+                                onLongPress: () {
+                                  //todo
+                                  deleteSingleImageAlertDialog(context, index);
+                                },
                                 child: Container(
                                   height: 75,
                                   width: 75,
@@ -89,7 +93,6 @@ class PreviousSessionScreen extends StatelessWidget {
                           },
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -101,7 +104,7 @@ class PreviousSessionScreen extends StatelessWidget {
     );
   }
 
-  Widget appBar() {
+  Widget appBar(BuildContext context) {
     return Container(
       height: 50,
       width: Get.width,
@@ -131,23 +134,87 @@ class PreviousSessionScreen extends StatelessWidget {
                     style: TextStyle(
                         fontFamily: "",
                         fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                Container(),
-                /*GestureDetector(
-                  onTap: () {
-                    showAlertDialog();
-                  },
+                GestureDetector(
+                  onTap: () {deleteAllImagesAlertDialog(context);},
                   child: Container(
                     child: Icon(Icons.delete_rounded),
                   ),
-                ),*/
+                ),
               ],
             )),
       ),
     );
   }
 
-  showAlertDialog(){}
+  // Delete Alert Dialog Box
+  deleteAllImagesAlertDialog(BuildContext context) {
+    Widget cancelButton = TextButton(
+      child: Text("No", style: TextStyle(fontFamily: ""),),
+      onPressed:  () {
+        Get.back();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Yes", style: TextStyle(fontFamily: ""),),
+      onPressed: () async {
+        controller.deleteLocalSessionList();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text("Do you want to delete All Images ?", style: TextStyle(fontFamily: ""),),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  // Delete Single Image Dialog box
+  deleteSingleImageAlertDialog(BuildContext context, int index) {
+
+    Widget cancelButton = TextButton(
+      child: Text("No", style: TextStyle(fontFamily: ""),),
+      onPressed:  () {
+        Get.back();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Yes", style: TextStyle(fontFamily: ""),),
+      onPressed: () async {
+        controller.updateLocalSessionList(index);
+        Get.back();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text("Do you want to delete This Image ?", style: TextStyle(fontFamily: ""),),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }

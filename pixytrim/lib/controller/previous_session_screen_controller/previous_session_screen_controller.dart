@@ -15,6 +15,20 @@ class PreviousSessionScreenController extends GetxController {
     isLoading(false);
   }
 
+  deleteLocalSessionList() async {
+    await localStorage.deleteImage();
+    Get.back();
+    Get.back();
+  }
+
+  updateLocalSessionList(int i) async {
+    isLoading(true);
+    localSessionList.removeAt(i);
+    localStorage.updateImageList(localSessionList);
+    getLocalSessionList();
+    isLoading(false);
+  }
+
 
   @override
   void onInit() async {

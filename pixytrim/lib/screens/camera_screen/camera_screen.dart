@@ -269,8 +269,6 @@ class _CameraScreenState extends State<CameraScreen> {
     Widget continueButton = TextButton(
       child: Text("Yes", style: TextStyle(fontFamily: ""),),
       onPressed: () async {
-         // todo
-
         if(cameraScreenController.addImageFromCameraList.isNotEmpty){
           for(int i = 0; i < cameraScreenController.addImageFromCameraList.length; i++) {
             localList.add(cameraScreenController.addImageFromCameraList[i].path);
@@ -281,6 +279,7 @@ class _CameraScreenState extends State<CameraScreen> {
           }
           Get.back();
         }
+        Get.back();
 
         // if(cameraScreenController.addImageFromCameraList.isNotEmpty){
         //   for(int i = 0; i < cameraScreenController.addImageFromCameraList.length; i++){
@@ -292,7 +291,6 @@ class _CameraScreenState extends State<CameraScreen> {
         //   }
         //   Get.back();
         // }
-        Get.back();
       },
     );
 

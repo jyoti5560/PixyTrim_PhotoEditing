@@ -27,6 +27,17 @@ class LocalStorage {
     return mainList;
   }
 
+  Future deleteImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('$storageKey');
+  }
+
+  Future updateImageList(List<String> localSessionList) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('$storageKey');
+    prefs.setStringList('$storageKey', localSessionList);
+  }
+
 
   /*storeMainList(List<String> subList) {
     print('subList : $subList');
