@@ -109,7 +109,7 @@ class FilterScreenState extends State<FilterScreen> {
 
   Widget filterList() {
     return Container(
-      height: 120,
+      height: 134,
       child: ListView.builder(
         itemCount: csController.filterOptions.length,
         shrinkWrap: true,

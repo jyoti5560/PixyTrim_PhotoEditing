@@ -75,10 +75,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
             children: [
               MainBackgroundWidget(),
 
-              Obx(
-                      ()=> csController.isLoading.value
-                      ? Center(child: CircularProgressIndicator())
-                      : Container(
+               Container(
                   margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
                   child: Column(
                     children: [
@@ -203,7 +200,6 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                     ],
                   ),
                 ),
-              ),
             ],
           ),
         ),
@@ -224,6 +220,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
         child: SliderTheme(
           data: SliderThemeData(
             trackShape: GradientRectSliderTrackShape(gradient: gradient, darkenInactive: false),
+            valueIndicatorTextStyle: TextStyle(fontFamily: ""),
           ),
           child: Slider(
             divisions: 25,
@@ -334,7 +331,16 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                       onTap: () async {
                         cropController.crop();
 
-                        await Future.delayed(Duration(seconds: 3)).then((value) => csController.isLoading(true));
+                        await Future.delayed(Duration(seconds: 3)).then((value) {
+                          Fluttertoast.showToast(
+                              msg: "Please wait",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 5,
+                              backgroundColor: Colors.blue,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        });
 
                         await _capturePng().then((value) {
                           csController.isLoading(false);
@@ -458,7 +464,8 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
           ),
           GestureDetector(
             onTap: (){
-              cropController.aspectRatio = 1000 / 667.0;
+              //cropController.aspectRatio = 1000 / 667.0;
+              cropController.aspectRatio = 16 / 9.0;
               //_cropController.aspectRatio = 1/1;
 
             },
