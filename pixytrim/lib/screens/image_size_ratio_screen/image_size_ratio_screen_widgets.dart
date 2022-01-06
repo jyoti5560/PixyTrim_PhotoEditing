@@ -65,7 +65,7 @@ class SizeRatio3 extends StatelessWidget {
   SizeRatio3({required this.file});
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     /*return Container(
       padding: EdgeInsets.only(top: 40, bottom: 40),
       // decoration: BoxDecoration(
@@ -82,15 +82,12 @@ class SizeRatio3 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: AspectRatio(
-              aspectRatio: 3.0 / 2.0,
-              child: Image(
-                image: FileImage(file),
+          child: AspectRatio(
+            aspectRatio: 3.0 / 2.0,
+            child: Image(
+              image: FileImage(file),
 
-                fit: BoxFit.cover,
-              ),
+              fit: BoxFit.cover,
             ),
           ),
         ),
@@ -122,15 +119,12 @@ class SizeRatio4 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: AspectRatio(
-              aspectRatio: 3.0 / 4.0,
-              child: Image(
-                image: FileImage(file),
+          child: AspectRatio(
+            aspectRatio: 3.0 / 4.0,
+            child: Image(
+              image: FileImage(file),
 
-                fit: BoxFit.cover, // use this
-              ),
+              fit: BoxFit.cover, // use this
             ),
           ),
         ),
@@ -159,15 +153,12 @@ class SizeRatio5 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: AspectRatio(
-              aspectRatio: 4.0 / 3.0,
-              child: Image(
-                image: FileImage(file),
+          child: AspectRatio(
+            aspectRatio: 4.0 / 3.0,
+            child: Image(
+              image: FileImage(file),
 
-                fit: BoxFit.cover, // use this
-              ),
+              fit: BoxFit.cover, // use this
             ),
           ),
         ),
@@ -195,15 +186,12 @@ class SizeRatio6 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: AspectRatio(
-              aspectRatio: 5.0 / 4.0,
-              child: Image(
-                image: FileImage(file),
+          child: AspectRatio(
+            aspectRatio: 5.0 / 4.0,
+            child: Image(
+              image: FileImage(file),
 
-                fit: BoxFit.cover, // use this
-              ),
+              fit: BoxFit.cover, // use this
             ),
           ),
         ),
@@ -226,15 +214,12 @@ class SizeRatio7 extends StatelessWidget {
       ),
     );*/
     return Container(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: AspectRatio(
-          aspectRatio: 9.0 / 16.0,
-          child: Image(
-            image: FileImage(file),
+      child: AspectRatio(
+        aspectRatio: 9.0 / 16.0,
+        child: Image(
+          image: FileImage(file),
 
-            fit: BoxFit.cover, // use this
-          ),
+          fit: BoxFit.cover, // use this
         ),
       ),
     );
@@ -260,15 +245,12 @@ class SizeRatio8 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: AspectRatio(
-              aspectRatio: 16.0 / 9.0,
-              child: Image(
-                image: FileImage(file),
+          child: AspectRatio(
+            aspectRatio: 16.0 / 9.0,
+            child: Image(
+              image: FileImage(file),
 
-                fit: BoxFit.cover, // use this
-              ),
+              fit: BoxFit.cover, // use this
             ),
           ),
         ),
@@ -292,15 +274,12 @@ class SizeRatio9 extends StatelessWidget {
     //   ),
     // );
     return Container(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: AspectRatio(
-          aspectRatio: 1.0 / 1.41,
-          child: Image(
-            image: FileImage(file),
+      child: AspectRatio(
+        aspectRatio: 1.0 / 1.41,
+        child: Image(
+          image: FileImage(file),
 
-            fit: BoxFit.cover, // use this
-          ),
+          fit: BoxFit.cover, // use this
         ),
       ),
     );
@@ -323,15 +302,12 @@ class SizeRatio10 extends StatelessWidget {
       ),
     );*/
     return Container(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: AspectRatio(
-          aspectRatio: 42.0 / 59.5,
-          child: Image(
-            image: FileImage(file),
+      child: AspectRatio(
+        aspectRatio: 42.0 / 59.5,
+        child: Image(
+          image: FileImage(file),
 
-            fit: BoxFit.cover, // use this
-          ),
+          fit: BoxFit.cover, // use this
         ),
       ),
     );
@@ -381,15 +357,12 @@ class SizeRatio11 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: AspectRatio(
-              aspectRatio: 2.7 / 1,
-              child: Image(
-                image: FileImage(file),
+          child: AspectRatio(
+            aspectRatio: 2.7 / 1,
+            child: Image(
+              image: FileImage(file),
 
-                fit: BoxFit.cover, // use this
-              ),
+              fit: BoxFit.cover, // use this
             ),
           ),
         ),
@@ -417,15 +390,12 @@ class SizeRatio12 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: AspectRatio(
-              aspectRatio: 1.91 / 1,
-              child: Image(
-                image: FileImage(file),
+          child: AspectRatio(
+            aspectRatio: 1.91 / 1,
+            child: Image(
+              image: FileImage(file),
 
-                fit: BoxFit.cover, // use this
-              ),
+              fit: BoxFit.cover, // use this
             ),
           ),
         ),
@@ -449,15 +419,12 @@ class SizeRatio13 extends StatelessWidget {
       ),
     );*/
     return Container(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: AspectRatio(
-          aspectRatio: 9.0 / 16.0,
-          child: Image(
-            image: FileImage(file),
+      child: AspectRatio(
+        aspectRatio: 9.0 / 16.0,
+        child: Image(
+          image: FileImage(file),
 
-            fit: BoxFit.cover, // use this
-          ),
+          fit: BoxFit.cover, // use this
         ),
       ),
     );
@@ -482,15 +449,12 @@ class SizeRatio14 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: AspectRatio(
-              aspectRatio: 1.0 /1.0,
-              child: Image(
-                image: FileImage(file),
+          child: AspectRatio(
+            aspectRatio: 1.0 /1.0,
+            child: Image(
+              image: FileImage(file),
 
-                fit: BoxFit.cover, // use this
-              ),
+              fit: BoxFit.cover, // use this
             ),
           ),
         )
@@ -512,12 +476,9 @@ class SizeRatio15 extends StatelessWidget {
       children: [
         Container(
           //width: Get.width / 1.3,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: AspectRatio(
-              aspectRatio: 4 / 5,
-              child: Image.file(file, fit: BoxFit.cover),
-            ),
+          child: AspectRatio(
+            aspectRatio: 4 / 5,
+            child: Image.file(file, fit: BoxFit.cover),
           ),
         ),
       ],
@@ -554,15 +515,12 @@ class SizeRatio16 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: AspectRatio(
-              aspectRatio: 1.85 /1.0,
-              child: Image(
-                image: FileImage(file),
+          child: AspectRatio(
+            aspectRatio: 1.85 /1.0,
+            child: Image(
+              image: FileImage(file),
 
-                fit: BoxFit.cover, // use this
-              ),
+              fit: BoxFit.cover, // use this
             ),
           ),
         ),
@@ -586,15 +544,12 @@ class SizeRatio17 extends StatelessWidget {
       ),
     );*/
     return Container(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: AspectRatio(
-          aspectRatio: 2.0 /3.0,
-          child: Image(
-            image: FileImage(file),
+      child: AspectRatio(
+        aspectRatio: 2.0 /3.0,
+        child: Image(
+          image: FileImage(file),
 
-            fit: BoxFit.cover, // use this
-          ),
+          fit: BoxFit.cover, // use this
         ),
       ),
     );
@@ -623,14 +578,11 @@ class SizeRatio18 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: AspectRatio(
-              aspectRatio: 3.0 /1.0,
-              child: Image(
-                image: FileImage(file),
-                fit: BoxFit.cover, // use this
-              ),
+          child: AspectRatio(
+            aspectRatio: 3.0 /1.0,
+            child: Image(
+              image: FileImage(file),
+              fit: BoxFit.cover, // use this
             ),
           ),
         ),
@@ -658,14 +610,11 @@ class SizeRatio19 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: AspectRatio(
-              aspectRatio: 16.0 /9.0,
-              child: Image(
-                image: FileImage(file),
-                fit: BoxFit.cover, // use this
-              ),
+          child: AspectRatio(
+            aspectRatio: 16.0 /9.0,
+            child: Image(
+              image: FileImage(file),
+              fit: BoxFit.cover, // use this
             ),
           ),
         ),
@@ -693,14 +642,11 @@ class SizeRatio20 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: AspectRatio(
-              aspectRatio: 16.0 /9.0,
-              child: Image(
-                image: FileImage(file),
-                fit: BoxFit.cover, // use this
-              ),
+          child: AspectRatio(
+            aspectRatio: 16.0 /9.0,
+            child: Image(
+              image: FileImage(file),
+              fit: BoxFit.cover, // use this
             ),
           ),
         ),

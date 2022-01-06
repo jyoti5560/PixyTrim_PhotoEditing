@@ -55,17 +55,20 @@ class _CollageScreenState extends State<CollageScreen>
                   appBar(),
                   SizedBox(height: 20),
                   Expanded(
-                      child: RepaintBoundary(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: RepaintBoundary(
                     key: key,
                     child: Container(
-                      width: Get.width,
-                      child: Obx(
-                        () => collageScreenController.isLoading.value
-                            ? Center(child: CircularProgressIndicator())
-                            : ImageListModule(),
-                      ),
+                        width: Get.width,
+                        child: Obx(
+                          () => collageScreenController.isLoading.value
+                              ? Center(child: CircularProgressIndicator())
+                              : ImageListModule(),
+                        ),
                     ),
-                  )),
+                  ),
+                      )),
                   tabBar(),
                   tabBarView(),
                 ],
@@ -243,18 +246,35 @@ class _ImageListModuleState extends State<ImageListModule> {
 
   Widget twoImageSelectedModule(int selectedIndex) {
     return Obx(() => selectedIndex == 0
-        ? ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Container(
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              SingleImageShowModule(
+                  // scale: collageScreenController.scale.value,
+                  // previousScale:
+                  //     collageScreenController.previousScale.value,
+                  index: 0),
+              SizedBox(width: 5),
+              SingleImageShowModule(
+                  // scale: collageScreenController.scale1.value,
+                  // previousScale:
+                  //     collageScreenController.previousScale1.value,
+                  index: 1),
+            ],
+          ),
+        )
+        : selectedIndex == 1
+            ? Container(
               decoration: collageMainImageBoxDecoration(),
-              child: Row(
+              child: Column(
                 children: [
                   SingleImageShowModule(
                       // scale: collageScreenController.scale.value,
                       // previousScale:
                       //     collageScreenController.previousScale.value,
                       index: 0),
-                  SizedBox(width: 5),
+                  SizedBox(height: 5),
                   SingleImageShowModule(
                       // scale: collageScreenController.scale1.value,
                       // previousScale:
@@ -262,136 +282,142 @@ class _ImageListModuleState extends State<ImageListModule> {
                       index: 1),
                 ],
               ),
-            ),
-          )
-        : selectedIndex == 1
-            ? ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
+            )
+            : selectedIndex == 2
+                ? Container(
                   decoration: collageMainImageBoxDecoration(),
                   child: Column(
                     children: [
                       SingleImageShowModule(
-                          // scale: collageScreenController.scale.value,
-                          // previousScale:
-                          //     collageScreenController.previousScale.value,
-                          index: 0),
+                        // scale: collageScreenController.scale.value,
+                        // previousScale:
+                        //     collageScreenController.previousScale.value,
+                        index: 0, flex: 2,
+                      ),
                       SizedBox(height: 5),
                       SingleImageShowModule(
-                          // scale: collageScreenController.scale1.value,
-                          // previousScale:
-                          //     collageScreenController.previousScale1.value,
-                          index: 1),
+                        // scale: collageScreenController.scale1.value,
+                        // previousScale: collageScreenController
+                        //     .previousScale1.value,
+                        index: 1, flex: 1,
+                      ),
                     ],
                   ),
-                ),
-              )
-            : selectedIndex == 2
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
+                )
+                : selectedIndex == 3
+                    ? Container(
                       decoration: collageMainImageBoxDecoration(),
                       child: Column(
                         children: [
                           SingleImageShowModule(
                             // scale: collageScreenController.scale.value,
-                            // previousScale:
-                            //     collageScreenController.previousScale.value,
-                            index: 0, flex: 2,
+                            // previousScale: collageScreenController
+                            //     .previousScale.value,
+                            index: 0, flex: 1,
                           ),
                           SizedBox(height: 5),
                           SingleImageShowModule(
                             // scale: collageScreenController.scale1.value,
                             // previousScale: collageScreenController
                             //     .previousScale1.value,
-                            index: 1, flex: 1,
+                            index: 1, flex: 2,
                           ),
                         ],
                       ),
-                    ),
-                  )
-                : selectedIndex == 3
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Container(
+                    )
+                    : selectedIndex == 4
+                        ? Container(
                           decoration: collageMainImageBoxDecoration(),
-                          child: Column(
+                          child: Row(
                             children: [
                               SingleImageShowModule(
-                                // scale: collageScreenController.scale.value,
+                                // scale:
+                                //     collageScreenController.scale.value,
                                 // previousScale: collageScreenController
                                 //     .previousScale.value,
                                 index: 0, flex: 1,
                               ),
-                              SizedBox(height: 5),
+                              SizedBox(width: 5),
                               SingleImageShowModule(
-                                // scale: collageScreenController.scale1.value,
+                                // scale: collageScreenController
+                                //     .scale1.value,
                                 // previousScale: collageScreenController
                                 //     .previousScale1.value,
                                 index: 1, flex: 2,
                               ),
                             ],
                           ),
-                        ),
-                      )
-                    : selectedIndex == 4
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
+                        )
+                        : selectedIndex == 5
+                            ? Container(
                               decoration: collageMainImageBoxDecoration(),
                               child: Row(
                                 children: [
                                   SingleImageShowModule(
-                                    // scale:
-                                    //     collageScreenController.scale.value,
-                                    // previousScale: collageScreenController
-                                    //     .previousScale.value,
-                                    index: 0, flex: 1,
+                                    // scale: collageScreenController
+                                    //     .scale.value,
+                                    // previousScale:
+                                    //     collageScreenController
+                                    //         .previousScale.value,
+                                    index: 0, flex: 2,
                                   ),
                                   SizedBox(width: 5),
                                   SingleImageShowModule(
                                     // scale: collageScreenController
                                     //     .scale1.value,
-                                    // previousScale: collageScreenController
-                                    //     .previousScale1.value,
-                                    index: 1, flex: 2,
+                                    // previousScale:
+                                    //     collageScreenController
+                                    //         .previousScale1.value,
+                                    index: 1, flex: 1,
                                   ),
                                 ],
                               ),
-                            ),
-                          )
-                        : selectedIndex == 5
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Container(
-                                  decoration: collageMainImageBoxDecoration(),
-                                  child: Row(
+                            )
+                            : selectedIndex == 6
+                                ? Container(
+                                  decoration:
+                                      collageMainImageBoxDecoration(),
+                                  child: Column(
                                     children: [
-                                      SingleImageShowModule(
-                                        // scale: collageScreenController
-                                        //     .scale.value,
-                                        // previousScale:
-                                        //     collageScreenController
-                                        //         .previousScale.value,
-                                        index: 0, flex: 2,
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            Expanded(child: Container()),
+                                            SingleImageShowModule(
+                                              // scale:
+                                              //     collageScreenController
+                                              //         .scale.value,
+                                              // previousScale:
+                                              //     collageScreenController
+                                              //         .previousScale
+                                              //         .value,
+                                              index: 0, flex: 1,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      SizedBox(width: 5),
-                                      SingleImageShowModule(
-                                        // scale: collageScreenController
-                                        //     .scale1.value,
-                                        // previousScale:
-                                        //     collageScreenController
-                                        //         .previousScale1.value,
-                                        index: 1, flex: 1,
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            SingleImageShowModule(
+                                              // scale:
+                                              //     collageScreenController
+                                              //         .scale1.value,
+                                              // previousScale:
+                                              //     collageScreenController
+                                              //         .previousScale1
+                                              //         .value,
+                                              index: 1, flex: 1,
+                                            ),
+                                            Expanded(child: Container()),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              )
-                            : selectedIndex == 6
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Container(
+                                )
+                                : selectedIndex == 7
+                                    ? Container(
                                       decoration:
                                           collageMainImageBoxDecoration(),
                                       child: Column(
@@ -399,7 +425,6 @@ class _ImageListModuleState extends State<ImageListModule> {
                                           Expanded(
                                             child: Row(
                                               children: [
-                                                Expanded(child: Container()),
                                                 SingleImageShowModule(
                                                   // scale:
                                                   //     collageScreenController
@@ -410,12 +435,17 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                   //         .value,
                                                   index: 0, flex: 1,
                                                 ),
+                                                Expanded(
+                                                    child: Container()),
                                               ],
                                             ),
                                           ),
                                           Expanded(
                                             child: Row(
                                               children: [
+                                                Expanded(
+                                                    child: Container()),
+                                                // SizedBox(width: 5),
                                                 SingleImageShowModule(
                                                   // scale:
                                                   //     collageScreenController
@@ -426,429 +456,52 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                   //         .value,
                                                   index: 1, flex: 1,
                                                 ),
-                                                Expanded(child: Container()),
                                               ],
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  )
-                                : selectedIndex == 7
-                                    ? ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Container(
+                                    )
+                                    : selectedIndex == 8
+                                        ? Container(
                                           decoration:
                                               collageMainImageBoxDecoration(),
-                                          child: Column(
+                                          child: Row(
                                             children: [
                                               Expanded(
-                                                child: Row(
+                                                child: Column(
                                                   children: [
-                                                    SingleImageShowModule(
-                                                      // scale:
-                                                      //     collageScreenController
-                                                      //         .scale.value,
-                                                      // previousScale:
-                                                      //     collageScreenController
-                                                      //         .previousScale
-                                                      //         .value,
-                                                      index: 0, flex: 1,
-                                                    ),
                                                     Expanded(
+                                                        flex: 1,
                                                         child: Container()),
+                                                    SizedBox(width: 5),
+                                                    SingleImageShowModule(
+                                                      index: 0,
+                                                      flex: 2,
+                                                    ),
                                                   ],
                                                 ),
                                               ),
+                                              SizedBox(width: 5),
                                               Expanded(
-                                                child: Row(
+                                                child: Column(
                                                   children: [
-                                                    Expanded(
-                                                        child: Container()),
-                                                    // SizedBox(width: 5),
                                                     SingleImageShowModule(
-                                                      // scale:
-                                                      //     collageScreenController
-                                                      //         .scale1.value,
-                                                      // previousScale:
-                                                      //     collageScreenController
-                                                      //         .previousScale1
-                                                      //         .value,
-                                                      index: 1, flex: 1,
+                                                      index: 1,
+                                                      flex: 2,
                                                     ),
+                                                    SizedBox(width: 5),
+                                                    Expanded(
+                                                        flex: 1,
+                                                        child: Container()),
                                                   ],
                                                 ),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                      )
-                                    : selectedIndex == 8
-                                        ? ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            child: Container(
-                                              decoration:
-                                                  collageMainImageBoxDecoration(),
-                                              child: Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Column(
-                                                      children: [
-                                                        Expanded(
-                                                            flex: 1,
-                                                            child: Container()),
-                                                        SizedBox(width: 5),
-                                                        SingleImageShowModule(
-                                                          index: 0,
-                                                          flex: 2,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 5),
-                                                  Expanded(
-                                                    child: Column(
-                                                      children: [
-                                                        SingleImageShowModule(
-                                                          index: 1,
-                                                          flex: 2,
-                                                        ),
-                                                        SizedBox(width: 5),
-                                                        Expanded(
-                                                            flex: 1,
-                                                            child: Container()),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
+                                        )
                                         : selectedIndex == 9
-                                            ? ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                child: Container(
-                                                  decoration:
-                                                      collageMainImageBoxDecoration(),
-                                                  child: Column(
-                                                    children: [
-                                                      Expanded(
-                                                        child: Row(
-                                                          children: [
-                                                            SingleImageShowModule(
-                                                              index: 0,
-                                                              flex: 2,
-                                                            ),
-                                                            SizedBox(width: 5),
-                                                            Expanded(
-                                                                flex: 1,
-                                                                child:
-                                                                    Container()),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 5),
-                                                      Expanded(
-                                                        child: Row(
-                                                          children: [
-                                                            Expanded(
-                                                                flex: 1,
-                                                                child:
-                                                                    Container()),
-                                                            SizedBox(width: 5),
-                                                            SingleImageShowModule(
-                                                              index: 1,
-                                                              flex: 2,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                            : selectedIndex == 10
-                                                ? ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    child: Container(
-                                                      decoration:
-                                                          collageMainImageBoxDecoration(),
-                                                      child: Column(
-                                                        children: [
-                                                          Expanded(
-                                                            child: Container(),
-                                                          ),
-                                                          Expanded(
-                                                            child: Row(
-                                                              children: [
-                                                                SingleImageShowModule(
-                                                                  index: 0,
-                                                                  flex: 1,
-                                                                ),
-                                                                SizedBox(
-                                                                    width: 5),
-                                                                SingleImageShowModule(
-                                                                  index: 1,
-                                                                  flex: 1,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            child: Container(),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  )
-                                                : selectedIndex == 11
-                                                    ? ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        child: Container(
-                                                          decoration:
-                                                              collageMainImageBoxDecoration(),
-                                                          child: Row(
-                                                            children: [
-                                                              Expanded(
-                                                                child: Column(
-                                                                  children: [
-                                                                    SingleImageShowModule(
-                                                                        index:
-                                                                            0),
-                                                                    SizedBox(
-                                                                        height:
-                                                                            5),
-                                                                    SingleImageShowModule(
-                                                                        index:
-                                                                            1),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                  child:
-                                                                      Container()),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : Container());
-  }
-
-  Widget threeImageSelectedModule(int selectedIndex) {
-    return Obx(() => selectedIndex == 0
-        ? ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Container(
-              decoration: collageMainImageBoxDecoration(),
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 2),
-                ],
-              ),
-            ),
-          )
-        : selectedIndex == 1
-            ? ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  decoration: collageMainImageBoxDecoration(),
-                  child: Column(
-                    children: [
-                      SingleImageShowModule(index: 0),
-                      SizedBox(height: 5),
-                      SingleImageShowModule(index: 1),
-                      SizedBox(height: 5),
-                      SingleImageShowModule(index: 2),
-                    ],
-                  ),
-                ),
-              )
-            : selectedIndex == 2
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      decoration: collageMainImageBoxDecoration(),
-                      child: Column(
-                        children: [
-                          SingleImageShowModule(index: 0),
-                          SizedBox(height: 5),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                SingleImageShowModule(index: 1),
-                                SizedBox(width: 5),
-                                SingleImageShowModule(index: 2),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                : selectedIndex == 3
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Container(
-                          decoration: collageMainImageBoxDecoration(),
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    SingleImageShowModule(index: 0),
-                                    SizedBox(width: 5),
-                                    SingleImageShowModule(index: 1),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 5),
-                              SingleImageShowModule(index: 2),
-                            ],
-                          ),
-                        ),
-                      )
-                    : selectedIndex == 4
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              decoration: collageMainImageBoxDecoration(),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        SingleImageShowModule(index: 0),
-                                        SizedBox(height: 5),
-                                        SingleImageShowModule(index: 1),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(width: 5),
-                                  SingleImageShowModule(index: 2),
-                                ],
-                              ),
-                            ),
-                          )
-                        : selectedIndex == 5
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Container(
-                                  decoration: collageMainImageBoxDecoration(),
-                                  child: Row(
-                                    children: [
-                                      SingleImageShowModule(index: 0),
-                                      SizedBox(width: 5),
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            SingleImageShowModule(index: 1),
-                                            SizedBox(height: 5),
-                                            SingleImageShowModule(index: 2),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            : selectedIndex == 6
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Container(
-                                      decoration:
-                                          collageMainImageBoxDecoration(),
-                                      child: Column(
-                                        children: [
-                                          Expanded(
-                                            flex: 3,
-                                            child: Row(
-                                              children: [
-                                                SingleImageShowModule(index: 0),
-                                                SizedBox(width: 5),
-                                                SingleImageShowModule(index: 1),
-                                                SizedBox(width: 5),
-                                                SingleImageShowModule(index: 2),
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Container(),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : selectedIndex == 7
-                                    ? ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Container(
-                                            decoration:
-                                                collageMainImageBoxDecoration(),
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Column(
-                                                    children: [
-                                                      Expanded(
-                                                          flex: 1,
-                                                          child: Container()),
-                                                      SingleImageShowModule(
-                                                        index: 0,
-                                                        flex: 2,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(width: 5),
-                                                Expanded(
-                                                  child: Column(
-                                                    children: [
-                                                      Expanded(
-                                                          flex: 1,
-                                                          child: Container()),
-                                                      SingleImageShowModule(
-                                                        index: 1,
-                                                        flex: 2,
-                                                      ),
-                                                      Expanded(
-                                                          flex: 1,
-                                                          child: Container()),
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(width: 5),
-                                                Expanded(
-                                                  child: Column(
-                                                    children: [
-                                                      SingleImageShowModule(
-                                                        index: 2,
-                                                        flex: 2,
-                                                      ),
-                                                      Expanded(
-                                                          flex: 1,
-                                                          child: Container()),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            )),
-                                      )
-                                    : selectedIndex == 8
-                                        ? ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            child: Container(
+                                            ? Container(
                                               decoration:
                                                   collageMainImageBoxDecoration(),
                                               child: Column(
@@ -857,152 +510,449 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                     child: Row(
                                                       children: [
                                                         SingleImageShowModule(
-                                                            index: 0),
-                                                        Expanded(
-                                                          child: Container(),
+                                                          index: 0,
+                                                          flex: 2,
                                                         ),
+                                                        SizedBox(width: 5),
                                                         Expanded(
-                                                          child: Container(),
-                                                        )
+                                                            flex: 1,
+                                                            child:
+                                                                Container()),
                                                       ],
                                                     ),
                                                   ),
+                                                  SizedBox(height: 5),
                                                   Expanded(
                                                     child: Row(
                                                       children: [
                                                         Expanded(
-                                                          child: Container(),
-                                                        ),
+                                                            flex: 1,
+                                                            child:
+                                                                Container()),
+                                                        SizedBox(width: 5),
                                                         SingleImageShowModule(
-                                                            index: 1),
-                                                        Expanded(
-                                                          child: Container(),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Row(
-                                                      children: [
-                                                        Expanded(
-                                                          child: Container(),
+                                                          index: 1,
+                                                          flex: 2,
                                                         ),
-                                                        Expanded(
-                                                          child: Container(),
-                                                        ),
-                                                        SingleImageShowModule(
-                                                            index: 2),
                                                       ],
                                                     ),
                                                   ),
                                                 ],
                                               ),
+                                            )
+                                            : selectedIndex == 10
+                                                ? Container(
+                                                  decoration:
+                                                      collageMainImageBoxDecoration(),
+                                                  child: Column(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(),
+                                                      ),
+                                                      Expanded(
+                                                        child: Row(
+                                                          children: [
+                                                            SingleImageShowModule(
+                                                              index: 0,
+                                                              flex: 1,
+                                                            ),
+                                                            SizedBox(
+                                                                width: 5),
+                                                            SingleImageShowModule(
+                                                              index: 1,
+                                                              flex: 1,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                        child: Container(),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                                : selectedIndex == 11
+                                                    ? Container(
+                                                      decoration:
+                                                          collageMainImageBoxDecoration(),
+                                                      child: Row(
+                                                        children: [
+                                                          Expanded(
+                                                            child: Column(
+                                                              children: [
+                                                                SingleImageShowModule(
+                                                                    index:
+                                                                        0),
+                                                                SizedBox(
+                                                                    height:
+                                                                        5),
+                                                                SingleImageShowModule(
+                                                                    index:
+                                                                        1),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                              child:
+                                                                  Container()),
+                                                        ],
+                                                      ),
+                                                    )
+                                                    : Container());
+  }
+
+  Widget threeImageSelectedModule(int selectedIndex) {
+    return Obx(() => selectedIndex == 0
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 1),
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 2),
+            ],
+          ),
+        )
+        : selectedIndex == 1
+            ? Container(
+              decoration: collageMainImageBoxDecoration(),
+              child: Column(
+                children: [
+                  SingleImageShowModule(index: 0),
+                  SizedBox(height: 5),
+                  SingleImageShowModule(index: 1),
+                  SizedBox(height: 5),
+                  SingleImageShowModule(index: 2),
+                ],
+              ),
+            )
+            : selectedIndex == 2
+                ? Container(
+                  decoration: collageMainImageBoxDecoration(),
+                  child: Column(
+                    children: [
+                      SingleImageShowModule(index: 0),
+                      SizedBox(height: 5),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            SingleImageShowModule(index: 1),
+                            SizedBox(width: 5),
+                            SingleImageShowModule(index: 2),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                )
+                : selectedIndex == 3
+                    ? Container(
+                      decoration: collageMainImageBoxDecoration(),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Row(
+                              children: [
+                                SingleImageShowModule(index: 0),
+                                SizedBox(width: 5),
+                                SingleImageShowModule(index: 1),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          SingleImageShowModule(index: 2),
+                        ],
+                      ),
+                    )
+                    : selectedIndex == 4
+                        ? Container(
+                          decoration: collageMainImageBoxDecoration(),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    SingleImageShowModule(index: 0),
+                                    SizedBox(height: 5),
+                                    SingleImageShowModule(index: 1),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              SingleImageShowModule(index: 2),
+                            ],
+                          ),
+                        )
+                        : selectedIndex == 5
+                            ? Container(
+                              decoration: collageMainImageBoxDecoration(),
+                              child: Row(
+                                children: [
+                                  SingleImageShowModule(index: 0),
+                                  SizedBox(width: 5),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        SingleImageShowModule(index: 1),
+                                        SizedBox(height: 5),
+                                        SingleImageShowModule(index: 2),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                            : selectedIndex == 6
+                                ? Container(
+                                  decoration:
+                                      collageMainImageBoxDecoration(),
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        flex: 3,
+                                        child: Row(
+                                          children: [
+                                            SingleImageShowModule(index: 0),
+                                            SizedBox(width: 5),
+                                            SingleImageShowModule(index: 1),
+                                            SizedBox(width: 5),
+                                            SingleImageShowModule(index: 2),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                : selectedIndex == 7
+                                    ? Container(
+                                        decoration:
+                                            collageMainImageBoxDecoration(),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                children: [
+                                                  Expanded(
+                                                      flex: 1,
+                                                      child: Container()),
+                                                  SingleImageShowModule(
+                                                    index: 0,
+                                                    flex: 2,
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          )
+                                            SizedBox(width: 5),
+                                            Expanded(
+                                              child: Column(
+                                                children: [
+                                                  Expanded(
+                                                      flex: 1,
+                                                      child: Container()),
+                                                  SingleImageShowModule(
+                                                    index: 1,
+                                                    flex: 2,
+                                                  ),
+                                                  Expanded(
+                                                      flex: 1,
+                                                      child: Container()),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 5),
+                                            Expanded(
+                                              child: Column(
+                                                children: [
+                                                  SingleImageShowModule(
+                                                    index: 2,
+                                                    flex: 2,
+                                                  ),
+                                                  Expanded(
+                                                      flex: 1,
+                                                      child: Container()),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ))
+                                    : selectedIndex == 8
+                                        ? Container(
+                                          decoration:
+                                              collageMainImageBoxDecoration(),
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                child: Row(
+                                                  children: [
+                                                    SingleImageShowModule(
+                                                        index: 0),
+                                                    Expanded(
+                                                      child: Container(),
+                                                    ),
+                                                    Expanded(
+                                                      child: Container(),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Container(),
+                                                    ),
+                                                    SingleImageShowModule(
+                                                        index: 1),
+                                                    Expanded(
+                                                      child: Container(),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Container(),
+                                                    ),
+                                                    Expanded(
+                                                      child: Container(),
+                                                    ),
+                                                    SingleImageShowModule(
+                                                        index: 2),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
                                         : selectedIndex == 9
-                                            ? ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                child: Container(
+                                            ? Container(
+                                                decoration:
+                                                    collageMainImageBoxDecoration(),
+                                                child: Row(
+                                                  children: [
+                                                    SingleImageShowModule(
+                                                        index: 0),
+                                                    SizedBox(width: 5),
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          SingleImageShowModule(
+                                                            index: 1,
+                                                            flex: 1,
+                                                          ),
+                                                          SizedBox(
+                                                              height: 5),
+                                                          SingleImageShowModule(
+                                                            index: 2,
+                                                            flex: 2,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ))
+                                            : selectedIndex == 10
+                                                ? Container(
                                                     decoration:
                                                         collageMainImageBoxDecoration(),
                                                     child: Row(
                                                       children: [
-                                                        SingleImageShowModule(
-                                                            index: 0),
-                                                        SizedBox(width: 5),
                                                         Expanded(
                                                           child: Column(
                                                             children: [
-                                                              SingleImageShowModule(
-                                                                index: 1,
+                                                              Expanded(
                                                                 flex: 1,
+                                                                child:
+                                                                    Container(),
                                                               ),
                                                               SizedBox(
-                                                                  height: 5),
+                                                                  height:
+                                                                      5),
                                                               SingleImageShowModule(
-                                                                index: 2,
+                                                                index: 0,
                                                                 flex: 2,
                                                               ),
                                                             ],
                                                           ),
-                                                        )
+                                                        ),
+                                                        SizedBox(width: 5),
+                                                        SingleImageShowModule(
+                                                            index: 1),
+                                                        SizedBox(width: 5),
+                                                        SingleImageShowModule(
+                                                            index: 2),
                                                       ],
-                                                    )),
-                                              )
-                                            : selectedIndex == 10
-                                                ? ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    child: Container(
-                                                        decoration:
-                                                            collageMainImageBoxDecoration(),
-                                                        child: Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child: Column(
-                                                                children: [
-                                                                  Expanded(
-                                                                    flex: 1,
-                                                                    child:
-                                                                        Container(),
-                                                                  ),
-                                                                  SizedBox(
-                                                                      height:
-                                                                          5),
-                                                                  SingleImageShowModule(
-                                                                    index: 0,
-                                                                    flex: 2,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            SizedBox(width: 5),
-                                                            SingleImageShowModule(
-                                                                index: 1),
-                                                            SizedBox(width: 5),
-                                                            SingleImageShowModule(
-                                                                index: 2),
-                                                          ],
-                                                        )),
-                                                  )
+                                                    ))
                                                 : selectedIndex == 11
-                                                    ? ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        child: Container(
+                                                    ? Container(
+                                                      decoration:
+                                                          collageMainImageBoxDecoration(),
+                                                      child: Column(
+                                                        children: [
+                                                          Expanded(
+                                                            child: Row(
+                                                              children: [
+                                                                SingleImageShowModule(
+                                                                    index:
+                                                                        0),
+                                                                SizedBox(
+                                                                    height:
+                                                                        5),
+                                                                Expanded(
+                                                                  child:
+                                                                      Container(),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                              height: 5),
+                                                          Expanded(
+                                                            child: Row(
+                                                              children: [
+                                                                SingleImageShowModule(
+                                                                    index:
+                                                                        1),
+                                                                SizedBox(
+                                                                    width:
+                                                                        5),
+                                                                SingleImageShowModule(
+                                                                    index:
+                                                                        2),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                    : selectedIndex == 12
+                                                        ? Container(
                                                           decoration:
                                                               collageMainImageBoxDecoration(),
-                                                          child: Column(
+                                                          child: Row(
                                                             children: [
-                                                              Expanded(
-                                                                child: Row(
-                                                                  children: [
-                                                                    SingleImageShowModule(
-                                                                        index:
-                                                                            0),
-                                                                    SizedBox(
-                                                                        height:
-                                                                            5),
-                                                                    Expanded(
-                                                                      child:
-                                                                          Container(),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
+                                                              SingleImageShowModule(
+                                                                  index: 0),
                                                               SizedBox(
-                                                                  height: 5),
+                                                                  width: 5),
                                                               Expanded(
-                                                                child: Row(
+                                                                flex: 2,
+                                                                child:
+                                                                    Column(
                                                                   children: [
                                                                     SingleImageShowModule(
                                                                         index:
                                                                             1),
                                                                     SizedBox(
-                                                                        width:
+                                                                        height:
                                                                             5),
                                                                     SingleImageShowModule(
                                                                         index:
@@ -1012,328 +962,479 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                               ),
                                                             ],
                                                           ),
-                                                        ),
-                                                      )
-                                                    : selectedIndex == 12
-                                                        ? ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20),
-                                                            child: Container(
-                                                              decoration:
-                                                                  collageMainImageBoxDecoration(),
-                                                              child: Row(
-                                                                children: [
-                                                                  SingleImageShowModule(
-                                                                      index: 0),
-                                                                  SizedBox(
-                                                                      width: 5),
-                                                                  Expanded(
-                                                                    flex: 2,
-                                                                    child:
-                                                                        Column(
-                                                                      children: [
-                                                                        SingleImageShowModule(
-                                                                            index:
-                                                                                1),
-                                                                        SizedBox(
-                                                                            height:
-                                                                                5),
-                                                                        SingleImageShowModule(
-                                                                            index:
-                                                                                2),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          )
+                                                        )
                                                         : selectedIndex == 13
-                                                            ? ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            20),
-                                                                child:
-                                                                    Container(
+                                                            ? Container(
                                                                   decoration:
-                                                                      collageMainImageBoxDecoration(),
+                                                              collageMainImageBoxDecoration(),
                                                                   child: Row(
-                                                                    children: [
-                                                                      SingleImageShowModule(
-                                                                          index:
-                                                                              0),
-                                                                      SizedBox(
-                                                                          width:
-                                                                              5),
-                                                                      SingleImageShowModule(
-                                                                          index:
-                                                                              1,
-                                                                          flex:
-                                                                              2),
-                                                                      SizedBox(
-                                                                          width:
-                                                                              5),
-                                                                      SingleImageShowModule(
-                                                                          index:
-                                                                              2),
-                                                                    ],
+                                                            children: [
+                                                              SingleImageShowModule(
+                                                                  index:
+                                                                      0),
+                                                              SizedBox(
+                                                                  width:
+                                                                      5),
+                                                              SingleImageShowModule(
+                                                                  index:
+                                                                      1,
+                                                                  flex:
+                                                                      2),
+                                                              SizedBox(
+                                                                  width:
+                                                                      5),
+                                                              SingleImageShowModule(
+                                                                  index:
+                                                                      2),
+                                                            ],
                                                                   ),
-                                                                ),
-                                                              )
+                                                                )
                                                             : Container());
   }
 
 Widget fourImageSelectedModule(int selectedIndex){
     return Obx(() =>
     selectedIndex == 0
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3),
-                ],
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 2),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 3),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 1
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1,  flex:2,),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1,  flex:2,),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 2,  flex:2,),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3),
-                ],
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 2,  flex:2,),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 3),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 2
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1,  flex:2,),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 1,  flex:2,),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 2,  flex:2,),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 3),
-                ],
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 2,  flex:2,),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 3),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 3
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 1),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 2),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 3),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 1),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 2),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 3),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 4
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 1),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 2),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 3),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 5
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 2),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
               ),
-            ),
 
-            SizedBox(height: 5),
-            SingleImageShowModule(index: 3),
+              SizedBox(height: 5),
+              SingleImageShowModule(index: 3),
 
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 6
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0,  flex:2,),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0,  flex:2,),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 2,  flex:2,),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 3),
-                ],
+              SizedBox(width: 5),
+              Expanded(
+                flex: 1,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 2,  flex:2,),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 3),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 7
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1,  flex:2,),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 1,  flex:2,),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              flex: 2,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 3,  flex:2,),
-                ],
+              SizedBox(width: 5),
+              Expanded(
+                flex: 2,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 2),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 3,  flex:2,),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 8
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(width: 5),
-            Expanded(
-              flex: 2,
-              child: Column(
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(width: 5),
+              Expanded(
+                flex: 2,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 1,  flex:2,),
+                    SizedBox(height: 5),
+                    Expanded(
+                      flex: 1,
+                      child: Row(
+                        children: [
+                          SingleImageShowModule(index: 2),
+                          SizedBox(width: 5),
+                          SingleImageShowModule(index: 3),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+
+            ],
+          ),
+        )
+        : selectedIndex == 9
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 1),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              SingleImageShowModule(index: 3),
+
+            ],
+          ),
+        )
+        : selectedIndex == 10
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 1),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
+              ),
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 3),
+
+            ],
+          ),
+        )
+        : selectedIndex == 11
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              SingleImageShowModule(index: 2),
+              SizedBox(height: 5),
+              SingleImageShowModule(index: 3),
+            ],
+          ),
+        )
+        : selectedIndex == 12
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(height: 5),
+              SingleImageShowModule(index: 1),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 2),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 3),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 13
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 1),
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 2),
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 3),
+            ],
+          ),
+        )
+        : selectedIndex == 14
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(height: 5),
+              SingleImageShowModule(index: 1),
+              SizedBox(height: 5),
+              SingleImageShowModule(index: 2),
+              SizedBox(height: 5),
+              SingleImageShowModule(index: 3),
+            ],
+          ),
+        )
+        : selectedIndex == 15
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: Container(),
+                    ),
+                    SingleImageShowModule(index: 0, flex:4,),
+                    Expanded(
+                      flex: 1,
+                      child: Container(),
+                    ),
+                  ],
+                ),
+              ),
+
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Container(),
+                    ),
+                    SingleImageShowModule(index: 1, flex:4,),
+                    Expanded(
+                      flex: 2,
+                      child: Container(),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Container(),
+                    ),
+                    SingleImageShowModule(index: 2, flex:4,),
+                    Expanded(
+                      flex: 3,
+                      child: Container(),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Container(),
+                    ),
+                    SingleImageShowModule(index: 3, flex:4,),
+                    Expanded(
+                      flex: 4,
+                      child: Container(),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 16
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Column(
                 children: [
-                  SingleImageShowModule(index: 1,  flex:2,),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        SingleImageShowModule(index: 0),
+                        SizedBox(width: 5),
+                        SingleImageShowModule(index: 1),
+                      ],
+                    ),
+                  ),
                   SizedBox(height: 5),
                   Expanded(
-                    flex: 1,
                     child: Row(
                       children: [
                         SingleImageShowModule(index: 2),
@@ -1341,2554 +1442,2112 @@ Widget fourImageSelectedModule(int selectedIndex){
                         SingleImageShowModule(index: 3),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
-            ),
 
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 9
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 2),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            SingleImageShowModule(index: 3),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 10
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 1),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 2),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            SingleImageShowModule(index: 3),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 11
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius
-          .circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            SingleImageShowModule(index: 2),
-            SizedBox(height: 5),
-            SingleImageShowModule(index: 3),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 12
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius
-          .circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(height: 5),
-            SingleImageShowModule(index: 1),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 13
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(width: 5),
-            SingleImageShowModule(index: 1),
-            SizedBox(width: 5),
-            SingleImageShowModule(index: 2),
-            SizedBox(width: 5),
-            SingleImageShowModule(index: 3),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 14
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(height: 5),
-            SingleImageShowModule(index: 1),
-            SizedBox(height: 5),
-            SingleImageShowModule(index: 2),
-            SizedBox(height: 5),
-            SingleImageShowModule(index: 3),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 15
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: Container(),
-                  ),
-                  SingleImageShowModule(index: 0, flex:4,),
-                  Expanded(
-                    flex: 1,
-                    child: Container(),
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Container(),
-                  ),
-                  SingleImageShowModule(index: 1, flex:4,),
-                  Expanded(
-                    flex: 2,
-                    child: Container(),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Container(),
-                  ),
-                  SingleImageShowModule(index: 2, flex:4,),
-                  Expanded(
-                    flex: 3,
-                    child: Container(),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(),
-                  ),
-                  SingleImageShowModule(index: 3, flex:4,),
-                  Expanded(
-                    flex: 4,
-                    child: Container(),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 16
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Column(
-              children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      SingleImageShowModule(index: 0),
-                      SizedBox(width: 5),
-                      SingleImageShowModule(index: 1),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 5),
-                Expanded(
-                  child: Row(
-                    children: [
-                      SingleImageShowModule(index: 2),
-                      SizedBox(width: 5),
-                      SingleImageShowModule(index: 3),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-
-            Container(
-              height: 80, width: 80,
-              color: Colors.black,
-            )
-          ],
-        ),
-      ),
-    )
+              Container(
+                height: 80, width: 80,
+                color: Colors.black,
+              )
+            ],
+          ),
+        )
         : Container());
   }
 
 Widget fiveImageSelectedModule(int selectedIndex){
     return Obx(() =>
     selectedIndex == 0
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0, flex:2,),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0, flex:2,),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              flex: 2,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 2, flex:2,),
-                  SizedBox(height: 5),
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: [
-                        SingleImageShowModule(index: 3),
-                        SizedBox(width: 5),
-                        SingleImageShowModule(index: 4),
-                      ],
-                    ),
-                  )
+              SizedBox(width: 5),
+              Expanded(
+                flex: 2,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 2, flex:2,),
+                    SizedBox(height: 5),
+                    Expanded(
+                      flex: 1,
+                      child: Row(
+                        children: [
+                          SingleImageShowModule(index: 3),
+                          SizedBox(width: 5),
+                          SingleImageShowModule(index: 4),
+                        ],
+                      ),
+                    )
 
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 1
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0, flex:2,),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0, flex:2,),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 5),
+              SizedBox(height: 5),
 
-            SingleImageShowModule(index: 2),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4, flex:2,),
-                ],
+              SingleImageShowModule(index: 2),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 4, flex:2,),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 2
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0, flex:2,),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0, flex:2,),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: 5),
-            SingleImageShowModule(index: 2),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 4, flex:2,),
-                ],
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 2),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 4, flex:2,),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 3
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            SingleImageShowModule(index: 2),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4),
-                ],
+              SizedBox(height: 5),
+              SingleImageShowModule(index: 2),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 4),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 4
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                  child: Column(
+                    children: [
+                      SingleImageShowModule(index: 0),
+                      SizedBox(height: 5),
+                      SingleImageShowModule(index: 1),
+                    ],
+                  )
+              ),
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 2),
+              SizedBox(width: 5),
+              Expanded(
+                  child: Column(
+                    children: [
+                      SingleImageShowModule(index: 3),
+                      SizedBox(height: 5),
+                      SingleImageShowModule(index: 4),
+                    ],
+                  )
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 5
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 4),
+
+                  ],
+                ),
+              ),
+
+            ],
+          ),
+        )
+        : selectedIndex == 6
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              SingleImageShowModule(index: 0, flex:2,),
+              SizedBox(height: 5),
+              Expanded(
+                flex: 1,
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 1),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 2),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 4),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 7
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                flex:2,
+                child: Row(
+                    children: [
+                      SingleImageShowModule(index: 0),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 1),
+                    ]
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                flex:1,
+                child: Row(
+                    children: [
+                      SingleImageShowModule(index: 2),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 3),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 4),
+                    ]
+                ),
+              ),
+
+
+            ],
+          ),
+        )
+        : selectedIndex == 8
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 2,
                 child: Column(
                   children: [
                     SingleImageShowModule(index: 0),
                     SizedBox(height: 5),
                     SingleImageShowModule(index: 1),
                   ],
-                )
-            ),
-            SizedBox(width: 5),
-            SingleImageShowModule(index: 2),
-            SizedBox(width: 5),
-            Expanded(
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                flex: 1,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 2),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 3),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 4),
+                  ],
+                ),
+              ),
+
+            ],
+          ),
+        )
+        : selectedIndex == 9
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 1),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 2),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 3),
+                  ],
+                ),
+              ),
+              SizedBox(width: 5),
+              SingleImageShowModule(
+                  index: 4),
+
+            ],
+          ),
+        )
+        : selectedIndex == 10
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 1),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
                 child: Column(
                   children: [
                     SingleImageShowModule(index: 3),
                     SizedBox(height: 5),
                     SingleImageShowModule(index: 4),
                   ],
-                )
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 5
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 2),
-                ],
+                ),
               ),
-            ),
 
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4),
-
-                ],
+            ],
+          ),
+        )
+        : selectedIndex == 11
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0, flex:2,),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
               ),
-            ),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 6
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            SingleImageShowModule(index: 0, flex:2,),
-            SizedBox(height: 5),
-            Expanded(
-              flex: 1,
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4),
-                ],
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 2),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 3, flex:2,),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 7
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              flex:2,
-              child: Row(
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 4),
+            ],
+          ),
+        )
+        : selectedIndex == 12
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0, flex:2,),
+                    SizedBox(height:5),
+                    Expanded(
+                        flex:1,
+                        child: Row(
+                            children:[
+                              SingleImageShowModule(index: 1),
+                              SizedBox(width:5),
+                              SingleImageShowModule(index: 2),
+                            ]
+                        )
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(width:5),
+              Expanded(
+                flex: 1,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(height:5),
+                    SingleImageShowModule(index: 4, flex:2,),
+
+                  ],
+                ),
+              )
+
+            ],
+          ),
+        )
+        : selectedIndex == 13
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(height: 5),
+              Expanded(
+                flex:2,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex:2,
+                      child: Row(
+                        children: [
+                          SingleImageShowModule(index: 1),
+                          SizedBox(width: 5),
+                          SingleImageShowModule(index: 2),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Expanded(
+                      flex:1,
+                      child: Column(
+                        children: [
+                          SingleImageShowModule(index: 3),
+                          SizedBox(height: 5),
+                          SingleImageShowModule(index: 4, flex:2,),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 14
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
                   children: [
                     SingleImageShowModule(index: 0),
                     SizedBox(width: 5),
                     SingleImageShowModule(index: 1),
-                  ]
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              flex:1,
-              child: Row(
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 4, flex:2,),
+                    SizedBox(width: 5),
+                    Expanded(
+                      child: Container(),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 15
+        ?  Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(),
+                    ),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
                   children: [
                     SingleImageShowModule(index: 2),
                     SizedBox(width: 5),
                     SingleImageShowModule(index: 3),
                     SizedBox(width: 5),
                     SingleImageShowModule(index: 4),
-                  ]
+                  ],
+                ),
               ),
-            ),
-
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 8
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 3),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 4),
-                ],
-              ),
-            ),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 9
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 1),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 2),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 3),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            SingleImageShowModule(
-                index: 4),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 10
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 1),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 2),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 4),
-                ],
-              ),
-            ),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 11
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius
-          .circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0, flex:2,),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 3, flex:2,),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            SingleImageShowModule(index: 4),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 12
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius
-          .circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0, flex:2,),
-                  SizedBox(height:5),
-                  Expanded(
-                      flex:1,
-                      child: Row(
-                          children:[
-                            SingleImageShowModule(index: 1),
-                            SizedBox(width:5),
-                            SingleImageShowModule(index: 2),
-                          ]
-                      )
-                  )
-                ],
-              ),
-            ),
-            SizedBox(width:5),
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(height:5),
-                  SingleImageShowModule(index: 4, flex:2,),
-
-                ],
-              ),
-            )
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 13
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(height: 5),
-            Expanded(
-              flex:2,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex:2,
-                    child: Row(
-                      children: [
-                        SingleImageShowModule(index: 1),
-                        SizedBox(width: 5),
-                        SingleImageShowModule(index: 2),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 5),
-                  Expanded(
-                    flex:1,
-                    child: Column(
-                      children: [
-                        SingleImageShowModule(index: 3),
-                        SizedBox(height: 5),
-                        SingleImageShowModule(index: 4, flex:2,),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 14
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 2),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4, flex:2,),
-                  SizedBox(width: 5),
-                  Expanded(
-                    child: Container(),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 15
-        ?  ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(),
-                  ),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 16
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            SingleImageShowModule(index: 0, flex:2,),
-            SizedBox(width: 5),
-            Expanded(
-              flex:1,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 1),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 2),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 3),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 4),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              SingleImageShowModule(index: 0, flex:2,),
+              SizedBox(width: 5),
+              Expanded(
+                flex:1,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 1),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 2),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 3),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 4),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 17
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(height: 5),
-            Expanded(
-              flex:2,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        SingleImageShowModule(index: 1),
-                        SizedBox(height: 5),
-                        SingleImageShowModule(index: 2),
-                      ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(height: 5),
+              Expanded(
+                flex:2,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SingleImageShowModule(index: 1),
+                          SizedBox(height: 5),
+                          SingleImageShowModule(index: 2),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 5),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        SingleImageShowModule(index: 3),
-                        SizedBox(height: 5),
-                        SingleImageShowModule(index: 4),
-                      ],
+                    SizedBox(width: 5),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SingleImageShowModule(index: 3),
+                          SizedBox(height: 5),
+                          SingleImageShowModule(index: 4),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 18
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(width: 5),
-            SingleImageShowModule(index: 1),
-            SizedBox(width: 5),
-            SingleImageShowModule(index: 2),
-            SizedBox(width: 5),
-            SingleImageShowModule(index: 3),
-            SizedBox(width: 5),
-            SingleImageShowModule(index: 4),
-          ],
-        ),
-      ),
-    )
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 1),
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 2),
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 3),
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 4),
+            ],
+          ),
+        )
         : selectedIndex == 19
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4),
-                ],
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 2),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 4),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : Container());
   }
 
 Widget sixImageSelectedModule(int selectedIndex){
     return Obx(() =>
     selectedIndex == 0
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 2),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 5),
-
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 1
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 4),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 5),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 2
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              flex:2,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0, flex:2,),
-                  SizedBox(height: 5),
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                        children: [
-                          SingleImageShowModule(index: 1),
-                          SizedBox(width:5),
-                          SingleImageShowModule(index: 2),
-                        ]
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              flex:1,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 4),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 5),
-
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 3
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              flex:1,
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 2),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              flex: 2,
-              child: Column(
-                children: [
-                  Expanded(
-                    flex:1,
-                    child: Row(
-                        children: [
-                          SingleImageShowModule(index: 3),
-                          SizedBox(width:5),
-                          SingleImageShowModule(index: 4),
-                        ]
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 5, flex:2,),
-
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 4
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0, flex:2,),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                )
-            ),
-            SizedBox(width: 5),
-            Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 3),
-                  ],
-                )
-            ),
-            SizedBox(width: 5),
-            Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 4),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 5, flex:2,),
-                  ],
-                )
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 5
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0, flex:2,),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 4),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 5, flex:2,),
-                ],
-              ),
-            ),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 6
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                  children:[
-                    SingleImageShowModule(index: 0, flex:2,),
-                    SizedBox(height:5),
-                    SingleImageShowModule(index: 1),
-                  ]
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                  children:[
-                    SingleImageShowModule(index: 2),
-                    SizedBox(height:5),
-                    SingleImageShowModule(index: 3, flex:2,),
-                  ]
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                  children:[
-                    SingleImageShowModule(index: 4, flex:2,),
-                    SizedBox(height:5),
-                    SingleImageShowModule(index: 5),
-                  ]
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 7
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0, flex:2,),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                  ]
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3, flex:2,),
-                  ]
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                  children: [
-                    SingleImageShowModule(index: 4, flex:2,),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 5),
-                  ]
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 8
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 2),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 3, flex:2,),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4, flex:2,),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 5),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-                child: Container()
-            )
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 9
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-                child: Container()
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 2),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 4),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 5),
-                ],
-              ),
-            ),
-
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 10
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Row(
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
                   children: [
                     SingleImageShowModule(index: 0),
                     SizedBox(width: 5),
                     SingleImageShowModule(index: 1),
-                  ]
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              flex:1,
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 5),
-                ],
-              ),
-            ),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 4),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 5),
 
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 11
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius
-          .circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            SingleImageShowModule(index: 0, flex:2,),
-            SizedBox(height: 5),
-            Expanded(
-              flex:1,
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 5),
-                ],
+                  ],
+                ),
               ),
-            ),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 12
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius
-          .circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width:5),
-                  SingleImageShowModule(index: 1),
-                ],
+            ],
+          ),
+        )
+        : selectedIndex == 1
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height:5),
-            Expanded(
-              flex: 2,
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width:5),
-                  SingleImageShowModule(index: 3),
-                ],
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 2),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 3),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height:5),
-            Expanded(
-              flex: 1,
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 4),
-                  SizedBox(width:5),
-                  SingleImageShowModule(index: 5),
-                ],
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 4),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 5),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 13
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-
-            SingleImageShowModule(index: 0),
-            SizedBox(height: 5),
-            Expanded(
-              flex:2,
-              child: Row(
-                children: [
-                  Expanded(
-                      flex:2,
-                      child: Column(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                  children: [
-                                    SingleImageShowModule(index: 1),
-                                    SizedBox(width:5),
-                                    SingleImageShowModule(index: 2),
-
-                                  ]
-                              ),
-                            ),
-                            SizedBox(height:5),
-                            Expanded(
-                              child: Row(
-                                  children: [
-                                    SingleImageShowModule(index: 3),
-                                    SizedBox(width:5),
-                                    SingleImageShowModule(index: 4),
-
-                                  ]
-                              ),
-                            )
-                          ]
-                      )
-                  ),
-                  SizedBox(width:5),
-                  SingleImageShowModule(index: 5),
-                ],
-              ),
-            ),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 14
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 4),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 5),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 15
-        ?  ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  Expanded(
-                      child: Column(
+            ],
+          ),
+        )
+        : selectedIndex == 2
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                flex:2,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0, flex:2,),
+                    SizedBox(height: 5),
+                    Expanded(
+                      flex: 1,
+                      child: Row(
                           children: [
                             SingleImageShowModule(index: 1),
-                            SizedBox(height: 5),
+                            SizedBox(width:5),
                             SingleImageShowModule(index: 2),
                           ]
-                      )
-                  ),
-
-                ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                      child: Column(
+              SizedBox(width: 5),
+              Expanded(
+                flex:1,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 4),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 5),
+
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 3
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                flex:1,
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 1),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                flex: 2,
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex:1,
+                      child: Row(
                           children: [
                             SingleImageShowModule(index: 3),
-                            SizedBox(height:5),
+                            SizedBox(width:5),
                             SingleImageShowModule(index: 4),
                           ]
-                      )
-                  ),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 5),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 5, flex:2,),
 
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 16
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-                flex:1,
-                child: Container()
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              flex:2,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Row(
-                        children:[
-                          SingleImageShowModule(index: 0),
-                          SizedBox(width: 5),
-                          SingleImageShowModule(index: 1),
-                          SizedBox(width: 5),
-                          SingleImageShowModule(index: 2),
-                        ]
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Expanded(
-                    child: Row(
-                        children:[
-                          SingleImageShowModule(index: 3),
-                          SizedBox(width: 5),
-                          SingleImageShowModule(index: 4),
-                          SizedBox(width: 5),
-                          SingleImageShowModule(index: 5),
-                        ]
-                    ),
+            ],
+          ),
+        )
+        : selectedIndex == 4
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                  child: Column(
+                    children: [
+                      SingleImageShowModule(index: 0, flex:2,),
+                      SizedBox(height: 5),
+                      SingleImageShowModule(index: 1),
+                    ],
                   )
-                ],
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-                flex:1,
-                child: Container()
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 17
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-                flex:1,
-                child: Container()
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              flex:2,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Row(
-                        children:[
-                          SingleImageShowModule(index: 0),
-                          SizedBox(width: 5),
-                          SingleImageShowModule(index: 1),
-                        ]
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Expanded(
-                    child: Row(
-                        children:[
-                          SingleImageShowModule(index: 2),
-                          SizedBox(width: 5),
-                          SingleImageShowModule(index: 3),
-                        ]
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Expanded(
-                    child: Row(
-                        children:[
-                          SingleImageShowModule(index: 4),
-                          SizedBox(width: 5),
-                          SingleImageShowModule(index: 5),
-                        ]
-                    ),
+              SizedBox(width: 5),
+              Expanded(
+                  child: Column(
+                    children: [
+                      SingleImageShowModule(index: 2),
+                      SizedBox(height: 5),
+                      SingleImageShowModule(index: 3),
+                    ],
                   )
-                ],
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-                flex:1,
-                child: Container()
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 18
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                  children: [
-                    Expanded(
-                        flex:3,
-                        child: Container()
-                    ),
-                    SingleImageShowModule(index: 0),
-                  ]
+              SizedBox(width: 5),
+              Expanded(
+                  child: Column(
+                    children: [
+                      SingleImageShowModule(index: 4),
+                      SizedBox(height: 5),
+                      SingleImageShowModule(index: 5, flex:2,),
+                    ],
+                  )
               ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
+            ],
+          ),
+        )
+        : selectedIndex == 5
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
                   children: [
-                    Expanded(
-                        flex:2,
-                        child: Container()
-                    ),
+                    SingleImageShowModule(index: 0, flex:2,),
+                    SizedBox(width: 5),
                     SingleImageShowModule(index: 1),
-                    Expanded(
-                        flex:1,
-                        child: Container()
-                    ),
-                  ]
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
+
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
                   children: [
-                    Expanded(
-                        flex:1,
-                        child: Container()
-                    ),
                     SingleImageShowModule(index: 2),
-                    Expanded(
-                        flex:1,
-                        child: Container()
-                    ),
-                  ]
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                  children: [
-                    Expanded(
-                        flex:1,
-                        child: Container()
-                    ),
+                    SizedBox(width: 5),
                     SingleImageShowModule(index: 3),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 4),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 5, flex:2,),
+                  ],
+                ),
+              ),
+
+            ],
+          ),
+        )
+        : selectedIndex == 6
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                    children:[
+                      SingleImageShowModule(index: 0, flex:2,),
+                      SizedBox(height:5),
+                      SingleImageShowModule(index: 1),
+                    ]
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                    children:[
+                      SingleImageShowModule(index: 2),
+                      SizedBox(height:5),
+                      SingleImageShowModule(index: 3, flex:2,),
+                    ]
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                    children:[
+                      SingleImageShowModule(index: 4, flex:2,),
+                      SizedBox(height:5),
+                      SingleImageShowModule(index: 5),
+                    ]
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 7
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                    children: [
+                      SingleImageShowModule(index: 0, flex:2,),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 1),
+                    ]
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                    children: [
+                      SingleImageShowModule(index: 2),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 3, flex:2,),
+                    ]
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                    children: [
+                      SingleImageShowModule(index: 4, flex:2,),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 5),
+                    ]
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 8
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 3, flex:2,),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 4, flex:2,),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 5),
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                  child: Container()
+              )
+
+            ],
+          ),
+        )
+        : selectedIndex == 9
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                  child: Container()
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 1),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 4),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 5),
+                  ],
+                ),
+              ),
+
+
+            ],
+          ),
+        )
+        : selectedIndex == 10
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Row(
+                    children: [
+                      SingleImageShowModule(index: 0),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 1),
+                    ]
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                flex:1,
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 2),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 4),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 5),
+                  ],
+                ),
+              ),
+
+
+            ],
+          ),
+        )
+        : selectedIndex == 11
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              SingleImageShowModule(index: 0, flex:2,),
+              SizedBox(height: 5),
+              Expanded(
+                flex:1,
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 1),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 2),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 4),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 5),
+                  ],
+                ),
+              ),
+
+            ],
+          ),
+        )
+        : selectedIndex == 12
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width:5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
+              ),
+              SizedBox(height:5),
+              Expanded(
+                flex: 2,
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 2),
+                    SizedBox(width:5),
+                    SingleImageShowModule(index: 3),
+                  ],
+                ),
+              ),
+              SizedBox(height:5),
+              Expanded(
+                flex: 1,
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 4),
+                    SizedBox(width:5),
+                    SingleImageShowModule(index: 5),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 13
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+
+              SingleImageShowModule(index: 0),
+              SizedBox(height: 5),
+              Expanded(
+                flex:2,
+                child: Row(
+                  children: [
                     Expanded(
                         flex:2,
-                        child: Container()
-                    ),
-                  ]
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                  children: [
-                    Expanded(
-                        flex:1,
-                        child: Container()
-                    ),
-                    SingleImageShowModule(index: 4),
-                    Expanded(
-                        flex:3,
-                        child: Container()
-                    ),
-                  ]
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                  children: [
-                    SingleImageShowModule(index: 5),
-                    Expanded(
-                        flex:3,
-                        child: Container()
-                    ),
-                  ]
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 19
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            SingleImageShowModule(index: 0),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 2),
+                        child: Column(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                    children: [
+                                      SingleImageShowModule(index: 1),
+                                      SizedBox(width:5),
+                                      SingleImageShowModule(index: 2),
 
-                ],
+                                    ]
+                                ),
+                              ),
+                              SizedBox(height:5),
+                              Expanded(
+                                child: Row(
+                                    children: [
+                                      SingleImageShowModule(index: 3),
+                                      SizedBox(width:5),
+                                      SingleImageShowModule(index: 4),
+
+                                    ]
+                                ),
+                              )
+                            ]
+                        )
+                    ),
+                    SizedBox(width:5),
+                    SingleImageShowModule(index: 5),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 5),
-                ],
+
+            ],
+          ),
+        )
+        : selectedIndex == 14
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 1),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 2),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 3),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 4),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 5),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 15
+        ?  Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    Expanded(
+                        child: Column(
+                            children: [
+                              SingleImageShowModule(index: 1),
+                              SizedBox(height: 5),
+                              SingleImageShowModule(index: 2),
+                            ]
+                        )
+                    ),
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Column(
+                            children: [
+                              SingleImageShowModule(index: 3),
+                              SizedBox(height:5),
+                              SingleImageShowModule(index: 4),
+                            ]
+                        )
+                    ),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 5),
+
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 16
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                  flex:1,
+                  child: Container()
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                flex:2,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Row(
+                          children:[
+                            SingleImageShowModule(index: 0),
+                            SizedBox(width: 5),
+                            SingleImageShowModule(index: 1),
+                            SizedBox(width: 5),
+                            SingleImageShowModule(index: 2),
+                          ]
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Expanded(
+                      child: Row(
+                          children:[
+                            SingleImageShowModule(index: 3),
+                            SizedBox(width: 5),
+                            SingleImageShowModule(index: 4),
+                            SizedBox(width: 5),
+                            SingleImageShowModule(index: 5),
+                          ]
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                  flex:1,
+                  child: Container()
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 17
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                  flex:1,
+                  child: Container()
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                flex:2,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Row(
+                          children:[
+                            SingleImageShowModule(index: 0),
+                            SizedBox(width: 5),
+                            SingleImageShowModule(index: 1),
+                          ]
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Expanded(
+                      child: Row(
+                          children:[
+                            SingleImageShowModule(index: 2),
+                            SizedBox(width: 5),
+                            SingleImageShowModule(index: 3),
+                          ]
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Expanded(
+                      child: Row(
+                          children:[
+                            SingleImageShowModule(index: 4),
+                            SizedBox(width: 5),
+                            SingleImageShowModule(index: 5),
+                          ]
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                  flex:1,
+                  child: Container()
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 18
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                    children: [
+                      Expanded(
+                          flex:3,
+                          child: Container()
+                      ),
+                      SingleImageShowModule(index: 0),
+                    ]
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                    children: [
+                      Expanded(
+                          flex:2,
+                          child: Container()
+                      ),
+                      SingleImageShowModule(index: 1),
+                      Expanded(
+                          flex:1,
+                          child: Container()
+                      ),
+                    ]
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                    children: [
+                      Expanded(
+                          flex:1,
+                          child: Container()
+                      ),
+                      SingleImageShowModule(index: 2),
+                      Expanded(
+                          flex:1,
+                          child: Container()
+                      ),
+                    ]
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                    children: [
+                      Expanded(
+                          flex:1,
+                          child: Container()
+                      ),
+                      SingleImageShowModule(index: 3),
+                      Expanded(
+                          flex:2,
+                          child: Container()
+                      ),
+                    ]
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                    children: [
+                      Expanded(
+                          flex:1,
+                          child: Container()
+                      ),
+                      SingleImageShowModule(index: 4),
+                      Expanded(
+                          flex:3,
+                          child: Container()
+                      ),
+                    ]
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                    children: [
+                      SingleImageShowModule(index: 5),
+                      Expanded(
+                          flex:3,
+                          child: Container()
+                      ),
+                    ]
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 19
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              SingleImageShowModule(index: 0),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 1),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 2),
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 4),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 5),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
         : Container());
   }
 
 Widget sevenImageSelectedModule(int selectedIndex){
     return Obx(() =>
     selectedIndex == 0
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0, flex:2,),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0, flex:2,),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4),
-                ],
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 2),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 4),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 5),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 6, flex:2,),
-                ],
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 5),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 6, flex:2,),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 1
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0, flex:2,),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0, flex:2,),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 1),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 3),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 4),
-                ],
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 2),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 3),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 4),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 5),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 6, flex:2,),
-                ],
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 5),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 6, flex:2,),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : selectedIndex == 2
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width:5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width:5),
-                  SingleImageShowModule(index: 2),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width:5),
+                    SingleImageShowModule(index: 1),
+                    SizedBox(width:5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width:5),
-                  SingleImageShowModule(index: 4),
-                  SizedBox(width:5),
-                  SingleImageShowModule(index: 5),
-                ],
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width:5),
+                    SingleImageShowModule(index: 4),
+                    SizedBox(width:5),
+                    SingleImageShowModule(index: 5),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 5),
-            SingleImageShowModule(index: 6),
-          ],
-        ),
-      ),
-    )
+              SizedBox(height: 5),
+              SingleImageShowModule(index: 6),
+            ],
+          ),
+        )
         : selectedIndex == 3
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 2),
-                ],
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 1),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 4),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 5),
-                ],
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 4),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 5),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: 5),
-            SingleImageShowModule(index: 6),
-          ],
-        ),
-      ),
-    )
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 6),
+            ],
+          ),
+        )
         : selectedIndex == 4
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-                flex:2,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                )
-            ),
-            SizedBox(width: 5),
-            Expanded(
-                flex:1,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 4),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 5),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 6),
-                  ],
-                )
-            ),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 5
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              flex:2,
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 2),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 5),
-            Expanded(
-              flex:1,
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 4),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 5),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 6),
-                ],
-              ),
-            ),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 6
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              flex:2,
-              child: Row(
-                  children:[
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 1),
-                  ]
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              flex:1,
-              child: Row(
-                  children:[
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 3),
-                  ]
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                  children:[
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 5),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 6),
-                  ]
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 7
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: BoxDecoration(
-          // border: Border.all(color: Colors.red, width: 5),
-            color: collageScreenController
-                .borderColor[
-            collageScreenController
-                .activeColor.value]),
-        child: Column(
-          children: [
-            SingleImageShowModule(index: 0, flex:2,),
-            SizedBox(height: 5),
-            Expanded(
-              flex:1,
-              child: Row(
-                  children: [
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                  ]
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              flex:1,
-              child: Row(
-                  children: [
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 5),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 6),
-                  ]
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 8
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 2),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            SingleImageShowModule(index: 3),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 4),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 5),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 6),
-                ],
-              ),
-            ),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 9
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-                child: Row(
-                    children:[
-                      SingleImageShowModule(index: 0),
-                      SizedBox(width:5),
-                      SingleImageShowModule(index: 1),
-                      SizedBox(width:5),
-                      SingleImageShowModule(index: 2),
-                    ]
-                )
-            ),
-            SizedBox(height: 5),
-            Expanded(
-                child: Row(
-                    children:[
-                      SingleImageShowModule(index: 3),
-                      SizedBox(width:5),
-                      SingleImageShowModule(index: 4),
-                    ]
-                )
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 5, flex:2,),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 6),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 10
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 2),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 4),
-                ],
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 5, flex:2,),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 6),
-                ],
-              ),
-            ),
-
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 11
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius
-          .circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Row(
-          children: [
-            Expanded(
-                child: Column(
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                  flex:2,
+                  child: Column(
                     children: [
                       SingleImageShowModule(index: 0),
-                      SizedBox(height:5),
+                      SizedBox(height: 5),
                       SingleImageShowModule(index: 1),
-                    ]
-                )
-
-            ),
-            SizedBox(width: 5),
-            Expanded(
-                child: Column(
-                    children: [
+                      SizedBox(height: 5),
                       SingleImageShowModule(index: 2),
-                      SizedBox(height:5),
-                      SingleImageShowModule(index: 3),
-                      SizedBox(height:5),
-                      SingleImageShowModule(index: 4),
-                    ]
-                )
-            ),
-            SizedBox(width: 5),
-            Expanded(
-                child: Column(
+                    ],
+                  )
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                  flex:1,
+                  child: Column(
                     children: [
+                      SingleImageShowModule(index: 3),
+                      SizedBox(height: 5),
+                      SingleImageShowModule(index: 4),
+                      SizedBox(height: 5),
                       SingleImageShowModule(index: 5),
-                      SizedBox(height:5),
+                      SizedBox(height: 5),
+                      SingleImageShowModule(index: 6),
+                    ],
+                  )
+              ),
+
+            ],
+          ),
+        )
+        : selectedIndex == 5
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                flex:2,
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 5),
+              Expanded(
+                flex:1,
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 4),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 5),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 6),
+                  ],
+                ),
+              ),
+
+            ],
+          ),
+        )
+        : selectedIndex == 6
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                flex:2,
+                child: Row(
+                    children:[
+                      SingleImageShowModule(index: 0),
+                      SizedBox(width:5),
+                      SingleImageShowModule(index: 1),
+                    ]
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                flex:1,
+                child: Row(
+                    children:[
+                      SingleImageShowModule(index: 2),
+                      SizedBox(width:5),
+                      SingleImageShowModule(index: 3),
+                    ]
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                    children:[
+                      SingleImageShowModule(index: 4),
+                      SizedBox(width:5),
+                      SingleImageShowModule(index: 5),
+                      SizedBox(width:5),
                       SingleImageShowModule(index: 6),
                     ]
-                )
-
-            ),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 12
-        ? ClipRRect(
-      borderRadius:
-      BorderRadius
-          .circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width:5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(width:5),
-                  SingleImageShowModule(index: 2),
-                ],
+                ),
               ),
-            ),
-            SizedBox(height:5),
-            SingleImageShowModule(index: 3),
-            SizedBox(height:5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 4),
-                  SizedBox(width:5),
-                  SingleImageShowModule(index: 5),
-                  SizedBox(width:5),
-                  SingleImageShowModule(index: 6),
-                ],
+            ],
+          ),
+        )
+        : selectedIndex == 7
+        ? Container(
+          decoration: BoxDecoration(
+            // border: Border.all(color: Colors.red, width: 5),
+              color: collageScreenController
+                  .borderColor[
+              collageScreenController
+                  .activeColor.value]),
+          child: Column(
+            children: [
+              SingleImageShowModule(index: 0, flex:2,),
+              SizedBox(height: 5),
+              Expanded(
+                flex:1,
+                child: Row(
+                    children: [
+                      SingleImageShowModule(index: 1),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 2),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 3),
+                    ]
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 13
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
+              SizedBox(height: 5),
+              Expanded(
+                flex:1,
+                child: Row(
+                    children: [
+                      SingleImageShowModule(index: 4),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 5),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 6),
+                    ]
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 8
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 1),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
+              ),
+              SizedBox(width: 5),
+              SingleImageShowModule(index: 3),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 4),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 5),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 6),
+                  ],
+                ),
+              ),
 
-            Expanded(
-              flex:1,
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width:5),
-                  Expanded(
-                      child: Row(
-                          children:[
-                            SingleImageShowModule(index: 1),
-                            SizedBox(width:5),
-                            SingleImageShowModule(index: 2),
-                          ]
-                      )
+            ],
+          ),
+        )
+        : selectedIndex == 9
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                  child: Row(
+                      children:[
+                        SingleImageShowModule(index: 0),
+                        SizedBox(width:5),
+                        SingleImageShowModule(index: 1),
+                        SizedBox(width:5),
+                        SingleImageShowModule(index: 2),
+                      ]
                   )
-                ],
               ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              flex:2,
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 3),
-                  SizedBox(width:5),
-                  Expanded(
-                      child: Column(
-                          children: [
-                            SingleImageShowModule(index: 4),
-                            SizedBox(height:5),
-                            Expanded(
+              SizedBox(height: 5),
+              Expanded(
+                  child: Row(
+                      children:[
+                        SingleImageShowModule(index: 3),
+                        SizedBox(width:5),
+                        SingleImageShowModule(index: 4),
+                      ]
+                  )
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 5, flex:2,),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 6),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 10
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 1),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 4),
+                  ],
+                ),
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 5, flex:2,),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 6),
+                  ],
+                ),
+              ),
+
+
+            ],
+          ),
+        )
+        : selectedIndex == 11
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Row(
+            children: [
+              Expanded(
+                  child: Column(
+                      children: [
+                        SingleImageShowModule(index: 0),
+                        SizedBox(height:5),
+                        SingleImageShowModule(index: 1),
+                      ]
+                  )
+
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                  child: Column(
+                      children: [
+                        SingleImageShowModule(index: 2),
+                        SizedBox(height:5),
+                        SingleImageShowModule(index: 3),
+                        SizedBox(height:5),
+                        SingleImageShowModule(index: 4),
+                      ]
+                  )
+              ),
+              SizedBox(width: 5),
+              Expanded(
+                  child: Column(
+                      children: [
+                        SingleImageShowModule(index: 5),
+                        SizedBox(height:5),
+                        SingleImageShowModule(index: 6),
+                      ]
+                  )
+
+              ),
+
+            ],
+          ),
+        )
+        : selectedIndex == 12
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width:5),
+                    SingleImageShowModule(index: 1),
+                    SizedBox(width:5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
+              ),
+              SizedBox(height:5),
+              SingleImageShowModule(index: 3),
+              SizedBox(height:5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 4),
+                    SizedBox(width:5),
+                    SingleImageShowModule(index: 5),
+                    SizedBox(width:5),
+                    SingleImageShowModule(index: 6),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 13
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+
+              Expanded(
+                flex:1,
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width:5),
+                    Expanded(
+                        child: Row(
+                            children:[
+                              SingleImageShowModule(index: 1),
+                              SizedBox(width:5),
+                              SingleImageShowModule(index: 2),
+                            ]
+                        )
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                flex:2,
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 3),
+                    SizedBox(width:5),
+                    Expanded(
+                        child: Column(
+                            children: [
+                              SingleImageShowModule(index: 4),
+                              SizedBox(height:5),
+                              Expanded(
+                                  child: Row(
+                                      children: [
+                                        SingleImageShowModule(index: 5),
+                                        SizedBox(width:5),
+                                        SingleImageShowModule(index: 6),
+                                      ]
+                                  )
+                              )
+
+                            ]
+                        )
+                    ),
+                  ],
+                ),
+              ),
+
+            ],
+          ),
+        )
+        : selectedIndex == 14
+        ? Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1,flex:2,),
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 2),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 3, flex:2,),
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 4),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 5),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 6),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+        : selectedIndex == 15
+        ?  Container(
+          decoration: collageMainImageBoxDecoration(),
+          child: Column(
+            children: [
+              Expanded(
+                flex:1,
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(index: 1, flex:2,),
+
+                  ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Expanded(
+                flex:2,
+                child: Row(
+                  children: [
+                    SingleImageShowModule(index: 2),
+                    SizedBox(width: 5),
+                    Expanded(
+                        flex:2,
+                        child: Column(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                    children: [
+                                      SingleImageShowModule(index: 3),
+                                      SizedBox(width:5),
+                                      SingleImageShowModule(index: 4),
+                                    ]
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Expanded(
                                 child: Row(
                                     children: [
                                       SingleImageShowModule(index: 5),
                                       SizedBox(width:5),
                                       SingleImageShowModule(index: 6),
                                     ]
-                                )
-                            )
+                                ),
+                              )
+                            ]
+                        )
+                    ),
 
-                          ]
-                      )
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 14
-        ? ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1,flex:2,),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 3, flex:2,),
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 4),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 5),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 6),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : selectedIndex == 15
-        ?  ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        decoration: collageMainImageBoxDecoration(),
-        child: Column(
-          children: [
-            Expanded(
-              flex:1,
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(index: 1, flex:2,),
-
-                ],
-              ),
-            ),
-            SizedBox(height: 5),
-            Expanded(
-              flex:2,
-              child: Row(
-                children: [
-                  SingleImageShowModule(index: 2),
-                  SizedBox(width: 5),
-                  Expanded(
-                      flex:2,
-                      child: Column(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                  children: [
-                                    SingleImageShowModule(index: 3),
-                                    SizedBox(width:5),
-                                    SingleImageShowModule(index: 4),
-                                  ]
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Expanded(
-                              child: Row(
-                                  children: [
-                                    SingleImageShowModule(index: 5),
-                                    SizedBox(width:5),
-                                    SingleImageShowModule(index: 6),
-                                  ]
-                              ),
-                            )
-                          ]
-                      )
-                  ),
-
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
+            ],
+          ),
+        )
         : Container());
   }
 }

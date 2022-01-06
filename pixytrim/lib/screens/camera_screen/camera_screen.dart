@@ -371,7 +371,7 @@ class _CameraScreenState extends State<CameraScreen> {
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
-          itemCount: cameraScreenController.addImageFromCameraList.length > 1 ? iconList.length : 8,
+          itemCount: iconList.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
