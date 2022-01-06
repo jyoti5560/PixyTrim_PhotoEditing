@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +9,8 @@ final controller = Get.find<ImageSizeRatioController>();
 
 //1:2
 class SizeRatio1 extends StatelessWidget {
-  const SizeRatio1({Key? key}) : super(key: key);
+  File file;
+  SizeRatio1({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +21,11 @@ class SizeRatio1 extends StatelessWidget {
       ),
     );*/
     return Container(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: AspectRatio(
-          aspectRatio: 1.0 / 2.0,
-          child: Image(
-            image: FileImage(controller.file),
-
-            fit: BoxFit.cover, // use this
-          ),
+      child: AspectRatio(
+        aspectRatio: 1.0 / 2.0,
+        child: Image(
+          image: FileImage(file),
+          fit: BoxFit.cover, // use this
         ),
       ),
     );
@@ -35,7 +34,8 @@ class SizeRatio1 extends StatelessWidget {
 
 // 2:3
 class SizeRatio2 extends StatelessWidget {
-  const SizeRatio2({Key? key}) : super(key: key);
+  File file;
+  SizeRatio2({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +47,12 @@ class SizeRatio2 extends StatelessWidget {
       ),
     );*/
     return Container(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: AspectRatio(
-          aspectRatio: 2.0 / 3.0,
-          child: Image(
-            image: FileImage(controller.file),
+      child: AspectRatio(
+        aspectRatio: 2.0 / 3.0,
+        child: Image(
+          image: FileImage(file),
 
-            fit: BoxFit.cover, // use this
-          ),
+          fit: BoxFit.cover, // use this
         ),
       ),
     );
@@ -64,10 +61,11 @@ class SizeRatio2 extends StatelessWidget {
 
 // 3:2
 class SizeRatio3 extends StatelessWidget {
-  const SizeRatio3({Key? key}) : super(key: key);
+  File file;
+  SizeRatio3({required this.file});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     /*return Container(
       padding: EdgeInsets.only(top: 40, bottom: 40),
       // decoration: BoxDecoration(
@@ -81,6 +79,7 @@ class SizeRatio3 extends StatelessWidget {
     );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           child: ClipRRect(
@@ -88,7 +87,7 @@ class SizeRatio3 extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 3.0 / 2.0,
               child: Image(
-                image: FileImage(controller.file),
+                image: FileImage(file),
 
                 fit: BoxFit.cover,
               ),
@@ -102,7 +101,8 @@ class SizeRatio3 extends StatelessWidget {
 
 // 3:4
 class SizeRatio4 extends StatelessWidget {
-  const SizeRatio4({Key? key}) : super(key: key);
+  File file;
+  SizeRatio4({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +119,7 @@ class SizeRatio4 extends StatelessWidget {
     );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           child: ClipRRect(
@@ -126,7 +127,7 @@ class SizeRatio4 extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 3.0 / 4.0,
               child: Image(
-                image: FileImage(controller.file),
+                image: FileImage(file),
 
                 fit: BoxFit.cover, // use this
               ),
@@ -140,7 +141,8 @@ class SizeRatio4 extends StatelessWidget {
 
 // 4:3
 class SizeRatio5 extends StatelessWidget {
-  const SizeRatio5({Key? key}) : super(key: key);
+  File file;
+  SizeRatio5({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -154,6 +156,7 @@ class SizeRatio5 extends StatelessWidget {
     );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           child: ClipRRect(
@@ -161,7 +164,7 @@ class SizeRatio5 extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 4.0 / 3.0,
               child: Image(
-                image: FileImage(controller.file),
+                image: FileImage(file),
 
                 fit: BoxFit.cover, // use this
               ),
@@ -175,7 +178,8 @@ class SizeRatio5 extends StatelessWidget {
 
 // 5:4
 class SizeRatio6 extends StatelessWidget {
-  const SizeRatio6({Key? key}) : super(key: key);
+  File file;
+  SizeRatio6({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -188,6 +192,7 @@ class SizeRatio6 extends StatelessWidget {
     );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           child: ClipRRect(
@@ -195,7 +200,7 @@ class SizeRatio6 extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 5.0 / 4.0,
               child: Image(
-                image: FileImage(controller.file),
+                image: FileImage(file),
 
                 fit: BoxFit.cover, // use this
               ),
@@ -209,7 +214,8 @@ class SizeRatio6 extends StatelessWidget {
 
 // 9:16
 class SizeRatio7 extends StatelessWidget {
-  const SizeRatio7({Key? key}) : super(key: key);
+  File file;
+  SizeRatio7({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -225,7 +231,7 @@ class SizeRatio7 extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 9.0 / 16.0,
           child: Image(
-            image: FileImage(controller.file),
+            image: FileImage(file),
 
             fit: BoxFit.cover, // use this
           ),
@@ -237,7 +243,8 @@ class SizeRatio7 extends StatelessWidget {
 
 // 16:9
 class SizeRatio8 extends StatelessWidget {
-  const SizeRatio8({Key? key}) : super(key: key);
+  File file;
+  SizeRatio8({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -250,6 +257,7 @@ class SizeRatio8 extends StatelessWidget {
     );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           child: ClipRRect(
@@ -257,7 +265,7 @@ class SizeRatio8 extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 16.0 / 9.0,
               child: Image(
-                image: FileImage(controller.file),
+                image: FileImage(file),
 
                 fit: BoxFit.cover, // use this
               ),
@@ -271,7 +279,8 @@ class SizeRatio8 extends StatelessWidget {
 
 // a4
 class SizeRatio9 extends StatelessWidget {
-  const SizeRatio9({Key? key}) : super(key: key);
+  File file;
+  SizeRatio9({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -288,7 +297,7 @@ class SizeRatio9 extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 1.0 / 1.41,
           child: Image(
-            image: FileImage(controller.file),
+            image: FileImage(file),
 
             fit: BoxFit.cover, // use this
           ),
@@ -300,7 +309,8 @@ class SizeRatio9 extends StatelessWidget {
 
 // a5
 class SizeRatio10 extends StatelessWidget {
-  const SizeRatio10({Key? key}) : super(key: key);
+  File file;
+  SizeRatio10({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -318,7 +328,7 @@ class SizeRatio10 extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 42.0 / 59.5,
           child: Image(
-            image: FileImage(controller.file),
+            image: FileImage(file),
 
             fit: BoxFit.cover, // use this
           ),
@@ -330,6 +340,8 @@ class SizeRatio10 extends StatelessWidget {
 
 // fb cover
 class SizeRatio11 extends StatelessWidget {
+  File file;
+  SizeRatio11({required this.file});
   @override
   Widget build(BuildContext context) {
     // return GestureDetector(
@@ -366,6 +378,7 @@ class SizeRatio11 extends StatelessWidget {
     );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
           child: ClipRRect(
@@ -373,7 +386,7 @@ class SizeRatio11 extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 2.7 / 1,
               child: Image(
-                image: FileImage(controller.file),
+                image: FileImage(file),
 
                 fit: BoxFit.cover, // use this
               ),
@@ -387,7 +400,8 @@ class SizeRatio11 extends StatelessWidget {
 
 // fb post
 class SizeRatio12 extends StatelessWidget {
-  const SizeRatio12({Key? key}) : super(key: key);
+  File file;
+  SizeRatio12({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -400,6 +414,7 @@ class SizeRatio12 extends StatelessWidget {
     // );
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
           child: ClipRRect(
@@ -407,7 +422,7 @@ class SizeRatio12 extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 1.91 / 1,
               child: Image(
-                image: FileImage(controller.file),
+                image: FileImage(file),
 
                 fit: BoxFit.cover, // use this
               ),
@@ -421,7 +436,8 @@ class SizeRatio12 extends StatelessWidget {
 
 // ig story
 class SizeRatio13 extends StatelessWidget {
-  const SizeRatio13({Key? key}) : super(key: key);
+  File file;
+  SizeRatio13({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -438,7 +454,7 @@ class SizeRatio13 extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 9.0 / 16.0,
           child: Image(
-            image: FileImage(controller.file),
+            image: FileImage(file),
 
             fit: BoxFit.cover, // use this
           ),
@@ -450,7 +466,8 @@ class SizeRatio13 extends StatelessWidget {
 
 // ig 1:1
 class SizeRatio14 extends StatelessWidget {
-  const SizeRatio14({Key? key}) : super(key: key);
+  File file;
+  SizeRatio14({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -462,6 +479,7 @@ class SizeRatio14 extends StatelessWidget {
     );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           child: ClipRRect(
@@ -469,7 +487,7 @@ class SizeRatio14 extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 1.0 /1.0,
               child: Image(
-                image: FileImage(controller.file),
+                image: FileImage(file),
 
                 fit: BoxFit.cover, // use this
               ),
@@ -483,12 +501,14 @@ class SizeRatio14 extends StatelessWidget {
 
 // ig 4:5
 class SizeRatio15 extends StatelessWidget {
-  const SizeRatio15({Key? key}) : super(key: key);
+  File file;
+  SizeRatio15({required this.file});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           //width: Get.width / 1.3,
@@ -496,7 +516,7 @@ class SizeRatio15 extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: AspectRatio(
               aspectRatio: 4 / 5,
-              child: Image.file(controller.file, fit: BoxFit.cover),
+              child: Image.file(file, fit: BoxFit.cover),
             ),
           ),
         ),
@@ -517,7 +537,8 @@ class SizeRatio15 extends StatelessWidget {
 
 // movie
 class SizeRatio16 extends StatelessWidget {
-  const SizeRatio16({Key? key}) : super(key: key);
+  File file;
+  SizeRatio16({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -530,6 +551,7 @@ class SizeRatio16 extends StatelessWidget {
     );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           child: ClipRRect(
@@ -537,7 +559,7 @@ class SizeRatio16 extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 1.85 /1.0,
               child: Image(
-                image: FileImage(controller.file),
+                image: FileImage(file),
 
                 fit: BoxFit.cover, // use this
               ),
@@ -551,7 +573,8 @@ class SizeRatio16 extends StatelessWidget {
 
 // pinterest post
 class SizeRatio17 extends StatelessWidget {
-  const SizeRatio17({Key? key}) : super(key: key);
+  File file;
+  SizeRatio17({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -568,7 +591,7 @@ class SizeRatio17 extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 2.0 /3.0,
           child: Image(
-            image: FileImage(controller.file),
+            image: FileImage(file),
 
             fit: BoxFit.cover, // use this
           ),
@@ -580,7 +603,8 @@ class SizeRatio17 extends StatelessWidget {
 
 // twitter header
 class SizeRatio18 extends StatelessWidget {
-  const SizeRatio18({Key? key}) : super(key: key);
+  File file;
+  SizeRatio18({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -596,6 +620,7 @@ class SizeRatio18 extends StatelessWidget {
     );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           child: ClipRRect(
@@ -603,7 +628,7 @@ class SizeRatio18 extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 3.0 /1.0,
               child: Image(
-                image: FileImage(controller.file),
+                image: FileImage(file),
                 fit: BoxFit.cover, // use this
               ),
             ),
@@ -616,7 +641,8 @@ class SizeRatio18 extends StatelessWidget {
 
 // twitter post
 class SizeRatio19 extends StatelessWidget {
-  const SizeRatio19({Key? key}) : super(key: key);
+  File file;
+  SizeRatio19({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -629,6 +655,7 @@ class SizeRatio19 extends StatelessWidget {
     );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           child: ClipRRect(
@@ -636,7 +663,7 @@ class SizeRatio19 extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 16.0 /9.0,
               child: Image(
-                image: FileImage(controller.file),
+                image: FileImage(file),
                 fit: BoxFit.cover, // use this
               ),
             ),
@@ -649,7 +676,8 @@ class SizeRatio19 extends StatelessWidget {
 
 // yt cover
 class SizeRatio20 extends StatelessWidget {
-  const SizeRatio20({Key? key}) : super(key: key);
+  File file;
+  SizeRatio20({required this.file});
 
   @override
   Widget build(BuildContext context) {
@@ -662,6 +690,7 @@ class SizeRatio20 extends StatelessWidget {
     );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           child: ClipRRect(
@@ -669,7 +698,7 @@ class SizeRatio20 extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 16.0 /9.0,
               child: Image(
-                image: FileImage(controller.file),
+                image: FileImage(file),
                 fit: BoxFit.cover, // use this
               ),
             ),

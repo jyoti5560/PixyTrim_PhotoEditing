@@ -432,8 +432,9 @@ class _CameraScreenState extends State<CameraScreen> {
                   Get.to(() =>
                       ImageEditorScreen(file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value], newIndex: cameraScreenController.selectedImage.value));
                 } else if (i == 7) {
+                  print('Value : ${cameraScreenController.selectedImage.value}');
                   Get.to(() => ImageSizeRatioScreen(),
-                      arguments: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]);
+                      arguments: [cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value], cameraScreenController.selectedImage.value]);
 
                   //Get.to(() => ImageEditorScreen(file: widget.file));
                 } /*else if(i == 8) {

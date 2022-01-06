@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -44,12 +45,9 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
                     SizedBox(height: 20),
                     Expanded(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Flexible(
-                              child: Container(
-                                  child: ratioImage()
-                              )
-                          ),
+                          Flexible(child: ratioImage(),),
                         ],
                       ),
                     ),
@@ -102,7 +100,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
                 GestureDetector(
                   onTap: () async {
                     await _capturePng().then((value) {
-                      Fluttertoast.showToast(
+                      /*Fluttertoast.showToast(
                           msg: "Save In to Gallery",
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.BOTTOM,
@@ -110,7 +108,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
                           backgroundColor: Colors.blue,
                           textColor: Colors.white,
                           fontSize: 16.0
-                      );
+                      );*/
                       Get.back();
                     });
                   },
@@ -149,7 +147,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
       print("png Bytes:====$pngBytes");
       //print("bs64:====$bs64");
       //setState(() {});
-      await saveImage();
+     // await saveImage();
     } catch (e) {
       print(e);
     }
