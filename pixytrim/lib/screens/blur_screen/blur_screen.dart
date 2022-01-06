@@ -26,6 +26,7 @@ class BlurScreen extends StatefulWidget {
 
 class _BlurScreenState extends State<BlurScreen> {
   final csController = Get.find<CameraScreenController>();
+  var blurValue = 0.0;
 
   LinearGradient gradient = LinearGradient(
       colors: <Color> [
@@ -186,11 +187,14 @@ class _BlurScreenState extends State<BlurScreen> {
                 value: blurImage,
                 min:0,
                 max: 5 ,
+                divisions: 100,
+                label: '$blurValue %',
                 onChanged: (value) {
                   setState(() {
                     blurImage = value;
+                    blurValue = (value * 100) / 5;
                   });
-                  print(blurImage);
+                  print(blurValue);
                 },
                 //divisions: 100,
                 //value: widget.collageScreenController.borderWidthValue.value,
