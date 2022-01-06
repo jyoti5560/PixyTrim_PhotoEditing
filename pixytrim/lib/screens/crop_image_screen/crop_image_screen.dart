@@ -341,7 +341,6 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                         await Future.delayed(Duration(seconds: 3));
 
                         await _capturePng().then((value) {
-                          csController.isLoading(false);
                           Get.back();
                         });
 

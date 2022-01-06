@@ -14,7 +14,7 @@ class CameraScreenController extends GetxController{
 
   RxDouble compressSize = 61.0.obs;
   RxList<File> addImageFromCameraList = <File>[].obs;
-
+  // final GlobalKey key = GlobalKey();
 
   @override
   void onInit() {

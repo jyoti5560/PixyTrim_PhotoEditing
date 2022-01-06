@@ -19,7 +19,7 @@ class FilterScreenState extends State<FilterScreen> {
   // FilterScreenController filterScreenController = Get.put(FilterScreenController());
   CameraScreenController csController = Get.find<CameraScreenController>();
   File? file;
-  final GlobalKey key = GlobalKey();
+ final GlobalKey key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,19 @@ class FilterScreenState extends State<FilterScreen> {
                 children: [
                   appBar(),
                   SizedBox(height: 20),
-                  Expanded(child: filterImage()),
+                  Expanded (
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: filterImage(),
+                        ),
+                        // Expanded(
+                        //   child: Container(),
+                        // ),
+                      ],
+                    ),
+                  ),
                   SizedBox(height: 20),
                   filterList()
                 ],
@@ -161,36 +173,35 @@ class FilterScreenState extends State<FilterScreen> {
 
   Widget filterImage(){
     return Obx(
-      ()=> Container(
-        // width: Get.width,
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: RepaintBoundary(
-              key: key,
-              child: csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 0
-                  ? csController.filterOptions[0].filterWidget
-                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 1
-                  ? csController.filterOptions[1].filterWidget
-                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 2
-                  ? csController.filterOptions[2].filterWidget
-                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 3
-                  ? csController.filterOptions[3].filterWidget
-                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 4
-                  ? csController.filterOptions[4].filterWidget
-                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 5
-                  ? csController.filterOptions[5].filterWidget
-                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 6
-                  ? csController.filterOptions[6].filterWidget
-                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 7
-                  ? csController.filterOptions[7].filterWidget
-                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 8
-                  ? csController.filterOptions[8].filterWidget
-                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 9
-                  ? csController.filterOptions[9].filterWidget
-                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 10
-                  ? csController.filterOptions[10].filterWidget
-                  : Container(),
-            )
+      ()=> ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: RepaintBoundary(
+          key: key,
+          child: Container(
+            child: csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 0
+                ? csController.filterOptions[0].filterWidget
+                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 1
+                ? csController.filterOptions[1].filterWidget
+                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 2
+                ? csController.filterOptions[2].filterWidget
+                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 3
+                ? csController.filterOptions[3].filterWidget
+                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 4
+                ? csController.filterOptions[4].filterWidget
+                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 5
+                ? csController.filterOptions[5].filterWidget
+                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 6
+                ? csController.filterOptions[6].filterWidget
+                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 7
+                ? csController.filterOptions[7].filterWidget
+                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 8
+                ? csController.filterOptions[8].filterWidget
+                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 9
+                ? csController.filterOptions[9].filterWidget
+                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 10
+                ? csController.filterOptions[10].filterWidget
+                : Container(),
+          ),
         ),
       ),
     );
