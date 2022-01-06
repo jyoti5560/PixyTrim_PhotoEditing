@@ -474,9 +474,9 @@ class ImagePainterState extends State<ImagePainter> {
 
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey)
-              ),
+              // decoration: BoxDecoration(
+              //   border: Border.all(color: Colors.grey)
+              // ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

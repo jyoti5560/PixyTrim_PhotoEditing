@@ -45,17 +45,26 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                     SizedBox(height: 20,),
 
                     Expanded(
-                      child: ImagePainter.file(
-                        widget.file,
-                        repaintKey: repaintKey,
-                        key: _imageKey,
-                        scalable: false,
-                        initialStrokeWidth: 2,
-                        initialColor: Colors.green,
-                        initialPaintMode: PaintMode.freeStyle,
-                        // placeholderWidget: Container(
-                        //   child: Text("jdjdh"),
-                        // ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: Container(
+                              child: ImagePainter.file(
+                                widget.file,
+                                repaintKey: repaintKey,
+                                key: _imageKey,
+                                scalable: false,
+                                initialStrokeWidth: 2,
+                                initialColor: Colors.green,
+                                initialPaintMode: PaintMode.freeStyle,
+                                // placeholderWidget: Container(
+                                //   child: Text("jdjdh"),
+                                // ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
 

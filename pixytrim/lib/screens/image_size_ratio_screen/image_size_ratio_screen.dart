@@ -43,7 +43,15 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
                     appBar(),
                     SizedBox(height: 20),
                     Expanded(
-                      child: ratioImage(),
+                      child: Column(
+                        children: [
+                          Flexible(
+                              child: Container(
+                                  child: ratioImage()
+                              )
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 20),
                     ratioList(),

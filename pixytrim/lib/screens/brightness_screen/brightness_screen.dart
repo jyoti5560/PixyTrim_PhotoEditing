@@ -61,47 +61,56 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                     appBar(),
                     SizedBox(height: 20),
                     Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Container(
-                            child: ColorFiltered(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Container(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Container(
+                                    child: ColorFiltered(
                       colorFilter: ColorFilter.matrix(calculateContrastMatrix(con)),
                       child: ColorFiltered(
-                            colorFilter:
-                                ColorFilter.matrix(calculateSaturationMatrix(sat)),
-                            child: Container(
-                              //width: Get.width,
-                              child: RepaintBoundary(
-                                key: key,
-                                child: ExtendedImage(
-                                  color: bright > 0
-                                      ? Colors.white.withOpacity(bright)
-                                      : Colors.black.withOpacity(-bright),
-                                  colorBlendMode: bright > 0
-                                      ? BlendMode.lighten
-                                      : BlendMode.darken,
-                                  image: ExtendedFileImageProvider(csController.addImageFromCameraList[csController.selectedImage.value]),
-                                  extendedImageEditorKey: editorKey,
-                                  /*child: Container(
-                                    width: Get.width,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: widget.file.toString().isNotEmpty
-                                          ? Image.file(
-                                              widget.file,
-                                              height: 120,
-                                              width: 120,
-                                              fit: BoxFit.fill,
-                                            )
-                                          : null,
+                                    colorFilter:
+                                        ColorFilter.matrix(calculateSaturationMatrix(sat)),
+                                    child: Container(
+                                      //width: Get.width,
+                                      child: RepaintBoundary(
+                                        key: key,
+                                        child: ExtendedImage(
+                                          color: bright > 0
+                                              ? Colors.white.withOpacity(bright)
+                                              : Colors.black.withOpacity(-bright),
+                                          colorBlendMode: bright > 0
+                                              ? BlendMode.lighten
+                                              : BlendMode.darken,
+                                          image: ExtendedFileImageProvider(csController.addImageFromCameraList[csController.selectedImage.value]),
+                                          extendedImageEditorKey: editorKey,
+                                          /*child: Container(
+                                            width: Get.width,
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(20),
+                                              child: widget.file.toString().isNotEmpty
+                                                  ? Image.file(
+                                                      widget.file,
+                                                      height: 120,
+                                                      width: 120,
+                                                      fit: BoxFit.fill,
+                                                    )
+                                                  : null,
+                                            ),
+                                          ),*/
+                                        ),
+                                      ),
                                     ),
-                                  ),*/
+                      ),
+                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                      ),
-                    ),
-                          ),
+                          ],
                         )),
                     SizedBox(height: 20),
                     brightnessList()

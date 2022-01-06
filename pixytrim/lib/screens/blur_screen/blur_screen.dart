@@ -79,21 +79,30 @@ class _BlurScreenState extends State<BlurScreen> {
                     //   ),
                     // ),
                     Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: RepaintBoundary(
-                          key: key,
-                          child: ImageFiltered(
-                            imageFilter: ImageFilter.blur(
-                                sigmaX: blurImage, sigmaY: blurImage),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
                             child: Container(
-                              color: Colors.transparent,
-                              child: csController.addImageFromCameraList[csController.selectedImage.value].toString().isNotEmpty
-                                  ? Image.file(csController.addImageFromCameraList[csController.selectedImage.value])
-                                  : null,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: RepaintBoundary(
+                                  key: key,
+                                  child: ImageFiltered(
+                                    imageFilter: ImageFilter.blur(
+                                        sigmaX: blurImage, sigmaY: blurImage),
+                                    child: Container(
+                                      color: Colors.transparent,
+                                      child: csController.addImageFromCameraList[csController.selectedImage.value].toString().isNotEmpty
+                                          ? Image.file(csController.addImageFromCameraList[csController.selectedImage.value])
+                                          : null,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
 
