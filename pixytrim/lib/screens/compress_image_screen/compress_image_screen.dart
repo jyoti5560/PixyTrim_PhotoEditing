@@ -220,8 +220,10 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
                           trackShape: GradientRectSliderTrackShape(
                               gradient: gradient, darkenInactive: false,
                           ),
+                          valueIndicatorTextStyle: TextStyle(fontFamily: ""),
                         ),
                         child: Slider(
+                          label: 'Compress : ${csController.compressSize.value.toStringAsFixed(2)} %',
                           onChanged: (value) {
                             setState(() {
                               print('value : $value');

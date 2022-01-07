@@ -28,7 +28,7 @@ class CropImageScreen extends StatefulWidget {
   _CropImageScreenState createState() => _CropImageScreenState();
 }
 
-class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProviderStateMixin {
+class _CropImageScreenState extends State<CropImageScreen> {
   CameraScreenController csController = Get.find<CameraScreenController>();
   //final cropKey = GlobalKey<CropState>();
   File? imageFile;
@@ -93,6 +93,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                                       borderRadius: BorderRadius.circular(20),
                                       child: croppedImage == null && index == 0
                                           ? Crop(
+                                        //aspectRatio: 4/3,
                                         controller: cropController,
                                         image: widget.file.readAsBytesSync(),
                                         onCropped: (croppedData1) {
@@ -102,9 +103,8 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                                             croppedImage = croppedData1;
                                             isCropping = false;
                                           });
-                                          // if (this.mounted) {
+                                          // if (mounted) {
                                           //   setState(() {
-                                          //     // Your state change code goes here
                                           //   });
                                           // }
                                         },
@@ -172,21 +172,15 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                                       //   ),
                                       // )
                                           : Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
-                                            border: Border.all(color: Colors.grey)
-                                        ),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
-                                          child: RepaintBoundary(
-                                              key: key,
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                 border: Border.all(color: Colors.red)
-                                                ),
-                                                  child: Image.memory(croppedImage!)
-                                              ),
-                                          ),
+                                        // decoration: BoxDecoration(
+                                        //     borderRadius: BorderRadius.circular(20),
+                                        //     border: Border.all(color: Colors.grey)
+                                        // ),
+                                        child: RepaintBoundary(
+                                            key: key,
+                                            child: Container(
+                                                child: Image.memory(croppedImage!)
+                                            ),
                                         ),
                                       ),
                                     ),
@@ -340,22 +334,42 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
                     SizedBox(width: 15,),
                     GestureDetector(
                       onTap: () async {
+                        /*setState(() {
+                          isCropping = true;
+                        });*/
+
                         cropController.crop();
-                        Fluttertoast.showToast(
-                            msg: "Please wait",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 5,
-                            backgroundColor: Colors.blue,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
-                        await Future.delayed(Duration(seconds: 3));
+                        // Fluttertoast.showToast(
+                        //     msg: "Please wait",
+                        //     toastLength: Toast.LENGTH_SHORT,
+                        //     gravity: ToastGravity.BOTTOM,
+                        //     timeInSecForIosWeb: 5,
+                        //     backgroundColor: Colors.blue,
+                        //     textColor: Colors.white,
+                        //     fontSize: 16.0);
+                        // await Future.delayed(Duration(seconds: 5)).then((value) {
+                        //   setState(() {
+                        //
+                        //   });
+                        // });
+                        //
+                        // await _capturePng().then((value) {
+                        //    Get.back();
+                        // });
 
+
+                        //crop1();
+                      },
+                      child: Container(
+                          child: Icon(Icons.check_rounded)
+                      ),
+                    ),
+                    SizedBox(width: 15,),
+                    GestureDetector(
+                      onTap: () async {
                         await _capturePng().then((value) {
-                           Get.back();
+                          Get.back();
                         });
-
-
                         //crop1();
                       },
                       child: Container(
@@ -404,7 +418,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
       RenderRepaintBoundary boundary =
       key.currentContext!.findRenderObject() as RenderRepaintBoundary;
       print(boundary);
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      ui.Image image = await boundary.toImage(pixelRatio: 1.0);
       print("image:===$image");
       final directory = (await getApplicationDocumentsDirectory()).path;
       ByteData? byteData =
@@ -417,7 +431,7 @@ class _CropImageScreenState extends State<CropImageScreen> with SingleTickerProv
         //imageFile = imgFile;
         csController.addImageFromCameraList[csController.selectedImage.value] = imgFile;
       });
-      print("File path====:${imageFile!.path}");
+      print("File path====:${csController.addImageFromCameraList[csController.selectedImage.value].path}");
       //collageScreenController.imageFileList = pngBytes;
       //bs64 = base64Encode(pngBytes);
       print("png Bytes:====$pngBytes");
