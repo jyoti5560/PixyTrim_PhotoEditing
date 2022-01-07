@@ -26,7 +26,7 @@ class BlurScreen extends StatefulWidget {
 
 class _BlurScreenState extends State<BlurScreen> {
   final csController = Get.find<CameraScreenController>();
-  var blurValue = 0.0;
+  double blurValue = 0.0;
 
   LinearGradient gradient = LinearGradient(
       colors: <Color> [
@@ -182,13 +182,14 @@ class _BlurScreenState extends State<BlurScreen> {
             child: SliderTheme(
               data: SliderThemeData(
                 trackShape: GradientRectSliderTrackShape(gradient: gradient, darkenInactive: false),
+                valueIndicatorTextStyle: TextStyle(fontFamily: ""),
               ),
               child: Slider(
                 value: blurImage,
                 min:0,
                 max: 5 ,
                 divisions: 100,
-                label: '$blurValue %',
+                label: '${blurValue.toStringAsFixed(0)} %',
                 onChanged: (value) {
                   setState(() {
                     blurImage = value;

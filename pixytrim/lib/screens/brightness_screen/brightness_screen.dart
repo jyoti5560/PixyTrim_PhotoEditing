@@ -28,8 +28,11 @@ class BrightnessScreen extends StatefulWidget {
 class _BrightnessScreenState extends State<BrightnessScreen> {
   final csController = Get.find<CameraScreenController>();
   double sat = 1;
+  double satPercent = 0.0;
   double bright = 0;
+  double brightPercent = 0.0;
   double con = 1;
+  double conPercent = 0.0;
   GlobalKey<ExtendedImageEditorState> editorKey = GlobalKey();
   final defaultColorMatrix = const <double>[
     1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0
@@ -68,16 +71,16 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                               child: Container(
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    child: ColorFiltered(
+                                  child: RepaintBoundary(
+                                    key: key,
+                                    child: Container(
+                                      child: ColorFiltered(
                       colorFilter: ColorFilter.matrix(calculateContrastMatrix(con)),
                       child: ColorFiltered(
-                                    colorFilter:
-                                        ColorFilter.matrix(calculateSaturationMatrix(sat)),
-                                    child: Container(
-                                      //width: Get.width,
-                                      child: RepaintBoundary(
-                                        key: key,
+                                      colorFilter:
+                                          ColorFilter.matrix(calculateSaturationMatrix(sat)),
+                                      child: Container(
+                                        //width: Get.width,
                                         child: ExtendedImage(
                                           color: bright > 0
                                               ? Colors.white.withOpacity(bright)
@@ -103,9 +106,9 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                                           ),*/
                                         ),
                                       ),
-                                    ),
                       ),
                     ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -113,7 +116,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                           ],
                         )),
                     SizedBox(height: 20),
-                    brightnessList()
+                    brightnessList(),
                   ],
                 ),
               )
@@ -197,10 +200,11 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                       //accentTextTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
                     ),
                     child: Slider(
-                      label: 'saturation : ${sat.toStringAsFixed(2)}',
+                      label: 'saturation : ${satPercent.toStringAsFixed(2)} %',
                       onChanged: (double value) {
                         setState(() {
                           sat = value;
+                          satPercent = (sat * 100) / 2;
                         });
                       },
                       divisions: 50,
@@ -238,15 +242,16 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                       valueIndicatorTextStyle: TextStyle(fontFamily: ""),
                     ),
                     child: Slider(
-                      label: 'brightness : ${bright.toStringAsFixed(2)}',
+                      label: 'brightness : ${brightPercent.toStringAsFixed(2)} %',
                       onChanged: (double value) {
                         setState(() {
                           bright = value;
+                          brightPercent = (bright * 100) / 0.50;
                         });
                       },
                       divisions: 50,
                       value: bright,
-                      min: -0.5,
+                      min: -0.50,
                       max: 0.50,
                     ),
                   ),
@@ -280,10 +285,11 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                       valueIndicatorTextStyle: TextStyle(fontFamily: ""),
                     ),
                     child: Slider(
-                      label: 'contrast : ${con.toStringAsFixed(2)}',
+                      label: 'contrast : ${conPercent.toStringAsFixed(2)} %',
                       onChanged: (double value) {
                         setState(() {
                           con = value;
+                          conPercent = (con * 100) / 1.50;
                         });
                       },
                       divisions: 50,
@@ -346,6 +352,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
       Uint8List pngBytes = byteData!.buffer.asUint8List();
       File imgFile = new File('$directory/$imgName.jpg');
       await imgFile.writeAsBytes(pngBytes);
+      print('index : ${csController.selectedImage.value}');
       setState(() {
         csController.addImageFromCameraList[csController.selectedImage.value] = imgFile;
       });
