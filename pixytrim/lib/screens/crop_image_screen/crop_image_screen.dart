@@ -16,6 +16,7 @@ import 'package:pixytrim/common/custom_image.dart';
 import 'dart:ui' as ui;
 import 'dart:math' as Math;
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
+import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 
 class CropImageScreen extends StatefulWidget {
@@ -43,7 +44,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
   int index = 0;
   bool showFront = true;
   double _rotation = 0;
-  double _scale = 1.0;
+  double _scale = 1;
   final cropController = CropController();
   BoxShape shape = BoxShape.rectangle;
   File? temp;
@@ -111,21 +112,30 @@ class _CropImageScreenState extends State<CropImageScreen> {
                                         initialSize: 0.5,
                                       )
                                           : index == 1
-                                          ? Transform(
-                                        transform: Matrix4.rotationX(
-                                            (_rotation) * Math.pi / 2
-                                        ),
+                                          ? RepaintBoundary(
+                                        key: key,
+                                            child: Transform.rotate(
+                                        angle: Math.pi / 180 * _rotation,
                                         alignment: Alignment.center,
                                         child: Container(
-                                          height: MediaQuery.of(context).size.height - 130,
-                                          alignment: Alignment.center,
-                                          child: Image.file(widget.file),
+                                            height: MediaQuery.of(context)
+                                                .size.height - 130,
+                                            alignment: Alignment.center,
+                                            child: PhotoView(
+                                              imageProvider:
+                                              FileImage(widget.file),
+                                            ),
                                         ),
-                                      )
+                                      ),
+                                          )
                                           : index == 2
-                                          ? PhotoView(
+                                          ? /*PhotoView(
                                         //enableRotation: true,
-                                          imageProvider: FileImage(widget.file))
+                                          imageProvider: FileImage(widget.file))*/
+                                      /*Transform.scale(
+                                          scale: 0.5,
+                                        origin: Offset(_scale, _scale),
+                                          child: Image.file(widget.file),)*/
                                       // Transform(
                                       //   transform: Matrix4.identity()..scale(_scale, _scale),
                                       //   alignment: Alignment.center,
@@ -136,29 +146,29 @@ class _CropImageScreenState extends State<CropImageScreen> {
                                       //   ),
                                       // )
 
-                                      // GestureDetector(
-                                      //   onScaleStart: (ScaleStartDetails details) {
-                                      //     print(details);
-                                      //     previousScale = _scale;
-                                      //     setState(() {});
-                                      //   },
-                                      //   onScaleUpdate: (ScaleUpdateDetails details) {
-                                      //     print(details);
-                                      //     _scale = previousScale * details.scale;
-                                      //     setState(() {});
-                                      //   },
-                                      //   onScaleEnd: (ScaleEndDetails details) {
-                                      //     print(details);
-                                      //
-                                      //     previousScale = 1.0;
-                                      //     setState(() {});
-                                      //   },
-                                      //   child: Transform(
-                                      //     alignment: FractionalOffset.center,
-                                      //     transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
-                                      //     child: Image.file(widget.file,fit: BoxFit.cover,),
-                                      //   ),
-                                      // )
+                                      GestureDetector(
+                                        onScaleStart: (ScaleStartDetails details) {
+                                          print(details);
+                                          previousScale = _scale;
+                                          setState(() {});
+                                        },
+                                        onScaleUpdate: (ScaleUpdateDetails details) {
+                                          print(details);
+                                          _scale = previousScale * details.scale;
+                                          setState(() {});
+                                        },
+                                        onScaleEnd: (ScaleEndDetails details) {
+                                          print(details);
+
+                                          previousScale = 1.0;
+                                          setState(() {});
+                                        },
+                                        child: Transform(
+                                          alignment: FractionalOffset.center,
+                                          transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
+                                          child: Image.file(widget.file,fit: BoxFit.cover,),
+                                        ),
+                                      )
                                       // PhotoView(
                                       //   //enableRotation: true,
                                       //     imageProvider: FileImage(widget.file))
@@ -196,7 +206,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
                       index == 0 ? cropRatio() :
 
                       index == 1 ? rotateRatio() :
-                     // index == 2 ? scaleRatio()
+                     index == 2 ? scaleRatio() :
                            Container(),
 
                       SizedBox(height: 20),
@@ -228,10 +238,10 @@ class _CropImageScreenState extends State<CropImageScreen> {
             valueIndicatorTextStyle: TextStyle(fontFamily: ""),
           ),
           child: Slider(
-            divisions: 25,
+            divisions: 360,
             value: _rotation,
             min: 0,
-            max: 50,
+            max: 360,
             label: '$_rotation°',
             onChanged: (n) {
               setState(() {
@@ -266,7 +276,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
             trackShape: GradientRectSliderTrackShape(gradient: gradient, darkenInactive: false),
           ),
           child: Slider(
-            divisions: 100,
+            divisions: 200,
             value: _scale,
             min: -180,
             max: 180,
