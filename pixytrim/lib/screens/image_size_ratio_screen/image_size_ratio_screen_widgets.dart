@@ -3,31 +3,26 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:pixytrim/controller/image_size_ratio_controller/image_size_ratio_controller.dart';
 
 final controller = Get.find<ImageSizeRatioController>();
 
-//1:2
+//1:2 = 0
 class SizeRatio1 extends StatelessWidget {
   File file;
   SizeRatio1({required this.file});
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      child: AspectRatio(
-        aspectRatio: 1 / 2,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
     return Container(
-      child: AspectRatio(
-        aspectRatio: 1.0 / 2.0,
-        child: Image(
-          image: FileImage(file),
-          fit: BoxFit.cover, // use this
+      width: 135,
+        height: 270,
+        child: PhotoView(
+          enableRotation: true,
+          customSize: Size.fromRadius(250),
+          imageProvider: FileImage(file),
         ),
-      ),
     );
   }
 }
@@ -39,21 +34,14 @@ class SizeRatio2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      width: Get.width / 1.2,
-      child: AspectRatio(
-        aspectRatio: 2 / 3,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
-    return Container(
-      child: AspectRatio(
-        aspectRatio: 2.0 / 3.0,
-        child: Image(
-          image: FileImage(file),
 
-          fit: BoxFit.cover, // use this
-        ),
+    return Container(
+      width: 150,
+      height: 225,
+      child: PhotoView(
+        enableRotation: true,
+        customSize: Size.fromRadius(250),
+        imageProvider: FileImage(file),
       ),
     );
   }
@@ -66,29 +54,17 @@ class SizeRatio3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      padding: EdgeInsets.only(top: 40, bottom: 40),
-      // decoration: BoxDecoration(
-      //     borderRadius: BorderRadius.circular(20),
-      //     border: Border.all(color: Colors.grey)
-      // ),
-      child: AspectRatio(
-        aspectRatio: 3 / 2,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: AspectRatio(
-            aspectRatio: 3.0 / 2.0,
-            child: Image(
-              image: FileImage(file),
-
-              fit: BoxFit.cover,
-            ),
+          width: 270,
+          height: 180,
+          child: PhotoView(
+            enableRotation: true,
+            customSize: Size.fromRadius(250),
+            imageProvider: FileImage(file),
           ),
         ),
       ],
@@ -103,29 +79,17 @@ class SizeRatio4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      padding: EdgeInsets.only(top: 15, bottom: 15),
-      //width: Get.width,
-      child: Container(
-        width: Get.width / 1.3,
-        child: AspectRatio(
-          aspectRatio: 3 / 4,
-          child: Image.file(controller.file, fit: BoxFit.cover),
-        ),
-      ),
-    );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: AspectRatio(
-            aspectRatio: 3.0 / 4.0,
-            child: Image(
-              image: FileImage(file),
-
-              fit: BoxFit.cover, // use this
-            ),
+          width: 180,
+          height: 240,
+          child: PhotoView(
+            enableRotation: true,
+            customSize: Size.fromRadius(250),
+            imageProvider: FileImage(file),
           ),
         ),
       ],
@@ -140,26 +104,17 @@ class SizeRatio5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      width: Get.width / 1.2,
-      padding: EdgeInsets.only(top: 30, bottom: 30),
-      child: AspectRatio(
-        aspectRatio: 4 / 3,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: AspectRatio(
-            aspectRatio: 4.0 / 3.0,
-            child: Image(
-              image: FileImage(file),
-
-              fit: BoxFit.cover, // use this
-            ),
+          width: 160,
+          height: 120,
+          child: PhotoView(
+            enableRotation: true,
+            customSize: Size.fromRadius(250),
+            imageProvider: FileImage(file),
           ),
         ),
       ],
@@ -167,32 +122,24 @@ class SizeRatio5 extends StatelessWidget {
   }
 }
 
-// 5:4
+// 5:4 = 5
 class SizeRatio6 extends StatelessWidget {
   File file;
   SizeRatio6({required this.file});
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      padding: EdgeInsets.only(top: 20, bottom: 20),
-      child: AspectRatio(
-        aspectRatio: 5 / 4,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: AspectRatio(
-            aspectRatio: 5.0 / 4.0,
-            child: Image(
-              image: FileImage(file),
-
-              fit: BoxFit.cover, // use this
-            ),
+          width: 300,
+          height: 240,
+          child: PhotoView(
+            enableRotation: true,
+            customSize: Size.fromRadius(250),
+            imageProvider: FileImage(file),
           ),
         ),
       ],
@@ -207,20 +154,13 @@ class SizeRatio7 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      child: AspectRatio(
-        aspectRatio: 9 / 16,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
     return Container(
-      child: AspectRatio(
-        aspectRatio: 9.0 / 16.0,
-        child: Image(
-          image: FileImage(file),
-
-          fit: BoxFit.cover, // use this
-        ),
+      width: 154.29,
+      height: 274.29,
+      child: PhotoView(
+        enableRotation: true,
+        customSize: Size.fromRadius(250),
+        imageProvider: FileImage(file),
       ),
     );
   }
@@ -233,25 +173,17 @@ class SizeRatio8 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      padding: EdgeInsets.symmetric(vertical: 120),
-      child: AspectRatio(
-        aspectRatio: 20 / 5,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: AspectRatio(
-            aspectRatio: 16.0 / 9.0,
-            child: Image(
-              image: FileImage(file),
-
-              fit: BoxFit.cover, // use this
-            ),
+          width: 274.29,
+          height: 154.29,
+          child: PhotoView(
+            enableRotation: true,
+            customSize: Size.fromRadius(250),
+            imageProvider: FileImage(file),
           ),
         ),
       ],
@@ -266,21 +198,13 @@ class SizeRatio9 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   width: Get.width / 1.2,
-    //   child: AspectRatio(
-    //     aspectRatio: 1 / 1.41,
-    //     child: Image.file(controller.file, fit: BoxFit.cover),
-    //   ),
-    // );
     return Container(
-      child: AspectRatio(
-        aspectRatio: 1.0 / 1.41,
-        child: Image(
-          image: FileImage(file),
-
-          fit: BoxFit.cover, // use this
-        ),
+      width: 250.57,
+      height: 177.14,
+      child: PhotoView(
+        enableRotation: true,
+        customSize: Size.fromRadius(250),
+        imageProvider: FileImage(file),
       ),
     );
   }
@@ -293,77 +217,35 @@ class SizeRatio10 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   /* return Container(
-      padding: EdgeInsets.only(top: 30, bottom: 30),
-      width: Get.width / 1.3,
-      child: AspectRatio(
-        aspectRatio: 1 / 1.41,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
     return Container(
-      child: AspectRatio(
-        aspectRatio: 42.0 / 59.5,
-        child: Image(
-          image: FileImage(file),
-
-          fit: BoxFit.cover, // use this
-        ),
+      width: 248,
+      height: 174.8,
+      child: PhotoView(
+        enableRotation: true,
+        customSize: Size.fromRadius(250),
+        imageProvider: FileImage(file),
       ),
     );
   }
 }
 
-// fb cover
+// fb cover phone = 10
 class SizeRatio11 extends StatelessWidget {
   File file;
   SizeRatio11({required this.file});
   @override
   Widget build(BuildContext context) {
-    // return GestureDetector(
-    //   onScaleStart: (ScaleStartDetails details) {
-    //     print(details);
-    //     controller.previousScale = controller.scale;
-    //   },
-    //   onScaleUpdate: (ScaleUpdateDetails details) {
-    //     print(details);
-    //     controller.scale = controller.previousScale * details.scale;
-    //     setState(() {});
-    //   },
-    //   onScaleEnd: (ScaleEndDetails details) {
-    //     print(details);
-    //     controller.previousScale = 1.0;
-    //   },
-    //   child: Container(
-    //     padding: EdgeInsets.symmetric(vertical: 180),
-    //     child: AspectRatio(
-    //       aspectRatio: 8 / 3,
-    //       child: Transform(
-    //         transform: Matrix4.diagonal3(Vector3(controller.scale, controller.scale, controller.scale)),
-    //         child: Image.file(controller.file, fit: BoxFit.cover),
-    //       ),
-    //     ),
-    //   ),
-    // );
-    /*return Container(
-      padding: EdgeInsets.symmetric(vertical: 200),
-      child: AspectRatio(
-        aspectRatio: 14 / 2,
-        child: Image.file(controller.file,),
-      ),
-    );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
-          child: AspectRatio(
-            aspectRatio: 2.7 / 1,
-            child: Image(
-              image: FileImage(file),
-
-              fit: BoxFit.cover, // use this
-            ),
+          width: 160,
+          height: 90,
+          child: PhotoView(
+            enableRotation: true,
+            // customSize: Size.fromRadius(50),
+            imageProvider: FileImage(file),
           ),
         ),
       ],
@@ -378,25 +260,17 @@ class SizeRatio12 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   padding: EdgeInsets.only(top: 100, bottom: 100),
-    //   child: AspectRatio(
-    //     aspectRatio: 1.91 / 1,
-    //     child: Image.file(controller.file, fit: BoxFit.cover),
-    //   ),
-    // );
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
-          child: AspectRatio(
-            aspectRatio: 1.91 / 1,
-            child: Image(
-              image: FileImage(file),
-
-              fit: BoxFit.cover, // use this
-            ),
+          width: 300,
+          height: 157.5,
+          child: PhotoView(
+            enableRotation: true,
+            customSize: Size.fromRadius(250),
+            imageProvider: FileImage(file),
           ),
         ),
       ],
@@ -411,21 +285,14 @@ class SizeRatio13 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      width: Get.width / 1.4,
-      child: AspectRatio(
-        aspectRatio: 9 / 16,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
-    return Container(
-      child: AspectRatio(
-        aspectRatio: 9.0 / 16.0,
-        child: Image(
-          image: FileImage(file),
 
-          fit: BoxFit.cover, // use this
-        ),
+    return Container(
+      width: 270,
+      height: 480,
+      child: PhotoView(
+        enableRotation: true,
+        customSize: Size.fromRadius(250),
+        imageProvider: FileImage(file),
       ),
     );
   }
@@ -438,26 +305,19 @@ class SizeRatio14 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      child: AspectRatio(
-        aspectRatio: 1 / 1,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: AspectRatio(
-            aspectRatio: 1.0 /1.0,
-            child: Image(
-              image: FileImage(file),
-
-              fit: BoxFit.cover, // use this
-            ),
+          width: 270,
+          height: 270,
+          child: PhotoView(
+            enableRotation: true,
+            customSize: Size.fromRadius(250),
+            imageProvider: FileImage(file),
           ),
-        )
+        ),
       ],
     );
   }
@@ -475,53 +335,37 @@ class SizeRatio15 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          //width: Get.width / 1.3,
-          child: AspectRatio(
-            aspectRatio: 4 / 5,
-            child: Image.file(file, fit: BoxFit.cover),
+          width: 270,
+          height: 337.5,
+          child: PhotoView(
+            enableRotation: true,
+            customSize: Size.fromRadius(250),
+            imageProvider: FileImage(file),
           ),
         ),
       ],
     );
-    /*return Container(
-      child: AspectRatio(
-        aspectRatio: 2.0 /2.5,
-        child: Image(
-          image: FileImage(controller.file),
-
-          fit: BoxFit.cover, // use this
-        ),
-      ),
-    );*/
   }
 }
 
-// movie
+// movie = 15
 class SizeRatio16 extends StatelessWidget {
   File file;
   SizeRatio16({required this.file});
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      padding: EdgeInsets.only(top: 180, bottom: 180),
-      child: AspectRatio(
-        aspectRatio: 3 / 1.1,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: AspectRatio(
-            aspectRatio: 1.85 /1.0,
-            child: Image(
-              image: FileImage(file),
-
-              fit: BoxFit.cover, // use this
-            ),
+          width: 480,
+          height: 270,
+          child: PhotoView(
+            enableRotation: true,
+            customSize: Size.fromRadius(250),
+            imageProvider: FileImage(file),
           ),
         ),
       ],
@@ -536,21 +380,13 @@ class SizeRatio17 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      width: Get.width / 1.3,
-      child: AspectRatio(
-        aspectRatio: 4 / 5,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
     return Container(
-      child: AspectRatio(
-        aspectRatio: 2.0 /3.0,
-        child: Image(
-          image: FileImage(file),
-
-          fit: BoxFit.cover, // use this
-        ),
+      width: 183.75,
+      height: 275.5,
+      child: PhotoView(
+        enableRotation: true,
+        customSize: Size.fromRadius(250),
+        imageProvider: FileImage(file),
       ),
     );
   }
@@ -563,27 +399,17 @@ class SizeRatio18 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      padding: EdgeInsets.only(top: 150, bottom: 150),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: AspectRatio(
-          aspectRatio: 2.39 / 1,
-          child: Image.file(controller.file, fit: BoxFit.cover),
-        ),
-      ),
-    );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: AspectRatio(
-            aspectRatio: 3.0 /1.0,
-            child: Image(
-              image: FileImage(file),
-              fit: BoxFit.cover, // use this
-            ),
+          width: 375,
+          height: 125,
+          child: PhotoView(
+            enableRotation: true,
+            customSize: Size.fromRadius(250),
+            imageProvider: FileImage(file),
           ),
         ),
       ],
@@ -598,24 +424,17 @@ class SizeRatio19 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      padding: EdgeInsets.only(top: 130, bottom: 130),
-      child: AspectRatio(
-        aspectRatio: 2.39 / 1,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: AspectRatio(
-            aspectRatio: 16.0 /9.0,
-            child: Image(
-              image: FileImage(file),
-              fit: BoxFit.cover, // use this
-            ),
+          width: 300,
+          height: 168.75,
+          child: PhotoView(
+            enableRotation: true,
+            customSize: Size.fromRadius(250),
+            imageProvider: FileImage(file),
           ),
         ),
       ],
@@ -623,31 +442,24 @@ class SizeRatio19 extends StatelessWidget {
   }
 }
 
-// yt cover
+// yt cover = 19
 class SizeRatio20 extends StatelessWidget {
   File file;
   SizeRatio20({required this.file});
 
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      padding: EdgeInsets.only(top: 180, bottom: 180),
-      child: AspectRatio(
-        aspectRatio: 2.39 / 1,
-        child: Image.file(controller.file, fit: BoxFit.cover),
-      ),
-    );*/
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          child: AspectRatio(
-            aspectRatio: 16.0 /9.0,
-            child: Image(
-              image: FileImage(file),
-              fit: BoxFit.cover, // use this
-            ),
+          width: 365.71,
+          height: 205.71,
+          child: PhotoView(
+            enableRotation: true,
+            customSize: Size.fromRadius(250),
+            imageProvider: FileImage(file),
           ),
         ),
       ],

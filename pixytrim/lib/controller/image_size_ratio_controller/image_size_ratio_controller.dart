@@ -11,6 +11,7 @@ class ImageSizeRatioController extends GetxController {
   RxInt selectedIndex = 0.obs;
   List<ImageSizeRatioModel> sizeOptions = [];
   double blurImage = 6;
+  RxInt scaleIndex = 0.obs;
 
   @override
   void onInit() {

@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -79,7 +77,6 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    //Get.back();
                     showAlertDialog();
                   },
                   child: Container(
@@ -99,16 +96,17 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await _capturePng().then((value) {
-                      /*Fluttertoast.showToast(
-                          msg: "Save In to Gallery",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 5,
-                          backgroundColor: Colors.blue,
-                          textColor: Colors.white,
-                          fontSize: 16.0
-                      );*/
+                    int newIndex = imageSizeRatioController.selectedIndex.value;
+                    print('new Index : $newIndex');
+                    double pixelRatio =
+                    newIndex == 19 || newIndex == 6 || newIndex == 7
+                        ?  7.0
+                        : newIndex == 5
+                        ? 5.0
+                        : newIndex == 8
+                        ? 14
+                        : 4.0;
+                    await _capturePng(pRation: pixelRatio).then((value) {
                       Get.back();
                     });
                   },
@@ -120,15 +118,16 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
     );
   }
 
-  Future _capturePng() async {
+  Future _capturePng({required double pRation}) async {
     try {
       print('inside');
+      print('pRation : $pRation');
       DateTime time = DateTime.now();
       String imgName = "${time.hour}-${time.minute}-${time.second}";
       RenderRepaintBoundary boundary =
       key.currentContext!.findRenderObject() as RenderRepaintBoundary;
       print(boundary);
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      ui.Image image = await boundary.toImage(pixelRatio: pRation);
       print("image:===$image");
       final directory = (await getApplicationDocumentsDirectory()).path;
       ByteData? byteData =
@@ -142,12 +141,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
             imgFile;
       });
       print("File path====:${file!.path}");
-      //collageScreenController.imageFileList = pngBytes;
-      //bs64 = base64Encode(pngBytes);
       print("png Bytes:====$pngBytes");
-      //print("bs64:====$bs64");
-      //setState(() {});
-     // await saveImage();
     } catch (e) {
       print(e);
     }
@@ -162,113 +156,134 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
   Widget ratioImage() {
     return Obx(
           () =>
-          Container(
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: RepaintBoundary(
-                  key: key,
-                  child: imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 0
-                      ? imageSizeRatioController.sizeOptions[0].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 1
-                      ? imageSizeRatioController.sizeOptions[1].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 2
-                      ? imageSizeRatioController.sizeOptions[2].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 3
-                      ? imageSizeRatioController.sizeOptions[3].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 4
-                      ? imageSizeRatioController.sizeOptions[4].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 5
-                      ? imageSizeRatioController.sizeOptions[5].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 6
-                      ? imageSizeRatioController.sizeOptions[6].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 7
-                      ? imageSizeRatioController.sizeOptions[7].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 8
-                      ? imageSizeRatioController.sizeOptions[8].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 9
-                      ? imageSizeRatioController.sizeOptions[9].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 10
-                      ? imageSizeRatioController.sizeOptions[10].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 11
-                      ? imageSizeRatioController.sizeOptions[11].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 12
-                      ? imageSizeRatioController.sizeOptions[12].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 13
-                      ? imageSizeRatioController.sizeOptions[13].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 14
-                      ? imageSizeRatioController.sizeOptions[14].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 15
-                      ? imageSizeRatioController.sizeOptions[15].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 16
-                      ? imageSizeRatioController.sizeOptions[16].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 17
-                      ? imageSizeRatioController.sizeOptions[17].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 18
-                      ? imageSizeRatioController.sizeOptions[18].sizeWidget
-                      : imageSizeRatioController.file
-                      .toString()
-                      .isNotEmpty &&
-                      imageSizeRatioController.selectedIndex.value == 19
-                      ? imageSizeRatioController.sizeOptions[19].sizeWidget
-                      : Container(),
-                )
+              Transform.scale(
+                scale: imageSizeRatioController.scaleIndex.value == 10
+                    ? 2.1
+                    : imageSizeRatioController.scaleIndex.value == 0
+                    || imageSizeRatioController.scaleIndex.value == 1
+                    || imageSizeRatioController.scaleIndex.value == 3
+                    || imageSizeRatioController.scaleIndex.value == 4
+                    || imageSizeRatioController.scaleIndex.value == 6
+                    ? 2
+                    : imageSizeRatioController.scaleIndex.value == 2
+                    || imageSizeRatioController.scaleIndex.value == 7
+                    || imageSizeRatioController.scaleIndex.value == 8
+                    || imageSizeRatioController.scaleIndex.value == 9
+                    || imageSizeRatioController.scaleIndex.value == 13
+                    || imageSizeRatioController.scaleIndex.value == 14
+                    || imageSizeRatioController.scaleIndex.value == 16
+                    ? 1.3
+                    : imageSizeRatioController.scaleIndex.value == 18
+                    ? 1.2
+                    : 1,
+            child: Container(
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: RepaintBoundary(
+                    key: key,
+                    child: imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 0
+                        ? imageSizeRatioController.sizeOptions[0].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 1
+                        ? imageSizeRatioController.sizeOptions[1].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 2
+                        ? imageSizeRatioController.sizeOptions[2].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 3
+                        ? imageSizeRatioController.sizeOptions[3].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 4
+                        ? imageSizeRatioController.sizeOptions[4].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 5
+                        ? imageSizeRatioController.sizeOptions[5].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 6
+                        ? imageSizeRatioController.sizeOptions[6].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 7
+                        ? imageSizeRatioController.sizeOptions[7].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 8
+                        ? imageSizeRatioController.sizeOptions[8].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 9
+                        ? imageSizeRatioController.sizeOptions[9].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 10
+                        ? imageSizeRatioController.sizeOptions[10].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 11
+                        ? imageSizeRatioController.sizeOptions[11].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 12
+                        ? imageSizeRatioController.sizeOptions[12].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 13
+                        ? imageSizeRatioController.sizeOptions[13].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 14
+                        ? imageSizeRatioController.sizeOptions[14].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 15
+                        ? imageSizeRatioController.sizeOptions[15].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 16
+                        ? imageSizeRatioController.sizeOptions[16].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 17
+                        ? imageSizeRatioController.sizeOptions[17].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 18
+                        ? imageSizeRatioController.sizeOptions[18].sizeWidget
+                        : imageSizeRatioController.file
+                        .toString()
+                        .isNotEmpty &&
+                        imageSizeRatioController.selectedIndex.value == 19
+                        ? imageSizeRatioController.sizeOptions[19].sizeWidget
+                        : Container(),
+                  ),
+              ),
             ),
           ),
     );
@@ -283,7 +298,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () {
+            onTap: () async {
               /*imageRatioIndex = index;
 
               if(imageRatioIndex == 0){
@@ -299,12 +314,18 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
 
                 });
               }*/
-              setState(() {
+              setState(()  {
                 imageSizeRatioController.selectedIndex.value = index;
                 print('index : $index');
                 print('selectedIndex : ${imageSizeRatioController.selectedIndex
                     .value}');
+                imageSizeRatioController.scaleIndex.value = imageSizeRatioController.selectedIndex
+                    .value;
               });
+              // File image = File('${imageSizeRatioController.sizeOptions[index].image}');
+              // var decodedImage = await decodeImageFromList(image.readAsBytesSync());
+              // print(decodedImage.width);
+              // print(decodedImage.height);
             },
             child: Container(
               width: Get.width / 3.5,

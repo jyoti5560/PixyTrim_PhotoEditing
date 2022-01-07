@@ -189,7 +189,7 @@ class _BlurScreenState extends State<BlurScreen> {
                 min:0,
                 max: 5 ,
                 divisions: 100,
-                label: '${blurValue.toStringAsFixed(0)} %',
+                label: 'Blur : ${blurValue.toStringAsFixed(0)} %',
                 onChanged: (value) {
                   setState(() {
                     blurImage = value;
