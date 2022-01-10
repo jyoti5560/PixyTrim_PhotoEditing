@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:pixytrim/common/common_widgets.dart';
@@ -211,6 +212,13 @@ class _CollageScreenState extends State<CollageScreen>
     // renameImage();
     await GallerySaver.saveImage("${file!.path}",
         albumName: "OTWPhotoEditingDemo");
+    Fluttertoast.showToast(
+        msg: "Save in to Gallery",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }
 
