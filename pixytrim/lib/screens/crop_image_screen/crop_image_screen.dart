@@ -30,22 +30,17 @@ class CropImageScreen extends StatefulWidget {
 class _CropImageScreenState extends State<CropImageScreen> {
   CameraScreenController csController = Get.find<CameraScreenController>();
   File? imageFile;
-  File? file2;
   final GlobalKey key = GlobalKey();
   Uint8List? croppedImage;
   var isCropping = false;
 
   int index = 0;
-  bool showFront = true;
   double _rotation = 0;
   double _scale = 1;
+  double _scalePercent = 0;
   final cropController = CropController();
-  BoxShape shape = BoxShape.rectangle;
-  File? temp;
-  double previousScale = 1.0;
 
   bool defaultSelectedIndex = true;
-  File? tempFile;
 
   LinearGradient gradient = LinearGradient(colors: <Color>[
     AppColor.kBorderGradientColor1,
@@ -53,7 +48,6 @@ class _CropImageScreenState extends State<CropImageScreen> {
     AppColor.kBorderGradientColor3,
   ]);
 
-  Image? cardFront;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +67,9 @@ class _CropImageScreenState extends State<CropImageScreen> {
                     appBar(),
                     SizedBox(height: 20),
                     Expanded(
-                      child: Column(
+                      child: isCropping == true
+                      ? Center(child: CircularProgressIndicator())
+                      : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Flexible(
@@ -85,18 +81,25 @@ class _CropImageScreenState extends State<CropImageScreen> {
                                         controller: cropController,
                                         image: widget.file.readAsBytesSync(),
                                         onCropped: (croppedData1) {
+                                          // setState(() {
+                                          //   isCropping = true;
+                                          // });
                                           setState(() {
                                             print(
                                                 'croppedData1 : $croppedData1');
                                             print(
                                                 'croppedData1 : ${croppedData1.runtimeType}');
                                             croppedImage = croppedData1;
+                                            widget.file.writeAsBytesSync(croppedImage!);
+                                            csController.addImageFromCameraList[csController.selectedImage.value]
+                                            = widget.file;
                                             isCropping = false;
+                                            Get.back();
                                           });
-                                          // if (mounted) {
-                                          //   setState(() {
-                                          //   });
-                                          // }
+                                          if (mounted) {
+                                            setState(() {
+                                            });
+                                          }
                                         },
                                         initialSize: 0.5,
                                       )
@@ -113,8 +116,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
                                                     130,
                                                 alignment: Alignment.center,
                                                 child: PhotoView(
-                                                  imageProvider:
-                                                      FileImage(widget.file),
+                                                  imageProvider: FileImage(widget.file),
                                                 ),
                                               ),
                                             ),
@@ -187,8 +189,8 @@ class _CropImageScreenState extends State<CropImageScreen> {
                                                 child: RepaintBoundary(
                                                   key: key,
                                                   child: Container(
-                                                      child: Image.memory(
-                                                          croppedImage!)),
+                                                      child: Image.memory(croppedImage!),
+                                                  ),
                                                 ),
                                               ),
                               ),
@@ -202,8 +204,8 @@ class _CropImageScreenState extends State<CropImageScreen> {
                         ? cropRatio()
                         : index == 1
                             ? rotateRatio()
-                            /*: index == 2
-                                ? scaleRatio()*/
+                            : index == 2
+                                ? scaleRatio()
                                 : Container(),
                     SizedBox(height: 20),
                     resizeCropButton()
@@ -238,7 +240,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
             value: _rotation,
             min: 0,
             max: 360,
-            label: '$_rotation°',
+            label: 'Rotate : $_rotation°',
             onChanged: (n) {
               setState(() {
                 _rotation = n.roundToDouble();
@@ -268,16 +270,18 @@ class _CropImageScreenState extends State<CropImageScreen> {
         child: SliderTheme(
           data: SliderThemeData(
             trackShape: GradientRectSliderTrackShape(gradient: gradient, darkenInactive: false),
+            valueIndicatorTextStyle: TextStyle(fontFamily: ""),
           ),
           child: Slider(
-            divisions: 360,
             value: _scale,
             min: 1,
-            max: 200,
-            label: '$_scale°',
+            max: 8,
+            divisions: 80,
+            label: 'Scale : $_scalePercent%',
             onChanged: (n) {
               setState(() {
                 _scale = n.roundToDouble();
+                _scalePercent = (100 * _scale) / 8;
                 //controller.rotation = _rotation;
               });
               // if (this.mounted) {
@@ -332,18 +336,23 @@ class _CropImageScreenState extends State<CropImageScreen> {
                     GestureDetector(
                       onTap: () async {
                        if(index == 0) {
+
+                         // cropController.crop();
+                         // Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG);
+
+                         // await Future.delayed(Duration(seconds: 5));
+                         // await _capturePng().then((value) {
+                         //   Get.back();
+                         // });
+
+
                          if(defaultSelectedIndex == true) {
                            cropController.crop();
                            Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG);
                            setState(() {
                              defaultSelectedIndex = false;
-                             // tempFile <- Store Cropped File
+                             isCropping = true;
                            });
-
-                           // await Future.delayed(Duration(seconds: 5));
-                           // await _capturePng().then((value) {
-                           //   Get.back();
-                           // });
                          } else if (defaultSelectedIndex == false){
                            await _capturePng().then((value) {
                              Get.back();
@@ -369,7 +378,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
     );
   }
 
-  Future _capturePng() async {
+  _capturePng() async {
     try {
       DateTime time = DateTime.now();
       String imgName = "${time.hour}-${time.minute}-${time.second}";
@@ -495,6 +504,8 @@ class _CropImageScreenState extends State<CropImageScreen> {
                 index = 0;
                 defaultSelectedIndex = true;
                 print('defaultSelectedIndex : $defaultSelectedIndex');
+                _rotation = 0; // Reset Value
+                _scale = 1; // Reset Value
               });
             },
             child: Container(
@@ -521,6 +532,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
             onTap: () {
               setState(() {
                 index = 1;
+                _scale = 1; // Reset Value
               });
             },
             child: Container(
@@ -547,6 +559,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
             onTap: () {
               setState(() {
                 index = 2;
+                _rotation = 0; // Reset Value
               });
             },
             child: Container(
@@ -620,4 +633,5 @@ class _CropImageScreenState extends State<CropImageScreen> {
       },
     );
   }
+
 }
