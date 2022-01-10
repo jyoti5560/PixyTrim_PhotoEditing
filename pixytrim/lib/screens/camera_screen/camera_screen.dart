@@ -71,86 +71,90 @@ class _CameraScreenState extends State<CameraScreen> {
                       child: Expanded(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey)
-                            ),
-                            child: Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Obx(
-                                  ()=> Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          child: cameraScreenController.addImageFromCameraList.length.isGreaterThan(0)
-                                              ? Image.file(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
-                                              )
-                                              : null,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(left: 10, right: 10, bottom: 0.5),
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black26,
-                                  ),
-                                  child: Obx(
-                                    ()=> ListView.builder(
-                                      itemCount: cameraScreenController.addImageFromCameraList.length,
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, i){
-                                        return Padding(
-                                          padding: const EdgeInsets.only(right: 5),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                cameraScreenController.selectedImage.value = i;
-                                                print('selectedImage1 : ${cameraScreenController.selectedImage.value}');
-                                              });
-                                            },
-                                            child: Container(
-                                              height: 45,
-                                              width: 45,
-                                              child: Image.file(
-                                                cameraScreenController
-                                                    .addImageFromCameraList[i],
-                                                fit: BoxFit.cover,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                border: cameraScreenController.selectedImage.value == i
-                                                    ? Border.all(color: Colors.black)
-                                                    : Border.all(color: Colors.transparent)
-                                              ),
-                                            ),
+                          child: Obx(
+                            ()=> cameraScreenController.isLoading.value
+                              ? Center(child: CircularProgressIndicator())
+                              : Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Obx(
+                                    ()=> Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            child: cameraScreenController.addImageFromCameraList.length.isGreaterThan(0)
+                                                ? Image.file(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value])
+                                                : null,
                                           ),
-                                        );
-                                      },
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  // child: Obx(
-                                  //       () => Row(
-                                  //     mainAxisAlignment: MainAxisAlignment.center,
-                                  //     children: List.generate(
-                                  //       cameraScreenController.addImageFromCameraList.length,
-                                  //           (index) => Container(
-                                  //         width: 30,
-                                  //         height: 30,
-                                  //         child: Image.file(
-                                  //           cameraScreenController
-                                  //               .addImageFromCameraList[index],
-                                  //           fit: BoxFit.cover,
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                ),
-                              ],
+                                  Container(
+                                    padding: EdgeInsets.only(left: 10, right: 10, bottom: 0.5),
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black26,
+                                    ),
+                                    child: Obx(
+                                      ()=> ListView.builder(
+                                        itemCount: cameraScreenController.addImageFromCameraList.length,
+                                        scrollDirection: Axis.horizontal,
+                                        itemBuilder: (context, i){
+                                          return Padding(
+                                            padding: const EdgeInsets.only(right: 5),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  cameraScreenController.selectedImage.value = i;
+                                                  print('selectedImage1 : ${cameraScreenController.selectedImage.value}');
+                                                });
+                                              },
+                                              child: Container(
+                                                height: 45,
+                                                width: 45,
+                                                child: Image.file(
+                                                  cameraScreenController
+                                                      .addImageFromCameraList[i],
+                                                  fit: BoxFit.cover,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  border: cameraScreenController.selectedImage.value == i
+                                                      ? Border.all(color: Colors.black)
+                                                      : Border.all(color: Colors.transparent)
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    // child: Obx(
+                                    //       () => Row(
+                                    //     mainAxisAlignment: MainAxisAlignment.center,
+                                    //     children: List.generate(
+                                    //       cameraScreenController.addImageFromCameraList.length,
+                                    //           (index) => Container(
+                                    //         width: 30,
+                                    //         height: 30,
+                                    //         child: Image.file(
+                                    //           cameraScreenController
+                                    //               .addImageFromCameraList[index],
+                                    //           fit: BoxFit.cover,
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -380,7 +384,12 @@ class _CameraScreenState extends State<CameraScreen> {
                 if (i == 0) {
                   Get.to(() => CropImageScreen(
                         file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
-                      ));
+                    newIndex: cameraScreenController.selectedImage.value,
+                      ))!.whenComplete(() {
+                        cameraScreenController.loading();
+                  })/*.then((value){
+                         cameraScreenController.loading();
+                  })*/;
                   //cropImage();
                 } else if (i == 1) {
                   Get.to(() => FilterScreen());
@@ -476,7 +485,7 @@ class _CameraScreenState extends State<CameraScreen> {
     // Create output file path
     // eg:- "Volume/VM/abcd_out.jpeg"
     final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
-    print("last inde: $lastIndex");
+    print("last index: $lastIndex");
     final splitted = filePath.substring(0, (lastIndex));
     final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
     var result = await FlutterImageCompress.compressAndGetFile(

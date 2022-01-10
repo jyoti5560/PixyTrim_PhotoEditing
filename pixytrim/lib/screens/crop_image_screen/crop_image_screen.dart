@@ -21,7 +21,8 @@ import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 class CropImageScreen extends StatefulWidget {
   File file;
-  CropImageScreen({required this.file});
+  int newIndex;
+  CropImageScreen({required this.file, required this.newIndex});
 
   @override
   _CropImageScreenState createState() => _CropImageScreenState();
@@ -81,25 +82,24 @@ class _CropImageScreenState extends State<CropImageScreen> {
                                         controller: cropController,
                                         image: widget.file.readAsBytesSync(),
                                         onCropped: (croppedData1) {
-                                          // setState(() {
-                                          //   isCropping = true;
-                                          // });
+                                          Future.delayed(Duration(seconds: 3));
                                           setState(() {
-                                            print(
-                                                'croppedData1 : $croppedData1');
-                                            print(
-                                                'croppedData1 : ${croppedData1.runtimeType}');
+                                            print('croppedData1 : $croppedData1');
                                             croppedImage = croppedData1;
                                             widget.file.writeAsBytesSync(croppedImage!);
-                                            csController.addImageFromCameraList[csController.selectedImage.value]
-                                            = widget.file;
+                                            csController.addImageFromCameraList[widget.newIndex] = widget.file;
+                                            print('NewIndex File : ${csController.addImageFromCameraList[widget.newIndex]}');
                                             isCropping = false;
+                                            // _capturePng().then((value) {
+                                            //   Get.back();
+                                            // });
                                             Get.back();
                                           });
-                                          if (mounted) {
-                                            setState(() {
-                                            });
-                                          }
+                                          // if (mounted) {
+                                          //   print('mounted : $mounted');
+                                          //   setState(() {
+                                          //   });
+                                          // }
                                         },
                                         initialSize: 0.5,
                                       )
@@ -208,7 +208,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
                                 ? scaleRatio()
                                 : Container(),
                     SizedBox(height: 20),
-                    resizeCropButton()
+                    resizeCropButton(),
                   ],
                 ),
               ),
@@ -276,7 +276,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
             value: _scale,
             min: 1,
             max: 8,
-            divisions: 80,
+            divisions: 32,
             label: 'Scale : $_scalePercent%',
             onChanged: (n) {
               setState(() {
@@ -336,16 +336,6 @@ class _CropImageScreenState extends State<CropImageScreen> {
                     GestureDetector(
                       onTap: () async {
                        if(index == 0) {
-
-                         // cropController.crop();
-                         // Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG);
-
-                         // await Future.delayed(Duration(seconds: 5));
-                         // await _capturePng().then((value) {
-                         //   Get.back();
-                         // });
-
-
                          if(defaultSelectedIndex == true) {
                            cropController.crop();
                            Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG);
@@ -358,6 +348,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
                              Get.back();
                            });
                          }
+
                        } else if(index == 1){
                          await _capturePng().then((value) {
                            Get.back();
@@ -397,11 +388,10 @@ class _CropImageScreenState extends State<CropImageScreen> {
       await imgFile.writeAsBytes(pngBytes);
       setState(() {
         //imageFile = imgFile;
-        csController.addImageFromCameraList[csController.selectedImage.value] =
-            imgFile;
+        csController.addImageFromCameraList[widget.newIndex] = imgFile;
       });
       print(
-          "File path====:${csController.addImageFromCameraList[csController.selectedImage.value].path}");
+          "File path====:${csController.addImageFromCameraList[widget.newIndex].path}");
       print("png Bytes:====$pngBytes");
     } catch (e) {
       print(e);
@@ -634,4 +624,9 @@ class _CropImageScreenState extends State<CropImageScreen> {
     );
   }
 
+  // @override
+  // void dispose() {
+  //   csController.loading();
+  //   super.dispose();
+  // }
 }

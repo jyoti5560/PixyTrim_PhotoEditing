@@ -11,7 +11,6 @@ import 'package:pixytrim/controller/camera_screen_controller/camera_screen_contr
 import 'package:pixytrim/screens/image_editor_screen/_paint_over_image.dart';
 
 class ImageEditorScreen extends StatefulWidget {
-  //const ImageEditorScreen({Key? key}) : super(key: key);
   File file;
   int newIndex;
   ImageEditorScreen({required this.file, required this.newIndex});
@@ -30,7 +29,6 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
     return WillPopScope(
       onWillPop: () async {return false;},
       child: Scaffold(
-
         body: SafeArea(
           child: Stack(
             children: [
@@ -42,7 +40,7 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                   children: [
                     appBar(),
 
-                    SizedBox(height: 20,),
+                    SizedBox(height: 20),
 
                     Expanded(
                       child: Column(
@@ -54,7 +52,7 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                                 widget.file,
                                 repaintKey: repaintKey,
                                 key: _imageKey,
-                                scalable: false,
+                                // scalable: false,
                                 initialStrokeWidth: 2,
                                 initialColor: Colors.green,
                                 initialPaintMode: PaintMode.freeStyle,
@@ -112,27 +110,24 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                 ),
                 GestureDetector(
                   onTap: () async{
+                    Fluttertoast.showToast(
+                        msg: "Processing...",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
                     await renameAndSaveImage().then((value) {
-                      Fluttertoast.showToast(
-                          msg: "Save in to Gallery",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0
-                      );
                       Get.back();
                     });
-                    // await _capturePng();
-
                   },
-                  child: Container(
-                      child: Image.asset(Images.ic_downloading, scale: 2,)
-                  ),
+                  child: Container(child: Icon(Icons.check_rounded)),
                 ),
               ],
-            )),
+            ),
+        ),
       ),
     );
   }
@@ -155,13 +150,12 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
-                  //margin: EdgeInsets.only(left: 10, right: 10),
-
                   child: Center(
                       child: Image.asset(
                         Images.ic_edit,
                         scale: 2.5,
-                      )),
+                      ),
+                  ),
                 ),
               ),
 
@@ -202,8 +196,6 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
-                  //margin: EdgeInsets.only(left: 10, right: 10),
-
                   child: Center(
                       child: Image.asset(
                         Images.ic_paint_brush,
@@ -223,8 +215,6 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
-                  //margin: EdgeInsets.only(left: 10, right: 10),
-
                   child: Center(
                       child: Image.asset(
                         Images.ic_text,
@@ -240,8 +230,7 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
               Center(
                   child: Icon(Icons.undo_outlined, size: 30,)),
               SizedBox(width: 10,),
-              Center(
-                  child: Icon(Icons.close, size: 30,)),
+              Center(child: Icon(Icons.close, size: 30)),
             ],
           )
 
@@ -261,7 +250,7 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
     final imgFile = File('$fullPath');
     imgFile.writeAsBytesSync(image!);
     csController.addImageFromCameraList[widget.newIndex] = imgFile;
-    await GallerySaver.saveImage(imgFile.path, albumName: "OTWPhotoEditingDemo");
+    // await GallerySaver.saveImage(imgFile.path, albumName: "OTWPhotoEditingDemo");
 
 
   }
@@ -333,6 +322,12 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
         return alert;
       },
     );
+  }
+
+  @override
+  void dispose() {
+    if(!mounted) return;
+    super.dispose();
   }
 }
 
