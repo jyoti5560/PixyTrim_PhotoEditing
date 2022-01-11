@@ -17,7 +17,7 @@ import 'dart:ui' as ui;
 import 'dart:math' as Math;
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
-
+import 'package:path/path.dart' as path;
 
 class CropImageScreen extends StatefulWidget {
   File file;
@@ -34,6 +34,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
   final GlobalKey key = GlobalKey();
   Uint8List? croppedImage;
   var isCropping = false;
+  File? tempCroppedFile;
 
   int index = 0;
   double _rotation = 0;
@@ -42,12 +43,15 @@ class _CropImageScreenState extends State<CropImageScreen> {
   final cropController = CropController();
 
   bool defaultSelectedIndex = true;
+  bool cropEnable = true;
 
-  LinearGradient gradient = LinearGradient(colors: <Color>[
+  LinearGradient gradient = LinearGradient(
+      colors: <Color>[
     AppColor.kBorderGradientColor1,
     AppColor.kBorderGradientColor2,
     AppColor.kBorderGradientColor3,
-  ]);
+  ],
+  );
 
 
   @override
@@ -67,136 +71,151 @@ class _CropImageScreenState extends State<CropImageScreen> {
                   children: [
                     appBar(),
                     SizedBox(height: 20),
-                    Expanded(
-                      child: isCropping == true
-                      ? Center(child: CircularProgressIndicator())
-                      : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: Container(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: croppedImage == null && index == 0
-                                    ? Crop(
-                                        controller: cropController,
-                                        image: widget.file.readAsBytesSync(),
-                                        onCropped: (croppedData1) {
-                                          Future.delayed(Duration(seconds: 3));
-                                          setState(() {
-                                            print('croppedData1 : $croppedData1');
-                                            croppedImage = croppedData1;
-                                            widget.file.writeAsBytesSync(croppedImage!);
-                                            csController.addImageFromCameraList[widget.newIndex] = widget.file;
-                                            print('NewIndex File : ${csController.addImageFromCameraList[widget.newIndex]}');
-                                            isCropping = false;
-                                            // _capturePng().then((value) {
-                                            //   Get.back();
-                                            // });
-                                            Get.back();
-                                          });
-                                          // if (mounted) {
-                                          //   print('mounted : $mounted');
-                                          //   setState(() {
-                                          //   });
-                                          // }
-                                        },
-                                        initialSize: 0.5,
-                                      )
-                                    : index == 1
-                                        ? RepaintBoundary(
-                                            key: key,
-                                            child: Transform.rotate(
-                                              angle: Math.pi / 180 * _rotation,
-                                              alignment: Alignment.center,
-                                              child: Container(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height -
-                                                    130,
-                                                alignment: Alignment.center,
-                                                child: PhotoView(
-                                                  imageProvider: FileImage(widget.file),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        : index == 2 ?
-                                // GestureDetector(
-                                //                 onScaleStart: (ScaleStartDetails
-                                //                     details) {
-                                //                   print(details);
-                                //                   previousScale = _scale;
-                                //                   setState(() {});
-                                //                 },
-                                //                 onScaleUpdate:
-                                //                     (ScaleUpdateDetails
-                                //                         details) {
-                                //                   print(details);
-                                //                   _scale = previousScale *
-                                //                       details.scale;
-                                //                   setState(() {});
-                                //                 },
-                                //                 onScaleEnd:
-                                //                     (ScaleEndDetails details) {
-                                //                   print(details);
-                                //
-                                //                   previousScale = 1.0;
-                                //                   setState(() {});
-                                //                 },
-                                //                 child: Transform(
-                                //                   alignment:
-                                //                       FractionalOffset.center,
-                                //                   transform: Matrix4.diagonal3(
-                                //                       Vector3(_scale, _scale,
-                                //                           _scale)),
-                                //                   child: Image.file(
-                                //                     widget.file,
-                                //                     fit: BoxFit.cover,
-                                //                   ),
-                                //                 ),
-                                //               )
-                                GestureDetector(
-                                  /* onScaleStart: (ScaleStartDetails details) {
-                                          print(details);
-                                          previousScale = _scale;
-                                          setState(() {});
-                                        },
-                                        onScaleUpdate: (ScaleUpdateDetails details) {
-                                          print(details);
-                                          _scale = previousScale * details.scale;
-                                          setState(() {});
-                                        },
-                                        onScaleEnd: (ScaleEndDetails details) {
-                                          print(details);
+                    Obx(
+                      ()=> Expanded(
+                        child: isCropping == true || csController.isLoading.value
+                        ? Center(child: CircularProgressIndicator())
+                        : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                                    child: Container(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: croppedImage == null && index == 0
+                                            ? Crop(
+                                          maskColor: Colors.white24,
+                                                controller: cropController,
+                                                image: widget.file.readAsBytesSync(),
+                                                onCropped: (croppedData1) async {
+                                                  // Future.delayed(Duration(seconds: 3));
+                                                  setState(() {
+                                                    print('croppedData1 : $croppedData1');
+                                                    croppedImage = croppedData1;
+                                                    widget.file.writeAsBytesSync(croppedImage!);
+                                                    tempCroppedFile = widget.file;
+                                                    print('tempCroppedFile : $tempCroppedFile');
+                                                    isCropping = false;
+                                                    cropEnable = false;
+                                                    csController.loading();
+                                                  });
+                                                  if (mounted) {
+                                                    print('mounted : $mounted');
+                                                    DateTime time = DateTime.now();
+                                                    String imgName = '${time.hour}_${time.minute}_${time.second}-${time.day}_${time.month}_${time.year}';
+                                                    String dir = (await getApplicationDocumentsDirectory()).path;
+                                                    String newPath = path.join(dir, '$imgName.jpg');
+                                                    widget.file.renameSync(newPath);
+                                                    print('widget.file :${widget.file}');
+                                                    setState(() {
+                                                    });
+                                                  }
+                                                },
+                                                initialSize: 0.5,
+                                              )
+                                            : index == 1
+                                                ? Obx(
+                                                  ()=> csController.isLoading.value
+                                          ? Center(child: CircularProgressIndicator())
+                                                  :RepaintBoundary(
+                                                      key: key,
+                                                      child: Transform.rotate(
+                                                        angle: Math.pi /
+                                                            180 *
+                                                            _rotation,
+                                                        alignment: Alignment.center,
+                                                        child: Container(
+                                                          height: MediaQuery.of(context).size.height - 130,
+                                                          alignment: Alignment.center,
+                                                          child: /*tempCroppedFile != null
+                                                            ? PhotoView(imageProvider: FileImage(tempCroppedFile!))
+                                                              : */PhotoView(imageProvider: FileImage(widget.file)),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                )
+                                                : index == 2
+                                                    ?
+                                                    // GestureDetector(
+                                                    //                 onScaleStart: (ScaleStartDetails
+                                                    //                     details) {
+                                                    //                   print(details);
+                                                    //                   previousScale = _scale;
+                                                    //                   setState(() {});
+                                                    //                 },
+                                                    //                 onScaleUpdate:
+                                                    //                     (ScaleUpdateDetails
+                                                    //                         details) {
+                                                    //                   print(details);
+                                                    //                   _scale = previousScale *
+                                                    //                       details.scale;
+                                                    //                   setState(() {});
+                                                    //                 },
+                                                    //                 onScaleEnd:
+                                                    //                     (ScaleEndDetails details) {
+                                                    //                   print(details);
+                                                    //
+                                                    //                   previousScale = 1.0;
+                                                    //                   setState(() {});
+                                                    //                 },
+                                                    //                 child: Transform(
+                                                    //                   alignment:
+                                                    //                       FractionalOffset.center,
+                                                    //                   transform: Matrix4.diagonal3(
+                                                    //                       Vector3(_scale, _scale,
+                                                    //                           _scale)),
+                                                    //                   child: Image.file(
+                                                    //                     widget.file,
+                                                    //                     fit: BoxFit.cover,
+                                                    //                   ),
+                                                    //                 ),
+                                                    //               )
+                                                    GestureDetector(
+                                                        /* onScaleStart: (ScaleStartDetails details) {
+                                            print(details);
+                                            previousScale = _scale;
+                                            setState(() {});
+                                          },
+                                          onScaleUpdate: (ScaleUpdateDetails details) {
+                                            print(details);
+                                            _scale = previousScale * details.scale;
+                                            setState(() {});
+                                          },
+                                          onScaleEnd: (ScaleEndDetails details) {
+                                            print(details);
 
-                                          previousScale = 1.0;
-                                          setState(() {});
-                                        },*/
-                                  child: RepaintBoundary(
-                                    key: key,
-                                    child: Transform(
-                                      alignment: FractionalOffset.center,
-                                      transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
-                                       // child: Image.file(widget.file,fit: BoxFit.cover,)
-                                      child: PhotoView(
-                                        imageProvider: FileImage(widget.file),
+                                            previousScale = 1.0;
+                                            setState(() {});
+                                          },*/
+                                                        child: RepaintBoundary(
+                                                          key: key,
+                                                          child: Transform(
+                                                            alignment:
+                                                                FractionalOffset
+                                                                    .center,
+                                                            transform:
+                                                                Matrix4.diagonal3(
+                                                                    Vector3(_scale, _scale, _scale)),
+                                                            // child: Image.file(widget.file,fit: BoxFit.cover,)
+                                                            child: PhotoView(
+                                                              imageProvider: FileImage(widget.file),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : Container(
+                                                        child: RepaintBoundary(
+                                                          key: key,
+                                                          child: Container(
+                                                            child: Image.memory(croppedImage!),
+                                                          ),
+                                                        ),
+                                                      ),
                                       ),
                                     ),
                                   ),
-                                )
-                                            : Container(
-                                                child: RepaintBoundary(
-                                                  key: key,
-                                                  child: Container(
-                                                      child: Image.memory(croppedImage!),
-                                                  ),
-                                                ),
-                                              ),
-                              ),
-                            ),
-                          ),
-                        ],
+                                ],
+                        ),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -377,7 +396,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
       RenderRepaintBoundary boundary =
           key.currentContext!.findRenderObject() as RenderRepaintBoundary;
       print(boundary);
-      ui.Image image = await boundary.toImage(pixelRatio: 1.0);
+      ui.Image image = await boundary.toImage(pixelRatio: 2.0);
       print("image:===$image");
       final directory = (await getApplicationDocumentsDirectory()).path;
       ByteData? byteData =
@@ -490,32 +509,58 @@ class _CropImageScreenState extends State<CropImageScreen> {
         children: [
           GestureDetector(
             onTap: () {
-              setState(() {
+              if(cropEnable == true){
+                setState(() {
+                  index = 0;
+                  defaultSelectedIndex = true;
+                  print('defaultSelectedIndex : $defaultSelectedIndex');
+                  _rotation = 0; // Reset Value
+                  _scale = 1; // Reset Value
+                });
+              } else {
+                Fluttertoast.showToast(msg: 'Image Already Cropped!', toastLength: Toast.LENGTH_SHORT);
+              }
+
+              /*setState(() {
                 index = 0;
                 defaultSelectedIndex = true;
                 print('defaultSelectedIndex : $defaultSelectedIndex');
                 _rotation = 0; // Reset Value
                 _scale = 1; // Reset Value
-              });
+              });*/
+
             },
-            child: Container(
-              padding: EdgeInsets.all(2),
-              height: 60,
-              width: 60,
-              margin: EdgeInsets.only(right: 8),
-              decoration: borderGradientDecoration(),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                ),
-                child: Center(
-                  child: Image.asset(
-                    Images.ic_crop,
-                    scale: 2,
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(2),
+                  height: 60,
+                  width: 60,
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: borderGradientDecoration(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Center(
+                      child: Image.asset(
+                        Images.ic_crop,
+                        scale: 2,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                const SizedBox(height: 5),
+                Text(
+                  'Crop',
+                  style: TextStyle(
+                      color: index == 0 ? Colors.black87 : Colors.grey.shade600,
+                      fontWeight: index == 0 ? FontWeight.bold : FontWeight.normal,
+                      fontFamily: ""
+                  ),
+                ),
+              ],
             ),
           ),
           GestureDetector(
@@ -523,26 +568,41 @@ class _CropImageScreenState extends State<CropImageScreen> {
               setState(() {
                 index = 1;
                 _scale = 1; // Reset Value
+                // cropEnable = false;
+                csController.loading();
               });
             },
-            child: Container(
-              padding: EdgeInsets.all(2),
-              height: 60,
-              width: 60,
-              margin: EdgeInsets.only(right: 8),
-              decoration: borderGradientDecoration(),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                ),
-                child: Center(
-                  child: Image.asset(
-                    Images.ic_rotate,
-                    scale: 2,
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(2),
+                  height: 60,
+                  width: 60,
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: borderGradientDecoration(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Center(
+                      child: Image.asset(
+                        Images.ic_rotate,
+                        scale: 2,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                const SizedBox(height: 5),
+                Text(
+                  'Rotate',
+                  style: TextStyle(
+                    color: index == 1 ? Colors.black87 : Colors.grey.shade600,
+                    fontWeight: index == 1 ? FontWeight.bold : FontWeight.normal,
+                    fontFamily: ""
+                  ),
+                ),
+              ],
             ),
           ),
           GestureDetector(
@@ -550,25 +610,39 @@ class _CropImageScreenState extends State<CropImageScreen> {
               setState(() {
                 index = 2;
                 _rotation = 0; // Reset Value
+                // cropEnable = false;
               });
             },
-            child: Container(
-              padding: EdgeInsets.all(2),
-              height: 60,
-              width: 60,
-              margin: EdgeInsets.only(right: 8),
-              decoration: borderGradientDecoration(),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(2),
+                  height: 60,
+                  width: 60,
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: borderGradientDecoration(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Center(
+                        child: Image.asset(
+                      Images.ic_scale,
+                      scale: 2,
+                    )),
+                  ),
                 ),
-                child: Center(
-                    child: Image.asset(
-                  Images.ic_scale,
-                  scale: 2,
-                )),
-              ),
+                const SizedBox(height: 5),
+                Text(
+                  'Scale',
+                  style: TextStyle(
+                      color: index == 2 ? Colors.black87 : Colors.grey.shade600,
+                      fontWeight: index == 2 ? FontWeight.bold : FontWeight.normal,
+                      fontFamily: ""
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -583,6 +657,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
         style: TextStyle(fontFamily: ""),
       ),
       onPressed: () {
+        croppedImage = null;
         Get.back();
         //Get.back();
       },

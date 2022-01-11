@@ -4,7 +4,7 @@ class TextDelegate {
   final String rectangle = "Rectangle";
   final String drawing = "Drawing";
   final String circle = "Circle";
-  final String arrow = "Text";
+  final String arrow = "Arrow";
   final String dashLine = "Dashline";
   final String text = "Text";
   final String changeMode = "Change Mode";

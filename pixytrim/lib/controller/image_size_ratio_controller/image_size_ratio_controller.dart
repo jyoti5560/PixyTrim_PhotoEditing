@@ -58,7 +58,7 @@ class ImageSizeRatioController extends GetxController {
           image: Images.ic_sizeRatio10,
           sizeWidget: SizeRatio10(file: file)),
       ImageSizeRatioModel(
-          sizeName: 'fb cover',
+          sizeName: 'fb Mobile cover',
           image: Images.ic_sizeRatio11,
           sizeWidget: SizeRatio11(file: file)),
       ImageSizeRatioModel(

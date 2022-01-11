@@ -81,7 +81,7 @@ class PreviousSessionScreen extends StatelessWidget {
                                   height: 75,
                                   width: 75,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
+                                    // borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
                                       image: FileImage(File('${controller.localSessionList[index]}')),
                                     ),

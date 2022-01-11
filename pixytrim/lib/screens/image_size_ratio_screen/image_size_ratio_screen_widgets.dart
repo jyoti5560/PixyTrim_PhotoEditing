@@ -19,7 +19,8 @@ class SizeRatio1 extends StatelessWidget {
       width: 135,
         height: 270,
         child: PhotoView(
-          enableRotation: true,
+          // enableRotation: true,
+          enablePanAlways: true,
           customSize: Size.fromRadius(250),
           imageProvider: FileImage(file),
         ),
@@ -39,7 +40,8 @@ class SizeRatio2 extends StatelessWidget {
       width: 150,
       height: 225,
       child: PhotoView(
-        enableRotation: true,
+        // enableRotation: true,
+        enablePanAlways: true,
         customSize: Size.fromRadius(250),
         imageProvider: FileImage(file),
       ),
@@ -62,7 +64,8 @@ class SizeRatio3 extends StatelessWidget {
           width: 270,
           height: 180,
           child: PhotoView(
-            enableRotation: true,
+            // enableRotation: true,
+            enablePanAlways: true,
             customSize: Size.fromRadius(250),
             imageProvider: FileImage(file),
           ),
@@ -87,7 +90,8 @@ class SizeRatio4 extends StatelessWidget {
           width: 180,
           height: 240,
           child: PhotoView(
-            enableRotation: true,
+            // enableRotation: true,
+            enablePanAlways: true,
             customSize: Size.fromRadius(250),
             imageProvider: FileImage(file),
           ),
@@ -112,7 +116,8 @@ class SizeRatio5 extends StatelessWidget {
           width: 160,
           height: 120,
           child: PhotoView(
-            enableRotation: true,
+            // enableRotation: true,
+            enablePanAlways: true,
             customSize: Size.fromRadius(250),
             imageProvider: FileImage(file),
           ),
@@ -137,7 +142,8 @@ class SizeRatio6 extends StatelessWidget {
           width: 300,
           height: 240,
           child: PhotoView(
-            enableRotation: true,
+            // enableRotation: true,
+            enablePanAlways: true,
             customSize: Size.fromRadius(250),
             imageProvider: FileImage(file),
           ),
@@ -158,7 +164,8 @@ class SizeRatio7 extends StatelessWidget {
       width: 154.29,
       height: 274.29,
       child: PhotoView(
-        enableRotation: true,
+        // enableRotation: true,
+        enablePanAlways: true,
         customSize: Size.fromRadius(250),
         imageProvider: FileImage(file),
       ),
@@ -181,7 +188,8 @@ class SizeRatio8 extends StatelessWidget {
           width: 274.29,
           height: 154.29,
           child: PhotoView(
-            enableRotation: true,
+            // enableRotation: true,
+            enablePanAlways: true,
             customSize: Size.fromRadius(250),
             imageProvider: FileImage(file),
           ),
@@ -202,7 +210,8 @@ class SizeRatio9 extends StatelessWidget {
       width: 250.57,
       height: 177.14,
       child: PhotoView(
-        enableRotation: true,
+        // enableRotation: true,
+        enablePanAlways: true,
         customSize: Size.fromRadius(250),
         imageProvider: FileImage(file),
       ),
@@ -221,7 +230,8 @@ class SizeRatio10 extends StatelessWidget {
       width: 248,
       height: 174.8,
       child: PhotoView(
-        enableRotation: true,
+        // enableRotation: true,
+        enablePanAlways: true,
         customSize: Size.fromRadius(250),
         imageProvider: FileImage(file),
       ),
@@ -243,8 +253,9 @@ class SizeRatio11 extends StatelessWidget {
           width: 160,
           height: 90,
           child: PhotoView(
-            enableRotation: true,
+            // enableRotation: true,
             // customSize: Size.fromRadius(50),
+            enablePanAlways: true,
             imageProvider: FileImage(file),
           ),
         ),
@@ -268,7 +279,8 @@ class SizeRatio12 extends StatelessWidget {
           width: 300,
           height: 157.5,
           child: PhotoView(
-            enableRotation: true,
+            // enableRotation: true,
+            enablePanAlways: true,
             customSize: Size.fromRadius(250),
             imageProvider: FileImage(file),
           ),
@@ -290,7 +302,8 @@ class SizeRatio13 extends StatelessWidget {
       width: 270,
       height: 480,
       child: PhotoView(
-        enableRotation: true,
+        // enableRotation: true,
+        enablePanAlways: true,
         customSize: Size.fromRadius(250),
         imageProvider: FileImage(file),
       ),
@@ -313,7 +326,8 @@ class SizeRatio14 extends StatelessWidget {
           width: 270,
           height: 270,
           child: PhotoView(
-            enableRotation: true,
+            // enableRotation: true,
+            enablePanAlways: true,
             customSize: Size.fromRadius(250),
             imageProvider: FileImage(file),
           ),
@@ -338,7 +352,8 @@ class SizeRatio15 extends StatelessWidget {
           width: 270,
           height: 337.5,
           child: PhotoView(
-            enableRotation: true,
+            // enableRotation: true,
+            enablePanAlways: true,
             customSize: Size.fromRadius(250),
             imageProvider: FileImage(file),
           ),
@@ -363,7 +378,8 @@ class SizeRatio16 extends StatelessWidget {
           width: 480,
           height: 270,
           child: PhotoView(
-            enableRotation: true,
+            // enableRotation: true,
+            enablePanAlways: true,
             customSize: Size.fromRadius(250),
             imageProvider: FileImage(file),
           ),
@@ -384,7 +400,8 @@ class SizeRatio17 extends StatelessWidget {
       width: 183.75,
       height: 275.5,
       child: PhotoView(
-        enableRotation: true,
+        // enableRotation: true,
+        enablePanAlways: true,
         customSize: Size.fromRadius(250),
         imageProvider: FileImage(file),
       ),
@@ -407,7 +424,8 @@ class SizeRatio18 extends StatelessWidget {
           width: 375,
           height: 125,
           child: PhotoView(
-            enableRotation: true,
+            // enableRotation: true,
+            enablePanAlways: true,
             customSize: Size.fromRadius(250),
             imageProvider: FileImage(file),
           ),
@@ -432,7 +450,8 @@ class SizeRatio19 extends StatelessWidget {
           width: 300,
           height: 168.75,
           child: PhotoView(
-            enableRotation: true,
+            // enableRotation: true,
+            enablePanAlways: true,
             customSize: Size.fromRadius(250),
             imageProvider: FileImage(file),
           ),
@@ -457,7 +476,8 @@ class SizeRatio20 extends StatelessWidget {
           width: 365.71,
           height: 205.71,
           child: PhotoView(
-            enableRotation: true,
+            // enableRotation: true,
+            enablePanAlways: true,
             customSize: Size.fromRadius(250),
             imageProvider: FileImage(file),
           ),

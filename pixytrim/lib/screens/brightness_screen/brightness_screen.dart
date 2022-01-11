@@ -33,6 +33,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
   double brightPercent = 0.0;
   double con = 1;
   double conPercent = 0.0;
+  double conPercent2 = 0.0;
   GlobalKey<ExtendedImageEditorState> editorKey = GlobalKey();
   final defaultColorMatrix = const <double>[
     1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0
@@ -285,11 +286,12 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                       valueIndicatorTextStyle: TextStyle(fontFamily: ""),
                     ),
                     child: Slider(
-                      label: 'contrast : ${conPercent.toStringAsFixed(2)} %',
+                      label: 'contrast : ${conPercent2.toStringAsFixed(2)} %',
                       onChanged: (double value) {
                         setState(() {
                           con = value;
                           conPercent = (con * 100) / 1.50;
+                          conPercent2 = (conPercent * 50) / 66.67;
                         });
                       },
                       divisions: 50,

@@ -104,7 +104,7 @@ List<ModeData> paintModes(TextDelegate textDelegate) => [
       ModeData(
           image: Images.ic_text,
           mode: PaintMode.text,
-          label: textDelegate.arrow),
+          label: textDelegate.text),
     ];
 
 @immutable
