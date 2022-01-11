@@ -120,16 +120,16 @@ class _CropImageScreenState extends State<CropImageScreen> {
                                                   :RepaintBoundary(
                                                       key: key,
                                                       child: Transform.rotate(
-                                                        angle: Math.pi /
-                                                            180 *
-                                                            _rotation,
+                                                        angle: Math.pi / 180 * _rotation,
+                                                        origin: Offset.zero,
                                                         alignment: Alignment.center,
                                                         child: Container(
                                                           height: MediaQuery.of(context).size.height - 130,
                                                           alignment: Alignment.center,
                                                           child: /*tempCroppedFile != null
                                                             ? PhotoView(imageProvider: FileImage(tempCroppedFile!))
-                                                              : */PhotoView(imageProvider: FileImage(widget.file)),
+                                                              : PhotoView(imageProvider: FileImage(widget.file),disableGestures: true,),*/
+                                                          Image.file(widget.file),
                                                         ),
                                                       ),
                                                     ),
@@ -198,6 +198,10 @@ class _CropImageScreenState extends State<CropImageScreen> {
                                                                     Vector3(_scale, _scale, _scale)),
                                                             // child: Image.file(widget.file,fit: BoxFit.cover,)
                                                             child: PhotoView(
+                                                              enablePanAlways: true,
+                                                              backgroundDecoration: BoxDecoration(
+                                                                color: Colors.transparent,
+                                                              ),
                                                               imageProvider: FileImage(widget.file),
                                                             ),
                                                           ),
