@@ -208,7 +208,7 @@ class _IndexScreenState extends State<IndexScreen> {
                                                     children: [
                                                       Image.asset(
                                                         Images.ic_layout,
-                                                        scale: 3.2,
+                                                        scale: 4,
                                                       ),
                                                       SizedBox(
                                                         width: 10,
