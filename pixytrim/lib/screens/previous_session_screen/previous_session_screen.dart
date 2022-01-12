@@ -6,6 +6,8 @@ import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/previous_session_screen_controller/previous_session_screen_controller.dart';
 import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 
+import 'collage_session_screen/collage_session_screen.dart';
+
 class PreviousSessionScreen extends StatelessWidget {
   PreviousSessionScreen({Key? key}) : super(key: key);
   final controller = Get.put(PreviousSessionScreenController());
@@ -29,7 +31,7 @@ class PreviousSessionScreen extends StatelessWidget {
                           children: [
                             appBar(context),
                             const SizedBox(height: 20),
-                            // collageImagesPreviousSessionModule(),
+                            collageImagesPreviousSessionModule(),
                             const SizedBox(height: 20),
                             Container(
                               child: controller.localSessionListNew.length == 0
@@ -42,6 +44,7 @@ class PreviousSessionScreen extends StatelessWidget {
                                   : GridView.builder(
                                       itemCount:
                                           controller.localSessionListNew.length,
+                                      physics: AlwaysScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
@@ -212,7 +215,7 @@ class PreviousSessionScreen extends StatelessWidget {
     AlertDialog alert = AlertDialog(
       content: Text(
         "Do you want to delete This Image ?",
-        style: TextStyle(fontFamily: ""),
+        style: TextStyle(fontFamily: "",fontSize: 18),
       ),
       actions: [
         cancelButton,
@@ -229,22 +232,27 @@ class PreviousSessionScreen extends StatelessWidget {
     );
   }
 
-  /*collageImagesPreviousSessionModule() {
-    return Container(
-      decoration: borderGradientDecoration(),
-      child: Padding(
-        padding: EdgeInsets.all(3),
-        child: Container(
-          padding: EdgeInsets.only(left: 10, right: 10),
-          decoration: containerBackgroundGradient(),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                'Collage Images Session',
-                style: TextStyle(
-                  fontFamily: "",
-                  fontWeight: FontWeight.bold,
+  collageImagesPreviousSessionModule() {
+    return GestureDetector(
+      onTap: () {
+        Get.to(()=> CollageSessionScreen());
+      },
+      child: Container(
+        decoration: borderGradientDecoration(),
+        child: Padding(
+          padding: EdgeInsets.all(3),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: containerBackgroundGradient(),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  'Collage Images Session',
+                  style: TextStyle(
+                    fontFamily: "",
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -252,7 +260,7 @@ class PreviousSessionScreen extends StatelessWidget {
         ),
       ),
     );
-  }*/
+  }
 
 
 }

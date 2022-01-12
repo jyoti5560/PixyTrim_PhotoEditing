@@ -7,6 +7,7 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
+import 'package:pixytrim/common/store_session_local/store_session_local.dart';
 import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';
 import 'package:pixytrim/screens/collage_screen/border_color_screen/border_color_screen.dart';
 import 'package:pixytrim/screens/collage_screen/border_radius_screen/border_radius_screen.dart';
@@ -29,6 +30,8 @@ class _CollageScreenState extends State<CollageScreen>
   late TabController _tabController;
   final GlobalKey key = GlobalKey();
   File? file;
+  List<String> localCollageList = [];
+  LocalStorage localStorage = LocalStorage();
 
   @override
   void initState() {
@@ -96,12 +99,7 @@ class _CollageScreenState extends State<CollageScreen>
               children: [
                 GestureDetector(
                   onTap: () {
-                    collageScreenController.borderWidthValue.value = 0.0;
-                    collageScreenController.activeColor.value = 0;
-                    collageScreenController.borderRadiusValue.value = 0.0;
-                    collageScreenController.isActiveWallpaper.value = false;
-
-                    Get.back();
+                    showAlertDialog();
                   },
                   child: Container(
                       child: Image.asset(
@@ -220,6 +218,65 @@ class _CollageScreenState extends State<CollageScreen>
         textColor: Colors.white,
         fontSize: 16.0);
     Get.back();
+  }
+
+  showAlertDialog() {
+    Widget cancelButton = TextButton(
+      child: Text(
+        "No",
+        style: TextStyle(fontFamily: ""),
+      ),
+      onPressed: () {
+        Get.back();
+        // Get.back();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "Yes",
+        style: TextStyle(fontFamily: ""),
+      ),
+      onPressed: () async {
+        collageScreenController.borderWidthValue.value = 0.0;
+        collageScreenController.activeColor.value = 0;
+        collageScreenController.borderRadiusValue.value = 0.0;
+        collageScreenController.isActiveWallpaper.value = false;
+
+        if(collageScreenController.imageFileList.isNotEmpty){
+          for(int i = 0; i < collageScreenController.imageFileList.length; i++){
+
+            localCollageList.add('${collageScreenController.imageFileList[i].file.path}');
+          }
+          print('localCollageList : $localCollageList');
+          if(localCollageList.isNotEmpty){
+            await localStorage.storeMainCollageList(localCollageList);
+          }
+        }
+
+        Get.back();
+        Get.back();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text(
+        "Do you want to save in Local ?",
+        style: TextStyle(fontFamily: ""),
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
 

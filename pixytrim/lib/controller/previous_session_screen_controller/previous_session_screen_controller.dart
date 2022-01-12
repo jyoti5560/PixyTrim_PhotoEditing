@@ -7,6 +7,8 @@ class PreviousSessionScreenController extends GetxController {
   List<String> localSessionList = [];
   List<String> localSessionListNew = [];
 
+  List<String> localCollageList = [];
+
   getLocalSessionList() async {
     isLoading(true);
     localSessionList = await localStorage.getMainList();
@@ -15,6 +17,15 @@ class PreviousSessionScreenController extends GetxController {
     }
     for(int i = (localSessionList.length-1); i>=0 ; i--) {
       localSessionListNew.add(localSessionList[i]);
+    }
+    isLoading(false);
+  }
+
+  getLocalCollageSessionList() async {
+    isLoading(true);
+    localCollageList = await localStorage.getCollageMainList();
+    if(localCollageList.isEmpty){
+      localCollageList = [];
     }
     isLoading(false);
   }
@@ -37,6 +48,7 @@ class PreviousSessionScreenController extends GetxController {
   @override
   void onInit() async {
     await getLocalSessionList();
+    await getLocalCollageSessionList();
     super.onInit();
   }
 

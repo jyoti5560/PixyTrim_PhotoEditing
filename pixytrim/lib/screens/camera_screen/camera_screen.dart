@@ -301,7 +301,7 @@ class _CameraScreenState extends State<CameraScreen> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       //title: Text("AlertDialog"),
-      content: Text("Do you want to save this session ?", style: TextStyle(fontFamily: ""),),
+      content: Text("Do you want to save in Local ?", style: TextStyle(fontFamily: ""),),
       actions: [
         cancelButton,
         continueButton,

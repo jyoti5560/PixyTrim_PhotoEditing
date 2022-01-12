@@ -51,7 +51,7 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                                 widget.file,
                                 repaintKey: repaintKey,
                                 key: _imageKey,
-                                scalable: true,
+                                // scalable: true,
                                 initialStrokeWidth: 2,
                                 initialColor: Colors.green,
                                 initialPaintMode: PaintMode.freeStyle,
