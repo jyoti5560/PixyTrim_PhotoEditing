@@ -5,12 +5,16 @@ class PreviousSessionScreenController extends GetxController {
   RxBool isLoading = false.obs;
   LocalStorage localStorage = LocalStorage();
   List<String> localSessionList = [];
+  List<String> localSessionListNew = [];
 
   getLocalSessionList() async {
     isLoading(true);
     localSessionList = await localStorage.getMainList();
     if(localSessionList.isEmpty){
       localSessionList = [];
+    }
+    for(int i = (localSessionList.length-1); i>=0 ; i--) {
+      localSessionListNew.add(localSessionList[i]);
     }
     isLoading(false);
   }

@@ -17,85 +17,76 @@ class PreviousSessionScreen extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: Obx(
-            ()=> Stack(
+            () => Stack(
               children: [
                 MainBackgroundWidget(),
                 controller.isLoading.value
-                ? Center(child: CircularProgressIndicator())
-                : Container(
-                  margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-                  child: Column(
-                    children: [
-                      appBar(context),
-                      const SizedBox(height: 20),
-                      Container(
-                        child: controller.localSessionList.length == 0
-                            ? Center(
-                          child: Text(
-                              'No Local Data Available',
-                            style: TextStyle(fontFamily: ""),
-                          ),)
-                            : GridView.builder(
-                          itemCount: controller.localSessionList.length,
-                          shrinkWrap: true,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                          ),
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(5),
-                              // child: Row(
-                              //   children: [
-                              //     Container(
-                              //       height: 100,
-                              //       width: 100,
-                              //       child: Image.file(File('${controller.localSessionList![index]}')),
-                              //     ),
-                              //     const SizedBox(width: 10),
-                              //     Expanded(
-                              //         child: Text(
-                              //             '${controller.localSessionList![index]}',
-                              //           maxLines: 3,
-                              //           overflow: TextOverflow.ellipsis,
-                              //           style: TextStyle(
-                              //             fontFamily: "",
-                              //           ),
-                              //         ),
-                              //     ),
-                              //   ],
-                              // ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  if(controller.localSessionList.isNotEmpty){
-                                    Get.off(()=> CameraScreen(), arguments: [File('${controller.localSessionList[index]}'), SelectedModule.gallery]);
-                                  }
-                                },
-
-                                onLongPress: () {
-                                  //todo
-                                  deleteSingleImageAlertDialog(context, index);
-                                },
-                                child: Container(
-                                  height: 75,
-                                  width: 75,
-                                  decoration: BoxDecoration(
-                                    // borderRadius: BorderRadius.circular(10),
-                                    image: DecorationImage(
-                                      image: FileImage(File('${controller.localSessionList[index]}')),
+                    ? Center(child: CircularProgressIndicator())
+                    : Container(
+                        margin:
+                            EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                        child: Column(
+                          children: [
+                            appBar(context),
+                            const SizedBox(height: 20),
+                            // collageImagesPreviousSessionModule(),
+                            const SizedBox(height: 20),
+                            Container(
+                              child: controller.localSessionListNew.length == 0
+                                  ? Center(
+                                      child: Text(
+                                        'No Local Data Available',
+                                        style: TextStyle(fontFamily: ""),
+                                      ),
+                                    )
+                                  : GridView.builder(
+                                      itemCount:
+                                          controller.localSessionListNew.length,
+                                      shrinkWrap: true,
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        mainAxisSpacing: 10,
+                                        crossAxisSpacing: 10,
+                                      ),
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              if (controller.localSessionListNew.isNotEmpty) {
+                                                Get.off(() => CameraScreen(),
+                                                    arguments: [
+                                                      File(
+                                                          '${controller.localSessionListNew[index]}'),
+                                                      SelectedModule.gallery
+                                                    ]);
+                                              }
+                                            },
+                                            onLongPress: () {
+                                              deleteSingleImageAlertDialog(
+                                                  context, index);
+                                            },
+                                            child: Container(
+                                              height: 75,
+                                              width: 75,
+                                              decoration: BoxDecoration(
+                                                // borderRadius: BorderRadius.circular(10),
+                                                image: DecorationImage(
+                                                  image: FileImage(File(
+                                                      '${controller.localSessionListNew[index]}')),
+                                                ),
+                                              ),
+                                              // child: Image.file(File('${controller.localSessionListNew![index]}')),
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
-                                  ),
-                                  // child: Image.file(File('${controller.localSessionList![index]}')),
-                                ),
-                              ),
-                            );
-                          },
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),
@@ -132,20 +123,23 @@ class PreviousSessionScreen extends StatelessWidget {
                   child: Text(
                     "Previous Session",
                     style: TextStyle(
-                        fontFamily: "",
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                      fontFamily: "",
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {deleteAllImagesAlertDialog(context);},
+                  onTap: () {
+                    deleteAllImagesAlertDialog(context);
+                  },
                   child: Container(
                     child: Icon(Icons.delete_rounded),
                   ),
                 ),
               ],
-            )),
+            ),
+        ),
       ),
     );
   }
@@ -153,13 +147,19 @@ class PreviousSessionScreen extends StatelessWidget {
   // Delete Alert Dialog Box
   deleteAllImagesAlertDialog(BuildContext context) {
     Widget cancelButton = TextButton(
-      child: Text("No", style: TextStyle(fontFamily: ""),),
-      onPressed:  () {
+      child: Text(
+        "No",
+        style: TextStyle(fontFamily: ""),
+      ),
+      onPressed: () {
         Get.back();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Yes", style: TextStyle(fontFamily: ""),),
+      child: Text(
+        "Yes",
+        style: TextStyle(fontFamily: ""),
+      ),
       onPressed: () async {
         controller.deleteLocalSessionList();
       },
@@ -167,7 +167,10 @@ class PreviousSessionScreen extends StatelessWidget {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      content: Text("Do you want to delete All Images ?", style: TextStyle(fontFamily: ""),),
+      content: Text(
+        "Do you want to delete All Images ?",
+        style: TextStyle(fontFamily: ""),
+      ),
       actions: [
         cancelButton,
         continueButton,
@@ -185,15 +188,20 @@ class PreviousSessionScreen extends StatelessWidget {
 
   // Delete Single Image Dialog box
   deleteSingleImageAlertDialog(BuildContext context, int index) {
-
     Widget cancelButton = TextButton(
-      child: Text("No", style: TextStyle(fontFamily: ""),),
-      onPressed:  () {
+      child: Text(
+        "No",
+        style: TextStyle(fontFamily: ""),
+      ),
+      onPressed: () {
         Get.back();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Yes", style: TextStyle(fontFamily: ""),),
+      child: Text(
+        "Yes",
+        style: TextStyle(fontFamily: ""),
+      ),
       onPressed: () async {
         controller.updateLocalSessionList(index);
         Get.back();
@@ -202,7 +210,10 @@ class PreviousSessionScreen extends StatelessWidget {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      content: Text("Do you want to delete This Image ?", style: TextStyle(fontFamily: ""),),
+      content: Text(
+        "Do you want to delete This Image ?",
+        style: TextStyle(fontFamily: ""),
+      ),
       actions: [
         cancelButton,
         continueButton,
@@ -217,4 +228,31 @@ class PreviousSessionScreen extends StatelessWidget {
       },
     );
   }
+
+  /*collageImagesPreviousSessionModule() {
+    return Container(
+      decoration: borderGradientDecoration(),
+      child: Padding(
+        padding: EdgeInsets.all(3),
+        child: Container(
+          padding: EdgeInsets.only(left: 10, right: 10),
+          decoration: containerBackgroundGradient(),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                'Collage Images Session',
+                style: TextStyle(
+                  fontFamily: "",
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }*/
+
+
 }
