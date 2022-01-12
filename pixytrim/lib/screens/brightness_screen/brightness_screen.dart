@@ -162,9 +162,12 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                 ),
                 GestureDetector(
                   onTap: () async{
-                    await _capturePng();
+                    await _capturePng().then((value) {
+                      Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
+                      Get.back();
+                    });
+
                     // saveImage();
-                    Get.back();
                   },
                   child: Container(child: Icon(Icons.check_rounded)),
                 ),

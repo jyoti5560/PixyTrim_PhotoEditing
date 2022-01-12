@@ -1043,7 +1043,8 @@ class ImagePainterState extends State<ImagePainter> {
               }
             },
             child: Container(
-              child: widget.undoIcon ?? Icon(Icons.undo_outlined, size: 30,),
+              child: widget.undoIcon ?? Icon(Icons.undo_outlined, size: 30,
+                color: _paintHistory.isNotEmpty ? Colors.black : Colors.grey,),
             ),
           ),
           SizedBox(width: 10,),
@@ -1052,7 +1053,8 @@ class ImagePainterState extends State<ImagePainter> {
               setState(_paintHistory.clear);
             },
             child: Container(
-              child: widget.clearAllIcon ?? Icon(Icons.close, size: 30,),
+              child: widget.clearAllIcon ?? Icon(Icons.close, size: 30,
+                color: _paintHistory.isNotEmpty ? Colors.black : Colors.grey,),
             ),
           ),
         ],

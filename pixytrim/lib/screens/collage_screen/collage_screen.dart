@@ -219,6 +219,7 @@ class _CollageScreenState extends State<CollageScreen>
         timeInSecForIosWeb: 1,
         textColor: Colors.white,
         fontSize: 16.0);
+    Get.back();
   }
 }
 

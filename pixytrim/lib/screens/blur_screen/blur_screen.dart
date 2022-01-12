@@ -155,8 +155,10 @@ class _BlurScreenState extends State<BlurScreen> {
                 GestureDetector(
                   onTap: ()async {
                     //saveImage();
-                    await _capturePng();
-                    Get.back();
+                    await _capturePng().then((value) {
+                      Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
+                      Get.back();
+                    });
                   },
                   child: Container(child: Icon(Icons.check_rounded)),
                 ),

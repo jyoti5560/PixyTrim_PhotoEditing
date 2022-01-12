@@ -361,22 +361,25 @@ class _CropImageScreenState extends State<CropImageScreen> {
                        if(index == 0) {
                          if(defaultSelectedIndex == true) {
                            cropController.crop();
-                           Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG);
+                           Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
                            setState(() {
                              defaultSelectedIndex = false;
                              isCropping = true;
                            });
                          } else if (defaultSelectedIndex == false){
+                           Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG);
                            await _capturePng().then((value) {
                              Get.back();
                            });
                          }
 
                        } else if(index == 1){
+                         Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
                          await _capturePng().then((value) {
                            Get.back();
                          });
                        } else if(index == 2) {
+                         Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
                          await _capturePng().then((value) {
                            Get.back();
                          });

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -107,6 +108,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
                         ? 14
                         : 4.0;
                     await _capturePng(pRation: pixelRatio).then((value) {
+                      Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
                       Get.back();
                     });
                   },

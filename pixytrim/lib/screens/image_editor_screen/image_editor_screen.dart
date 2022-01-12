@@ -106,15 +106,7 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                 ),
                 GestureDetector(
                   onTap: () async{
-                    Fluttertoast.showToast(
-                        msg: "Processing...",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.red,
-                        textColor: Colors.white,
-                        fontSize: 16.0
-                    );
+                    Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
                     await renameAndSaveImage().then((value) {
                       Get.back();
                     });

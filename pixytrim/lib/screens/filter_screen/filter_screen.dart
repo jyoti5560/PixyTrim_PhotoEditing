@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pixytrim/common/common_widgets.dart';
@@ -99,15 +100,7 @@ class FilterScreenState extends State<FilterScreen> {
                 GestureDetector(
                   onTap: () async {
                     await _capturePng().then((value) {
-                      // Fluttertoast.showToast(
-                      //     msg: "Save In to Gallery",
-                      //     toastLength: Toast.LENGTH_SHORT,
-                      //     gravity: ToastGravity.BOTTOM,
-                      //     timeInSecForIosWeb: 5,
-                      //     backgroundColor: Colors.blue,
-                      //     textColor: Colors.white,
-                      //     fontSize: 16.0
-                      // );
+                      Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
                       Get.back();
                     });
                   },

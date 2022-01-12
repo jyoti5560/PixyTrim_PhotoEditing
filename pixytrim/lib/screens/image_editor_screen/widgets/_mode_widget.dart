@@ -101,10 +101,10 @@ List<ModeData> paintModes(TextDelegate textDelegate) => [
           image: Images.ic_dash_line,
           mode: PaintMode.dashLine,
           label: textDelegate.dashLine),
-      ModeData(
+      /*ModeData(
           image: Images.ic_text,
           mode: PaintMode.text,
-          label: textDelegate.text),
+          label: textDelegate.text),*/
     ];
 
 @immutable
