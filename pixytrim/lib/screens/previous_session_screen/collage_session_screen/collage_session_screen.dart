@@ -31,7 +31,7 @@ class CollageSessionScreen extends StatelessWidget {
                     child: controller.localCollageList.length == 0
                     ? Center(
                       child: Text(
-                        'No Local Data Available',
+                        'No Collage Local Data Available',
                         style: TextStyle(fontFamily: ""),
                       ),
                     )
@@ -88,7 +88,6 @@ class CollageSessionScreen extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  Get.back();
                   Get.back();
                 },
                 child: Container(

@@ -228,7 +228,7 @@ class _CollageScreenState extends State<CollageScreen>
       ),
       onPressed: () {
         Get.back();
-        // Get.back();
+        Get.back();
       },
     );
     Widget continueButton = TextButton(

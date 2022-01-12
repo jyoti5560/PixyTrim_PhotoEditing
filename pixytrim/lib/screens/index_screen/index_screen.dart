@@ -10,7 +10,10 @@ import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_cont
 import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
+import 'package:pixytrim/screens/live_image_capture_screen/live_image_capture_screen.dart';
 import 'package:pixytrim/screens/previous_session_screen/previous_session_screen.dart';
+
+import 'index_screen_widgets.dart';
 // import 'package:pixytrim/screens/trim_video_screen/trim_video_screen.dart';
 
 
@@ -42,12 +45,8 @@ class _IndexScreenState extends State<IndexScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(
-                    child: Text(
-                      "Pixy Trim",
-                      style: TextStyle(fontSize: 50),
-                    ),
-                  ),
+                  // Header Name "Pixy Trim"
+                  HeaderTextModule(),
                   Container(
                     height: Get.height * 0.32,
                     margin: EdgeInsets.only(left: 10, right: 10),
@@ -63,38 +62,7 @@ class _IndexScreenState extends State<IndexScreen> {
                                   onTap: () {
                                     openGallery();
                                   },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: Container(
-                                      decoration: borderGradientDecoration(),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(3),
-                                        child: Container(
-                                          decoration: containerBackgroundGradient(),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Image.asset(
-                                                  Images.ic_gallery,
-                                                  scale: 2.5,
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  "Gallery",
-                                                  style:
-                                                  TextStyle(fontFamily: "", fontSize: 20),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  child: GalleryModule(),
                                 ),
                               ),
                               Expanded(
@@ -108,35 +76,7 @@ class _IndexScreenState extends State<IndexScreen> {
                                             onTap: (){
                                               openCamera();
                                             },
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5),
-                                              child: Container(
-                                                decoration: borderGradientDecoration(),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(3),
-                                                  child: Container(
-                                                    decoration: containerBackgroundGradient(),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        Image.asset(
-                                                          Images.ic_camera,
-                                                          scale: 2.5,
-                                                        ),
-                                                        SizedBox(width: 10),
-                                                        Text(
-                                                          "Camera",
-                                                          style: TextStyle(
-                                                              fontFamily: "",
-                                                              fontSize: 20,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
+                                            child: CameraModule(),
                                           ),
                                       ),
 
@@ -195,37 +135,7 @@ class _IndexScreenState extends State<IndexScreen> {
                                           onTap: (){
                                             selectImages();
                                           },
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(5),
-                                            child: Container(
-                                              decoration: borderGradientDecoration(),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(3),
-                                                child: Container(
-                                                  decoration: containerBackgroundGradient(),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Image.asset(
-                                                        Images.ic_layout,
-                                                        scale: 4,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      Text(
-                                                        "Collage",
-                                                        style: TextStyle(
-                                                          fontFamily: "",
-                                                          fontSize: 20,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                          child: CollageModule(),
                                         ),
                                       ),
                                     ],
@@ -241,117 +151,18 @@ class _IndexScreenState extends State<IndexScreen> {
                             onTap: (){
                               Get.to(()=> PreviousSessionScreen());
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Container(
-                                decoration: borderGradientDecoration(),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(3),
-                                  child: Container(
-                                    decoration: containerBackgroundGradient(),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        // Image.asset(
-                                        //   Images.ic_layout,
-                                        //   scale: 3.2,
-                                        // ),
-                                        // SizedBox(
-                                        //   width: 10,
-                                        // ),
-                                        Text(
-                                          "Previous Session",
-                                          style: TextStyle(
-                                            fontFamily: "",
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        /*Expanded(
-                          flex: 3,
-                          child: GestureDetector(
-                            onTap: (){
-                              Get.to(() => LiveCameraFramesScreen());
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Container(
-                                decoration: borderGradientDecoration(),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(3),
-                                  child: Container(
-                                    decoration: containerBackgroundGradient(),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          Images.ic_layout,
-                                          scale: 3.2,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          "Camera Frames",
-                                          style: TextStyle(
-                                            fontFamily: "",
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            child: LocalStoreDataModule(),
                           ),
                         ),
                         Expanded(
                           flex: 3,
                           child: GestureDetector(
-                            onTap: (){
-                              Get.to(() => PDFScreen());
+                            onTap: () {
+                              Get.to(()=> LiveImageCaptureScreen());
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Container(
-                                decoration: borderGradientDecoration(),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(3),
-                                  child: Container(
-                                    decoration: containerBackgroundGradient(),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          Images.ic_layout,
-                                          scale: 3.2,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          "PDF Maker",
-                                          style: TextStyle(
-                                            fontFamily: "",
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            child: LiveImageCaptureModule(),
                           ),
-                        ),*/
+                        ),
                       ],
                     ),
                   ),

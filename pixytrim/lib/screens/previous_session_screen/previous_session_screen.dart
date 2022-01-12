@@ -136,7 +136,7 @@ class PreviousSessionScreen extends StatelessWidget {
                   onTap: () {
                     deleteAllImagesAlertDialog(context);
                   },
-                  child: Container(
+                  child: controller.localSessionListNew.length == 0 ? Container() : Container(
                     child: Icon(Icons.delete_rounded),
                   ),
                 ),
@@ -248,7 +248,7 @@ class PreviousSessionScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  'Collage Images Session',
+                  'Collage Store Images',
                   style: TextStyle(
                     fontFamily: "",
                     fontWeight: FontWeight.bold,
