@@ -64,58 +64,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                   children: [
                     appBar(),
                     SizedBox(height: 20),
-                    Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Flexible(
-                              child: Container(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: RepaintBoundary(
-                                    key: key,
-                                    child: Container(
-                                      child: ColorFiltered(
-                      colorFilter: ColorFilter.matrix(calculateContrastMatrix(con)),
-                      child: ColorFiltered(
-                                      colorFilter:
-                                          ColorFilter.matrix(calculateSaturationMatrix(sat)),
-                                      child: Container(
-                                        //width: Get.width,
-                                        child: ExtendedImage(
-                                          color: bright > 0
-                                              ? Colors.white.withOpacity(bright)
-                                              : Colors.black.withOpacity(-bright),
-                                          colorBlendMode: bright > 0
-                                              ? BlendMode.lighten
-                                              : BlendMode.darken,
-                                          image: ExtendedFileImageProvider(csController.addImageFromCameraList[csController.selectedImage.value]),
-                                          extendedImageEditorKey: editorKey,
-                                          /*child: Container(
-                                            width: Get.width,
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(20),
-                                              child: widget.file.toString().isNotEmpty
-                                                  ? Image.file(
-                                                      widget.file,
-                                                      height: 120,
-                                                      width: 120,
-                                                      fit: BoxFit.fill,
-                                                    )
-                                                  : null,
-                                            ),
-                                          ),*/
-                                        ),
-                                      ),
-                      ),
-                    ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )),
+                    imageList(),
                     SizedBox(height: 20),
                     brightnessList(),
                   ],
@@ -175,6 +124,61 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
             )),
       ),
     );
+  }
+
+  Widget imageList(){
+    return Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              child: Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: RepaintBoundary(
+                    key: key,
+                    child: Container(
+                      child: ColorFiltered(
+                        colorFilter: ColorFilter.matrix(calculateContrastMatrix(con)),
+                        child: ColorFiltered(
+                          colorFilter:
+                          ColorFilter.matrix(calculateSaturationMatrix(sat)),
+                          child: Container(
+                            //width: Get.width,
+                            child: ExtendedImage(
+                              color: bright > 0
+                                  ? Colors.white.withOpacity(bright)
+                                  : Colors.black.withOpacity(-bright),
+                              colorBlendMode: bright > 0
+                                  ? BlendMode.lighten
+                                  : BlendMode.darken,
+                              image: ExtendedFileImageProvider(csController.addImageFromCameraList[csController.selectedImage.value]),
+                              extendedImageEditorKey: editorKey,
+                              /*child: Container(
+                                            width: Get.width,
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(20),
+                                              child: widget.file.toString().isNotEmpty
+                                                  ? Image.file(
+                                                      widget.file,
+                                                      height: 120,
+                                                      width: 120,
+                                                      fit: BoxFit.fill,
+                                                    )
+                                                  : null,
+                                            ),
+                                          ),*/
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 
   Widget brightnessList() {
@@ -420,18 +424,5 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
     );
   }
 
-  // Future saveImage() async {
-  //   // renameImage();
-  //   await GallerySaver.saveImage(widget.file.path, albumName: "OTWPhotoEditingDemo");
-  //   Fluttertoast.showToast(
-  //       msg: "Save in to Gallery",
-  //       toastLength: Toast.LENGTH_SHORT,
-  //       gravity: ToastGravity.BOTTOM,
-  //       timeInSecForIosWeb: 1,
-  //       backgroundColor: Colors.red,
-  //       textColor: Colors.white,
-  //       fontSize: 16.0
-  //   );
-  // }
 }
 

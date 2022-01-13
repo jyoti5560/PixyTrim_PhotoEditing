@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/models/filter_screen_model/single_filter_option.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,18 @@ class CameraScreenController extends GetxController{
   RxDouble compressSize = 61.0.obs;
   RxList<File> addImageFromCameraList = <File>[].obs;
   // final GlobalKey key = GlobalKey();
+
+  List<String> iconList = [
+    Images.ic_crop,
+    Images.ic_filter,
+    Images.ic_brightness,
+    Images.ic_blur,
+    Images.ic_compress,
+    Images.ic_resize,
+    Images.ic_edit_image,
+    Images.ic_image_ratio,
+    // Images.ic_layout,
+  ];
 
   @override
   void onInit() {

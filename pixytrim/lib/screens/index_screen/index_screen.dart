@@ -10,7 +10,7 @@ import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_cont
 import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
-import 'package:pixytrim/screens/live_image_capture_screen/live_image_capture_screen.dart';
+//import 'package:pixytrim/screens/live_image_capture_screen/live_image_capture_screen.dart';
 import 'package:pixytrim/screens/previous_session_screen/previous_session_screen.dart';
 
 import 'index_screen_widgets.dart';
@@ -158,7 +158,7 @@ class _IndexScreenState extends State<IndexScreen> {
                           flex: 3,
                           child: GestureDetector(
                             onTap: () {
-                              Get.to(()=> LiveImageCaptureScreen());
+                              //Get.to(()=> LiveImageCaptureScreen());
                             },
                             child: LiveImageCaptureModule(),
                           ),

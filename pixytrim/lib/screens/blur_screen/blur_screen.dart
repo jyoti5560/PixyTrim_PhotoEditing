@@ -56,53 +56,13 @@ class _BlurScreenState extends State<BlurScreen> {
                   children: [
                     appBar(),
                     SizedBox(height: 20),
-                    // Expanded(
-                    //   child: ClipRRect(
-                    //     borderRadius: BorderRadius.circular(20),
-                    //     child: Container(
-                    //       decoration: BoxDecoration(
-                    //         image: DecorationImage(
-                    //           image: FileImage(csController.addImageFromCameraList[csController.selectedImage.value]),
-                    //           fit: BoxFit.cover,
-                    //         ),
-                    //       ),
-                    //       child: RepaintBoundary(
-                    //         key: key,
-                    //         child: BackdropFilter(
-                    //               filter: ImageFilter.blur(
-                    //                   sigmaX: blurImage, sigmaY: blurImage),
-                    //               child: Container(
-                    //                 color: Colors.black.withOpacity(0.1),
-                    //               ),
-                    //             ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Flexible(
-                            child: Container(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: RepaintBoundary(
-                                  key: key,
-                                  child: ImageFiltered(
-                                    imageFilter: ImageFilter.blur(
-                                        sigmaX: blurImage, sigmaY: blurImage),
-                                    child: Container(
-                                      color: Colors.transparent,
-                                      child: csController.addImageFromCameraList[csController.selectedImage.value].toString().isNotEmpty
-                                          ? Image.file(csController.addImageFromCameraList[csController.selectedImage.value])
-                                          : null,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          imageList()
+
                         ],
                       ),
                     ),
@@ -164,6 +124,29 @@ class _BlurScreenState extends State<BlurScreen> {
                 ),
               ],
             )),
+      ),
+    );
+  }
+
+  Widget imageList(){
+    return Flexible(
+      child: Container(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: RepaintBoundary(
+            key: key,
+            child: ImageFiltered(
+              imageFilter: ImageFilter.blur(
+                  sigmaX: blurImage, sigmaY: blurImage),
+              child: Container(
+                color: Colors.transparent,
+                child: csController.addImageFromCameraList[csController.selectedImage.value].toString().isNotEmpty
+                    ? Image.file(csController.addImageFromCameraList[csController.selectedImage.value])
+                    : null,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -292,19 +275,5 @@ class _BlurScreenState extends State<BlurScreen> {
       },
     );
   }
-  // Image Save Module
-  // Future saveImage() async {
-  //   // renameImage();
-  //   await GallerySaver.saveImage(widget.file.path, albumName: "OTWPhotoEditingDemo");
-  //   Fluttertoast.showToast(
-  //       msg: "Save in to Gallery",
-  //       toastLength: Toast.LENGTH_SHORT,
-  //       gravity: ToastGravity.BOTTOM,
-  //       timeInSecForIosWeb: 1,
-  //       backgroundColor: Colors.red,
-  //       textColor: Colors.white,
-  //       fontSize: 16.0
-  //   );
-  // }
 
 }
