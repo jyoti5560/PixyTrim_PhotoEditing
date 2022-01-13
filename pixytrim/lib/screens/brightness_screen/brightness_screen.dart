@@ -111,8 +111,8 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                 ),
                 GestureDetector(
                   onTap: () async{
+                    Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
                     await _capturePng().then((value) {
-                      Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
                       Get.back();
                     });
 

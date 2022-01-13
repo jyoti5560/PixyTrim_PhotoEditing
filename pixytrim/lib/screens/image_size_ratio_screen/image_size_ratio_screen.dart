@@ -107,8 +107,9 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
                         : newIndex == 8
                         ? 14
                         : 4.0;
+                    Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
                     await _capturePng(pRation: pixelRatio).then((value) {
-                      Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
+
                       Get.back();
                     });
                   },

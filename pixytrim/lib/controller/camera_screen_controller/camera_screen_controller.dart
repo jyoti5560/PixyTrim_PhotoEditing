@@ -51,6 +51,8 @@ class CameraScreenController extends GetxController{
       SingleFilterOption(filterWidget: filter8(),filterName: 'Filter 8', filterListWidget: filter8(width: 100, height: 100, fit: BoxFit.cover)),
       SingleFilterOption(filterWidget: filter9(),filterName: 'Filter 9', filterListWidget: filter9(width: 100, height: 100, fit: BoxFit.cover)),
       SingleFilterOption(filterWidget: filter10(),filterName: 'Filter 10', filterListWidget: filter10(width: 100, height: 100, fit: BoxFit.cover)),
+      // SingleFilterOption(filterWidget: filter11(),filterName: 'Filter 11', filterListWidget: filter11(width: 100, height: 100, fit: BoxFit.cover)),
+      // SingleFilterOption(filterWidget: filter12(),filterName: 'Filter 12', filterListWidget: filter12(width: 100, height: 100, fit: BoxFit.cover)),
     ];
     super.onInit();
   }
@@ -273,6 +275,46 @@ class CameraScreenController extends GetxController{
             ]),
             child: Image.file(
                 addImageFromCameraList[selectedImage.value],
+              width: width ?? null,
+              height: height ?? null,fit: fit ?? null,)),
+      ),
+    );
+  }
+
+  Widget filter11({double? width, double? height, BoxFit? fit}){
+    return Obx(
+          ()=> Container(
+        width: width ?? null,
+        height: height ?? null,
+        child: ColorFiltered(
+            colorFilter: ColorFilter.matrix([
+              1.0, 0.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, 1.0, 0.0, 0.0,
+              0.0, 0.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, 0.0, 1.0, 0.0
+            ]),
+            child: Image.file(
+              addImageFromCameraList[selectedImage.value],
+              width: width ?? null,
+              height: height ?? null,fit: fit ?? null,)),
+      ),
+    );
+  }
+
+  Widget filter12({double? width, double? height, BoxFit? fit}){
+    return Obx(
+          ()=> Container(
+        width: width ?? null,
+        height: height ?? null,
+        child: ColorFiltered(
+            colorFilter: ColorFilter.matrix([
+              1.0, 0.0, 0.0, 0.0, 0.0,
+              0.0, 1.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, 0.0, 0.0, 0.0,
+              0.0, 0.0, 0.0, 1.0, 0.0
+            ]),
+            child: Image.file(
+              addImageFromCameraList[selectedImage.value],
               width: width ?? null,
               height: height ?? null,fit: fit ?? null,)),
       ),

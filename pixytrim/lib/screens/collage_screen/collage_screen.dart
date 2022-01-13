@@ -261,7 +261,7 @@ class _CollageScreenState extends State<CollageScreen>
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       content: Text(
-        "Do you want to save in Local ?",
+        "Do you want to save in Draft ?",
         style: TextStyle(fontFamily: ""),
       ),
       actions: [

@@ -154,7 +154,7 @@ class _IndexScreenState extends State<IndexScreen> {
                             child: LocalStoreDataModule(),
                           ),
                         ),
-                        Expanded(
+                       /* Expanded(
                           flex: 3,
                           child: GestureDetector(
                             onTap: () {
@@ -162,7 +162,7 @@ class _IndexScreenState extends State<IndexScreen> {
                             },
                             child: LiveImageCaptureModule(),
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),

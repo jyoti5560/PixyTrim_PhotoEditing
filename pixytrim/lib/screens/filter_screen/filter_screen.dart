@@ -99,8 +99,8 @@ class FilterScreenState extends State<FilterScreen> {
                 ),
                 GestureDetector(
                   onTap: () async {
+                    Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
                     await _capturePng().then((value) {
-                      Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
                       Get.back();
                     });
                   },
@@ -193,6 +193,10 @@ class FilterScreenState extends State<FilterScreen> {
                 ? csController.filterOptions[9].filterWidget
                 : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 10
                 ? csController.filterOptions[10].filterWidget
+                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 11
+                ? csController.filterOptions[11].filterWidget
+                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 12
+                ? csController.filterOptions[12].filterWidget
                 : Container(),
           ),
         ),

@@ -124,7 +124,7 @@ class PreviousSessionScreen extends StatelessWidget {
                 ),
                 Container(
                   child: Text(
-                    "Previous Session",
+                    "Draft",
                     style: TextStyle(
                       fontFamily: "",
                       fontSize: 18,
@@ -214,7 +214,7 @@ class PreviousSessionScreen extends StatelessWidget {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       content: Text(
-        "Do you want to delete This Image ?",
+        "Do you want to delete this image ?",
         style: TextStyle(fontFamily: "",fontSize: 18),
       ),
       actions: [
@@ -248,7 +248,7 @@ class PreviousSessionScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  'Collage Store Images',
+                  'Collage Draft',
                   style: TextStyle(
                     fontFamily: "",
                     fontWeight: FontWeight.bold,
