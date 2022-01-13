@@ -82,55 +82,6 @@ class _IndexScreenState extends State<IndexScreen> {
 
                                       // Trim Video Module
                                       Expanded(
-                                        // child: GestureDetector(
-                                        //   onTap: () async {
-                                        //     // FilePickerResult? result = await FilePicker.platform.pickFiles(
-                                        //     //   type: FileType.video,
-                                        //     //   allowCompression: false,
-                                        //     // );
-                                        //     // if (result != null) {
-                                        //     //   File file1 = File(result.files.single.path!);
-                                        //     //   Get.to(()=> TrimVideo(file: file1,));
-                                        //     // }
-                                        //   },
-                                        //   child: Padding(
-                                        //     padding: const EdgeInsets.all(5),
-                                        //     child: Container(
-                                        //       decoration: borderGradientDecoration(),
-                                        //       child: Padding(
-                                        //         padding: const EdgeInsets.all(3),
-                                        //         child: Container(
-                                        //           decoration: containerBackgroundGradient(),
-                                        //           child: Padding(
-                                        //             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                        //             child: Row(
-                                        //               mainAxisAlignment: MainAxisAlignment.center,
-                                        //               children: [
-                                        //                 Image.asset(
-                                        //                   Images.ic_trim_video,
-                                        //                   scale: 2.5,
-                                        //                 ),
-                                        //                 SizedBox(
-                                        //                   width: 10,
-                                        //                 ),
-                                        //                 Expanded(
-                                        //                   child: Text(
-                                        //                     "Previous Session",
-                                        //                     maxLines: 1,
-                                        //                     // overflow: TextOverflow.ellipsis,
-                                        //                     style: TextStyle(
-                                        //                         fontFamily: "",
-                                        //                         fontSize: 20),
-                                        //                   ),
-                                        //                 ),
-                                        //               ],
-                                        //             ),
-                                        //           ),
-                                        //         ),
-                                        //       ),
-                                        //     ),
-                                        //   ),
-                                        // ),
                                         child: GestureDetector(
                                           onTap: (){
                                             selectImages();

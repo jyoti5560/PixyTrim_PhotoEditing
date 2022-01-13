@@ -1,4 +1,4 @@
-package com.example.pixytrim;
+package com.omtecweb.pixytrim;
 
 import io.flutter.embedding.android.FlutterActivity;
 
