@@ -197,6 +197,8 @@ class FilterScreenState extends State<FilterScreen> {
                 ? csController.filterOptions[11].filterWidget
                 : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 12
                 ? csController.filterOptions[12].filterWidget
+                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 13
+                ? csController.filterOptions[13].filterWidget
                 : Container(),
           ),
         ),
