@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "799118890185",
-    "project_id": "pixytrim-photo-editor",
-    "storage_bucket": "pixytrim-photo-editor.appspot.com"
+    "project_number": "48109613354",
+    "project_id": "pixytrim",
+    "storage_bucket": "pixytrim.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:799118890185:android:841bfbe887320b12442918",
+        "mobilesdk_app_id": "1:48109613354:android:aa45d3b7d34f697313ae53",
         "android_client_info": {
           "package_name": "com.omtecweb.pixytrim"
         }
       },
       "oauth_client": [
         {
-          "client_id": "799118890185-ljm9sorm5fum6d728u5csgpk215brf39.apps.googleusercontent.com",
+          "client_id": "48109613354-9dpsrg6dg6muvhlr68tiu7b4cr1ee7a4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyByN1yH265U59LY5484bIhGyQNQFrWmggk"
+          "current_key": "AIzaSyBZMYcq3FNgU9iCQGbo3TmATJxX-U_rN5c"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "799118890185-ljm9sorm5fum6d728u5csgpk215brf39.apps.googleusercontent.com",
+              "client_id": "48109613354-9dpsrg6dg6muvhlr68tiu7b4cr1ee7a4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
