@@ -83,9 +83,7 @@ class _IndexScreenState extends State<IndexScreen> {
                                       // Trim Video Module
                                       Expanded(
                                         child: GestureDetector(
-                                          onTap: (){
-                                            selectImages();
-                                          },
+                                          onTap: () => selectImages(),
                                           child: CollageModule(),
                                         ),
                                       ),
@@ -99,9 +97,7 @@ class _IndexScreenState extends State<IndexScreen> {
                         Expanded(
                           flex: 3,
                           child: GestureDetector(
-                            onTap: (){
-                              Get.to(()=> PreviousSessionScreen());
-                            },
+                            onTap: () => Get.to(()=> PreviousSessionScreen()),
                             child: LocalStoreDataModule(),
                           ),
                         ),

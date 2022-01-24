@@ -6,7 +6,7 @@ import 'package:pixytrim/controller/splash_screen_controller/splash_screen_contr
 class SplashScreen extends StatelessWidget {
   SplashScreen({Key? key}) : super(key: key);
 
-  SplashScreenController splashScreenController = Get.put(SplashScreenController());
+  final splashScreenController = Get.put(SplashScreenController());
 
   @override
   Widget build(BuildContext context) {
