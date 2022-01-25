@@ -47,38 +47,41 @@ class _CollageScreenState extends State<CollageScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            MainBackgroundWidget(),
-            Container(
-              margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
-              child: Column(
-                children: [
-                  appBar(),
-                  SizedBox(height: 20),
-                  Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: RepaintBoundary(
-                    key: key,
-                    child: Container(
-                        width: Get.width,
-                        child: Obx(
-                          () => collageScreenController.isLoading.value
-                              ? Center(child: CircularProgressIndicator())
-                              : ImageListModule(),
-                        ),
+    return WillPopScope(
+      onWillPop: () async {return false;},
+      child: Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: [
+              MainBackgroundWidget(),
+              Container(
+                margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                child: Column(
+                  children: [
+                    appBar(),
+                    SizedBox(height: 20),
+                    Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: RepaintBoundary(
+                      key: key,
+                      child: Container(
+                          width: Get.width,
+                          child: Obx(
+                            () => collageScreenController.isLoading.value
+                                ? Center(child: CircularProgressIndicator())
+                                : ImageListModule(),
+                          ),
+                      ),
                     ),
-                  ),
-                      )),
-                  tabBar(),
-                  tabBarView(),
-                ],
-              ),
-            )
-          ],
+                        )),
+                    tabBar(),
+                    tabBarView(),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

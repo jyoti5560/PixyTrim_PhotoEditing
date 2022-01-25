@@ -8,9 +8,29 @@ import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 
 import 'collage_session_screen/collage_session_screen.dart';
 
-class PreviousSessionScreen extends StatelessWidget {
+class PreviousSessionScreen extends StatefulWidget {
   PreviousSessionScreen({Key? key}) : super(key: key);
+
+  @override
+  _PreviousSessionScreenState createState() => _PreviousSessionScreenState();
+}
+
+class _PreviousSessionScreenState extends State<PreviousSessionScreen> with SingleTickerProviderStateMixin{
   final controller = Get.put(PreviousSessionScreenController());
+
+  late TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(vsync: this, length: 2);
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,62 +51,10 @@ class PreviousSessionScreen extends StatelessWidget {
                           children: [
                             appBar(context),
                             const SizedBox(height: 20),
-                            collageImagesPreviousSessionModule(),
-                            const SizedBox(height: 20),
-                            Container(
-                              child: controller.localSessionListNew.length == 0
-                                  ? Center(
-                                      child: Text(
-                                        'No Local Data Available',
-                                        style: TextStyle(fontFamily: ""),
-                                      ),
-                                    )
-                                  : GridView.builder(
-                                      itemCount:
-                                          controller.localSessionListNew.length,
-                                      physics: AlwaysScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
-                                        mainAxisSpacing: 10,
-                                        crossAxisSpacing: 10,
-                                      ),
-                                      itemBuilder: (context, index) {
-                                        return Padding(
-                                          padding: const EdgeInsets.all(5),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              if (controller.localSessionListNew.isNotEmpty) {
-                                                Get.off(() => CameraScreen(),
-                                                    arguments: [
-                                                      File(
-                                                          '${controller.localSessionListNew[index]}'),
-                                                      SelectedModule.gallery
-                                                    ]);
-                                              }
-                                            },
-                                            onLongPress: () {
-                                              deleteSingleImageAlertDialog(
-                                                  context, index);
-                                            },
-                                            child: Container(
-                                              height: 75,
-                                              width: 75,
-                                              decoration: BoxDecoration(
-                                                // borderRadius: BorderRadius.circular(10),
-                                                image: DecorationImage(
-                                                  image: FileImage(File(
-                                                      '${controller.localSessionListNew[index]}')),
-                                                ),
-                                              ),
-                                              // child: Image.file(File('${controller.localSessionListNew![index]}')),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                            ),
+                            Expanded(child: draftData()),
+                           // const SizedBox(height: 20),
+                            tabView()
+
                           ],
                         ),
                       ),
@@ -132,14 +100,26 @@ class PreviousSessionScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                controller.localSessionListNew.isNotEmpty ?
                 GestureDetector(
                   onTap: () {
-                    deleteAllImagesAlertDialog(context);
+                    tabController.index == 0 ? deleteAllImagesAlertDialog(context) : Container();
+                    print('index:: ${tabController.index}');
                   },
-                  child: controller.localSessionListNew.length == 0 ? Container() : Container(
-                    child: Icon(Icons.delete_rounded),
-                  ),
-                ),
+                  child: tabController.index == 0 ? Icon(Icons.delete_rounded) : Container(),
+                  // child: controller.localSessionListNew.isNotEmpty && tabController.index == 0 ?
+                  //   Container(child: Icon(Icons.delete_rounded)) : Container(),
+                 ) :Container(),
+                 /* : tabController.index == 1 ?
+                 GestureDetector(
+                   onTap: () {
+                     deleteAllImagesAlertDialog(context);
+                   },
+                   //child: Icon(Icons.delete_rounded)),
+                   child: controller.localSessionListNew.isNotEmpty ?
+                   Container(child: Icon(Icons.delete_rounded)) : Container(),
+                 )  Container(), */
               ],
             ),
         ),
@@ -147,7 +127,188 @@ class PreviousSessionScreen extends StatelessWidget {
     );
   }
 
-  // Delete Alert Dialog Box
+  Widget draftData(){
+    /*return ;*/
+    return Container(
+      child: TabBarView(
+        controller: tabController,
+        children: [
+          Container(
+            child: controller.localSessionListNew.length == 0
+                ? Center(
+              child: Text(
+                'No Local Data Available',
+                style: TextStyle(fontFamily: ""),
+              ),
+            )
+                :
+            /*GridView.builder(
+              itemCount:
+              controller.localSessionListNew.length,
+              physics: AlwaysScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+              ),
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: GestureDetector(
+                    onTap: () {
+                      if (controller.localSessionListNew.isNotEmpty) {
+                        Get.off(() => CameraScreen(),
+                            arguments: [
+                              File(
+                                  '${controller.localSessionListNew[index]}'),
+                              SelectedModule.gallery
+                            ]);
+                      }
+                    },
+                    onLongPress: () {
+                      deleteSingleImageAlertDialog(
+                          context, index);
+                    },
+                    child: Container(
+                      height: 75,
+                      width: 75,
+                      decoration: BoxDecoration(
+                        // borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: FileImage(File(
+                              '${controller.localSessionListNew[index]}')),
+                        ),
+                      ),
+                      // child: Image.file(File('${controller.localSessionListNew![index]}')),
+                    ),
+                  ),
+                );
+              },
+            ),*/
+            ListView.builder(
+              itemCount: controller.localSessionListNew.length,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                physics: AlwaysScrollableScrollPhysics(),
+                itemBuilder: (context, index){
+                  return Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (controller.localSessionListNew.isNotEmpty) {
+                          Get.off(() => CameraScreen(),
+                              arguments: [
+                                File(
+                                    '${controller.localSessionListNew[index]}'),
+                                SelectedModule.gallery
+                              ]);
+                        }
+                      },
+                      onLongPress: () {
+                        deleteSingleImageAlertDialog(
+                            context, index);
+                      },
+                      child: Container(
+                        height: 75,
+                        width: 75,
+                        decoration: BoxDecoration(
+                          // borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: FileImage(File(
+                                '${controller.localSessionListNew[index]}')),
+                          ),
+                        ),
+                        // child: Image.file(File('${controller.localSessionListNew![index]}')),
+                      ),
+                    ),
+                  );
+                }
+            )
+          ),
+          Container(
+            child: controller.localCollageList.length == 0
+                ? Center(
+              child: Text(
+                'No Collage Local Data Available',
+                style: TextStyle(fontFamily: ""),
+              ),
+            )
+                : GridView.builder(
+              itemCount: controller.localCollageList.length,
+              physics: AlwaysScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+              ),
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Container(
+                    height: 75,
+                    width: 75,
+                    decoration: BoxDecoration(
+                      // borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: FileImage(File(
+                            '${controller.localCollageList[index]}')),
+                      ),
+                    ),
+                    // child: Image.file(File('${controller.localSessionListNew![index]}')),
+                  ),
+                );
+              },
+            ),
+          ),
+          //collageImagesPreviousSessionModule(),
+        ],
+      ),
+    );
+  }
+
+  Widget tabView(){
+    return TabBar(
+      indicatorColor: Colors.transparent,
+      indicatorSize: TabBarIndicatorSize.label,
+      labelColor: Colors.black,
+      labelPadding: EdgeInsets.only(top: 20.0),
+      unselectedLabelColor: Colors.grey,
+      controller:  tabController,
+      labelStyle: TextStyle(fontSize: 20),
+      tabs: [
+        Container(
+          width: Get.width,
+          margin: EdgeInsets.only(right: 5),
+          decoration: borderGradientDecoration(),
+          child: Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: Container(
+                padding: EdgeInsets.only(left: 10, right: 10),
+                decoration: containerBackgroundGradient(),
+                child: Tab(text: "Draft")),
+          ),
+        ),
+        Container(
+          width: Get.width,
+          margin: EdgeInsets.only(left: 5),
+          decoration: borderGradientDecoration(),
+          child: Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: Container(
+                padding: EdgeInsets.only(left: 10, right: 10),
+                decoration: containerBackgroundGradient(),
+                child: Tab(text: "Collage Draft")),
+          ),
+        ),
+
+      ],
+    );
+  }
+
   deleteAllImagesAlertDialog(BuildContext context) {
     Widget cancelButton = TextButton(
       child: Text(
@@ -189,7 +350,6 @@ class PreviousSessionScreen extends StatelessWidget {
     );
   }
 
-  // Delete Single Image Dialog box
   deleteSingleImageAlertDialog(BuildContext context, int index) {
     Widget cancelButton = TextButton(
       child: Text(
@@ -261,6 +421,4 @@ class PreviousSessionScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }

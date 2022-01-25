@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pixytrim/common/common_widgets.dart';
+import 'package:pixytrim/controller/login_screen_controller/login_screen_controller.dart';
 import 'package:pixytrim/screens/login_screen/login_screen_widgets.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,6 +12,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final loginScreenController = Get.put(LoginScreenController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
