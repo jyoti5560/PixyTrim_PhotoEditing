@@ -32,6 +32,7 @@ class OnBoardingScreen extends StatelessWidget {
                           // color: CustomColor.kOrangeColor,
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
+                          fontFamily: ""
                         ),
                       ),
                     ),
@@ -41,7 +42,7 @@ class OnBoardingScreen extends StatelessWidget {
                       child: Text(
                         onBoardingScreenController.onBoardingPages[index].description,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18, fontFamily: ""),
                       ),
                     ),
                   ],
@@ -74,7 +75,7 @@ class OnBoardingScreen extends StatelessWidget {
                 elevation: 0,
                 backgroundColor: Colors.orange,
                 onPressed: onBoardingScreenController.forwardAction,
-                child: Obx(()=> Text(onBoardingScreenController.isLastPage ? 'Start' : 'Next')),
+                child: Obx(()=> Text(onBoardingScreenController.isLastPage ? 'Start' : 'Next', style: TextStyle(fontFamily: ""),)),
               ),
             ),
           ],
