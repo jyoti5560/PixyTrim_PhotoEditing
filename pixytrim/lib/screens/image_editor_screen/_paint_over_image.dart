@@ -19,6 +19,7 @@ import 'widgets/_range_slider.dart';
 import 'widgets/_text_dialog.dart';
 
 export '_image_painter.dart';
+import 'package:photo_view/photo_view.dart';
 
 ///[ImagePainter] widget.
 @immutable

@@ -4,16 +4,16 @@ import 'package:pixytrim/common/store_session_local/store_session_local.dart';
 class PreviousSessionScreenController extends GetxController {
   RxBool isLoading = false.obs;
   LocalStorage localStorage = LocalStorage();
-  List<String> localSessionList = [];
-  List<String> localSessionListNew = [];
+  RxList<String> localSessionList = RxList();
+  RxList<String> localSessionListNew = RxList();
 
   List<String> localCollageList = [];
 
   getLocalSessionList() async {
     isLoading(true);
-    localSessionList = await localStorage.getMainList();
+    localSessionList.value = await localStorage.getMainList();
     if(localSessionList.isEmpty){
-      localSessionList = [];
+      localSessionList.value = [];
     }
     for(int i = (localSessionList.length-1); i>=0 ; i--) {
       localSessionListNew.add(localSessionList[i]);
