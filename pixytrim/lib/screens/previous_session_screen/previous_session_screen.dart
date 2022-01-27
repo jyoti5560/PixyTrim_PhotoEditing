@@ -5,7 +5,6 @@ import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/previous_session_screen_controller/previous_session_screen_controller.dart';
 import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
-
 import 'collage_session_screen/collage_session_screen.dart';
 
 class PreviousSessionScreen extends StatefulWidget {
@@ -14,7 +13,6 @@ class PreviousSessionScreen extends StatefulWidget {
   @override
   _PreviousSessionScreenState createState() => _PreviousSessionScreenState();
 }
-
 class _PreviousSessionScreenState extends State<PreviousSessionScreen> with SingleTickerProviderStateMixin{
   final controller = Get.put(PreviousSessionScreenController());
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/models/onboarding_screen_model/onboarding_screen_model.dart';
-import 'package:pixytrim/screens/index_screen/index_screen.dart';
 import 'package:pixytrim/screens/login_screen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,18 +24,18 @@ class OnBoardingScreenController extends GetxController {
   List<OnBoardingInfo> onBoardingPages= [
     OnBoardingInfo(
       imageAsset: Images.ic_service1,
-      title: 'Dummy Text 1',
-      description: 'Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text',
+      title: 'Welcome to PixyTrim!!',
+      description: 'Best and all-in-one photo editor and Collage Maker App For you!! Here,You can edit your photo with latest filters and upload on your social media.',
     ),
     OnBoardingInfo(
       imageAsset: Images.ic_service2,
-      title: 'Dummy Text 2',
-      description: 'Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text',
+      title: 'Photo Editing With PixyTrim!!',
+      description: "PixyTrim is an app for editing images which lets you alter filters, saturation Brightness, and Contrast. We also allow you to resize and compress images. It's a feature-rich app for you.",
     ),
     OnBoardingInfo(
       imageAsset: Images.ic_service3,
-      title: 'Dummy Text 3',
-      description: 'Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text Dummy Text',
+      title: 'Collage Maker With PixyTrim!!',
+      description: 'PixyTrim is most effective photo collage maker app. It is among the top photo collage apps that allows users to combine more than one photo using various grids.',
     ),
   ];
 

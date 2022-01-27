@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pixytrim/common/common_widgets.dart';
+import 'package:pixytrim/common/custom_color.dart';
 import 'package:pixytrim/controller/onboarding_screen_controller/onboarding_screen_controller.dart';
 
 class OnBoardingScreen extends StatelessWidget {
@@ -13,6 +15,7 @@ class OnBoardingScreen extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: [
+            MainBackgroundWidget(),
             PageView.builder(
               controller: onBoardingScreenController.pageController,
               onPageChanged: onBoardingScreenController.selectedPageIndex,
@@ -23,16 +26,16 @@ class OnBoardingScreen extends StatelessWidget {
                   children: [
                     Image.asset(onBoardingScreenController.onBoardingPages[index].imageAsset,
                       height: Get.height * 0.35,),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 35),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Text(
                         onBoardingScreenController.onBoardingPages[index].title,
+                        maxLines: 1,
                         style: const TextStyle(
                           // color: CustomColor.kOrangeColor,
-                          fontSize: 24,
+                          fontSize: 33,
                           fontWeight: FontWeight.bold,
-                          fontFamily: ""
                         ),
                       ),
                     ),
@@ -42,7 +45,7 @@ class OnBoardingScreen extends StatelessWidget {
                       child: Text(
                         onBoardingScreenController.onBoardingPages[index].description,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 18, fontFamily: ""),
+                        style: const TextStyle(fontSize: 15, fontFamily: ""),
                       ),
                     ),
                   ],
@@ -59,7 +62,9 @@ class OnBoardingScreen extends StatelessWidget {
                     width: 12,
                     height: 12,
                     decoration: BoxDecoration(
-                        color: onBoardingScreenController.selectedPageIndex.value == index ? Colors.black : Colors.grey,
+                        color: onBoardingScreenController.selectedPageIndex.value == index
+                            ? AppColor.kBorderGradientColor2
+                            : Colors.grey.shade200,
                         shape: BoxShape.circle
                     ),
                   ),
@@ -73,9 +78,34 @@ class OnBoardingScreen extends StatelessWidget {
               bottom: 25,
               child: FloatingActionButton(
                 elevation: 0,
-                backgroundColor: Colors.orange,
+                backgroundColor: AppColor.kBorderGradientColor2,
                 onPressed: onBoardingScreenController.forwardAction,
-                child: Obx(()=> Text(onBoardingScreenController.isLastPage ? 'Start' : 'Next', style: TextStyle(fontFamily: ""),)),
+                child: Container(
+                  decoration: serviceBorderGradientDecoration(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3),
+                    child: Container(
+                      decoration: serviceContainerDecoration(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Obx(
+                              ()=> Center(
+                                child: Text(
+                            onBoardingScreenController.isLastPage
+                                  ? 'Start'
+                                  : 'Next',
+                            maxLines: 1,
+                            style: TextStyle(
+                                  fontFamily: "",
+                                  color: Colors.black
+                            ),
+                          ),
+                              ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],

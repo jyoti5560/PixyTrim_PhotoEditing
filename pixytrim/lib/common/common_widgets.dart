@@ -60,3 +60,28 @@ BoxDecoration liveCameraFramesButtonDecoration() {
     // ),
   );
 }
+
+BoxDecoration serviceBorderGradientDecoration() {
+  return BoxDecoration(
+    shape: BoxShape.circle,
+    gradient: LinearGradient(
+      colors: [
+        AppColor.kBorderGradientColor1,
+        AppColor.kBorderGradientColor2,
+        AppColor.kBorderGradientColor3,
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+  );
+}
+
+BoxDecoration serviceContainerDecoration() {
+  return BoxDecoration(
+    shape: BoxShape.circle,
+    image: DecorationImage(
+      image: AssetImage('${Images.ic_btn_bg1}'),
+      fit: BoxFit.cover,
+    ),
+  );
+}
