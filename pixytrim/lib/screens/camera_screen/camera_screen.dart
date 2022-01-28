@@ -122,9 +122,9 @@ class _CameraScreenState extends State<CameraScreen> {
                           cameraScreenController.selectedModule ==
                                   SelectedModule.camera
                               ? Images.ic_camera2
-                              : Images.ic_gallery,
+                              : Images.ic_gallery1,
                           scale: cameraScreenController.selectedModule ==
-                              SelectedModule.camera ? 1.7 : 3.5,
+                              SelectedModule.camera ? 1.7 : 1.7,
                         ),
                       ),
                     ),
@@ -270,6 +270,21 @@ class _CameraScreenState extends State<CameraScreen> {
       onPressed: () async {
         if(cameraScreenController.addImageFromCameraList.isNotEmpty){
           for(int i = 0; i < cameraScreenController.addImageFromCameraList.length; i++) {
+            print('Initial File Name : ${cameraScreenController.addImageFromCameraList[i].path}');
+            //todo
+            String orgPath = cameraScreenController.addImageFromCameraList[i].path;
+            String frontPath = orgPath.split('cache')[0]; // Getting Front Path of file Path
+            print('frontPath: $frontPath');
+            List<String> ogPathList = orgPath.split('/');
+            print('ogPathList: $ogPathList');
+            String ogExt = ogPathList[ogPathList.length - 1].split('.')[1];
+            print('ogExt: $ogExt');
+            DateTime today = new DateTime.now();
+            String dateSlug = "${today.day}-${today.month}-${today.year}_${today.hour}:${today.minute}:${today.second}";
+            cameraScreenController.addImageFromCameraList[i]
+            = await cameraScreenController.addImageFromCameraList[i].rename("${frontPath}cache/pixytrim_$dateSlug.$ogExt");
+
+            print('Final FIle Name : ${cameraScreenController.addImageFromCameraList[i].path}');
             localList.add(cameraScreenController.addImageFromCameraList[i].path);
           }
           print('localList : $localList');

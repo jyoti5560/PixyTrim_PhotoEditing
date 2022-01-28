@@ -248,6 +248,21 @@ class _CollageScreenState extends State<CollageScreen>
         if(collageScreenController.imageFileList.isNotEmpty){
           for(int i = 0; i < collageScreenController.imageFileList.length; i++){
 
+            //todo
+           /* String orgPath = collageScreenController.imageFileList[i].file.path;
+            String frontPath = orgPath.split('cache')[0]; // Getting Front Path of file Path
+            print('frontPath: $frontPath');
+            List<String> ogPathList = orgPath.split('/');
+            print('ogPathList: $ogPathList');
+            String ogExt = ogPathList[ogPathList.length - 1].split('.')[1];
+            print('ogExt: $ogExt');
+            DateTime today = new DateTime.now();
+            String dateSlug = "${today.day}-${today.month}-${today.year}-${today.hour}:${today.minute}:${today.second}";
+            collageScreenController.imageFileList[i]
+            = await collageScreenController.imageFileList[i].file.rename("${frontPath}cache/pixytrim_$dateSlug.$ogExt");
+
+            print('Final FIle Name : ${cameraScreenController.addImageFromCameraList[i].path}');*/
+
             localCollageList.add('${collageScreenController.imageFileList[i].file.path}');
           }
           print('localCollageList : $localCollageList');

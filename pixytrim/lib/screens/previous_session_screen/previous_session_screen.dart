@@ -34,11 +34,28 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
     super.dispose();
   }
 
+  // List<UserDetails> _userDetails = [
+  //   UserDetails(name: 'Pixytrim ${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year} ${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}'),
+  //   UserDetails(name: 'Flutter ${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year} ${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}'),
+  //   UserDetails(name: 'Flutter Flutter'),
+  //   UserDetails(name: 'Flutter Flutter1'),
+  //   // UserDetails(name: 'Pixytrim ${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year} ${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}'),
+  //   // UserDetails(name: 'Pixytrim ${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year} ${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}'),
+  //   // UserDetails(name: 'Pixytrim ${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year} ${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}'),
+  //   // UserDetails(name: 'Pixytrim ${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year} ${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}'),
+  //
+  // ];
+
+  DateTime time = DateTime.now();
+  TextEditingController searchController = new TextEditingController();
+  TextEditingController searchCollageController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Obx(
             () => Stack(
@@ -52,8 +69,22 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                         child: Column(
                           children: [
                             appBar(context),
-                            const SizedBox(height: 20),
-                            Expanded(child: draftData()),
+                            const SizedBox(height: 10),
+                            /*ListTile(
+                              leading: new Icon(Icons.search),
+                              title: new TextField(
+                                controller: searchController,
+                                decoration: new InputDecoration(
+                                    hintText: 'Search', border: InputBorder.none),
+                                onChanged: onSearchTextChanged,
+                              ),
+                              trailing: new IconButton(icon: new Icon(Icons.cancel), onPressed: () {
+                                searchController.clear();
+                                onSearchTextChanged('');
+                              },),
+                            ),*/
+                            Expanded(
+                                child: draftData()),
                            // const SizedBox(height: 20),
                             tabView()
 
@@ -66,6 +97,46 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
         ),
       ),
     );
+  }
+
+  onSearchTextChanged(String text) async {
+    controller.searchResult.clear();
+    if (text.isEmpty) {
+      setState(() {});
+      return;
+    }
+    print("User list: ${controller.localSessionList}");
+    //String local= controller.localSessionList.toString().split('cache/')[1];
+    controller.localSessionList.forEach((userDetail) {
+      print("user detail path: ${userDetail.split('cache/')[1]}");
+      if (userDetail.split('cache/')[1].contains(text))
+      {
+        controller.searchResult.add(userDetail);
+      }
+
+    });
+
+    setState(() {});
+  }
+
+  onSearchCollageTextChanged(String text) async {
+    controller.searchResult.clear();
+    if (text.isEmpty) {
+      setState(() {});
+      return;
+    }
+    print("User list: ${controller.localCollageList}");
+   // String local= controller.localSessionList.toString().split('cache/')[1];
+    controller.localCollageList.forEach((userDetail) {
+      print("user detail path: ${userDetail.split('cache/')[1]}");
+      if (userDetail.split('cache/')[1].contains(text))
+      {
+        controller.searchResult.add(userDetail);
+      }
+
+    });
+
+    setState(() {});
   }
 
   Widget appBar(BuildContext context) {
@@ -103,7 +174,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                   ),
                 ),
 
-                controller.localSessionListNew.isNotEmpty ?
+                controller.localSessionList.isNotEmpty ?
                 GestureDetector(
                   onTap: () {
                     tabController.index == 0 ? deleteAllImagesAlertDialog(context) : Container();
@@ -140,271 +211,523 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
           children: [
 
                Container(
-                child: Obx(()=>
-                   controller.localSessionListNew.length == 0
-                      ? Center(
-                    child: Text(
-                      'No Local Data Available',
-                      style: TextStyle(fontFamily: ""),
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: searchController,
+                      decoration: new InputDecoration(
+                          hintText: 'Search',
+                          hintStyle: TextStyle(fontFamily: ""),
+                          labelStyle: TextStyle(fontFamily: "Times New Roman"),
+                          helperStyle: TextStyle(fontFamily: ""),
+                          prefixIcon: Icon(Icons.search, color: Colors.black,),
+                          suffixIcon: GestureDetector(
+                              onTap: (){
+                                searchController.clear();
+                                onSearchTextChanged('');
+                              },
+                              child: Icon(Icons.close, color: Colors.black,)),
+                          border: InputBorder.none),
+                      onChanged: onSearchTextChanged,
                     ),
-                  )
-                      :
-                 /* GridView.builder(
-                    itemCount:
-                    controller.localSessionListNew.length,
-                    physics: AlwaysScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate:
-                    SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                    ),
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: GestureDetector(
-                          onTap: () {
-                            if (controller.localSessionListNew.isNotEmpty) {
-                              Get.off(() => CameraScreen(),
-                                  arguments: [
-                                    File(
-                                        '${controller.localSessionListNew[index]}'),
-                                    SelectedModule.gallery
-                                  ]);
-                            }
-                          },
-                          onLongPress: () {
-                            deleteSingleImageAlertDialog(
-                                context, index);
-                          },
-                          child: Container(
-                            height: 75,
-                            width: 75,
-                            decoration: BoxDecoration(
-                              // borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: FileImage(File(
-                                    '${controller.localSessionListNew[index]}')),
-                              ),
-                            ),
-                            // child: Image.file(File('${controller.localSessionListNew![index]}')),
+                    SizedBox(height: 5,),
+                    Expanded(
+                      child: Obx(()=>
+                         controller.localSessionList.length == 0
+                            ? Center(
+                          child: Text(
+                            'No Local Data Available',
+                            style: TextStyle(fontFamily: ""),
                           ),
-                        ),
-                      );
-                    },
-                  ),*/
-                  ListView.builder(
-                  itemCount: controller.localSessionListNew.length,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    physics: AlwaysScrollableScrollPhysics(),
-                    itemBuilder: (context, index){
-                      return Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: GestureDetector(
-                          onTap: () {
-                            if (controller.localSessionListNew.isNotEmpty) {
-                              Get.off(() => CameraScreen(),
-                                  arguments: [
-                                    File(
-                                        '${controller.localSessionListNew[index]}'),
-                                    SelectedModule.gallery
-                                  ]);
-                            }
-                          },
-                          onLongPress: () {
-                            deleteSingleImageAlertDialog(
-                                context, index);
-                          },
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            //mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                height: 100,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  // borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: FileImage(File(
-                                        '${controller.localSessionListNew[index]}')),
+                        )
+                            :
+                       /* GridView.builder(
+                          itemCount:
+                          controller.localSessionListNew.length,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate:
+                          SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                          ),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (controller.localSessionListNew.isNotEmpty) {
+                                    Get.off(() => CameraScreen(),
+                                        arguments: [
+                                          File(
+                                              '${controller.localSessionListNew[index]}'),
+                                          SelectedModule.gallery
+                                        ]);
+                                  }
+                                },
+                                onLongPress: () {
+                                  deleteSingleImageAlertDialog(
+                                      context, index);
+                                },
+                                child: Container(
+                                  height: 75,
+                                  width: 75,
+                                  decoration: BoxDecoration(
+                                    // borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                      image: FileImage(File(
+                                          '${controller.localSessionListNew[index]}')),
+                                    ),
                                   ),
+                                  // child: Image.file(File('${controller.localSessionListNew![index]}')),
                                 ),
-                                // child: Image.file(File('${controller.localSessionListNew![index]}')),
                               ),
+                            );
+                          },
+                        ),*/
+                       controller.searchResult.length != 0 || searchController.text.isNotEmpty ?
+                       ListView.builder(
+                           itemCount: controller.searchResult.length,
+                           scrollDirection: Axis.vertical,
+                           shrinkWrap: true,
+                           physics: AlwaysScrollableScrollPhysics(),
+                           itemBuilder: (context, index){
+                             return Padding(
+                               padding: const EdgeInsets.all(5),
+                               child: GestureDetector(
+                                 onTap: () {
+                                   if (controller.localSessionList.isNotEmpty) {
+                                     Get.off(() => CameraScreen(),
+                                         arguments: [
+                                           File(
+                                               '${controller.localSessionList[index]}'),
+                                           SelectedModule.gallery
+                                         ]);
+                                   }
+                                 },
+                                 onLongPress: () {
+                                   deleteSingleImageAlertDialog(
+                                       context, index);
+                                 },
+                                 child: Row(
+                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   //mainAxisAlignment: MainAxisAlignment.start,
+                                   children: [
+                                     Container(
+                                       height: 100,
+                                       width: 100,
+                                       decoration: BoxDecoration(
+                                         // borderRadius: BorderRadius.circular(10),
+                                         image: DecorationImage(
+                                           image: FileImage(File(
+                                               '${controller.searchResult[index]}')),
+                                         ),
+                                       ),
+                                       // child: Image.file(File('${controller.localSessionListNew![index]}')),
+                                     ),
 
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                //mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () async {
-                                      await shareImage(index);
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.share),
-                                        SizedBox(width: 5,),
-                                        Text("Share", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                      ],
+                                     SizedBox(width: 5,),
+
+                                     Column(
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                       //mainAxisAlignment: MainAxisAlignment.start,
+                                       children: [
+                                         // Text("PixyTrim ${time.day}-${time.month}-${time.year} ${time.hour}:${time.minute}:${time.second}",
+                                         //   style: TextStyle(fontFamily: ""),),
+                                         Text(controller.searchResult[index].split('cache/')[1],style: TextStyle(fontFamily: ""),),
+
+                                         SizedBox(height: 7,),
+
+                                         GestureDetector(
+                                           onTap: () async {
+                                             await shareImage(index);
+                                           },
+                                           child: Row(
+                                             children: [
+                                               Icon(Icons.share),
+                                               SizedBox(width: 5,),
+                                               Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                             ],
+                                           ),
+                                         ),
+                                         SizedBox(height: 7,),
+                                         GestureDetector(
+                                           onTap: () async {
+                                             await saveImage(index);
+                                           },
+                                           child: Row(
+                                             children: [
+                                               Icon(Icons.download),
+                                               SizedBox(width: 5,),
+                                               Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                             ],
+                                           ),
+                                         ),
+
+                                         // SizedBox(height: 7,),
+                                         // GestureDetector(
+                                         //   onTap: () async {
+                                         //     setState(() {
+                                         //        controller.updateLocalSessionList(index);
+                                         //     });
+                                         //
+                                         //   },
+                                         //   child: Row(
+                                         //     children: [
+                                         //       Icon(Icons.delete),
+                                         //       SizedBox(width: 5,),
+                                         //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                         //     ],
+                                         //   ),
+                                         // ),
+                                       ],
+                                     )
+
+                                   ],
+                                 ),
+                               ),
+                             );
+                           }
+                       ):
+                        ListView.builder(
+                          //itemCount: _userDetails.length,
+                        itemCount: controller.localSessionList.length,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          itemBuilder: (context, index){
+
+                            print("local image list: ${controller.localSessionList[index]}");
+                             //fileName = controller.localSessionList[index];
+                            //File file = new File(controller.localSessionList[index]);
+                            //String name = file.path.split('/').last;
+                            return Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (controller.localSessionList.isNotEmpty) {
+                                    Get.off(() => CameraScreen(),
+                                        arguments: [
+                                          File(
+                                              '${controller.localSessionList[index]}'),
+                                          SelectedModule.gallery
+                                        ]);
+                                  }
+                                },
+                                onLongPress: () {
+                                  deleteSingleImageAlertDialog(
+                                      context, index);
+                                },
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  //mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 100,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        // borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: FileImage(File(
+                                              '${controller.localSessionList[index]}')),
+                                        ),
+                                      ),
+                                      // child: Image.file(File('${controller.localSessionListNew![index]}')),
                                     ),
-                                  ),
-                                  SizedBox(height: 7,),
-                                  GestureDetector(
-                                    onTap: () async {
-                                      await saveImage(index);
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.download),
-                                        SizedBox(width: 5,),
-                                        Text("Save", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                      ],
-                                    ),
-                                  ),
+                                    SizedBox(width: 5,),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        //mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          // Text("PixyTrim ${time.day}-${time.month}-${time.year} ${time.hour}:${time.minute}:${time.second}",
+                                          //   style: TextStyle(fontFamily: ""),),
+                                          Text(controller.localSessionList[index].split('cache/')[1],
+                                            style: TextStyle(fontFamily: "", fontSize: 16),),
+                                          // Text("Pixytrim $index",
+                                          //   style: TextStyle(fontFamily: ""),),
 
-                                  // SizedBox(height: 7,),
-                                  // GestureDetector(
-                                  //   onTap: () async {
-                                  //     setState(() {
-                                  //        controller.updateLocalSessionList(index);
-                                  //     });
-                                  //
-                                  //   },
-                                  //   child: Row(
-                                  //     children: [
-                                  //       Icon(Icons.delete),
-                                  //       SizedBox(width: 5,),
-                                  //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                ],
-                              )
+                                          SizedBox(height: 7,),
 
-                            ],
-                          ),
-                        ),
-                      );
-                    }
-                )
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await shareImage(index);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.share),
+                                                SizedBox(width: 5,),
+                                                Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(height: 7,),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await saveImage(index);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.download),
+                                                SizedBox(width: 5,),
+                                                Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                              ],
+                                            ),
+                                          ),
+
+                                          // SizedBox(height: 7,),
+                                          // GestureDetector(
+                                          //   onTap: () async {
+                                          //     setState(() {
+                                          //        controller.updateLocalSessionList(index);
+                                          //     });
+                                          //
+                                          //   },
+                                          //   child: Row(
+                                          //     children: [
+                                          //       Icon(Icons.delete),
+                                          //       SizedBox(width: 5,),
+                                          //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                          //     ],
+                                          //   ),
+                                          // ),
+                                        ],
+                                      ),
+                                    )
+
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                      )
+                      ),
+                    ),
+                  ],
                 ),
 
               ),
             Container(
-              child: controller.localCollageList.length == 0
-                  ? Center(
-                child: Text(
-                  'No Collage Local Data Available',
-                  style: TextStyle(fontFamily: ""),
-                ),
-              )
-                  :
-              /*GridView.builder(
-                itemCount: controller.localCollageList.length,
-                physics: AlwaysScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                ),
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Container(
-                      height: 75,
-                      width: 75,
-                      decoration: BoxDecoration(
-                        // borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                          image: FileImage(File(
-                              '${controller.localCollageList[index]}')),
+              child: Column(
+                children: [
+                  /*TextField(
+                    controller: searchCollageController,
+                    decoration: new InputDecoration(
+                        hintText: 'Search',
+                        hintStyle: TextStyle(fontFamily: ""),
+                        labelStyle: TextStyle(fontFamily: "Times New Roman"),
+                        helperStyle: TextStyle(fontFamily: ""),
+                        prefixIcon: Icon(Icons.search, color: Colors.black,),
+                        suffixIcon: GestureDetector(
+                            onTap: (){
+                              searchCollageController.clear();
+                              onSearchCollageTextChanged('');
+                            },
+                            child: Icon(Icons.close, color: Colors.black,)),
+                        border: InputBorder.none),
+                    onChanged: onSearchCollageTextChanged,
+                  ),
+                  SizedBox(height: 5,),*/
+
+                  Expanded(
+                    child: Obx(()=>
+                       controller.localCollageList.length == 0
+                          ? Center(
+                        child: Text(
+                          'No Collage Local Data Available',
+                          style: TextStyle(fontFamily: ""),
                         ),
-                      ),
-                      // child: Image.file(File('${controller.localSessionListNew![index]}')),
-                    ),
-                  );
-                },
-              ),*/
-              ListView.builder(
-                  itemCount: controller.localCollageList.length,
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: AlwaysScrollableScrollPhysics(),
-                  itemBuilder: (context, index){
-                    return Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 75,
-                            width: 75,
-                            decoration: BoxDecoration(
-                              // borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: FileImage(File(
-                                    '${controller.localCollageList[index]}')),
+                      )
+                          :
+                      /*GridView.builder(
+                        itemCount: controller.localCollageList.length,
+                        physics: AlwaysScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate:
+                        SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                        ),
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Container(
+                              height: 75,
+                              width: 75,
+                              decoration: BoxDecoration(
+                                // borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: FileImage(File(
+                                      '${controller.localCollageList[index]}')),
+                                ),
                               ),
+                              // child: Image.file(File('${controller.localSessionListNew![index]}')),
                             ),
-                            // child: Image.file(File('${controller.localSessionListNew![index]}')),
-                          ),
+                          );
+                        },
+                      ),*/
+                       controller.searchResult.length != 0 || searchController.text.isNotEmpty ?
+                       ListView.builder(
+                           itemCount: controller.searchResult.length,
+                           scrollDirection: Axis.vertical,
+                           shrinkWrap: true,
+                           physics: AlwaysScrollableScrollPhysics(),
+                           itemBuilder: (context, index){
+                             return Padding(
+                               padding: const EdgeInsets.all(5),
+                               child: Row(
+                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                 children: [
+                                   Container(
+                                     height: 75,
+                                     width: 75,
+                                     decoration: BoxDecoration(
+                                       // borderRadius: BorderRadius.circular(10),
+                                       image: DecorationImage(
+                                         image: FileImage(File(
+                                             '${controller.searchResult[index]}')),
+                                       ),
+                                     ),
+                                     // child: Image.file(File('${controller.localSessionListNew![index]}')),
+                                   ),
 
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            //mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              GestureDetector(
-                                onTap: () async {
-                                  await shareImage1(index);
-                                },
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.share),
-                                    SizedBox(width: 5,),
-                                    Text("Share", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 7,),
-                              GestureDetector(
-                                onTap: () async {
-                                  await saveImage1(index);
-                                },
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.download),
-                                    SizedBox(width: 5,),
-                                    Text("Save", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                  ],
-                                ),
-                              ),
+                                   Column(
+                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                     //mainAxisAlignment: MainAxisAlignment.start,
+                                     children: [
+                                       GestureDetector(
+                                         onTap: () async {
+                                           await shareImage1(index);
+                                         },
+                                         child: Row(
+                                           children: [
+                                             Icon(Icons.share),
+                                             SizedBox(width: 5,),
+                                             Text("Share", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                           ],
+                                         ),
+                                       ),
+                                       SizedBox(height: 7,),
+                                       GestureDetector(
+                                         onTap: () async {
+                                           await saveImage1(index);
+                                         },
+                                         child: Row(
+                                           children: [
+                                             Icon(Icons.download),
+                                             SizedBox(width: 5,),
+                                             Text("Save", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                           ],
+                                         ),
+                                       ),
 
-                              // SizedBox(height: 7,),
-                              // GestureDetector(
-                              //   onTap: () async {
-                              //     setState(() {
-                              //        controller.updateLocalSessionList(index);
-                              //     });
-                              //
-                              //   },
-                              //   child: Row(
-                              //     children: [
-                              //       Icon(Icons.delete),
-                              //       SizedBox(width: 5,),
-                              //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
-                              //     ],
-                              //   ),
-                              // ),
-                            ],
-                          )
-                        ],
+                                       // SizedBox(height: 7,),
+                                       // GestureDetector(
+                                       //   onTap: () async {
+                                       //     setState(() {
+                                       //        controller.updateLocalSessionList(index);
+                                       //     });
+                                       //
+                                       //   },
+                                       //   child: Row(
+                                       //     children: [
+                                       //       Icon(Icons.delete),
+                                       //       SizedBox(width: 5,),
+                                       //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                       //     ],
+                                       //   ),
+                                       // ),
+                                     ],
+                                   )
+                                 ],
+                               ),
+                             );
+                           }
+                       ):
+                      ListView.builder(
+                          itemCount: controller.localCollageList.length,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          itemBuilder: (context, index){
+                            return Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 75,
+                                    width: 75,
+                                    decoration: BoxDecoration(
+                                      // borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: FileImage(File(
+                                            '${controller.localCollageList[index]}')),
+                                      ),
+                                    ),
+                                    // child: Image.file(File('${controller.localSessionListNew![index]}')),
+                                  ),
+                                  SizedBox(width: 5,),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      //mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () async {
+                                            await shareImage1(index);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.share),
+                                              SizedBox(width: 5,),
+                                              Text("Share", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 7,),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            await saveImage1(index);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.download),
+                                              SizedBox(width: 5,),
+                                              Text("Save", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                            ],
+                                          ),
+                                        ),
+
+                                        // SizedBox(height: 7,),
+                                        // GestureDetector(
+                                        //   onTap: () async {
+                                        //     setState(() {
+                                        //        controller.updateLocalSessionList(index);
+                                        //     });
+                                        //
+                                        //   },
+                                        //   child: Row(
+                                        //     children: [
+                                        //       Icon(Icons.delete),
+                                        //       SizedBox(width: 5,),
+                                        //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          }
                       ),
-                    );
-                  }
+                    ),
+                  ),
+                ],
               )
             ),
             //collageImagesPreviousSessionModule(),
@@ -418,7 +741,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
   shareImage(int index) async {
     try {
       // final ByteData bytes = await rootBundle.load('${file!.path}');
-      await Share.shareFiles(['${controller.localSessionListNew[index]}']);
+      await Share.shareFiles(['${controller.localSessionList[index]}']);
     } catch (e) {
       print('Share Error : $e');
     }
@@ -435,7 +758,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
 
   Future saveImage(int index) async {
     // renameImage();
-    await GallerySaver.saveImage(controller.localSessionListNew[index],
+    await GallerySaver.saveImage(controller.localSessionList[index],
         albumName: "OTWPhotoEditingDemo");
     Fluttertoast.showToast(
         msg: "Save in to Gallery",
@@ -613,3 +936,19 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
     );
   }
 }
+
+/*
+class UserDetails {
+  //final int ? id;
+  //final String ? image;
+  final String ? name;
+
+  UserDetails({required this.name});
+
+  // factory UserDetails.fromJson(Map<String, dynamic> json) {
+  //   return new UserDetails(
+  //     id: json['id'],
+  //     name: json['name'],
+  //   );
+  // }
+}*/

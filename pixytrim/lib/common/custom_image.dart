@@ -15,6 +15,7 @@ class Images{
   static const ic_camera = '$root' + 'camera.png';
   static const ic_trim_video = '$root' + 'trim_video.png';
   static const ic_gallery = '$root' + 'gallery.png';
+  static const ic_gallery1 = '$root' + 'gallery1.png';
   static const ic_btn_bg1 = '$root' + 'btnbg1.jpg';
   static const ic_btn_bg2 = '$root' + 'btnbg2.jpg';
   static const ic_left_arrow = '$root' + 'left_arrow.png';

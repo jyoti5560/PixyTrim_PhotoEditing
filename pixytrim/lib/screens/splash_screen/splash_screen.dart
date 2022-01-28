@@ -34,7 +34,7 @@ class SplashScreen extends StatelessWidget {
               SizedBox(height: 20,),
 
               Container(
-                child: Text("Pixy Trim", style: TextStyle(fontSize: 50),),
+                child: Text("Pixy Trim", style: TextStyle(fontSize: 50, fontFamily: "Lemon Jelly"),),
               )
             ],
           ),

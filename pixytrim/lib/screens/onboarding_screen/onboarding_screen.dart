@@ -34,6 +34,7 @@ class OnBoardingScreen extends StatelessWidget {
                         maxLines: 1,
                         style: const TextStyle(
                           // color: CustomColor.kOrangeColor,
+                          fontFamily: "Lemon Jelly",
                           fontSize: 33,
                           fontWeight: FontWeight.bold,
                         ),

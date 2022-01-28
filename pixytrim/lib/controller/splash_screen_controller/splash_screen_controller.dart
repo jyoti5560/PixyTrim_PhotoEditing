@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:pixytrim/screens/index_screen/index_screen.dart';
+import 'package:pixytrim/screens/login_screen/login_screen.dart';
 import 'package:pixytrim/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +22,7 @@ class SplashScreenController extends GetxController{
     onBoardingValue = prefs.getBool("onboarding");
 
     if(onBoardingValue == true) {
-      Get.off(() => IndexScreen());
+      Get.off(() => LoginScreen());
     }
     else{
       Get.off(() => OnBoardingScreen());

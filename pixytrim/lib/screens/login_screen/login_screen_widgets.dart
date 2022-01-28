@@ -20,7 +20,7 @@ class welcomeText extends StatelessWidget {
       child: Text(
         "Welcome to PixyTrim",
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 30, fontFamily: "", fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 35, fontFamily: "Lemon Jelly", fontWeight: FontWeight.bold),
       ),
     );
   }

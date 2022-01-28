@@ -13,7 +13,6 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -26,8 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: "Lemon Jelly"
+        primarySwatch: Colors.blue,/* fontFamily: "Lemon Jelly",*/
       ),
       home: SplashScreen(),
     );

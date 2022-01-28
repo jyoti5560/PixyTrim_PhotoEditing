@@ -10,7 +10,7 @@ class HeaderTextModule extends StatelessWidget {
     return Container(
       child: Text(
         "Pixy Trim",
-        style: TextStyle(fontSize: 50),
+        style: TextStyle(fontSize: 50, fontFamily: "Lemon Jelly"),
       ),
     );
   }
