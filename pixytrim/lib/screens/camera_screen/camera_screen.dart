@@ -40,13 +40,11 @@ class _CameraScreenState extends State<CameraScreen> {
   imageLib.Image? resize;
   imageLib.Image? imageTemp;
 
-
-
   @override
   Widget build(BuildContext context) {
     print("path===${cameraScreenController.selectedModule}");
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => showAlertDialog(),
       child: Scaffold(
         body: SafeArea(
           child: Stack(

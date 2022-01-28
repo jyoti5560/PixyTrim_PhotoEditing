@@ -43,7 +43,7 @@ class _BlurScreenState extends State<BlurScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {return false;},
+      onWillPop: () async => showAlertDialog(),
       child: Scaffold(
         body: SafeArea(
           child: Stack(

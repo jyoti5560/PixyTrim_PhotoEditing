@@ -148,6 +148,8 @@ class LocalStoreDataModule extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Image.asset(Images.ic_draft, scale: 2.5,),
+                SizedBox(width: 10,),
                 Text(
                   "Draft",
                   style: TextStyle(

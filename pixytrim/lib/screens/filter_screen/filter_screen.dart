@@ -26,7 +26,7 @@ class FilterScreenState extends State<FilterScreen> {
   Widget build(BuildContext context) {
     print('selectedImage : ${csController.selectedImage.value}');
     return WillPopScope(
-      onWillPop: () async {return false;},
+      onWillPop: () async => showAlertDialog(),
       child: Scaffold(
           body: SafeArea(
             child: Stack(

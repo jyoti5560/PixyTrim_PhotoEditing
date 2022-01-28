@@ -30,7 +30,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {return false;},
+      onWillPop: () async => showAlertDialog(),
       child: Scaffold(
         body: SafeArea(
           child: Stack(
