@@ -82,8 +82,9 @@ class _CropImageScreenState extends State<CropImageScreen> {
                                         borderRadius: BorderRadius.circular(20),
                                         child: croppedImage == null && index == 0
                                             ? Crop(
-                                          maskColor: Colors.white24,
-                                                controller: cropController,
+                                           //maskColor: Colors.white54,
+                                          cornerDotBuilder: (size, edgeAlignment) => const DotControl(color: Colors.white),
+                                          controller: cropController,
                                                 image: widget.file.readAsBytesSync(),
                                                 onCropped: (croppedData1) async {
                                                   // Future.delayed(Duration(seconds: 3));
@@ -417,9 +418,27 @@ class _CropImageScreenState extends State<CropImageScreen> {
       print(
           "File path====:${csController.addImageFromCameraList[widget.newIndex].path}");
       print("png Bytes:====$pngBytes");
+      renameImage();
     } catch (e) {
       print(e);
     }
+  }
+
+  renameImage()async{
+    String orgPath = csController.addImageFromCameraList[csController.selectedImage.value].path;
+    String frontPath = orgPath.split('app_flutter')[0]; // Getting Front Path of file Path
+    print('frontPath: $frontPath');
+    List<String> ogPathList = orgPath.split('/');
+    print('ogPathList: $ogPathList');
+    String ogExt = ogPathList[ogPathList.length - 1].split('.')[1];
+    print('ogExt: $ogExt');
+    DateTime today = new DateTime.now();
+    String dateSlug = "${today.day}-${today.month}-${today.year}_${today.hour}:${today.minute}:${today.second}";
+    print('Date: $dateSlug');
+    csController.addImageFromCameraList[csController.selectedImage.value]
+    = await csController.addImageFromCameraList[csController.selectedImage.value].rename("${frontPath}cache/pixytrim_$dateSlug.$ogExt");
+
+    print('Final FIle Name : ${csController.addImageFromCameraList[csController.selectedImage.value].path}');
   }
 
   Future saveImage() async {

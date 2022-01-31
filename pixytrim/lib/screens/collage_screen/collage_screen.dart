@@ -332,19 +332,30 @@ class _ImageListModuleState extends State<ImageListModule> {
     return Obx(() => selectedIndex == 0
         ? Container(
           decoration: collageMainImageBoxDecoration(),
-          child: Row(
+          child: Stack(
             children: [
-              SingleImageShowModule(
-                  // scale: collageScreenController.scale.value,
-                  // previousScale:
-                  //     collageScreenController.previousScale.value,
-                  index: 0),
-              SizedBox(width: 5),
-              SingleImageShowModule(
-                  // scale: collageScreenController.scale1.value,
-                  // previousScale:
-                  //     collageScreenController.previousScale1.value,
-                  index: 1),
+              // Container(
+              //   color: collageScreenController
+              //       .borderColor[collageScreenController.activeColor.value],
+              //   child: collageScreenController.isActiveWallpaper.value ?
+              //   Image.asset("${collageScreenController.wallpapers[collageScreenController.activeWallpaper.value]}", fit: BoxFit.fill,) :
+              //   collageScreenController.file != null ? Image.file(collageScreenController.file!, fit: BoxFit.fill,) :null,
+              // ),
+              Row(
+                children: [
+                  SingleImageShowModule(
+                      // scale: collageScreenController.scale.value,
+                      // previousScale:
+                      //     collageScreenController.previousScale.value,
+                      index: 0),
+                  SizedBox(width: 5),
+                  SingleImageShowModule(
+                      // scale: collageScreenController.scale1.value,
+                      // previousScale:
+                      //     collageScreenController.previousScale1.value,
+                      index: 1),
+                ],
+              ),
             ],
           ),
         )
@@ -1531,8 +1542,16 @@ Widget fourImageSelectedModule(int selectedIndex){
               ),
 
               Container(
-                height: 80, width: 80,
-                color: Colors.black,
+                height: 70, width: 70,
+                decoration: BoxDecoration(
+                  color: collageScreenController
+                      .borderColor[collageScreenController.activeColor.value],
+                  image: collageScreenController.isActiveWallpaper.value ?
+                  DecorationImage(
+                    image: AssetImage("${collageScreenController.wallpapers[collageScreenController.activeWallpaper.value]}"),
+                    fit: BoxFit.fill,
+                  ) : null,
+                ),
               )
             ],
           ),

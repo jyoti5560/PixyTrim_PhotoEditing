@@ -121,12 +121,41 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
     );
   }
 
+  // Future _capturePng({required double pRation}) async {
+  //   try {
+  //     print('inside');
+  //     print('pRation : $pRation');
+  //     DateTime time = DateTime.now();
+  //     String imgName = "${time.hour}-${time.minute}-${time.second}";
+  //     RenderRepaintBoundary boundary =
+  //     key.currentContext!.findRenderObject() as RenderRepaintBoundary;
+  //     print(boundary);
+  //     ui.Image image = await boundary.toImage(pixelRatio: pRation);
+  //     print("image:===$image");
+  //     final directory = (await getApplicationDocumentsDirectory()).path;
+  //     ByteData? byteData =
+  //     await image.toByteData(format: ui.ImageByteFormat.png);
+  //     print("byte data:===$byteData");
+  //     Uint8List pngBytes = byteData!.buffer.asUint8List();
+  //     File imgFile = new File('$directory/$imgName.jpg');
+  //     await imgFile.writeAsBytes(pngBytes);
+  //     setState(() {
+  //       csController.addImageFromCameraList[csController.selectedImage.value] =
+  //           imgFile;
+  //     });
+  //     print("File path====:${file!.path}");
+  //     print("png Bytes:====$pngBytes");
+  //     renameImage();
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
   Future _capturePng({required double pRation}) async {
     try {
       print('inside');
-      print('pRation : $pRation');
       DateTime time = DateTime.now();
-      String imgName = "${time.hour}-${time.minute}-${time.second}";
+      final imgName = "${time.day}_${time.month}_${time.year}_${time.hour}_${time.minute}_${time.second}";
       RenderRepaintBoundary boundary =
       key.currentContext!.findRenderObject() as RenderRepaintBoundary;
       print(boundary);
@@ -139,15 +168,33 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
       Uint8List pngBytes = byteData!.buffer.asUint8List();
       File imgFile = new File('$directory/$imgName.jpg');
       await imgFile.writeAsBytes(pngBytes);
+      print('index : ${csController.selectedImage.value}');
       setState(() {
-        csController.addImageFromCameraList[csController.selectedImage.value] =
-            imgFile;
+        csController.addImageFromCameraList[csController.selectedImage.value] = imgFile;
       });
-      print("File path====:${file!.path}");
       print("png Bytes:====$pngBytes");
+      renameImage();
+      // await saveImage();
     } catch (e) {
       print(e);
     }
+  }
+
+  renameImage() async {
+    String orgPath = csController.addImageFromCameraList[csController.selectedImage.value].path;
+    String frontPath = orgPath.split('app_flutter')[0]; // Getting Front Path of file Path
+    print('frontPath: $frontPath');
+    List<String> ogPathList = orgPath.split('/');
+    print('ogPathList: $ogPathList');
+    String ogExt = ogPathList[ogPathList.length - 1].split('.')[1];
+    print('ogExt: $ogExt');
+    DateTime today = new DateTime.now();
+    String dateSlug = "${today.day}-${today.month}-${today.year}_${today.hour}:${today.minute}:${today.second}";
+    print('Date: $dateSlug');
+    csController.addImageFromCameraList[csController.selectedImage.value]
+    = await csController.addImageFromCameraList[csController.selectedImage.value].rename("${frontPath}cache/pixytrim_$dateSlug.$ogExt");
+
+    print('Final FIle Name : ${csController.addImageFromCameraList[csController.selectedImage.value].path}');
   }
 
   Future saveImage() async {

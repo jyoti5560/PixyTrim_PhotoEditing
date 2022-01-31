@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,8 +7,11 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
+import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';
 import 'package:pixytrim/controller/previous_session_screen_controller/previous_session_screen_controller.dart';
+import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
+import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
 import 'package:share/share.dart';
 
 import 'collage_session_screen/collage_session_screen.dart';
@@ -49,50 +53,48 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
   DateTime time = DateTime.now();
   TextEditingController searchController = new TextEditingController();
   TextEditingController searchCollageController = new TextEditingController();
+  final collageScreenController = Get.find<CollageScreenController>();
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Obx(
-            () => Stack(
-              children: [
-                MainBackgroundWidget(),
-                controller.isLoading.value
-                    ? Center(child: CircularProgressIndicator())
-                    : Container(
-                        margin:
-                            EdgeInsets.only(left: 15, right: 15, bottom: 20),
-                        child: Column(
-                          children: [
-                            appBar(context),
-                            const SizedBox(height: 10),
-                            /*ListTile(
-                              leading: new Icon(Icons.search),
-                              title: new TextField(
-                                controller: searchController,
-                                decoration: new InputDecoration(
-                                    hintText: 'Search', border: InputBorder.none),
-                                onChanged: onSearchTextChanged,
-                              ),
-                              trailing: new IconButton(icon: new Icon(Icons.cancel), onPressed: () {
-                                searchController.clear();
-                                onSearchTextChanged('');
-                              },),
-                            ),*/
-                            Expanded(
-                                child: draftData()),
-                           // const SizedBox(height: 20),
-                            tabView()
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Obx(
+          () => Stack(
+            children: [
+              MainBackgroundWidget(),
+              controller.isLoading.value
+                  ? Center(child: CircularProgressIndicator())
+                  : Container(
+                      margin:
+                          EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                      child: Column(
+                        children: [
+                          appBar(context),
+                          const SizedBox(height: 10),
+                          /*ListTile(
+                            leading: new Icon(Icons.search),
+                            title: new TextField(
+                              controller: searchController,
+                              decoration: new InputDecoration(
+                                  hintText: 'Search', border: InputBorder.none),
+                              onChanged: onSearchTextChanged,
+                            ),
+                            trailing: new IconButton(icon: new Icon(Icons.cancel), onPressed: () {
+                              searchController.clear();
+                              onSearchTextChanged('');
+                            },),
+                          ),*/
+                          Expanded(
+                              child: draftData()),
+                         // const SizedBox(height: 20),
+                          tabView()
 
-                          ],
-                        ),
+                        ],
                       ),
-              ],
-            ),
+                    ),
+            ],
           ),
         ),
       ),
@@ -654,73 +656,85 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                           itemBuilder: (context, index){
                             return Padding(
                               padding: const EdgeInsets.all(5),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 75,
-                                    width: 75,
-                                    decoration: BoxDecoration(
-                                      // borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        image: FileImage(File(
-                                            '${controller.localCollageList[index]}')),
+                              child: GestureDetector(
+                                onTap: (){
+                                  Get.back();
+                                  collageScreenController.imageFileList.clear();
+                                  for(int i=0; i < controller.localCollageList.length; i++){
+                                    File file = File('${controller.localCollageList[i]}');
+                                    XFile xFile = XFile('${file.path}');
+                                    collageScreenController.imageFileList.add(ImageFileItem(file: xFile));
+                                  }
+                                  Get.off(()=> CollageScreen());
+                                },
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 75,
+                                      width: 75,
+                                      decoration: BoxDecoration(
+                                        // borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: FileImage(File(
+                                              '${controller.localCollageList[index]}')),
+                                        ),
                                       ),
+                                      // child: Image.file(File('${controller.localSessionListNew![index]}')),
                                     ),
-                                    // child: Image.file(File('${controller.localSessionListNew![index]}')),
-                                  ),
-                                  SizedBox(width: 5,),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      //mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () async {
-                                            await shareImage1(index);
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Icon(Icons.share),
-                                              SizedBox(width: 5,),
-                                              Text("Share", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                            ],
+                                    SizedBox(width: 5,),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        //mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await shareImage1(index);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.share),
+                                                SizedBox(width: 5,),
+                                                Text("Share", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(height: 7,),
-                                        GestureDetector(
-                                          onTap: () async {
-                                            await saveImage1(index);
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Icon(Icons.download),
-                                              SizedBox(width: 5,),
-                                              Text("Save", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                            ],
+                                          SizedBox(height: 7,),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await saveImage1(index);
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.download),
+                                                SizedBox(width: 5,),
+                                                Text("Save", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                              ],
+                                            ),
                                           ),
-                                        ),
 
-                                        // SizedBox(height: 7,),
-                                        // GestureDetector(
-                                        //   onTap: () async {
-                                        //     setState(() {
-                                        //        controller.updateLocalSessionList(index);
-                                        //     });
-                                        //
-                                        //   },
-                                        //   child: Row(
-                                        //     children: [
-                                        //       Icon(Icons.delete),
-                                        //       SizedBox(width: 5,),
-                                        //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                        //     ],
-                                        //   ),
-                                        // ),
-                                      ],
-                                    ),
-                                  )
-                                ],
+                                          // SizedBox(height: 7,),
+                                          // GestureDetector(
+                                          //   onTap: () async {
+                                          //     setState(() {
+                                          //        controller.updateLocalSessionList(index);
+                                          //     });
+                                          //
+                                          //   },
+                                          //   child: Row(
+                                          //     children: [
+                                          //       Icon(Icons.delete),
+                                          //       SizedBox(width: 5,),
+                                          //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                          //     ],
+                                          //   ),
+                                          // ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             );
                           }

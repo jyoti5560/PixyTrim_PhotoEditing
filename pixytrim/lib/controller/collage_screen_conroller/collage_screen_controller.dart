@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pixytrim/common/custom_image.dart';
@@ -5,6 +7,7 @@ import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dar
 
 class CollageScreenController extends GetxController{
   RxDouble borderWidthValue = 0.0.obs;
+  File? file;
   List<Color> borderColor = [
     Colors.black,
     Colors.grey,

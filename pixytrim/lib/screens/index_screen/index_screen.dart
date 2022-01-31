@@ -1,5 +1,6 @@
 import 'dart:io';
 // import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
 //import 'package:pixytrim/screens/live_image_capture_screen/live_image_capture_screen.dart';
 import 'package:pixytrim/screens/previous_session_screen/previous_session_screen.dart';
+import 'package:pixytrim/screens/profile_screen/profile_screen.dart';
 
 import 'index_screen_widgets.dart';
 // import 'package:pixytrim/screens/trim_video_screen/trim_video_screen.dart';
@@ -19,6 +21,8 @@ import 'index_screen_widgets.dart';
 
 class IndexScreen extends StatefulWidget {
   //IndexScreen({Key? key}) : super(key: key);
+  UserCredential ? result;
+  IndexScreen({this.result});
 
   @override
   _IndexScreenState createState() => _IndexScreenState();
@@ -48,7 +52,7 @@ class _IndexScreenState extends State<IndexScreen> {
                   // Header Name "Pixy Trim"
                   HeaderTextModule(),
                   Container(
-                    height: Get.height * 0.32,
+                    height: Get.height * 0.40,
                     margin: EdgeInsets.only(left: 10, right: 10),
                     child: Column(
                       children: [
@@ -99,6 +103,15 @@ class _IndexScreenState extends State<IndexScreen> {
                           child: GestureDetector(
                             onTap: () => Get.to(()=> PreviousSessionScreen()),
                             child: LocalStoreDataModule(),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.to(() => ProfileScreen(result: widget.result,));
+                            },
+                            child: AddProfile(),
                           ),
                         ),
                        /* Expanded(

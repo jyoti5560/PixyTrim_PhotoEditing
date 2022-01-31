@@ -239,8 +239,25 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
     imgFile.writeAsBytesSync(image!);
     csController.addImageFromCameraList[widget.newIndex] = imgFile;
     // await GallerySaver.saveImage(imgFile.path, albumName: "OTWPhotoEditingDemo");
+    renameImage();
 
+  }
 
+  renameImage()async{
+    String orgPath = csController.addImageFromCameraList[widget.newIndex].path;
+    String frontPath = orgPath.split('app_flutter')[0]; // Getting Front Path of file Path
+    print('frontPath: $frontPath');
+    List<String> ogPathList = orgPath.split('/');
+    print('ogPathList: $ogPathList');
+    String ogExt = ogPathList[ogPathList.length - 1].split('.')[1];
+    print('ogExt: $ogExt');
+    DateTime today = new DateTime.now();
+    String dateSlug = "${today.day}-${today.month}-${today.year}_${today.hour}:${today.minute}:${today.second}";
+    print('Date: $dateSlug');
+    csController.addImageFromCameraList[widget.newIndex]
+    = await csController.addImageFromCameraList[widget.newIndex].rename("${frontPath}cache/pixytrim_$dateSlug.$ogExt");
+
+    print('Final FIle Name : ${csController.addImageFromCameraList[widget.newIndex].path}');
   }
 
   // Future _capturePng() async {

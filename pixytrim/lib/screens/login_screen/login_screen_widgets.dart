@@ -183,9 +183,11 @@ class _socialLoginState extends State<socialLogin> {
       // Getting users credential
       UserCredential result = await auth.signInWithCredential(authCredential);
       User? user = result.user;
+      print("Email: ${result.user!.email}");
+      print("Username: ${result.user!.displayName}");
 
       if (result != null) {
-        Get.to(() => IndexScreen());
+        Get.to(() => IndexScreen(result: result,));
       }
     }
   }

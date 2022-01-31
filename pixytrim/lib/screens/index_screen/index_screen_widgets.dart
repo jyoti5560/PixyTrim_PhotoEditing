@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
@@ -165,6 +166,42 @@ class LocalStoreDataModule extends StatelessWidget {
     );
   }
 }
+
+class AddProfile extends StatelessWidget {
+ // const AddProfile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: Container(
+        decoration: borderGradientDecoration(),
+        child: Padding(
+          padding: const EdgeInsets.all(3),
+          child: Container(
+            decoration: containerBackgroundGradient(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //Image.asset(Images.ic_draft, scale: 2.5,),
+                Icon(Icons.person),
+                SizedBox(width: 10,),
+                Text(
+                  "Profile",
+                  style: TextStyle(
+                    fontFamily: "",
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 class LiveImageCaptureModule extends StatelessWidget {
   const LiveImageCaptureModule({Key? key}) : super(key: key);
