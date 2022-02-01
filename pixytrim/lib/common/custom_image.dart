@@ -23,6 +23,7 @@ class Images{
   static const ic_downloading = '$root' + 'downloading.png';
   static const ic_sharing = '$root' + 'sharing.png';
   static const ic_camera2 = '$root' + 'camera2.png';
+  static const ic_profile = '$root' + 'profile.png';
 
   static const ic_crop = '$root' + 'crop.png';
   static const ic_filter = '$root' + 'filter.png';

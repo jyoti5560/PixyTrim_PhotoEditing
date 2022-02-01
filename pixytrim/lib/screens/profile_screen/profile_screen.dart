@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
+import 'package:pixytrim/controller/profile_screen_controller/profile_screen_controller.dart';
 import 'package:pixytrim/screens/image_editor_screen/_paint_over_image.dart';
 import 'package:pixytrim/screens/login_screen/login_screen.dart';
 
@@ -13,30 +14,35 @@ class ProfileScreen extends StatelessWidget {
   UserCredential ? result;
   ProfileScreen({this.result});
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  ProfileScreenController profileScreenController = Get.put(ProfileScreenController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            MainBackgroundWidget(),
+      body: Obx(()=>
+      profileScreenController.isLoading.value ?
+        Center(child: CircularProgressIndicator()) :
+         SafeArea(
+          child: Stack(
+            children: [
+              MainBackgroundWidget(),
 
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  appBar(context),
+              Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    appBar(context),
 
-                  result != null ?
-                  profileDetails() : Container(),
 
-                  Container()
-                ],
-              ),
-            )
-          ],
+                    profileDetails(),
+
+                    Container()
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -46,6 +52,7 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       height: 50,
       width: Get.width,
+      margin: EdgeInsets.only(left: 10, right: 10),
       decoration: borderGradientDecoration(),
       child: Padding(
         padding: const EdgeInsets.all(3.0),
@@ -88,29 +95,31 @@ class ProfileScreen extends StatelessWidget {
   Widget profileDetails(){
     return Container(
       child: Column(
-       // crossAxisAlignment: CrossAxisAlignment.center,
-      //mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          profileScreenController.uPhotoUrl!.isNotEmpty?
           ClipOval(
-            child: Material(
-              color: Colors.transparent,
-              child: Image.network(
-                result!.user!.photoURL!,
-                fit: BoxFit.fitHeight,
-              ),
+            child: Image.network(
+              profileScreenController.uPhotoUrl!
+            ),
+          ) : ClipOval(
+            child: Image.asset(
+                Images.ic_logo, scale: 7,
             ),
           ),
           SizedBox(height: 10,),
-          Text('Name: ${result!.user!.displayName}', style: TextStyle(fontSize: 17),),
+           Text(profileScreenController.uName!.isNotEmpty ? 'Name: ${profileScreenController.uName}' : 'Name: john', style: TextStyle(fontSize: 17),),
           SizedBox(height: 10,),
-          Text('Email: ${result!.user!.email}', style: TextStyle(fontSize: 17),),
-           SizedBox(height: 10,),
+          profileScreenController.uEmail!.isNotEmpty ? Text('Email: ${profileScreenController.uEmail}', style: TextStyle(fontSize: 17),) :
+          Text('Email: john@gmail.com', style: TextStyle(fontSize: 17),),
+          SizedBox(height: 10,),
 
           GestureDetector(
-            onTap: ()async{
-              await googleSignIn.signOut();
-              Get.off(() => LoginScreen());
+            onTap: () async {
+               googleSignIn.signOut();
+              await profileScreenController.clearUserDetails();
+              Get.back();
+              //Get.off(() => LoginScreen());
             },
             child: Container(
               height: 50,
@@ -124,7 +133,7 @@ class ProfileScreen extends StatelessWidget {
                  child: Center(
                    child: Container(
                      child: Text(
-                       "Sign Out",
+                       profileScreenController.userId!.isNotEmpty ? "Sign Out" : "Sign In",
                        style: TextStyle(
                          fontFamily: "",
                          fontSize: 18,

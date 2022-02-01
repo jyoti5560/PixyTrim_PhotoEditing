@@ -10,6 +10,7 @@ import 'package:pixytrim/controller/login_screen_controller/login_screen_control
 import 'package:pixytrim/screens/index_screen/index_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class welcomeText extends StatelessWidget {
   const welcomeText({Key? key}) : super(key: key);
@@ -39,6 +40,7 @@ class _socialLoginState extends State<socialLogin> {
   String? _imageUrl;
   String? _email;
   final loginScreenController = Get.find<LoginScreenController>();
+  //bool ? isLogin = false;
 
 
   @override
@@ -47,7 +49,7 @@ class _socialLoginState extends State<socialLogin> {
       children: [
         GestureDetector(
           onTap: (){
-            googleAuthentication(context);
+            loginScreenController.googleAuthentication(context);
           },
           child: Padding(
             padding: const EdgeInsets.all(5),
@@ -83,10 +85,12 @@ class _socialLoginState extends State<socialLogin> {
         ),
 
         GestureDetector(
-          onTap: (){
+          onTap: ()async {
+
             //facebookAuthentication(context);
             _onPressedLogInButton().then((value) {
-              if(loginScreenController.profile1!.userId.isNotEmpty){
+              if(loginScreenController.profile!.userId.isNotEmpty){
+
                 Get.to(() => IndexScreen());
               }
 
@@ -140,64 +144,15 @@ class _socialLoginState extends State<socialLogin> {
     );
   }
 
-  Future googleAuthentication(context) async {
-    // try {
-    //   googleSignInManager.signOut();
-    //   final result = await googleSignInManager.signIn();
-    //   if (result != null) {
-    //     if (result.email != "") {
-    //       Map params = {
-    //         "userName": result.displayName ?? "",
-    //         "emailId": result.email,
-    //         "serviceName": 'GOOGLE',
-    //         "uniqueId": "",
-    //         "loginPassword": "",
-    //       };
-    //       Navigator.push(
-    //         context,
-    //         MaterialPageRoute(builder: (context) => IndexScreen()),
-    //       );
-    //       // _socialLoginAPI(params, state.context);
-    //       print("userName");
-    //     } else {
-    //       // commonMessageDialog(state.context,
-    //       //     title: "Error",
-    //       //     message:
-    //       //     "Your Google account is not linked with email. Please signup and login with email and password.");
-    //     }
-    //   }
-    // } catch (error) {
-    //   print(error);
-    // }
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    googleSignIn.signOut();
-    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-    if (googleSignInAccount != null) {
-      final GoogleSignInAuthentication googleSignInAuthentication =
-      await googleSignInAccount.authentication;
-      final AuthCredential authCredential = GoogleAuthProvider.credential(
-          idToken: googleSignInAuthentication.idToken,
-          accessToken: googleSignInAuthentication.accessToken);
 
-      // Getting users credential
-      UserCredential result = await auth.signInWithCredential(authCredential);
-      User? user = result.user;
-      print("Email: ${result.user!.email}");
-      print("Username: ${result.user!.displayName}");
-
-      if (result != null) {
-        Get.to(() => IndexScreen(result: result,));
-      }
-    }
-  }
 
   Future<void> _onPressedLogInButton() async {
     await loginScreenController.plugin.logIn(
         permissions: [
           FacebookPermission.publicProfile,
           FacebookPermission.email,
-        ]);
+        ],
+    );
     await loginScreenController.updateLoginInfo();
     await loginScreenController.plugin.logOut();
   }

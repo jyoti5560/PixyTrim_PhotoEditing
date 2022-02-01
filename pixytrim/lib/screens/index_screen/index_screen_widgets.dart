@@ -183,8 +183,8 @@ class AddProfile extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //Image.asset(Images.ic_draft, scale: 2.5,),
-                Icon(Icons.person),
+                Image.asset(Images.ic_profile, scale: 2.8,),
+                //Icon(Icons.person),
                 SizedBox(width: 10,),
                 Text(
                   "Profile",

@@ -860,7 +860,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       content: Text(
-        "Do you want to delete All Images ?",
+        "Do you want to delete all images ?",
         style: TextStyle(fontFamily: ""),
       ),
       actions: [
