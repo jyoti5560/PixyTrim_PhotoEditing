@@ -55,7 +55,7 @@ class _socialLoginState extends State<socialLogin> {
             padding: const EdgeInsets.all(5),
             child: Container(
               height: 60,
-              width: Get.width/1.5,
+              width: Get.width/1.4,
               decoration: borderGradientDecoration(),
               child: Padding(
                 padding: const EdgeInsets.all(3),
@@ -100,7 +100,7 @@ class _socialLoginState extends State<socialLogin> {
             padding: const EdgeInsets.all(5),
             child: Container(
               height: 60,
-              width: Get.width/1.5,
+              width: Get.width/1.4,
               decoration: borderGradientDecoration(),
               child: Padding(
                 padding: const EdgeInsets.all(3),

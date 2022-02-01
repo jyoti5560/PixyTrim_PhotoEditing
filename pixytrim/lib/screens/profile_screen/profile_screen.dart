@@ -102,23 +102,20 @@ class ProfileScreen extends StatelessWidget {
             child: Image.network(
               profileScreenController.uPhotoUrl!
             ),
-          ) : ClipOval(
-            child: Image.asset(
-                Images.ic_logo, scale: 7,
-            ),
-          ),
+          ) :
+            ClipOval(),
           SizedBox(height: 10,),
-           Text(profileScreenController.uName!.isNotEmpty ? 'Name: ${profileScreenController.uName}' : 'Name: john', style: TextStyle(fontSize: 17),),
+           Text(profileScreenController.uName!.isNotEmpty ? 'Name: ${profileScreenController.uName}' : '', style: TextStyle(fontSize: 17),),
           SizedBox(height: 10,),
-          profileScreenController.uEmail!.isNotEmpty ? Text('Email: ${profileScreenController.uEmail}', style: TextStyle(fontSize: 17),) :
-          Text('Email: john@gmail.com', style: TextStyle(fontSize: 17),),
+           Text(profileScreenController.uEmail!.isNotEmpty ?'Email: ${profileScreenController.uEmail}' : '', style: TextStyle(fontSize: 17),),
           SizedBox(height: 10,),
 
           GestureDetector(
             onTap: () async {
                googleSignIn.signOut();
               await profileScreenController.clearUserDetails();
-              Get.back();
+              Get.off(() => LoginScreen());
+              //Get.back();
               //Get.off(() => LoginScreen());
             },
             child: Container(

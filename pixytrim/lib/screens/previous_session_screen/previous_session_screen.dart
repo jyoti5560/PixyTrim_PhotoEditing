@@ -115,7 +115,6 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
       {
         controller.searchResult.add(userDetail);
       }
-
     });
 
     setState(() {});
@@ -228,7 +227,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                 searchController.clear();
                                 onSearchTextChanged('');
                               },
-                              child: Icon(Icons.close, color: Colors.black,)),
+                              child: Icon(Icons.close, color: searchController.text.isNotEmpty ? Colors.black: Colors.grey,)),
                           border: InputBorder.none),
                       onChanged: onSearchTextChanged,
                     ),
@@ -337,35 +336,44 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                        children: [
                                          // Text("PixyTrim ${time.day}-${time.month}-${time.year} ${time.hour}:${time.minute}:${time.second}",
                                          //   style: TextStyle(fontFamily: ""),),
-                                         Text(controller.searchResult[index].split('cache/')[1],style: TextStyle(fontFamily: ""),),
+                                         Text(controller.searchResult[index].split('cache/')[1],
+                                           style: TextStyle(fontFamily: "", fontSize: 16),),
 
-                                         SizedBox(height: 7,),
+                                         SizedBox(height: 10,),
 
-                                         GestureDetector(
-                                           onTap: () async {
-                                             await shareImage(index);
-                                           },
-                                           child: Row(
-                                             children: [
-                                               Icon(Icons.share),
-                                               SizedBox(width: 5,),
-                                               Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                             ],
-                                           ),
-                                         ),
-                                         SizedBox(height: 7,),
-                                         GestureDetector(
-                                           onTap: () async {
-                                             await saveImage(index);
-                                           },
-                                           child: Row(
-                                             children: [
-                                               Icon(Icons.download),
-                                               SizedBox(width: 5,),
-                                               Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                             ],
-                                           ),
-                                         ),
+                                         Row(
+                                           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                           children: [
+                                             GestureDetector(
+                                               onTap: () async {
+                                                 await shareImage(index);
+                                               },
+                                               child: Row(
+                                                 children: [
+                                                   Icon(Icons.share),
+                                                   SizedBox(width: 5,),
+                                                   Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                                 ],
+                                               ),
+                                             ),
+                                              SizedBox(width: 20,),
+                                             GestureDetector(
+                                               onTap: () async {
+                                                 await saveImage(index);
+                                               },
+                                               child: Row(
+                                                 children: [
+                                                   Icon(Icons.download),
+                                                   SizedBox(width: 5,),
+                                                   Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                                 ],
+                                               ),
+                                             ),
+                                           ],
+                                         )
+
+
+
 
                                          // SizedBox(height: 7,),
                                          // GestureDetector(
@@ -441,7 +449,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                        //mainAxisAlignment: MainAxisAlignment.start,
+                                        //mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           // Text("PixyTrim ${time.day}-${time.month}-${time.year} ${time.hour}:${time.minute}:${time.second}",
                                           //   style: TextStyle(fontFamily: ""),),
@@ -450,33 +458,38 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                           // Text("Pixytrim $index",
                                           //   style: TextStyle(fontFamily: ""),),
 
-                                          SizedBox(height: 7,),
+                                          SizedBox(height: 10,),
 
-                                          GestureDetector(
-                                            onTap: () async {
-                                              await shareImage(index);
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Icon(Icons.share),
-                                                SizedBox(width: 5,),
-                                                Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(height: 7,),
-                                          GestureDetector(
-                                            onTap: () async {
-                                              await saveImage(index);
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Icon(Icons.download),
-                                                SizedBox(width: 5,),
-                                                Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                              ],
-                                            ),
-                                          ),
+                                          Row(
+                                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  await shareImage(index);
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    Icon(Icons.share),
+                                                    SizedBox(width: 5,),
+                                                    Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(width: 20,),
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  await saveImage(index);
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    Icon(Icons.download),
+                                                    SizedBox(width: 5,),
+                                                    Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          )
 
                                           // SizedBox(height: 7,),
                                           // GestureDetector(
