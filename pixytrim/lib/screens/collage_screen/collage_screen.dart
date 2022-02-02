@@ -15,6 +15,7 @@ import 'package:pixytrim/screens/collage_screen/border_width_screen/border_width
 import 'package:pixytrim/screens/collage_screen/layout_screen/layout_screen.dart';
 import 'dart:ui' as ui;
 import 'package:path_provider/path_provider.dart';
+import 'package:pixytrim/screens/index_screen/index_screen.dart';
 import 'collage_screen_widgets.dart';
 import 'wallpaper_screen/wallpapers_screen.dart';
 
@@ -270,9 +271,9 @@ class _CollageScreenState extends State<CollageScreen>
             await localStorage.storeMainCollageList(localCollageList);
           }
         }
-
-        Get.back();
-        Get.back();
+        Get.off(()=> IndexScreen());
+        // Get.back();
+        // Get.back();
       },
     );
 

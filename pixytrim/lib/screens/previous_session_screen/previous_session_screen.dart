@@ -348,12 +348,24 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                                onTap: () async {
                                                  await shareImage(index);
                                                },
-                                               child: Row(
-                                                 children: [
-                                                   Icon(Icons.share),
-                                                   SizedBox(width: 5,),
-                                                   Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                                 ],
+                                               child: Container(
+                                                 //width: Get.width,
+                                                 height: 40,
+                                                 //margin: EdgeInsets.only(right: 5),
+                                                 decoration: borderGradientDecoration(),
+                                                 child: Padding(
+                                                     padding: const EdgeInsets.all(3.0),
+                                                     child: Container(
+                                                         padding: EdgeInsets.only(left: 10, right: 10),
+                                                         decoration: containerBackgroundGradient(),
+                                                         child: Row(
+                                                           children: [
+                                                             Icon(Icons.share),
+                                                             SizedBox(width: 5,),
+                                                             Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                                           ],
+                                                         ),),
+                                                 ),
                                                ),
                                              ),
                                               SizedBox(width: 20,),
@@ -361,12 +373,25 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                                onTap: () async {
                                                  await saveImage(index);
                                                },
-                                               child: Row(
-                                                 children: [
-                                                   Icon(Icons.download),
-                                                   SizedBox(width: 5,),
-                                                   Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                                 ],
+                                               child: Container(
+                                                 //width: Get.width,
+                                                 height: 40,
+                                                 //margin: EdgeInsets.only(right: 5),
+                                                 decoration: borderGradientDecoration(),
+                                                 child: Padding(
+                                                   padding: const EdgeInsets.all(3.0),
+                                                   child: Container(
+                                                     padding: EdgeInsets.only(left: 10, right: 10),
+                                                     decoration: containerBackgroundGradient(),
+                                                     child: Row(
+                                                       children: [
+                                                         Icon(Icons.download),
+                                                         SizedBox(width: 5,),
+                                                         Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                                       ],
+                                                     ),
+                                                   ),
+                                                 ),
                                                ),
                                              ),
                                            ],
@@ -467,12 +492,24 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                                 onTap: () async {
                                                   await shareImage(index);
                                                 },
-                                                child: Row(
-                                                  children: [
-                                                    Icon(Icons.share),
-                                                    SizedBox(width: 5,),
-                                                    Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                                  ],
+                                                child: Container(
+                                                  //width: Get.width,
+                                                  height: 40,
+                                                  //margin: EdgeInsets.only(right: 5),
+                                                  decoration: borderGradientDecoration(),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(3.0),
+                                                    child: Container(
+                                                      padding: EdgeInsets.only(left: 10, right: 10),
+                                                      decoration: containerBackgroundGradient(),
+                                                      child: Row(
+                                                        children: [
+                                                          Icon(Icons.share),
+                                                          SizedBox(width: 5,),
+                                                          Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                                        ],
+                                                      ),),
+                                                  ),
                                                 ),
                                               ),
                                               SizedBox(width: 20,),
@@ -480,12 +517,25 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                                 onTap: () async {
                                                   await saveImage(index);
                                                 },
-                                                child: Row(
-                                                  children: [
-                                                    Icon(Icons.download),
-                                                    SizedBox(width: 5,),
-                                                    Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                                  ],
+                                                child: Container(
+                                                  //width: Get.width,
+                                                  height: 40,
+                                                  //margin: EdgeInsets.only(right: 5),
+                                                  decoration: borderGradientDecoration(),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(3.0),
+                                                    child: Container(
+                                                      padding: EdgeInsets.only(left: 10, right: 10),
+                                                      decoration: containerBackgroundGradient(),
+                                                      child: Row(
+                                                        children: [
+                                                          Icon(Icons.download),
+                                                          SizedBox(width: 5,),
+                                                          Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -550,7 +600,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                        controller.localCollageList.length == 0
                           ? Center(
                         child: Text(
-                          'No Collage Local Data Available',
+                          'No Collage Data Available In Local',
                           style: TextStyle(fontFamily: ""),
                         ),
                       )
@@ -668,7 +718,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                           physics: AlwaysScrollableScrollPhysics(),
                           itemBuilder: (context, index){
                             return Padding(
-                              padding: const EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(10),
                               child: GestureDetector(
                                 onTap: (){
                                   Get.back();
@@ -681,7 +731,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                   Get.off(()=> CollageScreen());
                                 },
                                 child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
                                       height: 75,
@@ -696,55 +746,82 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                       // child: Image.file(File('${controller.localSessionListNew![index]}')),
                                     ),
                                     SizedBox(width: 5,),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        //mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () async {
-                                              await shareImage1(index);
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Icon(Icons.share),
-                                                SizedBox(width: 5,),
-                                                Text("Share", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                              ],
+                                    Column(
+                                      //crossAxisAlignment: CrossAxisAlignment.start,
+                                      //mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () async {
+                                            await shareImage1(index);
+                                          },
+                                          child: Container(
+                                            width: 110,
+                                            height: 40,
+                                            //margin: EdgeInsets.only(right: 5),
+                                            decoration: borderGradientDecoration(),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(3.0),
+                                              child: Container(
+                                                padding: EdgeInsets.only(left: 10, right: 10),
+                                                decoration: containerBackgroundGradient(),
+                                                child: Center(
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(Icons.share),
+                                                      SizedBox(width: 5,),
+                                                      Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                                    ],
+                                                  ),
+                                                ),),
                                             ),
                                           ),
-                                          SizedBox(height: 7,),
-                                          GestureDetector(
-                                            onTap: () async {
-                                              await saveImage1(index);
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Icon(Icons.download),
-                                                SizedBox(width: 5,),
-                                                Text("Save", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                              ],
+                                        ),
+                                        SizedBox(height: 7,),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            await saveImage1(index);
+                                          },
+                                          child: Container(
+                                            width: 110,
+                                            height: 40,
+                                            //margin: EdgeInsets.only(right: 5),
+                                            decoration: borderGradientDecoration(),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(3.0),
+                                              child: Container(
+                                                padding: EdgeInsets.only(left: 10, right: 10),
+                                                decoration: containerBackgroundGradient(),
+                                                child: Center(
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(Icons.download),
+                                                      SizedBox(width: 5,),
+                                                      Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
                                             ),
                                           ),
+                                        ),
 
-                                          // SizedBox(height: 7,),
-                                          // GestureDetector(
-                                          //   onTap: () async {
-                                          //     setState(() {
-                                          //        controller.updateLocalSessionList(index);
-                                          //     });
-                                          //
-                                          //   },
-                                          //   child: Row(
-                                          //     children: [
-                                          //       Icon(Icons.delete),
-                                          //       SizedBox(width: 5,),
-                                          //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                          //     ],
-                                          //   ),
-                                          // ),
-                                        ],
-                                      ),
+                                        // SizedBox(height: 7,),
+                                        // GestureDetector(
+                                        //   onTap: () async {
+                                        //     setState(() {
+                                        //        controller.updateLocalSessionList(index);
+                                        //     });
+                                        //
+                                        //   },
+                                        //   child: Row(
+                                        //     children: [
+                                        //       Icon(Icons.delete),
+                                        //       SizedBox(width: 5,),
+                                        //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                      ],
                                     )
                                   ],
                                 ),
