@@ -17,12 +17,20 @@ class welcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(
-        "Welcome to PixyTrim",
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 35, fontFamily: "Lemon Jelly", fontWeight: FontWeight.bold),
-      ),
+    return Column(
+      children: [
+        Container(
+          child: Image.asset(Images.ic_logo, scale: 5,),
+        ),
+        SizedBox(height: 15,),
+        Container(
+          child: Text(
+            "Welcome to PixyTrim",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 35, fontFamily: "Lemon Jelly", fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
     );
   }
 }

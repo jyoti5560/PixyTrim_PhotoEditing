@@ -214,24 +214,35 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                Container(
                 child: Column(
                   children: [
-                    TextField(
-                      controller: searchController,
-                      decoration: new InputDecoration(
-                          hintText: 'Search',
-                          hintStyle: TextStyle(fontFamily: ""),
-                          labelStyle: TextStyle(fontFamily: "Times New Roman"),
-                          helperStyle: TextStyle(fontFamily: ""),
-                          prefixIcon: Icon(Icons.search, color: Colors.black,),
-                          suffixIcon: GestureDetector(
-                              onTap: (){
-                                searchController.clear();
-                                onSearchTextChanged('');
-                              },
-                              child: Icon(Icons.close, color: searchController.text.isNotEmpty ? Colors.black: Colors.grey,)),
-                          border: InputBorder.none),
-                      onChanged: onSearchTextChanged,
+                    Container(
+                      height: 45,
+                      decoration: borderGradientDecoration(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10, right: 10),
+                          decoration: containerBackgroundGradient(),
+                          child: TextField(
+                            controller: searchController,
+                            decoration: new InputDecoration(
+                                hintText: 'Search',
+                                hintStyle: TextStyle(fontFamily: ""),
+                                labelStyle: TextStyle(fontFamily: "Times New Roman"),
+                                helperStyle: TextStyle(fontFamily: ""),
+                                prefixIcon: Icon(Icons.search, color: Colors.black,),
+                                suffixIcon: GestureDetector(
+                                    onTap: (){
+                                      searchController.clear();
+                                      onSearchTextChanged('');
+                                    },
+                                    child: Icon(Icons.close, color: searchController.text.isNotEmpty ? Colors.black: Colors.grey,)),
+                                border: InputBorder.none),
+                            onChanged: onSearchTextChanged,
+                          ),
+                        ),
+                      ),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(height: 10,),
                     Expanded(
                       child: Obx(()=>
                          controller.localSessionList.length == 0
@@ -451,8 +462,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                   }
                                 },
                                 onLongPress: () {
-                                  deleteSingleImageAlertDialog(
-                                      context, index);
+
                                 },
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -502,13 +512,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                                     child: Container(
                                                       padding: EdgeInsets.only(left: 10, right: 10),
                                                       decoration: containerBackgroundGradient(),
-                                                      child: Row(
-                                                        children: [
-                                                          Icon(Icons.share),
-                                                          SizedBox(width: 5,),
-                                                          Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                                        ],
-                                                      ),),
+                                                      child: Icon(Icons.share),),
                                                   ),
                                                 ),
                                               ),
@@ -527,13 +531,28 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                                     child: Container(
                                                       padding: EdgeInsets.only(left: 10, right: 10),
                                                       decoration: containerBackgroundGradient(),
-                                                      child: Row(
-                                                        children: [
-                                                          Icon(Icons.download),
-                                                          SizedBox(width: 5,),
-                                                          Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                                        ],
-                                                      ),
+                                                      child: Icon(Icons.download),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(width: 20,),
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  deleteSingleImageAlertDialog(
+                                                      context, index);
+                                                },
+                                                child: Container(
+                                                  //width: Get.width,
+                                                  height: 40,
+                                                  //margin: EdgeInsets.only(right: 5),
+                                                  decoration: borderGradientDecoration(),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(3.0),
+                                                    child: Container(
+                                                      padding: EdgeInsets.only(left: 10, right: 10),
+                                                      decoration: containerBackgroundGradient(),
+                                                      child: Icon(Icons.delete),
                                                     ),
                                                   ),
                                                 ),

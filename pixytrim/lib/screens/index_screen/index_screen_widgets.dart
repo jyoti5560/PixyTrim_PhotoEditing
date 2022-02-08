@@ -8,11 +8,19 @@ class HeaderTextModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(
-        "Pixy Trim",
-        style: TextStyle(fontSize: 50, fontFamily: "Lemon Jelly"),
-      ),
+    return Column(
+      children: [
+        Container(
+          child: Image.asset(Images.ic_logo, scale: 5,),
+        ),
+        SizedBox(height: 15,),
+        Container(
+          child: Text(
+            "Pixy Trim",
+            style: TextStyle(fontSize: 50, fontFamily: "Lemon Jelly"),
+          ),
+        ),
+      ],
     );
   }
 }
