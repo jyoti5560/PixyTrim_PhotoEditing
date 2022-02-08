@@ -318,10 +318,10 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                          ]);
                                    }
                                  },
-                                 onLongPress: () {
-                                   deleteSingleImageAlertDialog(
-                                       context, index);
-                                 },
+                                 // onLongPress: () {
+                                 //   deleteSingleImageAlertDialog(
+                                 //       context, index);
+                                 // },
                                  child: Row(
                                    crossAxisAlignment: CrossAxisAlignment.start,
                                    //mainAxisAlignment: MainAxisAlignment.start,
@@ -369,17 +369,11 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                                      child: Container(
                                                          padding: EdgeInsets.only(left: 10, right: 10),
                                                          decoration: containerBackgroundGradient(),
-                                                         child: Row(
-                                                           children: [
-                                                             Icon(Icons.share),
-                                                             SizedBox(width: 5,),
-                                                             Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                                           ],
-                                                         ),),
+                                                         child: Icon(Icons.share),),
                                                  ),
                                                ),
                                              ),
-                                              SizedBox(width: 20,),
+                                              SizedBox(width: 10,),
                                              GestureDetector(
                                                onTap: () async {
                                                  await saveImage(index);
@@ -394,13 +388,28 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                                    child: Container(
                                                      padding: EdgeInsets.only(left: 10, right: 10),
                                                      decoration: containerBackgroundGradient(),
-                                                     child: Row(
-                                                       children: [
-                                                         Icon(Icons.download),
-                                                         SizedBox(width: 5,),
-                                                         Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                                       ],
-                                                     ),
+                                                     child: Icon(Icons.download),
+                                                   ),
+                                                 ),
+                                               ),
+                                             ),
+                                             SizedBox(width: 10,),
+                                             GestureDetector(
+                                               onTap: () async {
+                                                 deleteSingleImageAlertDialog(
+                                                     context, index);
+                                               },
+                                               child: Container(
+                                                 //width: Get.width,
+                                                 height: 40,
+                                                 //margin: EdgeInsets.only(right: 5),
+                                                 decoration: borderGradientDecoration(),
+                                                 child: Padding(
+                                                   padding: const EdgeInsets.all(3.0),
+                                                   child: Container(
+                                                     padding: EdgeInsets.only(left: 10, right: 10),
+                                                     decoration: containerBackgroundGradient(),
+                                                     child: Icon(Icons.delete),
                                                    ),
                                                  ),
                                                ),
@@ -461,9 +470,6 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                         ]);
                                   }
                                 },
-                                onLongPress: () {
-
-                                },
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   //mainAxisAlignment: MainAxisAlignment.start,
@@ -516,7 +522,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                                   ),
                                                 ),
                                               ),
-                                              SizedBox(width: 20,),
+                                              SizedBox(width: 10,),
                                               GestureDetector(
                                                 onTap: () async {
                                                   await saveImage(index);
@@ -536,7 +542,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                                   ),
                                                 ),
                                               ),
-                                              SizedBox(width: 20,),
+                                              SizedBox(width: 10,),
                                               GestureDetector(
                                                 onTap: () async {
                                                   deleteSingleImageAlertDialog(
