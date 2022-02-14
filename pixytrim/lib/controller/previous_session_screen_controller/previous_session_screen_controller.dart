@@ -54,8 +54,7 @@ class PreviousSessionScreenController extends GetxController {
 
   deleteLocalSessionList() async {
     await localStorage.deleteImage();
-    Get.back();
-    Get.back();
+
   }
 
   updateLocalSessionList(int i) async {
@@ -78,8 +77,6 @@ class PreviousSessionScreenController extends GetxController {
 
   deleteCollageLocalSessionList() async {
     await localStorage.deleteCollageImage();
-    Get.back();
-    Get.back();
   }
 
 

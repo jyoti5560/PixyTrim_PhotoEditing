@@ -175,18 +175,25 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                   ),
                 ),
 
-                controller.localSessionList.isNotEmpty ?
-                GestureDetector(
-                  onTap: () {
-                   // tabController.index == 0 ? deleteAllImagesAlertDialog(context) : deleteAllCollageImagesAlertDialog(context);
-                    tabController.index == 0 ? deleteAllImagesAlertDialog(context) : Container();
-                    print('index:: ${tabController.index}');
-                  },
-                  child: tabController.index == 0 ? Icon(Icons.delete_rounded) : Container(),
-                  // child: controller.localSessionListNew.isNotEmpty && tabController.index == 0 ?
-                  //   Container(child: Icon(Icons.delete_rounded)) : Container(),
-                 ) :Container(),
-                 /* : tabController.index == 1 ?
+                controller.localSessionList.isNotEmpty ||
+                      controller.localCollageList.isNotEmpty
+                  ? GestureDetector(
+                      onTap: () {
+                        // tabController.index == 0 ? deleteAllImagesAlertDialog(context) : deleteAllCollageImagesAlertDialog(context);
+                        if (tabController.index == 0) {
+                          deleteAllImagesAlertDialog(context);
+                        } else {
+                          deleteAllCollageImagesAlertDialog(context);
+                        }
+                        //tabController.index == 0 ? deleteAllImagesAlertDialog(context) : Container();
+                        print('index:: ${tabController.index}');
+                      },
+                      child: Icon(Icons.delete_rounded),
+                      // child: controller.localSessionListNew.isNotEmpty && tabController.index == 0 ?
+                      //   Container(child: Icon(Icons.delete_rounded)) : Container(),
+                    )
+                  : Container(),
+              /* : tabController.index == 1 ?
                  GestureDetector(
                    onTap: () {
                      deleteAllImagesAlertDialog(context);
@@ -970,6 +977,16 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
       ),
       onPressed: () async {
         controller.deleteLocalSessionList();
+        if(controller.localSessionList.isEmpty){
+          Fluttertoast.showToast(msg: 'List is Empty!');
+          Get.back();
+          // Get.back();
+        } else {
+        Fluttertoast.showToast(msg: 'Deleted Successfully!');
+        Get.back();
+        Get.back();
+
+        }
       },
     );
 
@@ -1011,6 +1028,16 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
       ),
       onPressed: () async {
         controller.deleteCollageLocalSessionList();
+        if(controller.localCollageList.isEmpty) {
+          Fluttertoast.showToast(msg: 'List is Empty!');
+          Get.back();
+          // Get.back();
+        } else {
+          Fluttertoast.showToast(msg: 'Deleted Successfully!');
+          Get.back();
+          Get.back();
+
+        }
       },
     );
 
