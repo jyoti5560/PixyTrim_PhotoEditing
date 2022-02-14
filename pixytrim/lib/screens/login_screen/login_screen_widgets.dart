@@ -99,7 +99,7 @@ class _socialLoginState extends State<socialLogin> {
             _onPressedLogInButton().then((value) {
               if(loginScreenController.profile!.userId.isNotEmpty){
 
-                Get.to(() => IndexScreen());
+                Get.off(() => IndexScreen());
               }
 
             });
@@ -140,7 +140,7 @@ class _socialLoginState extends State<socialLogin> {
 
         GestureDetector(
           onTap: (){
-            Get.to(() => IndexScreen());
+            Get.off(() => IndexScreen());
           },
           child: Container(
             child: Text("Skip", style: TextStyle(
