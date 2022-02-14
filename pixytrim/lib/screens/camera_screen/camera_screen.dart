@@ -280,8 +280,10 @@ class _CameraScreenState extends State<CameraScreen> {
             DateTime today = new DateTime.now();
             String dateSlug = "${today.day}-${today.month}-${today.year}_${today.hour}:${today.minute}:${today.second}";
             print('Date: $dateSlug');
+            // cameraScreenController.addImageFromCameraList.removeAt(i);
+            // cameraScreenController.addImageFromCameraList.insert(i, File("${frontPath}cache/pixytrim_${i}_$dateSlug.$ogExt"));
             cameraScreenController.addImageFromCameraList[i]
-            = await cameraScreenController.addImageFromCameraList[i].rename("${frontPath}cache/pixytrim_${i}_$dateSlug.$ogExt");
+            = await cameraScreenController.addImageFromCameraList[i].rename("${frontPath}cache/pixytrim_${i}_${i}_$dateSlug.$ogExt");
 
             print('Final FIle Name : ${cameraScreenController.addImageFromCameraList[i].path}');
             localList.add(cameraScreenController.addImageFromCameraList[i].path);

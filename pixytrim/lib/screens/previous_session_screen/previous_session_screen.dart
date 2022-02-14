@@ -178,6 +178,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                 controller.localSessionList.isNotEmpty ?
                 GestureDetector(
                   onTap: () {
+                   // tabController.index == 0 ? deleteAllImagesAlertDialog(context) : deleteAllCollageImagesAlertDialog(context);
                     tabController.index == 0 ? deleteAllImagesAlertDialog(context) : Container();
                     print('index:: ${tabController.index}');
                   },
@@ -683,7 +684,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                      // child: Image.file(File('${controller.localSessionListNew![index]}')),
                                    ),
 
-                                   Column(
+                                   Row(
                                      crossAxisAlignment: CrossAxisAlignment.start,
                                      //mainAxisAlignment: MainAxisAlignment.start,
                                      children: [
@@ -691,26 +692,14 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                          onTap: () async {
                                            await shareImage1(index);
                                          },
-                                         child: Row(
-                                           children: [
-                                             Icon(Icons.share),
-                                             SizedBox(width: 5,),
-                                             Text("Share", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                           ],
-                                         ),
+                                         child: Icon(Icons.share),
                                        ),
                                        SizedBox(height: 7,),
                                        GestureDetector(
                                          onTap: () async {
                                            await saveImage1(index);
                                          },
-                                         child: Row(
-                                           children: [
-                                             Icon(Icons.download),
-                                             SizedBox(width: 5,),
-                                             Text("Save", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                           ],
-                                         ),
+                                         child: Icon(Icons.download),
                                        ),
 
                                        // SizedBox(height: 7,),
@@ -771,8 +760,8 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                       // child: Image.file(File('${controller.localSessionListNew![index]}')),
                                     ),
                                     SizedBox(width: 5,),
-                                    Column(
-                                      //crossAxisAlignment: CrossAxisAlignment.start,
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       //mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         GestureDetector(
@@ -780,7 +769,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                             await shareImage1(index);
                                           },
                                           child: Container(
-                                            width: 110,
+                                           // width: 110,
                                             height: 40,
                                             //margin: EdgeInsets.only(right: 5),
                                             decoration: borderGradientDecoration(),
@@ -790,24 +779,18 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                                 padding: EdgeInsets.only(left: 10, right: 10),
                                                 decoration: containerBackgroundGradient(),
                                                 child: Center(
-                                                  child: Row(
-                                                    children: [
-                                                      Icon(Icons.share),
-                                                      SizedBox(width: 5,),
-                                                      Text("Share", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                                    ],
-                                                  ),
+                                                  child: Icon(Icons.share),
                                                 ),),
                                             ),
                                           ),
                                         ),
-                                        SizedBox(height: 7,),
+                                        SizedBox(width: 7,),
                                         GestureDetector(
                                           onTap: () async {
                                             await saveImage1(index);
                                           },
                                           child: Container(
-                                            width: 110,
+                                            //width: 110,
                                             height: 40,
                                             //margin: EdgeInsets.only(right: 5),
                                             decoration: borderGradientDecoration(),
@@ -817,13 +800,31 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                                                 padding: EdgeInsets.only(left: 10, right: 10),
                                                 decoration: containerBackgroundGradient(),
                                                 child: Center(
-                                                  child: Row(
-                                                    children: [
-                                                      Icon(Icons.download),
-                                                      SizedBox(width: 5,),
-                                                      Text("Save", style: TextStyle(fontFamily: "", fontSize: 17),)
-                                                    ],
-                                                  ),
+                                                  child:Icon(Icons.download),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+
+                                        SizedBox(width: 7,),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            deleteSingleImageCollageAlertDialog(
+                                                context, index);
+                                          },
+                                          child: Container(
+                                           // width: 110,
+                                            height: 40,
+                                            //margin: EdgeInsets.only(right: 5),
+                                            decoration: borderGradientDecoration(),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(3.0),
+                                              child: Container(
+                                                padding: EdgeInsets.only(left: 10, right: 10),
+                                                decoration: containerBackgroundGradient(),
+                                                child: Center(
+                                                  child: Icon(Icons.delete),
                                                 ),
                                               ),
                                             ),
@@ -993,6 +994,47 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
     );
   }
 
+  deleteAllCollageImagesAlertDialog(BuildContext context) {
+    Widget cancelButton = TextButton(
+      child: Text(
+        "No",
+        style: TextStyle(fontFamily: ""),
+      ),
+      onPressed: () {
+        Get.back();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "Yes",
+        style: TextStyle(fontFamily: ""),
+      ),
+      onPressed: () async {
+        controller.deleteCollageLocalSessionList();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text(
+        "Do you want to delete all images ?",
+        style: TextStyle(fontFamily: ""),
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   deleteSingleImageAlertDialog(BuildContext context, int index) {
     Widget cancelButton = TextButton(
       child: Text(
@@ -1010,6 +1052,48 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
       ),
       onPressed: () async {
         controller.updateLocalSessionList(index);
+        Get.back();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text(
+        "Do you want to delete this image ?",
+        style: TextStyle(fontFamily: "",fontSize: 18),
+      ),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  deleteSingleImageCollageAlertDialog(BuildContext context, int index) {
+    Widget cancelButton = TextButton(
+      child: Text(
+        "No",
+        style: TextStyle(fontFamily: ""),
+      ),
+      onPressed: () {
+        Get.back();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text(
+        "Yes",
+        style: TextStyle(fontFamily: ""),
+      ),
+      onPressed: () async {
+        controller.updateLocalCollageSessionList(index);
         Get.back();
       },
     );

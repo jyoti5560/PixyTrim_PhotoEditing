@@ -67,6 +67,21 @@ class PreviousSessionScreenController extends GetxController {
     isLoading(false);
   }
 
+  updateLocalCollageSessionList(int i) async {
+    print("index: $i");
+    isLoading(true);
+    localCollageList.removeAt(i);
+    localStorage.updateCollageImageList(localCollageList);
+    getLocalCollageSessionList();
+    isLoading(false);
+  }
+
+  deleteCollageLocalSessionList() async {
+    await localStorage.deleteCollageImage();
+    Get.back();
+    Get.back();
+  }
+
 
   @override
   void onInit() async {

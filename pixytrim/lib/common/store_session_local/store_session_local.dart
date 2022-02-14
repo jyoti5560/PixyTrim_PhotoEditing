@@ -63,4 +63,15 @@ class LocalStorage {
     prefs.setStringList('$storageKey', localSessionList);
   }
 
+  Future updateCollageImageList(List<String> localCollageList) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // prefs.remove('$storageKey');
+    prefs.setStringList('$storageCollageKey', localCollageList);
+  }
+
+  Future deleteCollageImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('$storageCollageKey');
+  }
+
 }
