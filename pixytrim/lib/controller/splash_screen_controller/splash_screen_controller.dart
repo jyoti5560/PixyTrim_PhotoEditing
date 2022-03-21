@@ -26,12 +26,12 @@ class SplashScreenController extends GetxController{
 
 
     if(onBoardingValue == true) {
-      Get.off(() => LoginScreen());
-      // if(userId.isNotEmpty){
-      //   Get.off(() => IndexScreen());
-      // } else{
-      //   Get.off(() => LoginScreen());
-      // }
+      //Get.off(() => LoginScreen());
+      if(userId.isNotEmpty){
+        Get.off(() => IndexScreen());
+      } else{
+        Get.off(() => LoginScreen());
+      }
     }
     else{
       Get.off(() => OnBoardingScreen());
