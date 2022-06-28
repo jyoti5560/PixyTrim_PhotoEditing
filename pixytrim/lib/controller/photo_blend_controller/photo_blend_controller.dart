@@ -5,11 +5,12 @@ import 'package:get/get.dart';
 
 class PhotoBlendController extends GetxController {
   RxDouble borderWidthValue = 0.0.obs;
+  Rx<String> selectedBlendModeText = "clear".obs;
 
   Rx<Color> selectedColor = Colors.transparent.obs;
   Rx<BlendMode> blendMode = BlendMode.saturation.obs;
 
-  RxString selectedBlendMode = "clear".obs;
+  Rx<BlendMode> selectedBlendMode = BlendMode.clear.obs;
 
   RxList<String> blendModesList = [
     "clear",

@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';

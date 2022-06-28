@@ -325,26 +325,7 @@ class _CameraScreenState extends State<CameraScreen> {
       ],
     );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      //title: Text("AlertDialog"),
-      content: Text(
-        "Do you want to save in Draft ?",
-        style: TextStyle(fontFamily: ""),
-      ),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
 
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 
   void openCamera() async {

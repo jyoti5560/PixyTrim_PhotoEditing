@@ -1,6 +1,6 @@
-import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:material_dialogs/material_dialogs.dart';
@@ -200,12 +200,24 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
   Widget colorBlendingToolsList() {
     return Column(
       children: [
+        SizedBox(height: 40),
         Container(
           alignment: AlignmentDirectional.centerStart,
-          margin: EdgeInsets.only(left: 4),
-          child: Text("Selected Color"),
+          margin: EdgeInsets.only(left: 10),
+          child: Row(
+            children: [
+              Text(
+                "Selected Color  :  ${blendController.selectedColor.value.toString()}",
+                style: TextStyle(
+                  color: AppColor.kBlackColor,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
         ),
-        SizedBox(height: 40),
+        SizedBox(height: 12),
         selectColorButton(),
         SizedBox(height: 20),
         selectBlendModeButton(),
@@ -269,32 +281,57 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
     );
   }
 
-  Widget selectBlendModeButton() {
-    return Container(
-      height: 50,
-      width: Get.size.width * 0.9,
-      child: CustomDropdownButton2(
-        buttonDecoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-          gradient: LinearGradient(
-            colors: [
-              AppColor.kBorderGradientColor1,
-              AppColor.kBorderGradientColor2,
-              AppColor.kBorderGradientColor3,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        hint: 'Select Blend Mode',
-        dropdownItems: blendController.blendModesList,
-        value: blendController.selectedBlendMode.value,
-        onChanged: (value) {
-          blendController.selectedBlendMode.value = value!;
-
-          setState(() {});
-        },
+  List<DropdownMenuItem<String>> get blendingItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(
+        child: Text("clear"),
+        value: "clear",
       ),
+      DropdownMenuItem(
+        child: Text("darken"),
+        value: "darken",
+      ),
+    ];
+    return menuItems;
+  }
+
+  Widget selectBlendModeButton() {
+    return DropdownButtonFormField(
+      menuMaxHeight: 200,
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.blue,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.blue,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        filled: true,
+        fillColor: Colors.blueAccent,
+        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+        isCollapsed: false,
+        isDense: false,
+      ),
+      dropdownColor: Colors.blueAccent,
+      style: TextStyle(
+        color: AppColor.kBlackColor,
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+      ),
+      elevation: 0,
+      value: blendController.selectedBlendModeText.value,
+      items: blendingItems,
+      onTap: () {},
+      onChanged: (value) {
+        blendController.selectedBlendModeText.value = value.toString();
+      },
     );
   }
 

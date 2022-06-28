@@ -1,9 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
@@ -46,6 +44,7 @@ class FilterScreenState extends State<FilterScreen>
       child: Scaffold(
           body: SafeArea(
         child: Stack(
+          
           children: [
             MainBackgroundWidget(),
             Container(
@@ -55,15 +54,13 @@ class FilterScreenState extends State<FilterScreen>
                   appBar(),
                   SizedBox(height: 20),
                   Expanded(
+
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Flexible(
                           child: filterImage(),
                         ),
-                        // Expanded(
-                        //   child: Container(),
-                        // ),
                       ],
                     ),
                   ),
@@ -81,7 +78,7 @@ class FilterScreenState extends State<FilterScreen>
 
   Widget filterCategoryBar() {
     return Container(
-      height: Get.size.height * 0.056,
+      height: 50,
       alignment: Alignment.centerLeft,
       child: TabBar(
         isScrollable: true,
@@ -106,7 +103,7 @@ class FilterScreenState extends State<FilterScreen>
 
   Widget filterCategoryView() {
     return Container(
-      height: Get.height * 0.135,
+      height: Get.height * 0.13,
       child: TabBarView(
         controller: categoryTabController,
         children: [
@@ -203,44 +200,42 @@ class FilterScreenState extends State<FilterScreen>
                     'selectedIndex : ${csController.simpleSelectedIndex.value}');
               });
             },
-            child: Expanded(
-              child: Column(
-                children: [
-                  Container(
-                    height: 75,
-                    width: 75,
-                    padding: EdgeInsets.all(4),
-                    margin: EdgeInsets.only(right: 10),
-                    decoration: borderGradientDecoration(),
-                    child: Container(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: csController
-                            .simpleFilterOptions[index].filterListWidget,
-                      ),
+            child: Column(
+              children: [
+                Container(
+                  height: 75,
+                  width: 75,
+                  padding: EdgeInsets.all(4),
+                  margin: EdgeInsets.only(right: 10),
+                  decoration: borderGradientDecoration(),
+                  child: Container(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: csController
+                          .simpleFilterOptions[index].filterListWidget,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "${filter.filterName}  ",
-                        style: TextStyle(
-                          fontFamily: "",
-                          color: csController.simpleSelectedIndex.value == index
-                              ? Colors.black87
-                              : Colors.grey.shade600,
-                          fontWeight:
-                              csController.simpleSelectedIndex.value == index
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                        ),
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${filter.filterName}  ",
+                      style: TextStyle(
+                        fontFamily: "",
+                        color: csController.simpleSelectedIndex.value == index
+                            ? Colors.black87
+                            : Colors.grey.shade600,
+                        fontWeight:
+                            csController.simpleSelectedIndex.value == index
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           );
         },
@@ -264,38 +259,36 @@ class FilterScreenState extends State<FilterScreen>
                     'selectedIndex : ${csController.colorSelectedIndex.value}');
               });
             },
-            child: Expanded(
-              child: Column(
-                children: [
-                  Container(
-                    height: 75,
-                    width: 75,
-                    padding: EdgeInsets.all(4),
-                    margin: EdgeInsets.only(right: 10),
-                    decoration: borderGradientDecoration(),
-                    child: Container(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: csController
-                            .colorFilterOptions[index].filterListWidget,
-                      ),
+            child: Column(
+              children: [
+                Container(
+                  height: 75,
+                  width: 75,
+                  padding: EdgeInsets.all(4),
+                  margin: EdgeInsets.only(right: 10),
+                  decoration: borderGradientDecoration(),
+                  child: Container(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: csController
+                          .colorFilterOptions[index].filterListWidget,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    "${csController.colorFilterOptions[index].filterName}  ",
-                    style: TextStyle(
-                        fontFamily: "",
-                        color: csController.colorSelectedIndex.value == index
-                            ? Colors.black87
-                            : Colors.grey.shade600,
-                        fontWeight:
-                            csController.colorSelectedIndex.value == index
-                                ? FontWeight.bold
-                                : FontWeight.normal),
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "${csController.colorFilterOptions[index].filterName}  ",
+                  style: TextStyle(
+                      fontFamily: "",
+                      color: csController.colorSelectedIndex.value == index
+                          ? Colors.black87
+                          : Colors.grey.shade600,
+                      fontWeight:
+                          csController.colorSelectedIndex.value == index
+                              ? FontWeight.bold
+                              : FontWeight.normal),
+                ),
+              ],
             ),
           );
         },
@@ -318,39 +311,37 @@ class FilterScreenState extends State<FilterScreen>
                 print('selectedIndex : ${csController.bwSelectedIndex.value}');
               });
             },
-            child: Expanded(
-              child: Column(
-                children: [
-                  Container(
-                    height: 75,
-                    width: 75,
-                    padding: EdgeInsets.all(4),
-                    margin: EdgeInsets.only(right: 10),
-                    decoration: borderGradientDecoration(),
-                    child: Container(
-                      height: 95,
-                      width: 95,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: csController
-                            .blackWhiteFilterOptions[index].filterListWidget,
-                      ),
+            child: Column(
+              children: [
+                Container(
+                  height: 75,
+                  width: 75,
+                  padding: EdgeInsets.all(4),
+                  margin: EdgeInsets.only(right: 10),
+                  decoration: borderGradientDecoration(),
+                  child: Container(
+                    height: 95,
+                    width: 95,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: csController
+                          .blackWhiteFilterOptions[index].filterListWidget,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    "${csController.blackWhiteFilterOptions[index].filterName}  ",
-                    style: TextStyle(
-                        fontFamily: "",
-                        color: csController.bwSelectedIndex.value == index
-                            ? Colors.black87
-                            : Colors.grey.shade600,
-                        fontWeight: csController.bwSelectedIndex.value == index
-                            ? FontWeight.bold
-                            : FontWeight.normal),
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "${csController.blackWhiteFilterOptions[index].filterName}  ",
+                  style: TextStyle(
+                      fontFamily: "",
+                      color: csController.bwSelectedIndex.value == index
+                          ? Colors.black87
+                          : Colors.grey.shade600,
+                      fontWeight: csController.bwSelectedIndex.value == index
+                          ? FontWeight.bold
+                          : FontWeight.normal),
+                ),
+              ],
             ),
           );
         },
