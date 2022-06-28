@@ -7,6 +7,8 @@ import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:pixytrim/common/common_widgets.dart';
@@ -46,18 +48,19 @@ class _CropImageScreenState extends State<CropImageScreen> {
   bool cropEnable = true;
 
   LinearGradient gradient = LinearGradient(
-      colors: <Color>[
-    AppColor.kBorderGradientColor1,
-    AppColor.kBorderGradientColor2,
-    AppColor.kBorderGradientColor3,
-  ],
+    colors: <Color>[
+      AppColor.kBorderGradientColor1,
+      AppColor.kBorderGradientColor2,
+      AppColor.kBorderGradientColor3,
+    ],
   );
-
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => showAlertDialog(),
+      onWillPop: () {
+        return showAlertDialog();
+      },
       child: Scaffold(
         body: SafeArea(
           child: Stack(
@@ -70,69 +73,104 @@ class _CropImageScreenState extends State<CropImageScreen> {
                     appBar(),
                     SizedBox(height: 20),
                     Obx(
-                      ()=> Expanded(
-                        child: isCropping == true || csController.isLoading.value
-                        ? Center(child: CircularProgressIndicator())
-                        : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Flexible(
+                      () => Expanded(
+                        child: isCropping == true ||
+                                csController.isLoading.value
+                            ? Center(child: CircularProgressIndicator())
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Flexible(
                                     child: Container(
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(20),
-                                        child: croppedImage == null && index == 0
+                                        child: croppedImage == null &&
+                                                index == 0
                                             ? Crop(
-                                           //maskColor: Colors.white54,
-                                          cornerDotBuilder: (size, edgeAlignment) => const DotControl(color: Colors.white),
-                                          controller: cropController,
-                                                image: widget.file.readAsBytesSync(),
-                                                onCropped: (croppedData1) async {
+                                                //maskColor: Colors.white54,
+                                                cornerDotBuilder: (size,
+                                                        edgeAlignment) =>
+                                                    const DotControl(
+                                                        color: Colors.white),
+                                                controller: cropController,
+                                                image: widget.file
+                                                    .readAsBytesSync(),
+                                                onCropped:
+                                                    (croppedData1) async {
                                                   // Future.delayed(Duration(seconds: 3));
                                                   setState(() {
-                                                    print('croppedData1 : $croppedData1');
+                                                    print(
+                                                        'croppedData1 : $croppedData1');
                                                     croppedImage = croppedData1;
-                                                    widget.file.writeAsBytesSync(croppedImage!);
-                                                    tempCroppedFile = widget.file;
-                                                    print('tempCroppedFile : $tempCroppedFile');
+                                                    widget.file
+                                                        .writeAsBytesSync(
+                                                            croppedImage!);
+                                                    tempCroppedFile =
+                                                        widget.file;
+                                                    print(
+                                                        'tempCroppedFile : $tempCroppedFile');
                                                     isCropping = false;
                                                     cropEnable = false;
                                                     csController.loading();
                                                   });
                                                   if (mounted) {
                                                     print('mounted : $mounted');
-                                                    DateTime time = DateTime.now();
-                                                    String imgName = '${time.hour}_${time.minute}_${time.second}-${time.day}_${time.month}_${time.year}';
-                                                    String dir = (await getApplicationDocumentsDirectory()).path;
-                                                    String newPath = path.join(dir, '$imgName.jpg');
-                                                    widget.file.renameSync(newPath);
-                                                    print('widget.file :${widget.file}');
-                                                    setState(() {
-                                                    });
+                                                    DateTime time =
+                                                        DateTime.now();
+                                                    String imgName =
+                                                        '${time.hour}_${time.minute}_${time.second}-${time.day}_${time.month}_${time.year}';
+                                                    String dir =
+                                                        (await getApplicationDocumentsDirectory())
+                                                            .path;
+                                                    String newPath = path.join(
+                                                        dir, '$imgName.jpg');
+                                                    widget.file
+                                                        .renameSync(newPath);
+                                                    print(
+                                                        'widget.file :${widget.file}');
+                                                    setState(() {});
                                                   }
                                                 },
                                                 initialSize: 0.5,
                                               )
                                             : index == 1
                                                 ? Obx(
-                                                  ()=> csController.isLoading.value
-                                          ? Center(child: CircularProgressIndicator())
-                                                  :RepaintBoundary(
-                                                      key: key,
-                                                      child: Transform.rotate(
-                                                        angle: Math.pi / 180 * _rotation,
-                                                        origin: Offset.zero,
-                                                        alignment: Alignment.center,
-                                                        child: Container(
-                                                          height: MediaQuery.of(context).size.height - 130,
-                                                          alignment: Alignment.center,
-                                                          child: /*tempCroppedFile != null
+                                                    () => csController
+                                                            .isLoading.value
+                                                        ? Center(
+                                                            child:
+                                                                CircularProgressIndicator())
+                                                        : RepaintBoundary(
+                                                            key: key,
+                                                            child: Transform
+                                                                .rotate(
+                                                              angle: Math.pi /
+                                                                  180 *
+                                                                  _rotation,
+                                                              origin:
+                                                                  Offset.zero,
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Container(
+                                                                height: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .height -
+                                                                    130,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child: /*tempCroppedFile != null
                                                             ? PhotoView(imageProvider: FileImage(tempCroppedFile!))
                                                               : PhotoView(imageProvider: FileImage(widget.file),disableGestures: true,),*/
-                                                          Image.file(widget.file),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                )
+                                                                    Image.file(
+                                                                        widget
+                                                                            .file),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                  )
                                                 : index == 2
                                                     ?
                                                     // GestureDetector(
@@ -192,16 +230,25 @@ class _CropImageScreenState extends State<CropImageScreen> {
                                                             alignment:
                                                                 FractionalOffset
                                                                     .center,
-                                                            transform:
-                                                                Matrix4.diagonal3(
-                                                                    Vector3(_scale, _scale, _scale)),
+                                                            transform: Matrix4
+                                                                .diagonal3(
+                                                                    Vector3(
+                                                                        _scale,
+                                                                        _scale,
+                                                                        _scale)),
                                                             // child: Image.file(widget.file,fit: BoxFit.cover,)
                                                             child: PhotoView(
-                                                              enablePanAlways: true,
-                                                              backgroundDecoration: BoxDecoration(
-                                                                color: Colors.transparent,
+                                                              enablePanAlways:
+                                                                  true,
+                                                              backgroundDecoration:
+                                                                  BoxDecoration(
+                                                                color: Colors
+                                                                    .transparent,
                                                               ),
-                                                              imageProvider: FileImage(widget.file),
+                                                              imageProvider:
+                                                                  FileImage(
+                                                                      widget
+                                                                          .file),
                                                             ),
                                                           ),
                                                         ),
@@ -210,7 +257,8 @@ class _CropImageScreenState extends State<CropImageScreen> {
                                                         child: RepaintBoundary(
                                                           key: key,
                                                           child: Container(
-                                                            child: Image.memory(croppedImage!),
+                                                            child: Image.memory(
+                                                                croppedImage!),
                                                           ),
                                                         ),
                                                       ),
@@ -218,7 +266,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
                                     ),
                                   ),
                                 ],
-                        ),
+                              ),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -279,7 +327,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
     );
   }
 
-  Widget scaleRatio(){
+  Widget scaleRatio() {
     return Container(
       padding: EdgeInsets.all(2),
       decoration: borderGradientDecoration(),
@@ -291,7 +339,8 @@ class _CropImageScreenState extends State<CropImageScreen> {
         ),
         child: SliderTheme(
           data: SliderThemeData(
-            trackShape: GradientRectSliderTrackShape(gradient: gradient, darkenInactive: false),
+            trackShape: GradientRectSliderTrackShape(
+                gradient: gradient, darkenInactive: false),
             valueIndicatorTextStyle: TextStyle(fontFamily: ""),
           ),
           child: Slider(
@@ -357,32 +406,63 @@ class _CropImageScreenState extends State<CropImageScreen> {
                     const SizedBox(width: 15),
                     GestureDetector(
                       onTap: () async {
-                       if(index == 0) {
-                         if(defaultSelectedIndex == true) {
-                           cropController.crop();
-                           Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
-                           setState(() {
-                             defaultSelectedIndex = false;
-                             isCropping = true;
-                           });
-                         } else if (defaultSelectedIndex == false){
-                           Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG);
-                           await _capturePng().then((value) {
-                             Get.back();
-                           });
-                         }
-
-                       } else if(index == 1){
-                         Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
-                         await _capturePng().then((value) {
-                           Get.back();
-                         });
-                       } else if(index == 2) {
-                         Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
-                         await _capturePng().then((value) {
-                           Get.back();
-                         });
-                       }
+                        if (index == 0) {
+                          if (defaultSelectedIndex == true) {
+                            cropController.crop();
+                            showTopNotification(
+                              displayText: "Please Wait...",
+                              leadingIcon: Icon(
+                                Icons.crop,
+                                color: AppColor.kBlackColor,
+                              ),
+                              displayTime: 2,
+                            );
+                            //  Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
+                            setState(() {
+                              defaultSelectedIndex = false;
+                              isCropping = true;
+                            });
+                          } else if (defaultSelectedIndex == false) {
+                            showTopNotification(
+                              displayText: "Please Wait...",
+                              leadingIcon: Icon(
+                                Icons.crop,
+                                color: AppColor.kBlackColor,
+                              ),
+                              displayTime: 2,
+                            );
+                            //  Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG);
+                            await _capturePng().then((value) {
+                              Get.back();
+                            });
+                          }
+                        } else if (index == 1) {
+                          showTopNotification(
+                            displayText: "Please Wait...",
+                            leadingIcon: Icon(
+                              Icons.crop,
+                              color: AppColor.kBlackColor,
+                            ),
+                            displayTime: 2,
+                          );
+                          //  Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
+                          await _capturePng().then((value) {
+                            Get.back();
+                          });
+                        } else if (index == 2) {
+                          showTopNotification(
+                            displayText: "Please Wait...",
+                            leadingIcon: Icon(
+                              Icons.crop,
+                              color: AppColor.kBlackColor,
+                            ),
+                            displayTime: 2,
+                          );
+                          //  Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
+                          await _capturePng().then((value) {
+                            Get.back();
+                          });
+                        }
                       },
                       child: Container(child: Icon(Icons.check_rounded)),
                     ),
@@ -424,21 +504,27 @@ class _CropImageScreenState extends State<CropImageScreen> {
     }
   }
 
-  renameImage()async{
-    String orgPath = csController.addImageFromCameraList[csController.selectedImage.value].path;
-    String frontPath = orgPath.split('app_flutter')[0]; // Getting Front Path of file Path
+  renameImage() async {
+    String orgPath = csController
+        .addImageFromCameraList[csController.selectedImage.value].path;
+    String frontPath =
+        orgPath.split('app_flutter')[0]; // Getting Front Path of file Path
     print('frontPath: $frontPath');
     List<String> ogPathList = orgPath.split('/');
     print('ogPathList: $ogPathList');
     String ogExt = ogPathList[ogPathList.length - 1].split('.')[1];
     print('ogExt: $ogExt');
     DateTime today = new DateTime.now();
-    String dateSlug = "${today.day}-${today.month}-${today.year}_${today.hour}:${today.minute}:${today.second}";
+    String dateSlug =
+        "${today.day}-${today.month}-${today.year}_${today.hour}:${today.minute}:${today.second}";
     print('Date: $dateSlug');
-    csController.addImageFromCameraList[csController.selectedImage.value]
-    = await csController.addImageFromCameraList[csController.selectedImage.value].rename("${frontPath}cache/pixytrim_$dateSlug.$ogExt");
+    csController.addImageFromCameraList[csController.selectedImage.value] =
+        await csController
+            .addImageFromCameraList[csController.selectedImage.value]
+            .rename("${frontPath}cache/pixytrim_$dateSlug.$ogExt");
 
-    print('Final FIle Name : ${csController.addImageFromCameraList[csController.selectedImage.value].path}');
+    print(
+        'Final FIle Name : ${csController.addImageFromCameraList[csController.selectedImage.value].path}');
   }
 
   Future saveImage() async {
@@ -447,14 +533,23 @@ class _CropImageScreenState extends State<CropImageScreen> {
     await GallerySaver.saveImage("${imageFile!.path}",
         albumName: "OTWPhotoEditingDemo");
     Get.back();
-    Fluttertoast.showToast(
-        msg: "Save In to Gallery",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 5,
-        backgroundColor: Colors.blue,
-        textColor: Colors.white,
-        fontSize: 16.0);
+
+    showTopNotification(
+      displayText: "Save In to Gallery",
+      leadingIcon: Icon(
+        Icons.image,
+        color: AppColor.kBlackColor,
+      ),
+      displayTime: 2,
+    );
+    // Fluttertoast.showToast(
+    //     msg: "Save In to Gallery",
+    //     toastLength: Toast.LENGTH_SHORT,
+    //     gravity: ToastGravity.BOTTOM,
+    //     timeInSecForIosWeb: 5,
+    //     backgroundColor: Colors.blue,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
   Widget cropRatio() {
@@ -464,7 +559,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
         children: [
           GestureDetector(
             onTap: () {
-              cropController.aspectRatio = 2/3;
+              cropController.aspectRatio = 2 / 3;
               //_cropController.aspectRatio = 1/1;
             },
             child: Container(
@@ -533,7 +628,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
         children: [
           GestureDetector(
             onTap: () {
-              if(cropEnable == true){
+              if (cropEnable == true) {
                 setState(() {
                   index = 0;
                   defaultSelectedIndex = true;
@@ -542,7 +637,17 @@ class _CropImageScreenState extends State<CropImageScreen> {
                   _scale = 1; // Reset Value
                 });
               } else {
-                Fluttertoast.showToast(msg: 'Image Already Cropped!', toastLength: Toast.LENGTH_SHORT);
+                showTopNotification(
+                  displayText: "Image Already Cropped!",
+                  leadingIcon: Icon(
+                    Icons.crop,
+                    color: AppColor.kBlackColor,
+                  ),
+                  displayTime: 2,
+                );
+                //   Fluttertoast.showToast(
+                //       msg: 'Image Already Cropped!',
+                //       toastLength: Toast.LENGTH_SHORT);
               }
 
               /*setState(() {
@@ -552,7 +657,6 @@ class _CropImageScreenState extends State<CropImageScreen> {
                 _rotation = 0; // Reset Value
                 _scale = 1; // Reset Value
               });*/
-
             },
             child: Column(
               children: [
@@ -580,9 +684,9 @@ class _CropImageScreenState extends State<CropImageScreen> {
                   'Crop',
                   style: TextStyle(
                       color: index == 0 ? Colors.black87 : Colors.grey.shade600,
-                      fontWeight: index == 0 ? FontWeight.bold : FontWeight.normal,
-                      fontFamily: ""
-                  ),
+                      fontWeight:
+                          index == 0 ? FontWeight.bold : FontWeight.normal,
+                      fontFamily: ""),
                 ),
               ],
             ),
@@ -621,10 +725,10 @@ class _CropImageScreenState extends State<CropImageScreen> {
                 Text(
                   'Rotate',
                   style: TextStyle(
-                    color: index == 1 ? Colors.black87 : Colors.grey.shade600,
-                    fontWeight: index == 1 ? FontWeight.bold : FontWeight.normal,
-                    fontFamily: ""
-                  ),
+                      color: index == 1 ? Colors.black87 : Colors.grey.shade600,
+                      fontWeight:
+                          index == 1 ? FontWeight.bold : FontWeight.normal,
+                      fontFamily: ""),
                 ),
               ],
             ),
@@ -662,9 +766,9 @@ class _CropImageScreenState extends State<CropImageScreen> {
                   'Scale',
                   style: TextStyle(
                       color: index == 2 ? Colors.black87 : Colors.grey.shade600,
-                      fontWeight: index == 2 ? FontWeight.bold : FontWeight.normal,
-                      fontFamily: ""
-                  ),
+                      fontWeight:
+                          index == 2 ? FontWeight.bold : FontWeight.normal,
+                      fontFamily: ""),
                 ),
               ],
             ),
@@ -675,54 +779,44 @@ class _CropImageScreenState extends State<CropImageScreen> {
   }
 
   showAlertDialog() {
-    Widget cancelButton = TextButton(
-      child: Text(
-        "No",
-        style: TextStyle(fontFamily: ""),
-      ),
+    Widget cancelButton = IconsButton(
       onPressed: () {
         croppedImage = null;
         Get.back();
-        //Get.back();
       },
-    );
-    Widget continueButton = TextButton(
-      child: Text(
-        "Yes",
-        style: TextStyle(fontFamily: ""),
-      ),
-      onPressed: () async {
-        // await _capturePng().then((value) {
-        //   Get.back();
-        //   Get.back();
-        // });
-        Get.back();
-        Get.back();
-      },
+      text: 'No',
+      color: AppColor.kBorderGradientColor3,
+      textStyle: TextStyle(color: Colors.white),
     );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      //title: Text("AlertDialog"),
-      content: Text(
-        "Do you want to exit?",
-        style: TextStyle(fontFamily: ""),
+    Widget continueButton = IconsButton(
+      onPressed: () async {
+        Get.back();
+        Get.back();
+      },
+      text: 'yes',
+      color: AppColor.kBorderGradientColor1,
+      textStyle: TextStyle(color: Colors.white),
+    );
+
+    Dialogs.materialDialog(
+      lottieBuilder: LottieBuilder.asset(
+        "assets/lotties/9511-loading.json",
       ),
+      color: Colors.white,
+      msg: "Do you want to exit?",
+      msgStyle: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      context: context,
       actions: [
         cancelButton,
         continueButton,
       ],
     );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
-
   // @override
   // void dispose() {
   //   csController.loading();

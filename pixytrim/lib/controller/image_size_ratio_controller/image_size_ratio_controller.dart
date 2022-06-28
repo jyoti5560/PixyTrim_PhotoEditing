@@ -4,8 +4,8 @@ import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/models/image_size_ratio_model/image_size_ratio_model.dart';
 import 'package:pixytrim/screens/image_size_ratio_screen/image_size_ratio_screen_widgets.dart';
 
-
 class ImageSizeRatioController extends GetxController {
+  RxBool isLoading = false.obs;
   File file = Get.arguments[0];
   int currentIndex = Get.arguments[1];
   RxInt selectedIndex = 0.obs;
@@ -15,7 +15,6 @@ class ImageSizeRatioController extends GetxController {
 
   @override
   void onInit() {
-
     sizeOptions = [
       ImageSizeRatioModel(
           sizeName: '1.2',

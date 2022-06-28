@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 import 'custom_color.dart';
 import 'custom_image.dart';
-
 
 BoxDecoration borderGradientDecoration() {
   return BoxDecoration(
@@ -17,6 +17,30 @@ BoxDecoration borderGradientDecoration() {
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
     ),
+  );
+}
+
+showTopNotification({
+  required String displayText,
+  required Widget leadingIcon,
+  int? displayTime,
+}) {
+  return showSimpleNotification(
+    Text(
+      displayText,
+      // "Saved to photo Gallery",
+      style: TextStyle(
+        color: AppColor.kBlackColor,
+        fontSize: 16,
+      ),
+    ),
+    leading: leadingIcon,
+    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+    background: AppColor.kButtonCyanColor,
+    position: NotificationPosition.top,
+    duration: Duration(seconds: displayTime ?? 3),
+    autoDismiss: true,
+    elevation: 2,
   );
 }
 
@@ -47,8 +71,7 @@ class MainBackgroundWidget extends StatelessWidget {
 
 BoxDecoration liveCameraFramesButtonDecoration() {
   return BoxDecoration(
-    shape: BoxShape.circle,
-    color: Colors.black38
+    shape: BoxShape.circle, color: Colors.black38,
     // gradient: LinearGradient(
     //   colors: [
     //     AppColor.kBorderGradientColor1,

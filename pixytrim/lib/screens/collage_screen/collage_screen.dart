@@ -2,9 +2,10 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/common/store_session_local/store_session_local.dart';
@@ -15,7 +16,7 @@ import 'package:pixytrim/screens/collage_screen/border_width_screen/border_width
 import 'package:pixytrim/screens/collage_screen/layout_screen/layout_screen.dart';
 import 'dart:ui' as ui;
 import 'package:path_provider/path_provider.dart';
-import 'package:pixytrim/screens/index_screen/index_screen.dart';
+import '../../common/custom_color.dart';
 import 'collage_screen_widgets.dart';
 import 'wallpaper_screen/wallpapers_screen.dart';
 
@@ -49,7 +50,9 @@ class _CollageScreenState extends State<CollageScreen>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => showAlertDialog(),
+      onWillPop: () {
+        return showAlertDialog();
+      },
       child: Scaffold(
         body: SafeArea(
           child: Stack(
@@ -62,20 +65,21 @@ class _CollageScreenState extends State<CollageScreen>
                     appBar(),
                     SizedBox(height: 20),
                     Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: RepaintBoundary(
-                      key: key,
-                      child: Container(
-                          width: Get.width,
-                          child: Obx(
-                            () => collageScreenController.isLoading.value
-                                ? Center(child: CircularProgressIndicator())
-                                : ImageListModule(),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: RepaintBoundary(
+                          key: key,
+                          child: Container(
+                            width: Get.width,
+                            child: Obx(
+                              () => collageScreenController.isLoading.value
+                                  ? Center(child: CircularProgressIndicator())
+                                  : ImageListModule(),
+                            ),
                           ),
+                        ),
                       ),
                     ),
-                        )),
                     tabBar(),
                     tabBarView(),
                   ],
@@ -192,7 +196,9 @@ class _CollageScreenState extends State<CollageScreen>
       ByteData? byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
       print("byte data:===$byteData");
-      Uint8List pngBytes = byteData!.buffer.asUint8List();
+      print("byte data:===${byteData!.elementSizeInBytes.toString()}");
+      Uint8List pngBytes = byteData.buffer.asUint8List();
+
       File imgFile = new File('$directory/$photoName.jpg');
       await imgFile.writeAsBytes(pngBytes);
       setState(() {
@@ -214,87 +220,79 @@ class _CollageScreenState extends State<CollageScreen>
     // renameImage();
     await GallerySaver.saveImage("${file!.path}",
         albumName: "OTWPhotoEditingDemo");
-    Fluttertoast.showToast(
-        msg: "Save in to Gallery",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        textColor: Colors.white,
-        fontSize: 16.0);
-    Get.back();
+    showTopNotification(
+      displayText: "Save in to Gallery",
+      leadingIcon: Icon(
+        Icons.image,
+        color: AppColor.kBlackColor,
+      ),
+    );
+    // Fluttertoast.showToast(
+    //     msg: "Save in to Gallery",
+    //     toastLength: Toast.LENGTH_SHORT,
+    //     gravity: ToastGravity.CENTER,
+    //     timeInSecForIosWeb: 1,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
+    // Get.back();
   }
 
   showAlertDialog() {
-    Widget cancelButton = TextButton(
-      child: Text(
-        "No",
-        style: TextStyle(fontFamily: ""),
-      ),
+    Widget cancelButton = IconsButton(
       onPressed: () {
         Get.back();
         Get.back();
       },
+      text: 'Don\'t save'.toUpperCase(),
+      color: AppColor.kBorderGradientColor3,
+      textStyle: TextStyle(color: Colors.white),
     );
-    Widget continueButton = TextButton(
-      child: Text(
-        "Yes",
-        style: TextStyle(fontFamily: ""),
-      ),
+
+    Widget continueButton = IconsButton(
       onPressed: () async {
         collageScreenController.borderWidthValue.value = 0.0;
         collageScreenController.activeColor.value = 0;
         collageScreenController.borderRadiusValue.value = 0.0;
         collageScreenController.isActiveWallpaper.value = false;
 
-        if(collageScreenController.imageFileList.isNotEmpty){
-          for(int i = 0; i < collageScreenController.imageFileList.length; i++){
-
-            //todo
-           /* String orgPath = collageScreenController.imageFileList[i].file.path;
-            String frontPath = orgPath.split('cache')[0]; // Getting Front Path of file Path
-            print('frontPath: $frontPath');
-            List<String> ogPathList = orgPath.split('/');
-            print('ogPathList: $ogPathList');
-            String ogExt = ogPathList[ogPathList.length - 1].split('.')[1];
-            print('ogExt: $ogExt');
-            DateTime today = new DateTime.now();
-            String dateSlug = "${today.day}-${today.month}-${today.year}-${today.hour}:${today.minute}:${today.second}";
-            collageScreenController.imageFileList[i]
-            = await collageScreenController.imageFileList[i].file.rename("${frontPath}cache/pixytrim_$dateSlug.$ogExt");
-
-            print('Final FIle Name : ${cameraScreenController.addImageFromCameraList[i].path}');*/
-
-            localCollageList.add('${collageScreenController.imageFileList[i].file.path}');
+        if (collageScreenController.imageFileList.isNotEmpty) {
+          for (int i = 0;
+              i < collageScreenController.imageFileList.length;
+              i++) {
+            localCollageList
+                .add('${collageScreenController.imageFileList[i].file.path}');
           }
           print('localCollageList : $localCollageList');
-          if(localCollageList.isNotEmpty){
+          if (localCollageList.isNotEmpty) {
             await localStorage.storeMainCollageList(localCollageList);
           }
         }
-        Get.off(()=> IndexScreen());
-        // Get.back();
-        // Get.back();
+
+        Get.back();
+        Get.back();
       },
+      text: 'save draft'.toUpperCase(),
+      color: AppColor.kBorderGradientColor1,
+      textStyle: TextStyle(color: Colors.white),
     );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      content: Text(
-        "Do you want to save in Draft ?",
-        style: TextStyle(fontFamily: ""),
+    Dialogs.materialDialog(
+      lottieBuilder: LottieBuilder.asset(
+        "assets/lotties/9511-loading.json",
       ),
+      color: Colors.white,
+      msg: "Do you want to save draft Project before exiting?",
+      msgStyle: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      msgAlign: TextAlign.justify,
+      context: context,
       actions: [
         cancelButton,
         continueButton,
       ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
     );
   }
 }
@@ -318,513 +316,511 @@ class _ImageListModuleState extends State<ImageListModule> {
               ? threeImageSelectedModule(
                   collageScreenController.selectedIndex.value)
               : collageScreenController.imageFileList.length == 4
-          ? fourImageSelectedModule(collageScreenController.selectedIndex.value)
-          : collageScreenController.imageFileList.length == 5
-          ? fiveImageSelectedModule(collageScreenController.selectedIndex.value)
-          : collageScreenController.imageFileList.length == 6
-          ? sixImageSelectedModule(collageScreenController.selectedIndex.value)
-          : collageScreenController.imageFileList.length == 7
-          ? sevenImageSelectedModule(collageScreenController.selectedIndex.value)
-              : Container(),
+                  ? fourImageSelectedModule(
+                      collageScreenController.selectedIndex.value)
+                  : collageScreenController.imageFileList.length == 5
+                      ? fiveImageSelectedModule(
+                          collageScreenController.selectedIndex.value)
+                      : collageScreenController.imageFileList.length == 6
+                          ? sixImageSelectedModule(
+                              collageScreenController.selectedIndex.value)
+                          : collageScreenController.imageFileList.length == 7
+                              ? sevenImageSelectedModule(
+                                  collageScreenController.selectedIndex.value)
+                              : Container(),
     );
   }
 
   Widget twoImageSelectedModule(int selectedIndex) {
     return Obx(() => selectedIndex == 0
         ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Stack(
-            children: [
-              // Container(
-              //   color: collageScreenController
-              //       .borderColor[collageScreenController.activeColor.value],
-              //   child: collageScreenController.isActiveWallpaper.value ?
-              //   Image.asset("${collageScreenController.wallpapers[collageScreenController.activeWallpaper.value]}", fit: BoxFit.fill,) :
-              //   collageScreenController.file != null ? Image.file(collageScreenController.file!, fit: BoxFit.fill,) :null,
-              // ),
-              Row(
-                children: [
-                  SingleImageShowModule(
-                      // scale: collageScreenController.scale.value,
-                      // previousScale:
-                      //     collageScreenController.previousScale.value,
-                      index: 0),
-                  SizedBox(width: 5),
-                  SingleImageShowModule(
-                      // scale: collageScreenController.scale1.value,
-                      // previousScale:
-                      //     collageScreenController.previousScale1.value,
-                      index: 1),
-                ],
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 1
-            ? Container(
-              decoration: collageMainImageBoxDecoration(),
-              child: Column(
-                children: [
-                  SingleImageShowModule(
-                      // scale: collageScreenController.scale.value,
-                      // previousScale:
-                      //     collageScreenController.previousScale.value,
-                      index: 0),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(
-                      // scale: collageScreenController.scale1.value,
-                      // previousScale:
-                      //     collageScreenController.previousScale1.value,
-                      index: 1),
-                ],
-              ),
-            )
-            : selectedIndex == 2
-                ? Container(
-                  decoration: collageMainImageBoxDecoration(),
-                  child: Column(
-                    children: [
-                      SingleImageShowModule(
+            decoration: collageMainImageBoxDecoration(),
+            child: Stack(
+              children: [
+                // Container(
+                //   color: collageScreenController
+                //       .borderColor[collageScreenController.activeColor.value],
+                //   child: collageScreenController.isActiveWallpaper.value ?
+                //   Image.asset("${collageScreenController.wallpapers[collageScreenController.activeWallpaper.value]}", fit: BoxFit.fill,) :
+                //   collageScreenController.file != null ? Image.file(collageScreenController.file!, fit: BoxFit.fill,) :null,
+                // ),
+                Row(
+                  children: [
+                    SingleImageShowModule(
                         // scale: collageScreenController.scale.value,
                         // previousScale:
                         //     collageScreenController.previousScale.value,
-                        index: 0, flex: 2,
-                      ),
-                      SizedBox(height: 5),
-                      SingleImageShowModule(
+                        index: 0),
+                    SizedBox(width: 5),
+                    SingleImageShowModule(
                         // scale: collageScreenController.scale1.value,
-                        // previousScale: collageScreenController
-                        //     .previousScale1.value,
-                        index: 1, flex: 1,
-                      ),
-                    ],
-                  ),
-                )
+                        // previousScale:
+                        //     collageScreenController.previousScale1.value,
+                        index: 1),
+                  ],
+                ),
+              ],
+            ),
+          )
+        : selectedIndex == 1
+            ? Container(
+                decoration: collageMainImageBoxDecoration(),
+                child: Column(
+                  children: [
+                    SingleImageShowModule(
+                        // scale: collageScreenController.scale.value,
+                        // previousScale:
+                        //     collageScreenController.previousScale.value,
+                        index: 0),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(
+                        // scale: collageScreenController.scale1.value,
+                        // previousScale:
+                        //     collageScreenController.previousScale1.value,
+                        index: 1),
+                  ],
+                ),
+              )
+            : selectedIndex == 2
+                ? Container(
+                    decoration: collageMainImageBoxDecoration(),
+                    child: Column(
+                      children: [
+                        SingleImageShowModule(
+                          // scale: collageScreenController.scale.value,
+                          // previousScale:
+                          //     collageScreenController.previousScale.value,
+                          index: 0, flex: 2,
+                        ),
+                        SizedBox(height: 5),
+                        SingleImageShowModule(
+                          // scale: collageScreenController.scale1.value,
+                          // previousScale: collageScreenController
+                          //     .previousScale1.value,
+                          index: 1, flex: 1,
+                        ),
+                      ],
+                    ),
+                  )
                 : selectedIndex == 3
                     ? Container(
-                      decoration: collageMainImageBoxDecoration(),
-                      child: Column(
-                        children: [
-                          SingleImageShowModule(
-                            // scale: collageScreenController.scale.value,
-                            // previousScale: collageScreenController
-                            //     .previousScale.value,
-                            index: 0, flex: 1,
-                          ),
-                          SizedBox(height: 5),
-                          SingleImageShowModule(
-                            // scale: collageScreenController.scale1.value,
-                            // previousScale: collageScreenController
-                            //     .previousScale1.value,
-                            index: 1, flex: 2,
-                          ),
-                        ],
-                      ),
-                    )
+                        decoration: collageMainImageBoxDecoration(),
+                        child: Column(
+                          children: [
+                            SingleImageShowModule(
+                              // scale: collageScreenController.scale.value,
+                              // previousScale: collageScreenController
+                              //     .previousScale.value,
+                              index: 0, flex: 1,
+                            ),
+                            SizedBox(height: 5),
+                            SingleImageShowModule(
+                              // scale: collageScreenController.scale1.value,
+                              // previousScale: collageScreenController
+                              //     .previousScale1.value,
+                              index: 1, flex: 2,
+                            ),
+                          ],
+                        ),
+                      )
                     : selectedIndex == 4
                         ? Container(
-                          decoration: collageMainImageBoxDecoration(),
-                          child: Row(
-                            children: [
-                              SingleImageShowModule(
-                                // scale:
-                                //     collageScreenController.scale.value,
-                                // previousScale: collageScreenController
-                                //     .previousScale.value,
-                                index: 0, flex: 1,
-                              ),
-                              SizedBox(width: 5),
-                              SingleImageShowModule(
-                                // scale: collageScreenController
-                                //     .scale1.value,
-                                // previousScale: collageScreenController
-                                //     .previousScale1.value,
-                                index: 1, flex: 2,
-                              ),
-                            ],
-                          ),
-                        )
+                            decoration: collageMainImageBoxDecoration(),
+                            child: Row(
+                              children: [
+                                SingleImageShowModule(
+                                  // scale:
+                                  //     collageScreenController.scale.value,
+                                  // previousScale: collageScreenController
+                                  //     .previousScale.value,
+                                  index: 0, flex: 1,
+                                ),
+                                SizedBox(width: 5),
+                                SingleImageShowModule(
+                                  // scale: collageScreenController
+                                  //     .scale1.value,
+                                  // previousScale: collageScreenController
+                                  //     .previousScale1.value,
+                                  index: 1, flex: 2,
+                                ),
+                              ],
+                            ),
+                          )
                         : selectedIndex == 5
                             ? Container(
-                              decoration: collageMainImageBoxDecoration(),
-                              child: Row(
-                                children: [
-                                  SingleImageShowModule(
-                                    // scale: collageScreenController
-                                    //     .scale.value,
-                                    // previousScale:
-                                    //     collageScreenController
-                                    //         .previousScale.value,
-                                    index: 0, flex: 2,
-                                  ),
-                                  SizedBox(width: 5),
-                                  SingleImageShowModule(
-                                    // scale: collageScreenController
-                                    //     .scale1.value,
-                                    // previousScale:
-                                    //     collageScreenController
-                                    //         .previousScale1.value,
-                                    index: 1, flex: 1,
-                                  ),
-                                ],
-                              ),
-                            )
+                                decoration: collageMainImageBoxDecoration(),
+                                child: Row(
+                                  children: [
+                                    SingleImageShowModule(
+                                      // scale: collageScreenController
+                                      //     .scale.value,
+                                      // previousScale:
+                                      //     collageScreenController
+                                      //         .previousScale.value,
+                                      index: 0, flex: 2,
+                                    ),
+                                    SizedBox(width: 5),
+                                    SingleImageShowModule(
+                                      // scale: collageScreenController
+                                      //     .scale1.value,
+                                      // previousScale:
+                                      //     collageScreenController
+                                      //         .previousScale1.value,
+                                      index: 1, flex: 1,
+                                    ),
+                                  ],
+                                ),
+                              )
                             : selectedIndex == 6
                                 ? Container(
-                                  decoration:
-                                      collageMainImageBoxDecoration(),
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Expanded(child: Container()),
-                                            SingleImageShowModule(
-                                              // scale:
-                                              //     collageScreenController
-                                              //         .scale.value,
-                                              // previousScale:
-                                              //     collageScreenController
-                                              //         .previousScale
-                                              //         .value,
-                                              index: 0, flex: 1,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            SingleImageShowModule(
-                                              // scale:
-                                              //     collageScreenController
-                                              //         .scale1.value,
-                                              // previousScale:
-                                              //     collageScreenController
-                                              //         .previousScale1
-                                              //         .value,
-                                              index: 1, flex: 1,
-                                            ),
-                                            Expanded(child: Container()),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                                : selectedIndex == 7
-                                    ? Container(
-                                      decoration:
-                                          collageMainImageBoxDecoration(),
-                                      child: Column(
-                                        children: [
-                                          Expanded(
-                                            child: Row(
-                                              children: [
-                                                SingleImageShowModule(
-                                                  // scale:
-                                                  //     collageScreenController
-                                                  //         .scale.value,
-                                                  // previousScale:
-                                                  //     collageScreenController
-                                                  //         .previousScale
-                                                  //         .value,
-                                                  index: 0, flex: 1,
-                                                ),
-                                                Expanded(
-                                                    child: Container()),
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                    child: Container()),
-                                                // SizedBox(width: 5),
-                                                SingleImageShowModule(
-                                                  // scale:
-                                                  //     collageScreenController
-                                                  //         .scale1.value,
-                                                  // previousScale:
-                                                  //     collageScreenController
-                                                  //         .previousScale1
-                                                  //         .value,
-                                                  index: 1, flex: 1,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                    : selectedIndex == 8
-                                        ? Container(
-                                          decoration:
-                                              collageMainImageBoxDecoration(),
+                                    decoration: collageMainImageBoxDecoration(),
+                                    child: Column(
+                                      children: [
+                                        Expanded(
                                           child: Row(
                                             children: [
-                                              Expanded(
-                                                child: Column(
-                                                  children: [
-                                                    Expanded(
-                                                        flex: 1,
-                                                        child: Container()),
-                                                    SizedBox(width: 5),
-                                                    SingleImageShowModule(
-                                                      index: 0,
-                                                      flex: 2,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(width: 5),
-                                              Expanded(
-                                                child: Column(
-                                                  children: [
-                                                    SingleImageShowModule(
-                                                      index: 1,
-                                                      flex: 2,
-                                                    ),
-                                                    SizedBox(width: 5),
-                                                    Expanded(
-                                                        flex: 1,
-                                                        child: Container()),
-                                                  ],
-                                                ),
+                                              Expanded(child: Container()),
+                                              SingleImageShowModule(
+                                                // scale:
+                                                //     collageScreenController
+                                                //         .scale.value,
+                                                // previousScale:
+                                                //     collageScreenController
+                                                //         .previousScale
+                                                //         .value,
+                                                index: 0, flex: 1,
                                               ),
                                             ],
                                           ),
-                                        )
-                                        : selectedIndex == 9
-                                            ? Container(
-                                              decoration:
-                                                  collageMainImageBoxDecoration(),
-                                              child: Column(
+                                        ),
+                                        Expanded(
+                                          child: Row(
+                                            children: [
+                                              SingleImageShowModule(
+                                                // scale:
+                                                //     collageScreenController
+                                                //         .scale1.value,
+                                                // previousScale:
+                                                //     collageScreenController
+                                                //         .previousScale1
+                                                //         .value,
+                                                index: 1, flex: 1,
+                                              ),
+                                              Expanded(child: Container()),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : selectedIndex == 7
+                                    ? Container(
+                                        decoration:
+                                            collageMainImageBoxDecoration(),
+                                        child: Column(
+                                          children: [
+                                            Expanded(
+                                              child: Row(
                                                 children: [
-                                                  Expanded(
-                                                    child: Row(
-                                                      children: [
-                                                        SingleImageShowModule(
-                                                          index: 0,
-                                                          flex: 2,
-                                                        ),
-                                                        SizedBox(width: 5),
-                                                        Expanded(
-                                                            flex: 1,
-                                                            child:
-                                                                Container()),
-                                                      ],
-                                                    ),
+                                                  SingleImageShowModule(
+                                                    // scale:
+                                                    //     collageScreenController
+                                                    //         .scale.value,
+                                                    // previousScale:
+                                                    //     collageScreenController
+                                                    //         .previousScale
+                                                    //         .value,
+                                                    index: 0, flex: 1,
                                                   ),
-                                                  SizedBox(height: 5),
-                                                  Expanded(
-                                                    child: Row(
-                                                      children: [
-                                                        Expanded(
-                                                            flex: 1,
-                                                            child:
-                                                                Container()),
-                                                        SizedBox(width: 5),
-                                                        SingleImageShowModule(
-                                                          index: 1,
-                                                          flex: 2,
-                                                        ),
-                                                      ],
-                                                    ),
+                                                  Expanded(child: Container()),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Row(
+                                                children: [
+                                                  Expanded(child: Container()),
+                                                  // SizedBox(width: 5),
+                                                  SingleImageShowModule(
+                                                    // scale:
+                                                    //     collageScreenController
+                                                    //         .scale1.value,
+                                                    // previousScale:
+                                                    //     collageScreenController
+                                                    //         .previousScale1
+                                                    //         .value,
+                                                    index: 1, flex: 1,
                                                   ),
                                                 ],
                                               ),
-                                            )
-                                            : selectedIndex == 10
-                                                ? Container(
-                                                  decoration:
-                                                      collageMainImageBoxDecoration(),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : selectedIndex == 8
+                                        ? Container(
+                                            decoration:
+                                                collageMainImageBoxDecoration(),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
                                                   child: Column(
                                                     children: [
                                                       Expanded(
-                                                        child: Container(),
-                                                      ),
-                                                      Expanded(
-                                                        child: Row(
-                                                          children: [
-                                                            SingleImageShowModule(
-                                                              index: 0,
-                                                              flex: 1,
-                                                            ),
-                                                            SizedBox(
-                                                                width: 5),
-                                                            SingleImageShowModule(
-                                                              index: 1,
-                                                              flex: 1,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: Container(),
+                                                          flex: 1,
+                                                          child: Container()),
+                                                      SizedBox(width: 5),
+                                                      SingleImageShowModule(
+                                                        index: 0,
+                                                        flex: 2,
                                                       ),
                                                     ],
                                                   ),
-                                                )
-                                                : selectedIndex == 11
-                                                    ? Container(
-                                                      decoration:
-                                                          collageMainImageBoxDecoration(),
+                                                ),
+                                                SizedBox(width: 5),
+                                                Expanded(
+                                                  child: Column(
+                                                    children: [
+                                                      SingleImageShowModule(
+                                                        index: 1,
+                                                        flex: 2,
+                                                      ),
+                                                      SizedBox(width: 5),
+                                                      Expanded(
+                                                          flex: 1,
+                                                          child: Container()),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : selectedIndex == 9
+                                            ? Container(
+                                                decoration:
+                                                    collageMainImageBoxDecoration(),
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
                                                       child: Row(
                                                         children: [
-                                                          Expanded(
-                                                            child: Column(
-                                                              children: [
-                                                                SingleImageShowModule(
-                                                                    index:
-                                                                        0),
-                                                                SizedBox(
-                                                                    height:
-                                                                        5),
-                                                                SingleImageShowModule(
-                                                                    index:
-                                                                        1),
-                                                              ],
-                                                            ),
+                                                          SingleImageShowModule(
+                                                            index: 0,
+                                                            flex: 2,
                                                           ),
+                                                          SizedBox(width: 5),
                                                           Expanded(
+                                                              flex: 1,
                                                               child:
                                                                   Container()),
                                                         ],
                                                       ),
-                                                    )
+                                                    ),
+                                                    SizedBox(height: 5),
+                                                    Expanded(
+                                                      child: Row(
+                                                        children: [
+                                                          Expanded(
+                                                              flex: 1,
+                                                              child:
+                                                                  Container()),
+                                                          SizedBox(width: 5),
+                                                          SingleImageShowModule(
+                                                            index: 1,
+                                                            flex: 2,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : selectedIndex == 10
+                                                ? Container(
+                                                    decoration:
+                                                        collageMainImageBoxDecoration(),
+                                                    child: Column(
+                                                      children: [
+                                                        Expanded(
+                                                          child: Container(),
+                                                        ),
+                                                        Expanded(
+                                                          child: Row(
+                                                            children: [
+                                                              SingleImageShowModule(
+                                                                index: 0,
+                                                                flex: 1,
+                                                              ),
+                                                              SizedBox(
+                                                                  width: 5),
+                                                              SingleImageShowModule(
+                                                                index: 1,
+                                                                flex: 1,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Container(),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                : selectedIndex == 11
+                                                    ? Container(
+                                                        decoration:
+                                                            collageMainImageBoxDecoration(),
+                                                        child: Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: Column(
+                                                                children: [
+                                                                  SingleImageShowModule(
+                                                                      index: 0),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          5),
+                                                                  SingleImageShowModule(
+                                                                      index: 1),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                                child:
+                                                                    Container()),
+                                                          ],
+                                                        ),
+                                                      )
                                                     : Container());
   }
 
   Widget threeImageSelectedModule(int selectedIndex) {
     return Obx(() => selectedIndex == 0
         ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 1),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 2),
-            ],
-          ),
-        )
+            decoration: collageMainImageBoxDecoration(),
+            child: Row(
+              children: [
+                SingleImageShowModule(index: 0),
+                SizedBox(width: 5),
+                SingleImageShowModule(index: 1),
+                SizedBox(width: 5),
+                SingleImageShowModule(index: 2),
+              ],
+            ),
+          )
         : selectedIndex == 1
             ? Container(
-              decoration: collageMainImageBoxDecoration(),
-              child: Column(
-                children: [
-                  SingleImageShowModule(index: 0),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 1),
-                  SizedBox(height: 5),
-                  SingleImageShowModule(index: 2),
-                ],
-              ),
-            )
+                decoration: collageMainImageBoxDecoration(),
+                child: Column(
+                  children: [
+                    SingleImageShowModule(index: 0),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 1),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 2),
+                  ],
+                ),
+              )
             : selectedIndex == 2
                 ? Container(
-                  decoration: collageMainImageBoxDecoration(),
-                  child: Column(
-                    children: [
-                      SingleImageShowModule(index: 0),
-                      SizedBox(height: 5),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            SingleImageShowModule(index: 1),
-                            SizedBox(width: 5),
-                            SingleImageShowModule(index: 2),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                )
-                : selectedIndex == 3
-                    ? Container(
-                      decoration: collageMainImageBoxDecoration(),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Row(
-                              children: [
-                                SingleImageShowModule(index: 0),
-                                SizedBox(width: 5),
-                                SingleImageShowModule(index: 1),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          SingleImageShowModule(index: 2),
-                        ],
-                      ),
-                    )
-                    : selectedIndex == 4
-                        ? Container(
-                          decoration: collageMainImageBoxDecoration(),
+                    decoration: collageMainImageBoxDecoration(),
+                    child: Column(
+                      children: [
+                        SingleImageShowModule(index: 0),
+                        SizedBox(height: 5),
+                        Expanded(
                           child: Row(
                             children: [
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    SingleImageShowModule(index: 0),
-                                    SizedBox(height: 5),
-                                    SingleImageShowModule(index: 1),
-                                  ],
-                                ),
-                              ),
+                              SingleImageShowModule(index: 1),
                               SizedBox(width: 5),
                               SingleImageShowModule(index: 2),
                             ],
                           ),
                         )
-                        : selectedIndex == 5
-                            ? Container(
-                              decoration: collageMainImageBoxDecoration(),
+                      ],
+                    ),
+                  )
+                : selectedIndex == 3
+                    ? Container(
+                        decoration: collageMainImageBoxDecoration(),
+                        child: Column(
+                          children: [
+                            Expanded(
                               child: Row(
                                 children: [
                                   SingleImageShowModule(index: 0),
                                   SizedBox(width: 5),
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        SingleImageShowModule(index: 1),
-                                        SizedBox(height: 5),
-                                        SingleImageShowModule(index: 2),
-                                      ],
-                                    ),
-                                  ),
+                                  SingleImageShowModule(index: 1),
                                 ],
                               ),
-                            )
-                            : selectedIndex == 6
-                                ? Container(
-                                  decoration:
-                                      collageMainImageBoxDecoration(),
+                            ),
+                            SizedBox(height: 5),
+                            SingleImageShowModule(index: 2),
+                          ],
+                        ),
+                      )
+                    : selectedIndex == 4
+                        ? Container(
+                            decoration: collageMainImageBoxDecoration(),
+                            child: Row(
+                              children: [
+                                Expanded(
                                   child: Column(
                                     children: [
-                                      Expanded(
-                                        flex: 3,
-                                        child: Row(
-                                          children: [
-                                            SingleImageShowModule(index: 0),
-                                            SizedBox(width: 5),
-                                            SingleImageShowModule(index: 1),
-                                            SizedBox(width: 5),
-                                            SingleImageShowModule(index: 2),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Container(),
-                                      ),
+                                      SingleImageShowModule(index: 0),
+                                      SizedBox(height: 5),
+                                      SingleImageShowModule(index: 1),
                                     ],
                                   ),
-                                )
+                                ),
+                                SizedBox(width: 5),
+                                SingleImageShowModule(index: 2),
+                              ],
+                            ),
+                          )
+                        : selectedIndex == 5
+                            ? Container(
+                                decoration: collageMainImageBoxDecoration(),
+                                child: Row(
+                                  children: [
+                                    SingleImageShowModule(index: 0),
+                                    SizedBox(width: 5),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          SingleImageShowModule(index: 1),
+                                          SizedBox(height: 5),
+                                          SingleImageShowModule(index: 2),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : selectedIndex == 6
+                                ? Container(
+                                    decoration: collageMainImageBoxDecoration(),
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          flex: 3,
+                                          child: Row(
+                                            children: [
+                                              SingleImageShowModule(index: 0),
+                                              SizedBox(width: 5),
+                                              SingleImageShowModule(index: 1),
+                                              SizedBox(width: 5),
+                                              SingleImageShowModule(index: 2),
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Container(),
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 : selectedIndex == 7
                                     ? Container(
                                         decoration:
@@ -879,55 +875,55 @@ class _ImageListModuleState extends State<ImageListModule> {
                                         ))
                                     : selectedIndex == 8
                                         ? Container(
-                                          decoration:
-                                              collageMainImageBoxDecoration(),
-                                          child: Column(
-                                            children: [
-                                              Expanded(
-                                                child: Row(
-                                                  children: [
-                                                    SingleImageShowModule(
-                                                        index: 0),
-                                                    Expanded(
-                                                      child: Container(),
-                                                    ),
-                                                    Expanded(
-                                                      child: Container(),
-                                                    )
-                                                  ],
+                                            decoration:
+                                                collageMainImageBoxDecoration(),
+                                            child: Column(
+                                              children: [
+                                                Expanded(
+                                                  child: Row(
+                                                    children: [
+                                                      SingleImageShowModule(
+                                                          index: 0),
+                                                      Expanded(
+                                                        child: Container(),
+                                                      ),
+                                                      Expanded(
+                                                        child: Container(),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              Expanded(
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                      child: Container(),
-                                                    ),
-                                                    SingleImageShowModule(
-                                                        index: 1),
-                                                    Expanded(
-                                                      child: Container(),
-                                                    )
-                                                  ],
+                                                Expanded(
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(),
+                                                      ),
+                                                      SingleImageShowModule(
+                                                          index: 1),
+                                                      Expanded(
+                                                        child: Container(),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              Expanded(
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                      child: Container(),
-                                                    ),
-                                                    Expanded(
-                                                      child: Container(),
-                                                    ),
-                                                    SingleImageShowModule(
-                                                        index: 2),
-                                                  ],
+                                                Expanded(
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(),
+                                                      ),
+                                                      Expanded(
+                                                        child: Container(),
+                                                      ),
+                                                      SingleImageShowModule(
+                                                          index: 2),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
+                                              ],
+                                            ),
+                                          )
                                         : selectedIndex == 9
                                             ? Container(
                                                 decoration:
@@ -944,8 +940,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                             index: 1,
                                                             flex: 1,
                                                           ),
-                                                          SizedBox(
-                                                              height: 5),
+                                                          SizedBox(height: 5),
                                                           SingleImageShowModule(
                                                             index: 2,
                                                             flex: 2,
@@ -970,8 +965,7 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                                     Container(),
                                                               ),
                                                               SizedBox(
-                                                                  height:
-                                                                      5),
+                                                                  height: 5),
                                                               SingleImageShowModule(
                                                                 index: 0,
                                                                 flex: 2,
@@ -989,2669 +983,2918 @@ class _ImageListModuleState extends State<ImageListModule> {
                                                     ))
                                                 : selectedIndex == 11
                                                     ? Container(
-                                                      decoration:
-                                                          collageMainImageBoxDecoration(),
-                                                      child: Column(
-                                                        children: [
-                                                          Expanded(
+                                                        decoration:
+                                                            collageMainImageBoxDecoration(),
+                                                        child: Column(
+                                                          children: [
+                                                            Expanded(
+                                                              child: Row(
+                                                                children: [
+                                                                  SingleImageShowModule(
+                                                                      index: 0),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          5),
+                                                                  Expanded(
+                                                                    child:
+                                                                        Container(),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 5),
+                                                            Expanded(
+                                                              child: Row(
+                                                                children: [
+                                                                  SingleImageShowModule(
+                                                                      index: 1),
+                                                                  SizedBox(
+                                                                      width: 5),
+                                                                  SingleImageShowModule(
+                                                                      index: 2),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    : selectedIndex == 12
+                                                        ? Container(
+                                                            decoration:
+                                                                collageMainImageBoxDecoration(),
                                                             child: Row(
                                                               children: [
                                                                 SingleImageShowModule(
-                                                                    index:
-                                                                        0),
+                                                                    index: 0),
                                                                 SizedBox(
-                                                                    height:
-                                                                        5),
+                                                                    width: 5),
                                                                 Expanded(
-                                                                  child:
-                                                                      Container(),
+                                                                  flex: 2,
+                                                                  child: Column(
+                                                                    children: [
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              1),
+                                                                      SizedBox(
+                                                                          height:
+                                                                              5),
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              2),
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                               ],
                                                             ),
-                                                          ),
-                                                          SizedBox(
-                                                              height: 5),
-                                                          Expanded(
-                                                            child: Row(
-                                                              children: [
-                                                                SingleImageShowModule(
-                                                                    index:
-                                                                        1),
-                                                                SizedBox(
-                                                                    width:
-                                                                        5),
-                                                                SingleImageShowModule(
-                                                                    index:
-                                                                        2),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    )
-                                                    : selectedIndex == 12
-                                                        ? Container(
-                                                          decoration:
-                                                              collageMainImageBoxDecoration(),
-                                                          child: Row(
-                                                            children: [
-                                                              SingleImageShowModule(
-                                                                  index: 0),
-                                                              SizedBox(
-                                                                  width: 5),
-                                                              Expanded(
-                                                                flex: 2,
-                                                                child:
-                                                                    Column(
+                                                          )
+                                                        : selectedIndex == 13
+                                                            ? Container(
+                                                                decoration:
+                                                                    collageMainImageBoxDecoration(),
+                                                                child: Row(
                                                                   children: [
                                                                     SingleImageShowModule(
                                                                         index:
-                                                                            1),
+                                                                            0),
                                                                     SizedBox(
-                                                                        height:
+                                                                        width:
+                                                                            5),
+                                                                    SingleImageShowModule(
+                                                                        index:
+                                                                            1,
+                                                                        flex:
+                                                                            2),
+                                                                    SizedBox(
+                                                                        width:
                                                                             5),
                                                                     SingleImageShowModule(
                                                                         index:
                                                                             2),
                                                                   ],
                                                                 ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )
-                                                        : selectedIndex == 13
-                                                            ? Container(
-                                                                  decoration:
-                                                              collageMainImageBoxDecoration(),
-                                                                  child: Row(
-                                                            children: [
-                                                              SingleImageShowModule(
-                                                                  index:
-                                                                      0),
-                                                              SizedBox(
-                                                                  width:
-                                                                      5),
-                                                              SingleImageShowModule(
-                                                                  index:
-                                                                      1,
-                                                                  flex:
-                                                                      2),
-                                                              SizedBox(
-                                                                  width:
-                                                                      5),
-                                                              SingleImageShowModule(
-                                                                  index:
-                                                                      2),
-                                                            ],
-                                                                  ),
-                                                                )
+                                                              )
                                                             : Container());
   }
 
-Widget fourImageSelectedModule(int selectedIndex){
-    return Obx(() =>
-    selectedIndex == 0
+  Widget fourImageSelectedModule(int selectedIndex) {
+    return Obx(() => selectedIndex == 0
         ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
+            decoration: collageMainImageBoxDecoration(),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      SingleImageShowModule(index: 0),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 1),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                  ],
+                SizedBox(height: 5),
+                Expanded(
+                  child: Row(
+                    children: [
+                      SingleImageShowModule(index: 2),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 3),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        )
+              ],
+            ),
+          )
         : selectedIndex == 1
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1,  flex:2,),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 2,  flex:2,),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 2
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
+            ? Container(
+                decoration: collageMainImageBoxDecoration(),
                 child: Column(
                   children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1,  flex:2,),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 2,  flex:2,),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 3),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 3
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 1),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 2),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 3),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 4
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 5
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-
-              SizedBox(height: 5),
-              SingleImageShowModule(index: 3),
-
-            ],
-          ),
-        )
-        : selectedIndex == 6
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0,  flex:2,),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 2,  flex:2,),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 3),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 7
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1,  flex:2,),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 3,  flex:2,),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 8
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(width: 5),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 1,  flex:2,),
-                    SizedBox(height: 5),
                     Expanded(
-                      flex: 1,
                       child: Row(
                         children: [
-                          SingleImageShowModule(index: 2),
+                          SingleImageShowModule(index: 0),
+                          SizedBox(width: 5),
+                          SingleImageShowModule(
+                            index: 1,
+                            flex: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          SingleImageShowModule(
+                            index: 2,
+                            flex: 2,
+                          ),
                           SizedBox(width: 5),
                           SingleImageShowModule(index: 3),
                         ],
                       ),
-                    )
-                  ],
-                ),
-              ),
-
-            ],
-          ),
-        )
-        : selectedIndex == 9
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              SingleImageShowModule(index: 3),
-
-            ],
-          ),
-        )
-        : selectedIndex == 10
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 1),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 3),
-
-            ],
-          ),
-        )
-        : selectedIndex == 11
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              SingleImageShowModule(index: 2),
-              SizedBox(height: 5),
-              SingleImageShowModule(index: 3),
-            ],
-          ),
-        )
-        : selectedIndex == 12
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(height: 5),
-              SingleImageShowModule(index: 1),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 13
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 1),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 2),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 3),
-            ],
-          ),
-        )
-        : selectedIndex == 14
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(height: 5),
-              SingleImageShowModule(index: 1),
-              SizedBox(height: 5),
-              SingleImageShowModule(index: 2),
-              SizedBox(height: 5),
-              SingleImageShowModule(index: 3),
-            ],
-          ),
-        )
-        : selectedIndex == 15
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: Container(),
-                    ),
-                    SingleImageShowModule(index: 0, flex:4,),
-                    Expanded(
-                      flex: 1,
-                      child: Container(),
                     ),
                   ],
                 ),
-              ),
-
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Container(),
-                    ),
-                    SingleImageShowModule(index: 1, flex:4,),
-                    Expanded(
-                      flex: 2,
-                      child: Container(),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Container(),
-                    ),
-                    SingleImageShowModule(index: 2, flex:4,),
-                    Expanded(
-                      flex: 3,
-                      child: Container(),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(),
-                    ),
-                    SingleImageShowModule(index: 3, flex:4,),
-                    Expanded(
-                      flex: 4,
-                      child: Container(),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 16
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Column(
-                children: [
-                  Expanded(
+              )
+            : selectedIndex == 2
+                ? Container(
+                    decoration: collageMainImageBoxDecoration(),
                     child: Row(
                       children: [
-                        SingleImageShowModule(index: 0),
-                        SizedBox(width: 5),
-                        SingleImageShowModule(index: 1),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        SingleImageShowModule(index: 2),
-                        SizedBox(width: 5),
-                        SingleImageShowModule(index: 3),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-
-              Container(
-                height: 70, width: 70,
-                decoration: BoxDecoration(
-                  color: collageScreenController
-                      .borderColor[collageScreenController.activeColor.value],
-                  image: collageScreenController.isActiveWallpaper.value ?
-                  DecorationImage(
-                    image: AssetImage("${collageScreenController.wallpapers[collageScreenController.activeWallpaper.value]}"),
-                    fit: BoxFit.fill,
-                  ) : null,
-                ),
-              )
-            ],
-          ),
-        )
-        : Container());
-  }
-
-Widget fiveImageSelectedModule(int selectedIndex){
-    return Obx(() =>
-    selectedIndex == 0
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0, flex:2,),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 2, flex:2,),
-                    SizedBox(height: 5),
-                    Expanded(
-                      flex: 1,
-                      child: Row(
-                        children: [
-                          SingleImageShowModule(index: 3),
-                          SizedBox(width: 5),
-                          SingleImageShowModule(index: 4),
-                        ],
-                      ),
-                    )
-
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 1
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0, flex:2,),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-
-              SingleImageShowModule(index: 2),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4, flex:2,),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 2
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0, flex:2,),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 2),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 4, flex:2,),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 3
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              SingleImageShowModule(index: 2),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 4
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                  child: Column(
-                    children: [
-                      SingleImageShowModule(index: 0),
-                      SizedBox(height: 5),
-                      SingleImageShowModule(index: 1),
-                    ],
-                  )
-              ),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 2),
-              SizedBox(width: 5),
-              Expanded(
-                  child: Column(
-                    children: [
-                      SingleImageShowModule(index: 3),
-                      SizedBox(height: 5),
-                      SingleImageShowModule(index: 4),
-                    ],
-                  )
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 5
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4),
-
-                  ],
-                ),
-              ),
-
-            ],
-          ),
-        )
-        : selectedIndex == 6
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              SingleImageShowModule(index: 0, flex:2,),
-              SizedBox(height: 5),
-              Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 7
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                flex:2,
-                child: Row(
-                    children: [
-                      SingleImageShowModule(index: 0),
-                      SizedBox(width: 5),
-                      SingleImageShowModule(index: 1),
-                    ]
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                flex:1,
-                child: Row(
-                    children: [
-                      SingleImageShowModule(index: 2),
-                      SizedBox(width: 5),
-                      SingleImageShowModule(index: 3),
-                      SizedBox(width: 5),
-                      SingleImageShowModule(index: 4),
-                    ]
-                ),
-              ),
-
-
-            ],
-          ),
-        )
-        : selectedIndex == 8
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 3),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 4),
-                  ],
-                ),
-              ),
-
-            ],
-          ),
-        )
-        : selectedIndex == 9
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 1),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 2),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 3),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              SingleImageShowModule(
-                  index: 4),
-
-            ],
-          ),
-        )
-        : selectedIndex == 10
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 1),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 4),
-                  ],
-                ),
-              ),
-
-            ],
-          ),
-        )
-        : selectedIndex == 11
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0, flex:2,),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 3, flex:2,),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 4),
-            ],
-          ),
-        )
-        : selectedIndex == 12
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0, flex:2,),
-                    SizedBox(height:5),
-                    Expanded(
-                        flex:1,
-                        child: Row(
-                            children:[
-                              SingleImageShowModule(index: 1),
-                              SizedBox(width:5),
-                              SingleImageShowModule(index: 2),
-                            ]
-                        )
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(width:5),
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(height:5),
-                    SingleImageShowModule(index: 4, flex:2,),
-
-                  ],
-                ),
-              )
-
-            ],
-          ),
-        )
-        : selectedIndex == 13
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(height: 5),
-              Expanded(
-                flex:2,
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex:2,
-                      child: Row(
-                        children: [
-                          SingleImageShowModule(index: 1),
-                          SizedBox(width: 5),
-                          SingleImageShowModule(index: 2),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    Expanded(
-                      flex:1,
-                      child: Column(
-                        children: [
-                          SingleImageShowModule(index: 3),
-                          SizedBox(height: 5),
-                          SingleImageShowModule(index: 4, flex:2,),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 14
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4, flex:2,),
-                    SizedBox(width: 5),
-                    Expanded(
-                      child: Container(),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 15
-        ?  Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(),
-                    ),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 16
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              SingleImageShowModule(index: 0, flex:2,),
-              SizedBox(width: 5),
-              Expanded(
-                flex:1,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 1),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 2),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 3),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 4),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 17
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(height: 5),
-              Expanded(
-                flex:2,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          SingleImageShowModule(index: 1),
-                          SizedBox(height: 5),
-                          SingleImageShowModule(index: 2),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          SingleImageShowModule(index: 3),
-                          SizedBox(height: 5),
-                          SingleImageShowModule(index: 4),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 18
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 1),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 2),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 3),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 4),
-            ],
-          ),
-        )
-        : selectedIndex == 19
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : Container());
-  }
-
-Widget sixImageSelectedModule(int selectedIndex){
-    return Obx(() =>
-    selectedIndex == 0
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 5),
-
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 1
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 5),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 2
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                flex:2,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0, flex:2,),
-                    SizedBox(height: 5),
-                    Expanded(
-                      flex: 1,
-                      child: Row(
-                          children: [
-                            SingleImageShowModule(index: 1),
-                            SizedBox(width:5),
-                            SingleImageShowModule(index: 2),
-                          ]
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                flex:1,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 4),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 5),
-
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 3
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                flex:1,
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex:1,
-                      child: Row(
-                          children: [
-                            SingleImageShowModule(index: 3),
-                            SizedBox(width:5),
-                            SingleImageShowModule(index: 4),
-                          ]
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 5, flex:2,),
-
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 4
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                  child: Column(
-                    children: [
-                      SingleImageShowModule(index: 0, flex:2,),
-                      SizedBox(height: 5),
-                      SingleImageShowModule(index: 1),
-                    ],
-                  )
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                  child: Column(
-                    children: [
-                      SingleImageShowModule(index: 2),
-                      SizedBox(height: 5),
-                      SingleImageShowModule(index: 3),
-                    ],
-                  )
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                  child: Column(
-                    children: [
-                      SingleImageShowModule(index: 4),
-                      SizedBox(height: 5),
-                      SingleImageShowModule(index: 5, flex:2,),
-                    ],
-                  )
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 5
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0, flex:2,),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                  ],
-                ),
-              ),
-
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 5, flex:2,),
-                  ],
-                ),
-              ),
-
-            ],
-          ),
-        )
-        : selectedIndex == 6
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                    children:[
-                      SingleImageShowModule(index: 0, flex:2,),
-                      SizedBox(height:5),
-                      SingleImageShowModule(index: 1),
-                    ]
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                    children:[
-                      SingleImageShowModule(index: 2),
-                      SizedBox(height:5),
-                      SingleImageShowModule(index: 3, flex:2,),
-                    ]
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                    children:[
-                      SingleImageShowModule(index: 4, flex:2,),
-                      SizedBox(height:5),
-                      SingleImageShowModule(index: 5),
-                    ]
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 7
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                    children: [
-                      SingleImageShowModule(index: 0, flex:2,),
-                      SizedBox(width: 5),
-                      SingleImageShowModule(index: 1),
-                    ]
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                    children: [
-                      SingleImageShowModule(index: 2),
-                      SizedBox(width: 5),
-                      SingleImageShowModule(index: 3, flex:2,),
-                    ]
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                    children: [
-                      SingleImageShowModule(index: 4, flex:2,),
-                      SizedBox(width: 5),
-                      SingleImageShowModule(index: 5),
-                    ]
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 8
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 3, flex:2,),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4, flex:2,),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 5),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                  child: Container()
-              )
-
-            ],
-          ),
-        )
-        : selectedIndex == 9
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                  child: Container()
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 4),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 5),
-                  ],
-                ),
-              ),
-
-
-            ],
-          ),
-        )
-        : selectedIndex == 10
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Row(
-                    children: [
-                      SingleImageShowModule(index: 0),
-                      SizedBox(width: 5),
-                      SingleImageShowModule(index: 1),
-                    ]
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                flex:1,
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 5),
-                  ],
-                ),
-              ),
-
-
-            ],
-          ),
-        )
-        : selectedIndex == 11
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              SingleImageShowModule(index: 0, flex:2,),
-              SizedBox(height: 5),
-              Expanded(
-                flex:1,
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 5),
-                  ],
-                ),
-              ),
-
-            ],
-          ),
-        )
-        : selectedIndex == 12
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(height:5),
-              Expanded(
-                flex: 2,
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 3),
-                  ],
-                ),
-              ),
-              SizedBox(height:5),
-              Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 5),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 13
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-
-              SingleImageShowModule(index: 0),
-              SizedBox(height: 5),
-              Expanded(
-                flex:2,
-                child: Row(
-                  children: [
-                    Expanded(
-                        flex:2,
-                        child: Column(
+                        Expanded(
+                          child: Column(
                             children: [
-                              Expanded(
-                                child: Row(
+                              SingleImageShowModule(index: 0),
+                              SizedBox(height: 5),
+                              SingleImageShowModule(
+                                index: 1,
+                                flex: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              SingleImageShowModule(
+                                index: 2,
+                                flex: 2,
+                              ),
+                              SizedBox(height: 5),
+                              SingleImageShowModule(index: 3),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : selectedIndex == 3
+                    ? Container(
+                        decoration: collageMainImageBoxDecoration(),
+                        child: Row(
+                          children: [
+                            SingleImageShowModule(index: 0),
+                            SizedBox(width: 5),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  SingleImageShowModule(index: 1),
+                                  SizedBox(height: 5),
+                                  SingleImageShowModule(index: 2),
+                                  SizedBox(height: 5),
+                                  SingleImageShowModule(index: 3),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : selectedIndex == 4
+                        ? Container(
+                            decoration: collageMainImageBoxDecoration(),
+                            child: Column(
+                              children: [
+                                SingleImageShowModule(index: 0),
+                                SizedBox(height: 5),
+                                Expanded(
+                                  child: Row(
                                     children: [
                                       SingleImageShowModule(index: 1),
-                                      SizedBox(width:5),
+                                      SizedBox(width: 5),
                                       SingleImageShowModule(index: 2),
-
-                                    ]
-                                ),
-                              ),
-                              SizedBox(height:5),
-                              Expanded(
-                                child: Row(
-                                    children: [
+                                      SizedBox(width: 5),
                                       SingleImageShowModule(index: 3),
-                                      SizedBox(width:5),
-                                      SingleImageShowModule(index: 4),
-
-                                    ]
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : selectedIndex == 5
+                            ? Container(
+                                decoration: collageMainImageBoxDecoration(),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          SingleImageShowModule(index: 0),
+                                          SizedBox(width: 5),
+                                          SingleImageShowModule(index: 1),
+                                          SizedBox(width: 5),
+                                          SingleImageShowModule(index: 2),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 5),
+                                    SingleImageShowModule(index: 3),
+                                  ],
                                 ),
                               )
-                            ]
-                        )
-                    ),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 5),
-                  ],
-                ),
-              ),
-
-            ],
-          ),
-        )
-        : selectedIndex == 14
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 5),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 15
-        ?  Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    Expanded(
-                        child: Column(
-                            children: [
-                              SingleImageShowModule(index: 1),
-                              SizedBox(height: 5),
-                              SingleImageShowModule(index: 2),
-                            ]
-                        )
-                    ),
-
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Column(
-                            children: [
-                              SingleImageShowModule(index: 3),
-                              SizedBox(height:5),
-                              SingleImageShowModule(index: 4),
-                            ]
-                        )
-                    ),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 5),
-
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 16
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                  flex:1,
-                  child: Container()
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                flex:2,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Row(
-                          children:[
-                            SingleImageShowModule(index: 0),
-                            SizedBox(width: 5),
-                            SingleImageShowModule(index: 1),
-                            SizedBox(width: 5),
-                            SingleImageShowModule(index: 2),
-                          ]
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Expanded(
-                      child: Row(
-                          children:[
-                            SingleImageShowModule(index: 3),
-                            SizedBox(width: 5),
-                            SingleImageShowModule(index: 4),
-                            SizedBox(width: 5),
-                            SingleImageShowModule(index: 5),
-                          ]
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                  flex:1,
-                  child: Container()
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 17
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                  flex:1,
-                  child: Container()
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                flex:2,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Row(
-                          children:[
-                            SingleImageShowModule(index: 0),
-                            SizedBox(width: 5),
-                            SingleImageShowModule(index: 1),
-                          ]
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Expanded(
-                      child: Row(
-                          children:[
-                            SingleImageShowModule(index: 2),
-                            SizedBox(width: 5),
-                            SingleImageShowModule(index: 3),
-                          ]
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Expanded(
-                      child: Row(
-                          children:[
-                            SingleImageShowModule(index: 4),
-                            SizedBox(width: 5),
-                            SingleImageShowModule(index: 5),
-                          ]
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                  flex:1,
-                  child: Container()
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 18
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                    children: [
-                      Expanded(
-                          flex:3,
-                          child: Container()
-                      ),
-                      SingleImageShowModule(index: 0),
-                    ]
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                    children: [
-                      Expanded(
-                          flex:2,
-                          child: Container()
-                      ),
-                      SingleImageShowModule(index: 1),
-                      Expanded(
-                          flex:1,
-                          child: Container()
-                      ),
-                    ]
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                    children: [
-                      Expanded(
-                          flex:1,
-                          child: Container()
-                      ),
-                      SingleImageShowModule(index: 2),
-                      Expanded(
-                          flex:1,
-                          child: Container()
-                      ),
-                    ]
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                    children: [
-                      Expanded(
-                          flex:1,
-                          child: Container()
-                      ),
-                      SingleImageShowModule(index: 3),
-                      Expanded(
-                          flex:2,
-                          child: Container()
-                      ),
-                    ]
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                    children: [
-                      Expanded(
-                          flex:1,
-                          child: Container()
-                      ),
-                      SingleImageShowModule(index: 4),
-                      Expanded(
-                          flex:3,
-                          child: Container()
-                      ),
-                    ]
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                    children: [
-                      SingleImageShowModule(index: 5),
-                      Expanded(
-                          flex:3,
-                          child: Container()
-                      ),
-                    ]
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 19
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              SingleImageShowModule(index: 0),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 2),
-
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 5),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : Container());
+                            : selectedIndex == 6
+                                ? Container(
+                                    decoration: collageMainImageBoxDecoration(),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child: Column(
+                                            children: [
+                                              SingleImageShowModule(
+                                                index: 0,
+                                                flex: 2,
+                                              ),
+                                              SizedBox(height: 5),
+                                              SingleImageShowModule(index: 1),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(width: 5),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Column(
+                                            children: [
+                                              SingleImageShowModule(
+                                                index: 2,
+                                                flex: 2,
+                                              ),
+                                              SizedBox(height: 5),
+                                              SingleImageShowModule(index: 3),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : selectedIndex == 7
+                                    ? Container(
+                                        decoration:
+                                            collageMainImageBoxDecoration(),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 1,
+                                              child: Column(
+                                                children: [
+                                                  SingleImageShowModule(
+                                                      index: 0),
+                                                  SizedBox(height: 5),
+                                                  SingleImageShowModule(
+                                                    index: 1,
+                                                    flex: 2,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 5),
+                                            Expanded(
+                                              flex: 2,
+                                              child: Column(
+                                                children: [
+                                                  SingleImageShowModule(
+                                                      index: 2),
+                                                  SizedBox(height: 5),
+                                                  SingleImageShowModule(
+                                                    index: 3,
+                                                    flex: 2,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : selectedIndex == 8
+                                        ? Container(
+                                            decoration:
+                                                collageMainImageBoxDecoration(),
+                                            child: Row(
+                                              children: [
+                                                SingleImageShowModule(index: 0),
+                                                SizedBox(width: 5),
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Column(
+                                                    children: [
+                                                      SingleImageShowModule(
+                                                        index: 1,
+                                                        flex: 2,
+                                                      ),
+                                                      SizedBox(height: 5),
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: Row(
+                                                          children: [
+                                                            SingleImageShowModule(
+                                                                index: 2),
+                                                            SizedBox(width: 5),
+                                                            SingleImageShowModule(
+                                                                index: 3),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : selectedIndex == 9
+                                            ? Container(
+                                                decoration:
+                                                    collageMainImageBoxDecoration(),
+                                                child: Column(
+                                                  children: [
+                                                    SingleImageShowModule(
+                                                        index: 0),
+                                                    SizedBox(height: 5),
+                                                    Expanded(
+                                                      child: Row(
+                                                        children: [
+                                                          SingleImageShowModule(
+                                                              index: 1),
+                                                          SizedBox(width: 5),
+                                                          SingleImageShowModule(
+                                                              index: 2),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 5),
+                                                    SingleImageShowModule(
+                                                        index: 3),
+                                                  ],
+                                                ),
+                                              )
+                                            : selectedIndex == 10
+                                                ? Container(
+                                                    decoration:
+                                                        collageMainImageBoxDecoration(),
+                                                    child: Row(
+                                                      children: [
+                                                        SingleImageShowModule(
+                                                            index: 0),
+                                                        SizedBox(width: 5),
+                                                        Expanded(
+                                                          child: Column(
+                                                            children: [
+                                                              SingleImageShowModule(
+                                                                  index: 1),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                              SingleImageShowModule(
+                                                                  index: 2),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(width: 5),
+                                                        SingleImageShowModule(
+                                                            index: 3),
+                                                      ],
+                                                    ),
+                                                  )
+                                                : selectedIndex == 11
+                                                    ? Container(
+                                                        decoration:
+                                                            collageMainImageBoxDecoration(),
+                                                        child: Column(
+                                                          children: [
+                                                            Expanded(
+                                                              child: Row(
+                                                                children: [
+                                                                  SingleImageShowModule(
+                                                                      index: 0),
+                                                                  SizedBox(
+                                                                      width: 5),
+                                                                  SingleImageShowModule(
+                                                                      index: 1),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            SizedBox(height: 5),
+                                                            SingleImageShowModule(
+                                                                index: 2),
+                                                            SizedBox(height: 5),
+                                                            SingleImageShowModule(
+                                                                index: 3),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    : selectedIndex == 12
+                                                        ? Container(
+                                                            decoration:
+                                                                collageMainImageBoxDecoration(),
+                                                            child: Column(
+                                                              children: [
+                                                                SingleImageShowModule(
+                                                                    index: 0),
+                                                                SizedBox(
+                                                                    height: 5),
+                                                                SingleImageShowModule(
+                                                                    index: 1),
+                                                                SizedBox(
+                                                                    height: 5),
+                                                                Expanded(
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              2),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              5),
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              3),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          )
+                                                        : selectedIndex == 13
+                                                            ? Container(
+                                                                decoration:
+                                                                    collageMainImageBoxDecoration(),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SingleImageShowModule(
+                                                                        index:
+                                                                            0),
+                                                                    SizedBox(
+                                                                        width:
+                                                                            5),
+                                                                    SingleImageShowModule(
+                                                                        index:
+                                                                            1),
+                                                                    SizedBox(
+                                                                        width:
+                                                                            5),
+                                                                    SingleImageShowModule(
+                                                                        index:
+                                                                            2),
+                                                                    SizedBox(
+                                                                        width:
+                                                                            5),
+                                                                    SingleImageShowModule(
+                                                                        index:
+                                                                            3),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            : selectedIndex ==
+                                                                    14
+                                                                ? Container(
+                                                                    decoration:
+                                                                        collageMainImageBoxDecoration(),
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        SingleImageShowModule(
+                                                                            index:
+                                                                                0),
+                                                                        SizedBox(
+                                                                            height:
+                                                                                5),
+                                                                        SingleImageShowModule(
+                                                                            index:
+                                                                                1),
+                                                                        SizedBox(
+                                                                            height:
+                                                                                5),
+                                                                        SingleImageShowModule(
+                                                                            index:
+                                                                                2),
+                                                                        SizedBox(
+                                                                            height:
+                                                                                5),
+                                                                        SingleImageShowModule(
+                                                                            index:
+                                                                                3),
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                : selectedIndex ==
+                                                                        15
+                                                                    ? Container(
+                                                                        decoration:
+                                                                            collageMainImageBoxDecoration(),
+                                                                        child:
+                                                                            Row(
+                                                                          children: [
+                                                                            Expanded(
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  Expanded(
+                                                                                    flex: 4,
+                                                                                    child: Container(),
+                                                                                  ),
+                                                                                  SingleImageShowModule(
+                                                                                    index: 0,
+                                                                                    flex: 4,
+                                                                                  ),
+                                                                                  Expanded(
+                                                                                    flex: 1,
+                                                                                    child: Container(),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            SizedBox(width: 5),
+                                                                            Expanded(
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  Expanded(
+                                                                                    flex: 3,
+                                                                                    child: Container(),
+                                                                                  ),
+                                                                                  SingleImageShowModule(
+                                                                                    index: 1,
+                                                                                    flex: 4,
+                                                                                  ),
+                                                                                  Expanded(
+                                                                                    flex: 2,
+                                                                                    child: Container(),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            SizedBox(width: 5),
+                                                                            Expanded(
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  Expanded(
+                                                                                    flex: 2,
+                                                                                    child: Container(),
+                                                                                  ),
+                                                                                  SingleImageShowModule(
+                                                                                    index: 2,
+                                                                                    flex: 4,
+                                                                                  ),
+                                                                                  Expanded(
+                                                                                    flex: 3,
+                                                                                    child: Container(),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            SizedBox(width: 5),
+                                                                            Expanded(
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  Expanded(
+                                                                                    flex: 1,
+                                                                                    child: Container(),
+                                                                                  ),
+                                                                                  SingleImageShowModule(
+                                                                                    index: 3,
+                                                                                    flex: 4,
+                                                                                  ),
+                                                                                  Expanded(
+                                                                                    flex: 4,
+                                                                                    child: Container(),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    : selectedIndex ==
+                                                                            16
+                                                                        ? Container(
+                                                                            decoration:
+                                                                                collageMainImageBoxDecoration(),
+                                                                            child:
+                                                                                Stack(
+                                                                              alignment: Alignment.center,
+                                                                              children: [
+                                                                                Column(
+                                                                                  children: [
+                                                                                    Expanded(
+                                                                                      child: Row(
+                                                                                        children: [
+                                                                                          SingleImageShowModule(index: 0),
+                                                                                          SizedBox(width: 5),
+                                                                                          SingleImageShowModule(index: 1),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                    SizedBox(height: 5),
+                                                                                    Expanded(
+                                                                                      child: Row(
+                                                                                        children: [
+                                                                                          SingleImageShowModule(index: 2),
+                                                                                          SizedBox(width: 5),
+                                                                                          SingleImageShowModule(index: 3),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                                Container(
+                                                                                  height: 70,
+                                                                                  width: 70,
+                                                                                  decoration: BoxDecoration(
+                                                                                    color: collageScreenController.borderColor[collageScreenController.activeColor.value],
+                                                                                    image: collageScreenController.isActiveWallpaper.value
+                                                                                        ? DecorationImage(
+                                                                                            image: AssetImage("${collageScreenController.wallpapers[collageScreenController.activeWallpaper.value]}"),
+                                                                                            fit: BoxFit.fill,
+                                                                                          )
+                                                                                        : null,
+                                                                                  ),
+                                                                                )
+                                                                              ],
+                                                                            ),
+                                                                          )
+                                                                        : Container());
   }
 
-Widget sevenImageSelectedModule(int selectedIndex){
-    return Obx(() =>
-    selectedIndex == 0
+  Widget fiveImageSelectedModule(int selectedIndex) {
+    return Obx(() => selectedIndex == 0
         ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0, flex:2,),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 5),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 6, flex:2,),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 1
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0, flex:2,),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 3),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 4),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 5),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 6, flex:2,),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 2
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 5),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              SingleImageShowModule(index: 6),
-            ],
-          ),
-        )
-        : selectedIndex == 3
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 4),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 5),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 6),
-            ],
-          ),
-        )
-        : selectedIndex == 4
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                  flex:2,
+            decoration: collageMainImageBoxDecoration(),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
                   child: Column(
                     children: [
-                      SingleImageShowModule(index: 0),
+                      SingleImageShowModule(
+                        index: 0,
+                        flex: 2,
+                      ),
                       SizedBox(height: 5),
                       SingleImageShowModule(index: 1),
-                      SizedBox(height: 5),
-                      SingleImageShowModule(index: 2),
                     ],
-                  )
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                  flex:1,
+                  ),
+                ),
+                SizedBox(width: 5),
+                Expanded(
+                  flex: 2,
                   child: Column(
                     children: [
-                      SingleImageShowModule(index: 3),
+                      SingleImageShowModule(
+                        index: 2,
+                        flex: 2,
+                      ),
                       SizedBox(height: 5),
-                      SingleImageShowModule(index: 4),
-                      SizedBox(height: 5),
-                      SingleImageShowModule(index: 5),
-                      SizedBox(height: 5),
-                      SingleImageShowModule(index: 6),
-                    ],
-                  )
-              ),
-
-            ],
-          ),
-        )
-        : selectedIndex == 5
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                flex:2,
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-
-              SizedBox(height: 5),
-              Expanded(
-                flex:1,
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 5),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 6),
-                  ],
-                ),
-              ),
-
-            ],
-          ),
-        )
-        : selectedIndex == 6
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                flex:2,
-                child: Row(
-                    children:[
-                      SingleImageShowModule(index: 0),
-                      SizedBox(width:5),
-                      SingleImageShowModule(index: 1),
-                    ]
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                flex:1,
-                child: Row(
-                    children:[
-                      SingleImageShowModule(index: 2),
-                      SizedBox(width:5),
-                      SingleImageShowModule(index: 3),
-                    ]
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                    children:[
-                      SingleImageShowModule(index: 4),
-                      SizedBox(width:5),
-                      SingleImageShowModule(index: 5),
-                      SizedBox(width:5),
-                      SingleImageShowModule(index: 6),
-                    ]
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 7
-        ? Container(
-          decoration: BoxDecoration(
-            // border: Border.all(color: Colors.red, width: 5),
-              color: collageScreenController
-                  .borderColor[
-              collageScreenController
-                  .activeColor.value]),
-          child: Column(
-            children: [
-              SingleImageShowModule(index: 0, flex:2,),
-              SizedBox(height: 5),
-              Expanded(
-                flex:1,
-                child: Row(
-                    children: [
-                      SingleImageShowModule(index: 1),
-                      SizedBox(width: 5),
-                      SingleImageShowModule(index: 2),
-                      SizedBox(width: 5),
-                      SingleImageShowModule(index: 3),
-                    ]
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                flex:1,
-                child: Row(
-                    children: [
-                      SingleImageShowModule(index: 4),
-                      SizedBox(width: 5),
-                      SingleImageShowModule(index: 5),
-                      SizedBox(width: 5),
-                      SingleImageShowModule(index: 6),
-                    ]
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 8
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              SingleImageShowModule(index: 3),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 4),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 5),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 6),
-                  ],
-                ),
-              ),
-
-            ],
-          ),
-        )
-        : selectedIndex == 9
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                  child: Row(
-                      children:[
-                        SingleImageShowModule(index: 0),
-                        SizedBox(width:5),
-                        SingleImageShowModule(index: 1),
-                        SizedBox(width:5),
-                        SingleImageShowModule(index: 2),
-                      ]
-                  )
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                  child: Row(
-                      children:[
-                        SingleImageShowModule(index: 3),
-                        SizedBox(width:5),
-                        SingleImageShowModule(index: 4),
-                      ]
-                  )
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 5, flex:2,),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 6),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 10
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 4),
-                  ],
-                ),
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleImageShowModule(index: 5, flex:2,),
-                    SizedBox(height: 5),
-                    SingleImageShowModule(index: 6),
-                  ],
-                ),
-              ),
-
-
-            ],
-          ),
-        )
-        : selectedIndex == 11
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Row(
-            children: [
-              Expanded(
-                  child: Column(
-                      children: [
-                        SingleImageShowModule(index: 0),
-                        SizedBox(height:5),
-                        SingleImageShowModule(index: 1),
-                      ]
-                  )
-
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                  child: Column(
-                      children: [
-                        SingleImageShowModule(index: 2),
-                        SizedBox(height:5),
-                        SingleImageShowModule(index: 3),
-                        SizedBox(height:5),
-                        SingleImageShowModule(index: 4),
-                      ]
-                  )
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                  child: Column(
-                      children: [
-                        SingleImageShowModule(index: 5),
-                        SizedBox(height:5),
-                        SingleImageShowModule(index: 6),
-                      ]
-                  )
-
-              ),
-
-            ],
-          ),
-        )
-        : selectedIndex == 12
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 1),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 2),
-                  ],
-                ),
-              ),
-              SizedBox(height:5),
-              SingleImageShowModule(index: 3),
-              SizedBox(height:5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 5),
-                    SizedBox(width:5),
-                    SingleImageShowModule(index: 6),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 13
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-
-              Expanded(
-                flex:1,
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width:5),
-                    Expanded(
+                      Expanded(
+                        flex: 1,
                         child: Row(
-                            children:[
-                              SingleImageShowModule(index: 1),
-                              SizedBox(width:5),
-                              SingleImageShowModule(index: 2),
-                            ]
-                        )
-                    )
-                  ],
+                          children: [
+                            SingleImageShowModule(index: 3),
+                            SizedBox(width: 5),
+                            SingleImageShowModule(index: 4),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                flex:2,
-                child: Row(
+              ],
+            ),
+          )
+        : selectedIndex == 1
+            ? Container(
+                decoration: collageMainImageBoxDecoration(),
+                child: Column(
                   children: [
-                    SingleImageShowModule(index: 3),
-                    SizedBox(width:5),
                     Expanded(
-                        child: Column(
-                            children: [
-                              SingleImageShowModule(index: 4),
-                              SizedBox(height:5),
-                              Expanded(
-                                  child: Row(
-                                      children: [
-                                        SingleImageShowModule(index: 5),
-                                        SizedBox(width:5),
-                                        SingleImageShowModule(index: 6),
-                                      ]
-                                  )
-                              )
-
-                            ]
-                        )
+                      child: Row(
+                        children: [
+                          SingleImageShowModule(
+                            index: 0,
+                            flex: 2,
+                          ),
+                          SizedBox(width: 5),
+                          SingleImageShowModule(index: 1),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    SingleImageShowModule(index: 2),
+                    SizedBox(height: 5),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          SingleImageShowModule(index: 3),
+                          SizedBox(width: 5),
+                          SingleImageShowModule(
+                            index: 4,
+                            flex: 2,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              ),
-
-            ],
-          ),
-        )
-        : selectedIndex == 14
-        ? Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1,flex:2,),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 3, flex:2,),
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 4),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 5),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 6),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
-        : selectedIndex == 15
-        ?  Container(
-          decoration: collageMainImageBoxDecoration(),
-          child: Column(
-            children: [
-              Expanded(
-                flex:1,
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 0),
-                    SizedBox(width: 5),
-                    SingleImageShowModule(index: 1, flex:2,),
-
-                  ],
-                ),
-              ),
-              SizedBox(height: 5),
-              Expanded(
-                flex:2,
-                child: Row(
-                  children: [
-                    SingleImageShowModule(index: 2),
-                    SizedBox(width: 5),
-                    Expanded(
-                        flex:2,
-                        child: Column(
+              )
+            : selectedIndex == 2
+                ? Container(
+                    decoration: collageMainImageBoxDecoration(),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
                             children: [
-                              Expanded(
-                                child: Row(
-                                    children: [
-                                      SingleImageShowModule(index: 3),
-                                      SizedBox(width:5),
-                                      SingleImageShowModule(index: 4),
-                                    ]
+                              SingleImageShowModule(
+                                index: 0,
+                                flex: 2,
+                              ),
+                              SizedBox(height: 5),
+                              SingleImageShowModule(index: 1),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        SingleImageShowModule(index: 2),
+                        SizedBox(width: 5),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              SingleImageShowModule(index: 3),
+                              SizedBox(height: 5),
+                              SingleImageShowModule(
+                                index: 4,
+                                flex: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : selectedIndex == 3
+                    ? Container(
+                        decoration: collageMainImageBoxDecoration(),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  SingleImageShowModule(index: 0),
+                                  SizedBox(width: 5),
+                                  SingleImageShowModule(index: 1),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            SingleImageShowModule(index: 2),
+                            SizedBox(height: 5),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  SingleImageShowModule(index: 3),
+                                  SizedBox(width: 5),
+                                  SingleImageShowModule(index: 4),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : selectedIndex == 4
+                        ? Container(
+                            decoration: collageMainImageBoxDecoration(),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    SingleImageShowModule(index: 0),
+                                    SizedBox(height: 5),
+                                    SingleImageShowModule(index: 1),
+                                  ],
+                                )),
+                                SizedBox(width: 5),
+                                SingleImageShowModule(index: 2),
+                                SizedBox(width: 5),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    SingleImageShowModule(index: 3),
+                                    SizedBox(height: 5),
+                                    SingleImageShowModule(index: 4),
+                                  ],
+                                )),
+                              ],
+                            ),
+                          )
+                        : selectedIndex == 5
+                            ? Container(
+                                decoration: collageMainImageBoxDecoration(),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          SingleImageShowModule(index: 0),
+                                          SizedBox(width: 5),
+                                          SingleImageShowModule(index: 1),
+                                          SizedBox(width: 5),
+                                          SingleImageShowModule(index: 2),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 5),
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          SingleImageShowModule(index: 3),
+                                          SizedBox(width: 5),
+                                          SingleImageShowModule(index: 4),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
+                              )
+                            : selectedIndex == 6
+                                ? Container(
+                                    decoration: collageMainImageBoxDecoration(),
+                                    child: Column(
+                                      children: [
+                                        SingleImageShowModule(
+                                          index: 0,
+                                          flex: 2,
+                                        ),
+                                        SizedBox(height: 5),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Row(
+                                            children: [
+                                              SingleImageShowModule(index: 1),
+                                              SizedBox(width: 5),
+                                              SingleImageShowModule(index: 2),
+                                              SizedBox(width: 5),
+                                              SingleImageShowModule(index: 3),
+                                              SizedBox(width: 5),
+                                              SingleImageShowModule(index: 4),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : selectedIndex == 7
+                                    ? Container(
+                                        decoration:
+                                            collageMainImageBoxDecoration(),
+                                        child: Column(
+                                          children: [
+                                            Expanded(
+                                              flex: 2,
+                                              child: Row(children: [
+                                                SingleImageShowModule(index: 0),
+                                                SizedBox(width: 5),
+                                                SingleImageShowModule(index: 1),
+                                              ]),
+                                            ),
+                                            SizedBox(height: 5),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Row(children: [
+                                                SingleImageShowModule(index: 2),
+                                                SizedBox(width: 5),
+                                                SingleImageShowModule(index: 3),
+                                                SizedBox(width: 5),
+                                                SingleImageShowModule(index: 4),
+                                              ]),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : selectedIndex == 8
+                                        ? Container(
+                                            decoration:
+                                                collageMainImageBoxDecoration(),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Column(
+                                                    children: [
+                                                      SingleImageShowModule(
+                                                          index: 0),
+                                                      SizedBox(height: 5),
+                                                      SingleImageShowModule(
+                                                          index: 1),
+                                                    ],
+                                                  ),
+                                                ),
+                                                SizedBox(width: 5),
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: Column(
+                                                    children: [
+                                                      SingleImageShowModule(
+                                                          index: 2),
+                                                      SizedBox(height: 5),
+                                                      SingleImageShowModule(
+                                                          index: 3),
+                                                      SizedBox(height: 5),
+                                                      SingleImageShowModule(
+                                                          index: 4),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : selectedIndex == 9
+                                            ? Container(
+                                                decoration:
+                                                    collageMainImageBoxDecoration(),
+                                                child: Row(
+                                                  children: [
+                                                    SingleImageShowModule(
+                                                        index: 0),
+                                                    SizedBox(width: 5),
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          SingleImageShowModule(
+                                                              index: 1),
+                                                          SizedBox(height: 5),
+                                                          SingleImageShowModule(
+                                                              index: 2),
+                                                          SizedBox(height: 5),
+                                                          SingleImageShowModule(
+                                                              index: 3),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 5),
+                                                    SingleImageShowModule(
+                                                        index: 4),
+                                                  ],
+                                                ),
+                                              )
+                                            : selectedIndex == 10
+                                                ? Container(
+                                                    decoration:
+                                                        collageMainImageBoxDecoration(),
+                                                    child: Row(
+                                                      children: [
+                                                        SingleImageShowModule(
+                                                            index: 0),
+                                                        SizedBox(width: 5),
+                                                        Expanded(
+                                                          child: Column(
+                                                            children: [
+                                                              SingleImageShowModule(
+                                                                  index: 1),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                              SingleImageShowModule(
+                                                                  index: 2),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(width: 5),
+                                                        Expanded(
+                                                          child: Column(
+                                                            children: [
+                                                              SingleImageShowModule(
+                                                                  index: 3),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                              SingleImageShowModule(
+                                                                  index: 4),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                : selectedIndex == 11
+                                                    ? Container(
+                                                        decoration:
+                                                            collageMainImageBoxDecoration(),
+                                                        child: Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: Column(
+                                                                children: [
+                                                                  SingleImageShowModule(
+                                                                    index: 0,
+                                                                    flex: 2,
+                                                                  ),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          5),
+                                                                  SingleImageShowModule(
+                                                                      index: 1),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            SizedBox(width: 5),
+                                                            Expanded(
+                                                              child: Column(
+                                                                children: [
+                                                                  SingleImageShowModule(
+                                                                      index: 2),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          5),
+                                                                  SingleImageShowModule(
+                                                                    index: 3,
+                                                                    flex: 2,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            SizedBox(width: 5),
+                                                            SingleImageShowModule(
+                                                                index: 4),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    : selectedIndex == 12
+                                                        ? Container(
+                                                            decoration:
+                                                                collageMainImageBoxDecoration(),
+                                                            child: Row(
+                                                              children: [
+                                                                Expanded(
+                                                                  flex: 2,
+                                                                  child: Column(
+                                                                    children: [
+                                                                      SingleImageShowModule(
+                                                                        index:
+                                                                            0,
+                                                                        flex: 2,
+                                                                      ),
+                                                                      SizedBox(
+                                                                          height:
+                                                                              5),
+                                                                      Expanded(
+                                                                          flex:
+                                                                              1,
+                                                                          child:
+                                                                              Row(children: [
+                                                                            SingleImageShowModule(index: 1),
+                                                                            SizedBox(width: 5),
+                                                                            SingleImageShowModule(index: 2),
+                                                                          ]))
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    width: 5),
+                                                                Expanded(
+                                                                  flex: 1,
+                                                                  child: Column(
+                                                                    children: [
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              3),
+                                                                      SizedBox(
+                                                                          height:
+                                                                              5),
+                                                                      SingleImageShowModule(
+                                                                        index:
+                                                                            4,
+                                                                        flex: 2,
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          )
+                                                        : selectedIndex == 13
+                                                            ? Container(
+                                                                decoration:
+                                                                    collageMainImageBoxDecoration(),
+                                                                child: Column(
+                                                                  children: [
+                                                                    SingleImageShowModule(
+                                                                        index:
+                                                                            0),
+                                                                    SizedBox(
+                                                                        height:
+                                                                            5),
+                                                                    Expanded(
+                                                                      flex: 2,
+                                                                      child:
+                                                                          Row(
+                                                                        children: [
+                                                                          Expanded(
+                                                                            flex:
+                                                                                2,
+                                                                            child:
+                                                                                Row(
+                                                                              children: [
+                                                                                SingleImageShowModule(index: 1),
+                                                                                SizedBox(width: 5),
+                                                                                SingleImageShowModule(index: 2),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(
+                                                                              width: 5),
+                                                                          Expanded(
+                                                                            flex:
+                                                                                1,
+                                                                            child:
+                                                                                Column(
+                                                                              children: [
+                                                                                SingleImageShowModule(index: 3),
+                                                                                SizedBox(height: 5),
+                                                                                SingleImageShowModule(
+                                                                                  index: 4,
+                                                                                  flex: 2,
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            : selectedIndex ==
+                                                                    14
+                                                                ? Container(
+                                                                    decoration:
+                                                                        collageMainImageBoxDecoration(),
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        Expanded(
+                                                                          child:
+                                                                              Row(
+                                                                            children: [
+                                                                              SingleImageShowModule(index: 0),
+                                                                              SizedBox(width: 5),
+                                                                              SingleImageShowModule(index: 1),
+                                                                              SizedBox(width: 5),
+                                                                              SingleImageShowModule(index: 2),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                            height:
+                                                                                5),
+                                                                        Expanded(
+                                                                          child:
+                                                                              Row(
+                                                                            children: [
+                                                                              SingleImageShowModule(index: 3),
+                                                                              SizedBox(width: 5),
+                                                                              SingleImageShowModule(
+                                                                                index: 4,
+                                                                                flex: 2,
+                                                                              ),
+                                                                              SizedBox(width: 5),
+                                                                              Expanded(
+                                                                                child: Container(),
+                                                                              )
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                : selectedIndex ==
+                                                                        15
+                                                                    ? Container(
+                                                                        decoration:
+                                                                            collageMainImageBoxDecoration(),
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            Expanded(
+                                                                              child: Row(
+                                                                                children: [
+                                                                                  Expanded(
+                                                                                    child: Container(),
+                                                                                  ),
+                                                                                  SizedBox(width: 5),
+                                                                                  SingleImageShowModule(index: 0),
+                                                                                  SizedBox(width: 5),
+                                                                                  SingleImageShowModule(index: 1),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            SizedBox(height: 5),
+                                                                            Expanded(
+                                                                              child: Row(
+                                                                                children: [
+                                                                                  SingleImageShowModule(index: 2),
+                                                                                  SizedBox(width: 5),
+                                                                                  SingleImageShowModule(index: 3),
+                                                                                  SizedBox(width: 5),
+                                                                                  SingleImageShowModule(index: 4),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    : selectedIndex ==
+                                                                            16
+                                                                        ? Container(
+                                                                            decoration:
+                                                                                collageMainImageBoxDecoration(),
+                                                                            child:
+                                                                                Row(
+                                                                              children: [
+                                                                                SingleImageShowModule(
+                                                                                  index: 0,
+                                                                                  flex: 2,
+                                                                                ),
+                                                                                SizedBox(width: 5),
+                                                                                Expanded(
+                                                                                  flex: 1,
+                                                                                  child: Column(
+                                                                                    children: [
+                                                                                      SingleImageShowModule(index: 1),
+                                                                                      SizedBox(height: 5),
+                                                                                      SingleImageShowModule(index: 2),
+                                                                                      SizedBox(height: 5),
+                                                                                      SingleImageShowModule(index: 3),
+                                                                                      SizedBox(height: 5),
+                                                                                      SingleImageShowModule(index: 4),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          )
+                                                                        : selectedIndex ==
+                                                                                17
+                                                                            ? Container(
+                                                                                decoration: collageMainImageBoxDecoration(),
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    SingleImageShowModule(index: 0),
+                                                                                    SizedBox(height: 5),
+                                                                                    Expanded(
+                                                                                      flex: 2,
+                                                                                      child: Row(
+                                                                                        children: [
+                                                                                          Expanded(
+                                                                                            child: Column(
+                                                                                              children: [
+                                                                                                SingleImageShowModule(index: 1),
+                                                                                                SizedBox(height: 5),
+                                                                                                SingleImageShowModule(index: 2),
+                                                                                              ],
+                                                                                            ),
+                                                                                          ),
+                                                                                          SizedBox(width: 5),
+                                                                                          Expanded(
+                                                                                            child: Column(
+                                                                                              children: [
+                                                                                                SingleImageShowModule(index: 3),
+                                                                                                SizedBox(height: 5),
+                                                                                                SingleImageShowModule(index: 4),
+                                                                                              ],
+                                                                                            ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              )
+                                                                            : selectedIndex == 18
+                                                                                ? Container(
+                                                                                    decoration: collageMainImageBoxDecoration(),
+                                                                                    child: Row(
+                                                                                      children: [
+                                                                                        SingleImageShowModule(index: 0),
+                                                                                        SizedBox(width: 5),
+                                                                                        SingleImageShowModule(index: 1),
+                                                                                        SizedBox(width: 5),
+                                                                                        SingleImageShowModule(index: 2),
+                                                                                        SizedBox(width: 5),
+                                                                                        SingleImageShowModule(index: 3),
+                                                                                        SizedBox(width: 5),
+                                                                                        SingleImageShowModule(index: 4),
+                                                                                      ],
+                                                                                    ),
+                                                                                  )
+                                                                                : selectedIndex == 19
+                                                                                    ? Container(
+                                                                                        decoration: collageMainImageBoxDecoration(),
+                                                                                        child: Column(
+                                                                                          children: [
+                                                                                            Expanded(
+                                                                                              child: Row(
+                                                                                                children: [
+                                                                                                  SingleImageShowModule(index: 0),
+                                                                                                  SizedBox(width: 5),
+                                                                                                  SingleImageShowModule(index: 1),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                            SizedBox(height: 5),
+                                                                                            Expanded(
+                                                                                              child: Row(
+                                                                                                children: [
+                                                                                                  SingleImageShowModule(index: 2),
+                                                                                                  SizedBox(width: 5),
+                                                                                                  SingleImageShowModule(index: 3),
+                                                                                                  SizedBox(width: 5),
+                                                                                                  SingleImageShowModule(index: 4),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      )
+                                                                                    : Container());
+  }
+
+  Widget sixImageSelectedModule(int selectedIndex) {
+    return Obx(() => selectedIndex == 0
+        ? Container(
+            decoration: collageMainImageBoxDecoration(),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      SingleImageShowModule(index: 0),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 1),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 2),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 5),
+                Expanded(
+                  child: Row(
+                    children: [
+                      SingleImageShowModule(index: 3),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 4),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 5),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        : selectedIndex == 1
+            ? Container(
+                decoration: collageMainImageBoxDecoration(),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          SingleImageShowModule(index: 0),
+                          SizedBox(width: 5),
+                          SingleImageShowModule(index: 1),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          SingleImageShowModule(index: 2),
+                          SizedBox(width: 5),
+                          SingleImageShowModule(index: 3),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          SingleImageShowModule(index: 4),
+                          SizedBox(width: 5),
+                          SingleImageShowModule(index: 5),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : selectedIndex == 2
+                ? Container(
+                    decoration: collageMainImageBoxDecoration(),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            children: [
+                              SingleImageShowModule(
+                                index: 0,
+                                flex: 2,
                               ),
                               SizedBox(height: 5),
                               Expanded(
-                                child: Row(
-                                    children: [
-                                      SingleImageShowModule(index: 5),
-                                      SizedBox(width:5),
-                                      SingleImageShowModule(index: 6),
-                                    ]
+                                flex: 1,
+                                child: Row(children: [
+                                  SingleImageShowModule(index: 1),
+                                  SizedBox(width: 5),
+                                  SingleImageShowModule(index: 2),
+                                ]),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            children: [
+                              SingleImageShowModule(index: 3),
+                              SizedBox(height: 5),
+                              SingleImageShowModule(index: 4),
+                              SizedBox(height: 5),
+                              SingleImageShowModule(index: 5),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : selectedIndex == 3
+                    ? Container(
+                        decoration: collageMainImageBoxDecoration(),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                children: [
+                                  SingleImageShowModule(index: 0),
+                                  SizedBox(height: 5),
+                                  SingleImageShowModule(index: 1),
+                                  SizedBox(height: 5),
+                                  SingleImageShowModule(index: 2),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: Row(children: [
+                                      SingleImageShowModule(index: 3),
+                                      SizedBox(width: 5),
+                                      SingleImageShowModule(index: 4),
+                                    ]),
+                                  ),
+                                  SizedBox(height: 5),
+                                  SingleImageShowModule(
+                                    index: 5,
+                                    flex: 2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : selectedIndex == 4
+                        ? Container(
+                            decoration: collageMainImageBoxDecoration(),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    SingleImageShowModule(
+                                      index: 0,
+                                      flex: 2,
+                                    ),
+                                    SizedBox(height: 5),
+                                    SingleImageShowModule(index: 1),
+                                  ],
+                                )),
+                                SizedBox(width: 5),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    SingleImageShowModule(index: 2),
+                                    SizedBox(height: 5),
+                                    SingleImageShowModule(index: 3),
+                                  ],
+                                )),
+                                SizedBox(width: 5),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    SingleImageShowModule(index: 4),
+                                    SizedBox(height: 5),
+                                    SingleImageShowModule(
+                                      index: 5,
+                                      flex: 2,
+                                    ),
+                                  ],
+                                )),
+                              ],
+                            ),
+                          )
+                        : selectedIndex == 5
+                            ? Container(
+                                decoration: collageMainImageBoxDecoration(),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          SingleImageShowModule(
+                                            index: 0,
+                                            flex: 2,
+                                          ),
+                                          SizedBox(width: 5),
+                                          SingleImageShowModule(index: 1),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 5),
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          SingleImageShowModule(index: 2),
+                                          SizedBox(width: 5),
+                                          SingleImageShowModule(index: 3),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 5),
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          SingleImageShowModule(index: 4),
+                                          SizedBox(width: 5),
+                                          SingleImageShowModule(
+                                            index: 5,
+                                            flex: 2,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               )
-                            ]
-                        )
-                    ),
+                            : selectedIndex == 6
+                                ? Container(
+                                    decoration: collageMainImageBoxDecoration(),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(children: [
+                                            SingleImageShowModule(
+                                              index: 0,
+                                              flex: 2,
+                                            ),
+                                            SizedBox(height: 5),
+                                            SingleImageShowModule(index: 1),
+                                          ]),
+                                        ),
+                                        SizedBox(width: 5),
+                                        Expanded(
+                                          child: Column(children: [
+                                            SingleImageShowModule(index: 2),
+                                            SizedBox(height: 5),
+                                            SingleImageShowModule(
+                                              index: 3,
+                                              flex: 2,
+                                            ),
+                                          ]),
+                                        ),
+                                        SizedBox(width: 5),
+                                        Expanded(
+                                          child: Column(children: [
+                                            SingleImageShowModule(
+                                              index: 4,
+                                              flex: 2,
+                                            ),
+                                            SizedBox(height: 5),
+                                            SingleImageShowModule(index: 5),
+                                          ]),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : selectedIndex == 7
+                                    ? Container(
+                                        decoration:
+                                            collageMainImageBoxDecoration(),
+                                        child: Column(
+                                          children: [
+                                            Expanded(
+                                              child: Row(children: [
+                                                SingleImageShowModule(
+                                                  index: 0,
+                                                  flex: 2,
+                                                ),
+                                                SizedBox(width: 5),
+                                                SingleImageShowModule(index: 1),
+                                              ]),
+                                            ),
+                                            SizedBox(height: 5),
+                                            Expanded(
+                                              child: Row(children: [
+                                                SingleImageShowModule(index: 2),
+                                                SizedBox(width: 5),
+                                                SingleImageShowModule(
+                                                  index: 3,
+                                                  flex: 2,
+                                                ),
+                                              ]),
+                                            ),
+                                            SizedBox(height: 5),
+                                            Expanded(
+                                              child: Row(children: [
+                                                SingleImageShowModule(
+                                                  index: 4,
+                                                  flex: 2,
+                                                ),
+                                                SizedBox(width: 5),
+                                                SingleImageShowModule(index: 5),
+                                              ]),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : selectedIndex == 8
+                                        ? Container(
+                                            decoration:
+                                                collageMainImageBoxDecoration(),
+                                            child: Column(
+                                              children: [
+                                                Expanded(
+                                                  child: Row(
+                                                    children: [
+                                                      SingleImageShowModule(
+                                                          index: 0),
+                                                      SizedBox(width: 5),
+                                                      SingleImageShowModule(
+                                                          index: 1),
+                                                      SizedBox(width: 5),
+                                                      SingleImageShowModule(
+                                                          index: 2),
+                                                    ],
+                                                  ),
+                                                ),
+                                                SizedBox(height: 5),
+                                                Expanded(
+                                                  child: Row(
+                                                    children: [
+                                                      SingleImageShowModule(
+                                                        index: 3,
+                                                        flex: 2,
+                                                      ),
+                                                      SizedBox(width: 5),
+                                                      SingleImageShowModule(
+                                                        index: 4,
+                                                        flex: 2,
+                                                      ),
+                                                      SizedBox(width: 5),
+                                                      SingleImageShowModule(
+                                                          index: 5),
+                                                    ],
+                                                  ),
+                                                ),
+                                                SizedBox(height: 5),
+                                                Expanded(child: Container())
+                                              ],
+                                            ),
+                                          )
+                                        : selectedIndex == 9
+                                            ? Container(
+                                                decoration:
+                                                    collageMainImageBoxDecoration(),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                        child: Container()),
+                                                    SizedBox(width: 5),
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          SingleImageShowModule(
+                                                              index: 0),
+                                                          SizedBox(height: 5),
+                                                          SingleImageShowModule(
+                                                              index: 1),
+                                                          SizedBox(height: 5),
+                                                          SingleImageShowModule(
+                                                              index: 2),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 5),
+                                                    Expanded(
+                                                      child: Column(
+                                                        children: [
+                                                          SingleImageShowModule(
+                                                              index: 3),
+                                                          SizedBox(height: 5),
+                                                          SingleImageShowModule(
+                                                              index: 4),
+                                                          SizedBox(height: 5),
+                                                          SingleImageShowModule(
+                                                              index: 5),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : selectedIndex == 10
+                                                ? Container(
+                                                    decoration:
+                                                        collageMainImageBoxDecoration(),
+                                                    child: Column(
+                                                      children: [
+                                                        Expanded(
+                                                          flex: 2,
+                                                          child: Row(children: [
+                                                            SingleImageShowModule(
+                                                                index: 0),
+                                                            SizedBox(width: 5),
+                                                            SingleImageShowModule(
+                                                                index: 1),
+                                                          ]),
+                                                        ),
+                                                        SizedBox(height: 5),
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: Row(
+                                                            children: [
+                                                              SingleImageShowModule(
+                                                                  index: 2),
+                                                              SizedBox(
+                                                                  width: 5),
+                                                              SingleImageShowModule(
+                                                                  index: 3),
+                                                              SizedBox(
+                                                                  width: 5),
+                                                              SingleImageShowModule(
+                                                                  index: 4),
+                                                              SizedBox(
+                                                                  width: 5),
+                                                              SingleImageShowModule(
+                                                                  index: 5),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                : selectedIndex == 11
+                                                    ? Container(
+                                                        decoration:
+                                                            collageMainImageBoxDecoration(),
+                                                        child: Column(
+                                                          children: [
+                                                            SingleImageShowModule(
+                                                              index: 0,
+                                                              flex: 2,
+                                                            ),
+                                                            SizedBox(height: 5),
+                                                            Expanded(
+                                                              flex: 1,
+                                                              child: Row(
+                                                                children: [
+                                                                  SingleImageShowModule(
+                                                                      index: 1),
+                                                                  SizedBox(
+                                                                      width: 5),
+                                                                  SingleImageShowModule(
+                                                                      index: 2),
+                                                                  SizedBox(
+                                                                      width: 5),
+                                                                  SingleImageShowModule(
+                                                                      index: 3),
+                                                                  SizedBox(
+                                                                      width: 5),
+                                                                  SingleImageShowModule(
+                                                                      index: 4),
+                                                                  SizedBox(
+                                                                      width: 5),
+                                                                  SingleImageShowModule(
+                                                                      index: 5),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    : selectedIndex == 12
+                                                        ? Container(
+                                                            decoration:
+                                                                collageMainImageBoxDecoration(),
+                                                            child: Column(
+                                                              children: [
+                                                                Expanded(
+                                                                  flex: 1,
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              0),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              5),
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              1),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 5),
+                                                                Expanded(
+                                                                  flex: 2,
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              2),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              5),
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              3),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 5),
+                                                                Expanded(
+                                                                  flex: 1,
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              4),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              5),
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              5),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          )
+                                                        : selectedIndex == 13
+                                                            ? Container(
+                                                                decoration:
+                                                                    collageMainImageBoxDecoration(),
+                                                                child: Column(
+                                                                  children: [
+                                                                    SingleImageShowModule(
+                                                                        index:
+                                                                            0),
+                                                                    SizedBox(
+                                                                        height:
+                                                                            5),
+                                                                    Expanded(
+                                                                      flex: 2,
+                                                                      child:
+                                                                          Row(
+                                                                        children: [
+                                                                          Expanded(
+                                                                              flex: 2,
+                                                                              child: Column(children: [
+                                                                                Expanded(
+                                                                                  child: Row(children: [
+                                                                                    SingleImageShowModule(index: 1),
+                                                                                    SizedBox(width: 5),
+                                                                                    SingleImageShowModule(index: 2),
+                                                                                  ]),
+                                                                                ),
+                                                                                SizedBox(height: 5),
+                                                                                Expanded(
+                                                                                  child: Row(children: [
+                                                                                    SingleImageShowModule(index: 3),
+                                                                                    SizedBox(width: 5),
+                                                                                    SingleImageShowModule(index: 4),
+                                                                                  ]),
+                                                                                )
+                                                                              ])),
+                                                                          SizedBox(
+                                                                              width: 5),
+                                                                          SingleImageShowModule(
+                                                                              index: 5),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            : selectedIndex ==
+                                                                    14
+                                                                ? Container(
+                                                                    decoration:
+                                                                        collageMainImageBoxDecoration(),
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        SingleImageShowModule(
+                                                                            index:
+                                                                                0),
+                                                                        SizedBox(
+                                                                            height:
+                                                                                5),
+                                                                        Expanded(
+                                                                          child:
+                                                                              Row(
+                                                                            children: [
+                                                                              SingleImageShowModule(index: 1),
+                                                                              SizedBox(width: 5),
+                                                                              SingleImageShowModule(index: 2),
+                                                                              SizedBox(width: 5),
+                                                                              SingleImageShowModule(index: 3),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                            height:
+                                                                                5),
+                                                                        Expanded(
+                                                                          child:
+                                                                              Row(
+                                                                            children: [
+                                                                              SingleImageShowModule(index: 4),
+                                                                              SizedBox(width: 5),
+                                                                              SingleImageShowModule(index: 5),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                : selectedIndex ==
+                                                                        15
+                                                                    ? Container(
+                                                                        decoration:
+                                                                            collageMainImageBoxDecoration(),
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            Expanded(
+                                                                              child: Row(
+                                                                                children: [
+                                                                                  SingleImageShowModule(index: 0),
+                                                                                  SizedBox(width: 5),
+                                                                                  Expanded(
+                                                                                      child: Column(children: [
+                                                                                    SingleImageShowModule(index: 1),
+                                                                                    SizedBox(height: 5),
+                                                                                    SingleImageShowModule(index: 2),
+                                                                                  ])),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            SizedBox(height: 5),
+                                                                            Expanded(
+                                                                              child: Row(
+                                                                                children: [
+                                                                                  Expanded(
+                                                                                      child: Column(children: [
+                                                                                    SingleImageShowModule(index: 3),
+                                                                                    SizedBox(height: 5),
+                                                                                    SingleImageShowModule(index: 4),
+                                                                                  ])),
+                                                                                  SizedBox(width: 5),
+                                                                                  SingleImageShowModule(index: 5),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    : selectedIndex ==
+                                                                            16
+                                                                        ? Container(
+                                                                            decoration:
+                                                                                collageMainImageBoxDecoration(),
+                                                                            child:
+                                                                                Column(
+                                                                              children: [
+                                                                                Expanded(flex: 1, child: Container()),
+                                                                                SizedBox(height: 5),
+                                                                                Expanded(
+                                                                                  flex: 2,
+                                                                                  child: Column(
+                                                                                    children: [
+                                                                                      Expanded(
+                                                                                        child: Row(children: [
+                                                                                          SingleImageShowModule(index: 0),
+                                                                                          SizedBox(width: 5),
+                                                                                          SingleImageShowModule(index: 1),
+                                                                                          SizedBox(width: 5),
+                                                                                          SingleImageShowModule(index: 2),
+                                                                                        ]),
+                                                                                      ),
+                                                                                      SizedBox(height: 5),
+                                                                                      Expanded(
+                                                                                        child: Row(children: [
+                                                                                          SingleImageShowModule(index: 3),
+                                                                                          SizedBox(width: 5),
+                                                                                          SingleImageShowModule(index: 4),
+                                                                                          SizedBox(width: 5),
+                                                                                          SingleImageShowModule(index: 5),
+                                                                                        ]),
+                                                                                      )
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                                SizedBox(height: 5),
+                                                                                Expanded(flex: 1, child: Container()),
+                                                                              ],
+                                                                            ),
+                                                                          )
+                                                                        : selectedIndex ==
+                                                                                17
+                                                                            ? Container(
+                                                                                decoration: collageMainImageBoxDecoration(),
+                                                                                child: Row(
+                                                                                  children: [
+                                                                                    Expanded(flex: 1, child: Container()),
+                                                                                    SizedBox(height: 5),
+                                                                                    Expanded(
+                                                                                      flex: 2,
+                                                                                      child: Column(
+                                                                                        children: [
+                                                                                          Expanded(
+                                                                                            child: Row(children: [
+                                                                                              SingleImageShowModule(index: 0),
+                                                                                              SizedBox(width: 5),
+                                                                                              SingleImageShowModule(index: 1),
+                                                                                            ]),
+                                                                                          ),
+                                                                                          SizedBox(height: 5),
+                                                                                          Expanded(
+                                                                                            child: Row(children: [
+                                                                                              SingleImageShowModule(index: 2),
+                                                                                              SizedBox(width: 5),
+                                                                                              SingleImageShowModule(index: 3),
+                                                                                            ]),
+                                                                                          ),
+                                                                                          SizedBox(height: 5),
+                                                                                          Expanded(
+                                                                                            child: Row(children: [
+                                                                                              SingleImageShowModule(index: 4),
+                                                                                              SizedBox(width: 5),
+                                                                                              SingleImageShowModule(index: 5),
+                                                                                            ]),
+                                                                                          )
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                    SizedBox(height: 5),
+                                                                                    Expanded(flex: 1, child: Container()),
+                                                                                  ],
+                                                                                ),
+                                                                              )
+                                                                            : selectedIndex == 18
+                                                                                ? Container(
+                                                                                    decoration: collageMainImageBoxDecoration(),
+                                                                                    child: Row(
+                                                                                      children: [
+                                                                                        Expanded(
+                                                                                          child: Column(children: [
+                                                                                            Expanded(flex: 3, child: Container()),
+                                                                                            SingleImageShowModule(index: 0),
+                                                                                          ]),
+                                                                                        ),
+                                                                                        SizedBox(width: 5),
+                                                                                        Expanded(
+                                                                                          child: Column(children: [
+                                                                                            Expanded(flex: 2, child: Container()),
+                                                                                            SingleImageShowModule(index: 1),
+                                                                                            Expanded(flex: 1, child: Container()),
+                                                                                          ]),
+                                                                                        ),
+                                                                                        SizedBox(width: 5),
+                                                                                        Expanded(
+                                                                                          child: Column(children: [
+                                                                                            Expanded(flex: 1, child: Container()),
+                                                                                            SingleImageShowModule(index: 2),
+                                                                                            Expanded(flex: 1, child: Container()),
+                                                                                          ]),
+                                                                                        ),
+                                                                                        SizedBox(width: 5),
+                                                                                        Expanded(
+                                                                                          child: Column(children: [
+                                                                                            Expanded(flex: 1, child: Container()),
+                                                                                            SingleImageShowModule(index: 3),
+                                                                                            Expanded(flex: 2, child: Container()),
+                                                                                          ]),
+                                                                                        ),
+                                                                                        SizedBox(width: 5),
+                                                                                        Expanded(
+                                                                                          child: Column(children: [
+                                                                                            Expanded(flex: 1, child: Container()),
+                                                                                            SingleImageShowModule(index: 4),
+                                                                                            Expanded(flex: 3, child: Container()),
+                                                                                          ]),
+                                                                                        ),
+                                                                                        SizedBox(width: 5),
+                                                                                        Expanded(
+                                                                                          child: Column(children: [
+                                                                                            SingleImageShowModule(index: 5),
+                                                                                            Expanded(flex: 3, child: Container()),
+                                                                                          ]),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  )
+                                                                                : selectedIndex == 19
+                                                                                    ? Container(
+                                                                                        decoration: collageMainImageBoxDecoration(),
+                                                                                        child: Column(
+                                                                                          children: [
+                                                                                            SingleImageShowModule(index: 0),
+                                                                                            SizedBox(height: 5),
+                                                                                            Expanded(
+                                                                                              child: Row(
+                                                                                                children: [
+                                                                                                  SingleImageShowModule(index: 1),
+                                                                                                  SizedBox(width: 5),
+                                                                                                  SingleImageShowModule(index: 2),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                            SizedBox(height: 5),
+                                                                                            Expanded(
+                                                                                              child: Row(
+                                                                                                children: [
+                                                                                                  SingleImageShowModule(index: 3),
+                                                                                                  SizedBox(width: 5),
+                                                                                                  SingleImageShowModule(index: 4),
+                                                                                                  SizedBox(width: 5),
+                                                                                                  SingleImageShowModule(index: 5),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      )
+                                                                                    : Container());
+  }
 
+  Widget sevenImageSelectedModule(int selectedIndex) {
+    return Obx(() => selectedIndex == 0
+        ? Container(
+            decoration: collageMainImageBoxDecoration(),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      SingleImageShowModule(
+                        index: 0,
+                        flex: 2,
+                      ),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 1),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 5),
+                Expanded(
+                  child: Row(
+                    children: [
+                      SingleImageShowModule(index: 2),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 3),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(index: 4),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 5),
+                Expanded(
+                  child: Row(
+                    children: [
+                      SingleImageShowModule(index: 5),
+                      SizedBox(width: 5),
+                      SingleImageShowModule(
+                        index: 6,
+                        flex: 2,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        : selectedIndex == 1
+            ? Container(
+                decoration: collageMainImageBoxDecoration(),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SingleImageShowModule(
+                            index: 0,
+                            flex: 2,
+                          ),
+                          SizedBox(height: 5),
+                          SingleImageShowModule(index: 1),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SingleImageShowModule(index: 2),
+                          SizedBox(height: 5),
+                          SingleImageShowModule(index: 3),
+                          SizedBox(height: 5),
+                          SingleImageShowModule(index: 4),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SingleImageShowModule(index: 5),
+                          SizedBox(height: 5),
+                          SingleImageShowModule(
+                            index: 6,
+                            flex: 2,
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              ),
-            ],
-          ),
-        )
-        : Container());
+              )
+            : selectedIndex == 2
+                ? Container(
+                    decoration: collageMainImageBoxDecoration(),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              SingleImageShowModule(index: 0),
+                              SizedBox(width: 5),
+                              SingleImageShowModule(index: 1),
+                              SizedBox(width: 5),
+                              SingleImageShowModule(index: 2),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              SingleImageShowModule(index: 3),
+                              SizedBox(width: 5),
+                              SingleImageShowModule(index: 4),
+                              SizedBox(width: 5),
+                              SingleImageShowModule(index: 5),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        SingleImageShowModule(index: 6),
+                      ],
+                    ),
+                  )
+                : selectedIndex == 3
+                    ? Container(
+                        decoration: collageMainImageBoxDecoration(),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  SingleImageShowModule(index: 0),
+                                  SizedBox(height: 5),
+                                  SingleImageShowModule(index: 1),
+                                  SizedBox(height: 5),
+                                  SingleImageShowModule(index: 2),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  SingleImageShowModule(index: 3),
+                                  SizedBox(height: 5),
+                                  SingleImageShowModule(index: 4),
+                                  SizedBox(height: 5),
+                                  SingleImageShowModule(index: 5),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            SingleImageShowModule(index: 6),
+                          ],
+                        ),
+                      )
+                    : selectedIndex == 4
+                        ? Container(
+                            decoration: collageMainImageBoxDecoration(),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    flex: 2,
+                                    child: Column(
+                                      children: [
+                                        SingleImageShowModule(index: 0),
+                                        SizedBox(height: 5),
+                                        SingleImageShowModule(index: 1),
+                                        SizedBox(height: 5),
+                                        SingleImageShowModule(index: 2),
+                                      ],
+                                    )),
+                                SizedBox(width: 5),
+                                Expanded(
+                                    flex: 1,
+                                    child: Column(
+                                      children: [
+                                        SingleImageShowModule(index: 3),
+                                        SizedBox(height: 5),
+                                        SingleImageShowModule(index: 4),
+                                        SizedBox(height: 5),
+                                        SingleImageShowModule(index: 5),
+                                        SizedBox(height: 5),
+                                        SingleImageShowModule(index: 6),
+                                      ],
+                                    )),
+                              ],
+                            ),
+                          )
+                        : selectedIndex == 5
+                            ? Container(
+                                decoration: collageMainImageBoxDecoration(),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Row(
+                                        children: [
+                                          SingleImageShowModule(index: 0),
+                                          SizedBox(width: 5),
+                                          SingleImageShowModule(index: 1),
+                                          SizedBox(width: 5),
+                                          SingleImageShowModule(index: 2),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 5),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Row(
+                                        children: [
+                                          SingleImageShowModule(index: 3),
+                                          SizedBox(width: 5),
+                                          SingleImageShowModule(index: 4),
+                                          SizedBox(width: 5),
+                                          SingleImageShowModule(index: 5),
+                                          SizedBox(width: 5),
+                                          SingleImageShowModule(index: 6),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : selectedIndex == 6
+                                ? Container(
+                                    decoration: collageMainImageBoxDecoration(),
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child: Row(children: [
+                                            SingleImageShowModule(index: 0),
+                                            SizedBox(width: 5),
+                                            SingleImageShowModule(index: 1),
+                                          ]),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Row(children: [
+                                            SingleImageShowModule(index: 2),
+                                            SizedBox(width: 5),
+                                            SingleImageShowModule(index: 3),
+                                          ]),
+                                        ),
+                                        SizedBox(height: 5),
+                                        Expanded(
+                                          child: Row(children: [
+                                            SingleImageShowModule(index: 4),
+                                            SizedBox(width: 5),
+                                            SingleImageShowModule(index: 5),
+                                            SizedBox(width: 5),
+                                            SingleImageShowModule(index: 6),
+                                          ]),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : selectedIndex == 7
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                            // border: Border.all(color: Colors.red, width: 5),
+                                            color: collageScreenController
+                                                    .borderColor[
+                                                collageScreenController
+                                                    .activeColor.value]),
+                                        child: Column(
+                                          children: [
+                                            SingleImageShowModule(
+                                              index: 0,
+                                              flex: 2,
+                                            ),
+                                            SizedBox(height: 5),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Row(children: [
+                                                SingleImageShowModule(index: 1),
+                                                SizedBox(width: 5),
+                                                SingleImageShowModule(index: 2),
+                                                SizedBox(width: 5),
+                                                SingleImageShowModule(index: 3),
+                                              ]),
+                                            ),
+                                            SizedBox(height: 5),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Row(children: [
+                                                SingleImageShowModule(index: 4),
+                                                SizedBox(width: 5),
+                                                SingleImageShowModule(index: 5),
+                                                SizedBox(width: 5),
+                                                SingleImageShowModule(index: 6),
+                                              ]),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : selectedIndex == 8
+                                        ? Container(
+                                            decoration:
+                                                collageMainImageBoxDecoration(),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Column(
+                                                    children: [
+                                                      SingleImageShowModule(
+                                                          index: 0),
+                                                      SizedBox(height: 5),
+                                                      SingleImageShowModule(
+                                                          index: 1),
+                                                      SizedBox(height: 5),
+                                                      SingleImageShowModule(
+                                                          index: 2),
+                                                    ],
+                                                  ),
+                                                ),
+                                                SizedBox(width: 5),
+                                                SingleImageShowModule(index: 3),
+                                                SizedBox(width: 5),
+                                                Expanded(
+                                                  child: Column(
+                                                    children: [
+                                                      SingleImageShowModule(
+                                                          index: 4),
+                                                      SizedBox(height: 5),
+                                                      SingleImageShowModule(
+                                                          index: 5),
+                                                      SizedBox(height: 5),
+                                                      SingleImageShowModule(
+                                                          index: 6),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : selectedIndex == 9
+                                            ? Container(
+                                                decoration:
+                                                    collageMainImageBoxDecoration(),
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                        child: Row(children: [
+                                                      SingleImageShowModule(
+                                                          index: 0),
+                                                      SizedBox(width: 5),
+                                                      SingleImageShowModule(
+                                                          index: 1),
+                                                      SizedBox(width: 5),
+                                                      SingleImageShowModule(
+                                                          index: 2),
+                                                    ])),
+                                                    SizedBox(height: 5),
+                                                    Expanded(
+                                                        child: Row(children: [
+                                                      SingleImageShowModule(
+                                                          index: 3),
+                                                      SizedBox(width: 5),
+                                                      SingleImageShowModule(
+                                                          index: 4),
+                                                    ])),
+                                                    SizedBox(height: 5),
+                                                    Expanded(
+                                                      child: Row(
+                                                        children: [
+                                                          SingleImageShowModule(
+                                                            index: 5,
+                                                            flex: 2,
+                                                          ),
+                                                          SizedBox(width: 5),
+                                                          SingleImageShowModule(
+                                                              index: 6),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : selectedIndex == 10
+                                                ? Container(
+                                                    decoration:
+                                                        collageMainImageBoxDecoration(),
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: Column(
+                                                            children: [
+                                                              SingleImageShowModule(
+                                                                  index: 0),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                              SingleImageShowModule(
+                                                                  index: 1),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                              SingleImageShowModule(
+                                                                  index: 2),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(width: 5),
+                                                        Expanded(
+                                                          child: Column(
+                                                            children: [
+                                                              SingleImageShowModule(
+                                                                  index: 3),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                              SingleImageShowModule(
+                                                                  index: 4),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(width: 5),
+                                                        Expanded(
+                                                          child: Column(
+                                                            children: [
+                                                              SingleImageShowModule(
+                                                                index: 5,
+                                                                flex: 2,
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 5),
+                                                              SingleImageShowModule(
+                                                                  index: 6),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                : selectedIndex == 11
+                                                    ? Container(
+                                                        decoration:
+                                                            collageMainImageBoxDecoration(),
+                                                        child: Row(
+                                                          children: [
+                                                            Expanded(
+                                                                child: Column(
+                                                                    children: [
+                                                                  SingleImageShowModule(
+                                                                      index: 0),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          5),
+                                                                  SingleImageShowModule(
+                                                                      index: 1),
+                                                                ])),
+                                                            SizedBox(width: 5),
+                                                            Expanded(
+                                                                child: Column(
+                                                                    children: [
+                                                                  SingleImageShowModule(
+                                                                      index: 2),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          5),
+                                                                  SingleImageShowModule(
+                                                                      index: 3),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          5),
+                                                                  SingleImageShowModule(
+                                                                      index: 4),
+                                                                ])),
+                                                            SizedBox(width: 5),
+                                                            Expanded(
+                                                                child: Column(
+                                                                    children: [
+                                                                  SingleImageShowModule(
+                                                                      index: 5),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          5),
+                                                                  SingleImageShowModule(
+                                                                      index: 6),
+                                                                ])),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    : selectedIndex == 12
+                                                        ? Container(
+                                                            decoration:
+                                                                collageMainImageBoxDecoration(),
+                                                            child: Column(
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              0),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              5),
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              1),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              5),
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              2),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 5),
+                                                                SingleImageShowModule(
+                                                                    index: 3),
+                                                                SizedBox(
+                                                                    height: 5),
+                                                                Expanded(
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              4),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              5),
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              5),
+                                                                      SizedBox(
+                                                                          width:
+                                                                              5),
+                                                                      SingleImageShowModule(
+                                                                          index:
+                                                                              6),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          )
+                                                        : selectedIndex == 13
+                                                            ? Container(
+                                                                decoration:
+                                                                    collageMainImageBoxDecoration(),
+                                                                child: Column(
+                                                                  children: [
+                                                                    Expanded(
+                                                                      flex: 1,
+                                                                      child:
+                                                                          Row(
+                                                                        children: [
+                                                                          SingleImageShowModule(
+                                                                              index: 0),
+                                                                          SizedBox(
+                                                                              width: 5),
+                                                                          Expanded(
+                                                                              child: Row(children: [
+                                                                            SingleImageShowModule(index: 1),
+                                                                            SizedBox(width: 5),
+                                                                            SingleImageShowModule(index: 2),
+                                                                          ]))
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(
+                                                                        height:
+                                                                            5),
+                                                                    Expanded(
+                                                                      flex: 2,
+                                                                      child:
+                                                                          Row(
+                                                                        children: [
+                                                                          SingleImageShowModule(
+                                                                              index: 3),
+                                                                          SizedBox(
+                                                                              width: 5),
+                                                                          Expanded(
+                                                                              child: Column(children: [
+                                                                            SingleImageShowModule(index: 4),
+                                                                            SizedBox(height: 5),
+                                                                            Expanded(
+                                                                                child: Row(children: [
+                                                                              SingleImageShowModule(index: 5),
+                                                                              SizedBox(width: 5),
+                                                                              SingleImageShowModule(index: 6),
+                                                                            ]))
+                                                                          ])),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            : selectedIndex ==
+                                                                    14
+                                                                ? Container(
+                                                                    decoration:
+                                                                        collageMainImageBoxDecoration(),
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        Expanded(
+                                                                          child:
+                                                                              Row(
+                                                                            children: [
+                                                                              SingleImageShowModule(index: 0),
+                                                                              SizedBox(width: 5),
+                                                                              SingleImageShowModule(
+                                                                                index: 1,
+                                                                                flex: 2,
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                            height:
+                                                                                5),
+                                                                        Expanded(
+                                                                          child:
+                                                                              Row(
+                                                                            children: [
+                                                                              SingleImageShowModule(index: 2),
+                                                                              SizedBox(width: 5),
+                                                                              SingleImageShowModule(
+                                                                                index: 3,
+                                                                                flex: 2,
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                            height:
+                                                                                5),
+                                                                        Expanded(
+                                                                          child:
+                                                                              Row(
+                                                                            children: [
+                                                                              SingleImageShowModule(index: 4),
+                                                                              SizedBox(width: 5),
+                                                                              SingleImageShowModule(index: 5),
+                                                                              SizedBox(width: 5),
+                                                                              SingleImageShowModule(index: 6),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                : selectedIndex ==
+                                                                        15
+                                                                    ? Container(
+                                                                        decoration:
+                                                                            collageMainImageBoxDecoration(),
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            Expanded(
+                                                                              flex: 1,
+                                                                              child: Row(
+                                                                                children: [
+                                                                                  SingleImageShowModule(index: 0),
+                                                                                  SizedBox(width: 5),
+                                                                                  SingleImageShowModule(
+                                                                                    index: 1,
+                                                                                    flex: 2,
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            SizedBox(height: 5),
+                                                                            Expanded(
+                                                                              flex: 2,
+                                                                              child: Row(
+                                                                                children: [
+                                                                                  SingleImageShowModule(index: 2),
+                                                                                  SizedBox(width: 5),
+                                                                                  Expanded(
+                                                                                      flex: 2,
+                                                                                      child: Column(children: [
+                                                                                        Expanded(
+                                                                                          child: Row(children: [
+                                                                                            SingleImageShowModule(index: 3),
+                                                                                            SizedBox(width: 5),
+                                                                                            SingleImageShowModule(index: 4),
+                                                                                          ]),
+                                                                                        ),
+                                                                                        SizedBox(height: 5),
+                                                                                        Expanded(
+                                                                                          child: Row(children: [
+                                                                                            SingleImageShowModule(index: 5),
+                                                                                            SizedBox(width: 5),
+                                                                                            SingleImageShowModule(index: 6),
+                                                                                          ]),
+                                                                                        )
+                                                                                      ])),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    : Container());
   }
 }

@@ -11,9 +11,14 @@ class HeaderTextModule extends StatelessWidget {
     return Column(
       children: [
         Container(
-          child: Image.asset(Images.ic_logo, scale: 5,),
+          child: Image.asset(
+            Images.ic_logo,
+            scale: 5,
+          ),
         ),
-        SizedBox(height: 15,),
+        SizedBox(
+          height: 15,
+        ),
         Container(
           child: Text(
             "Pixy Trim",
@@ -52,8 +57,7 @@ class GalleryModule extends StatelessWidget {
                   ),
                   Text(
                     "Gallery",
-                    style:
-                    TextStyle(fontFamily: "", fontSize: 20),
+                    style: TextStyle(fontFamily: "", fontSize: 20),
                   ),
                 ],
               ),
@@ -157,8 +161,13 @@ class LocalStoreDataModule extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(Images.ic_draft, scale: 2.5,),
-                SizedBox(width: 10,),
+                Image.asset(
+                  Images.ic_draft,
+                  scale: 2.5,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
                 Text(
                   "Draft",
                   style: TextStyle(
@@ -176,7 +185,7 @@ class LocalStoreDataModule extends StatelessWidget {
 }
 
 class AddProfile extends StatelessWidget {
- // const AddProfile({Key? key}) : super(key: key);
+  // const AddProfile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -191,9 +200,14 @@ class AddProfile extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(Images.ic_profile, scale: 2.8,),
+                Image.asset(
+                  Images.ic_profile,
+                  scale: 2.8,
+                ),
                 //Icon(Icons.person),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Text(
                   "Profile",
                   style: TextStyle(
@@ -209,7 +223,6 @@ class AddProfile extends StatelessWidget {
     );
   }
 }
-
 
 class LiveImageCaptureModule extends StatelessWidget {
   const LiveImageCaptureModule({Key? key}) : super(key: key);

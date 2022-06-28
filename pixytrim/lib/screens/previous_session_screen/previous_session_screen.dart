@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';
@@ -14,6 +15,7 @@ import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
 import 'package:share/share.dart';
 
+import '../../common/custom_color.dart';
 import 'collage_session_screen/collage_session_screen.dart';
 
 class PreviousSessionScreen extends StatefulWidget {
@@ -22,7 +24,9 @@ class PreviousSessionScreen extends StatefulWidget {
   @override
   _PreviousSessionScreenState createState() => _PreviousSessionScreenState();
 }
-class _PreviousSessionScreenState extends State<PreviousSessionScreen> with SingleTickerProviderStateMixin{
+
+class _PreviousSessionScreenState extends State<PreviousSessionScreen>
+    with SingleTickerProviderStateMixin {
   final controller = Get.put(PreviousSessionScreenController());
   late TabController tabController;
 
@@ -67,8 +71,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
               controller.isLoading.value
                   ? Center(child: CircularProgressIndicator())
                   : Container(
-                      margin:
-                          EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                      margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
                       child: Column(
                         children: [
                           appBar(context),
@@ -86,11 +89,9 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                               onSearchTextChanged('');
                             },),
                           ),*/
-                          Expanded(
-                              child: draftData()),
-                         // const SizedBox(height: 20),
+                          Expanded(child: draftData()),
+                          // const SizedBox(height: 20),
                           tabView()
-
                         ],
                       ),
                     ),
@@ -111,8 +112,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
     //String local= controller.localSessionList.toString().split('cache/')[1];
     controller.localSessionList.forEach((userDetail) {
       print("user detail path: ${userDetail.split('cache/')[1]}");
-      if (userDetail.split('cache/')[1].contains(text))
-      {
+      if (userDetail.split('cache/')[1].contains(text)) {
         controller.searchResult.add(userDetail);
       }
     });
@@ -127,27 +127,27 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
       return;
     }
     print("User list: ${controller.localCollageList}");
-   // String local= controller.localSessionList.toString().split('cache/')[1];
+    // String local= controller.localSessionList.toString().split('cache/')[1];
     controller.localCollageList.forEach((userDetail) {
       print("user detail path: ${userDetail.split('cache/')[1]}");
-      if (userDetail.split('cache/')[1].contains(text))
-      {
+      if (userDetail.split('cache/')[1].contains(text)) {
         controller.searchResult.add(userDetail);
       }
-
     });
 
     setState(() {});
   }
 
   Widget appBar(BuildContext context) {
-    return Container(
-      height: 50,
-      width: Get.width,
-      decoration: borderGradientDecoration(),
-      child: Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: Container(
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Container(
+        height: 50,
+        width: Get.width,
+        decoration: borderGradientDecoration(),
+        child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Container(
             padding: EdgeInsets.only(left: 10, right: 10),
             decoration: containerBackgroundGradient(),
             child: Row(
@@ -174,94 +174,105 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                     ),
                   ),
                 ),
-
                 controller.localSessionList.isNotEmpty ||
-                      controller.localCollageList.isNotEmpty
-                  ? GestureDetector(
-                      onTap: () {
-                        // tabController.index == 0 ? deleteAllImagesAlertDialog(context) : deleteAllCollageImagesAlertDialog(context);
-                        if (tabController.index == 0) {
-                          deleteAllImagesAlertDialog(context);
-                        } else {
-                          deleteAllCollageImagesAlertDialog(context);
-                        }
-                        //tabController.index == 0 ? deleteAllImagesAlertDialog(context) : Container();
-                        print('index:: ${tabController.index}');
-                      },
-                      child: Icon(Icons.delete_rounded),
-                      // child: controller.localSessionListNew.isNotEmpty && tabController.index == 0 ?
-                      //   Container(child: Icon(Icons.delete_rounded)) : Container(),
-                    )
-                  : Container(),
-              /* : tabController.index == 1 ?
-                 GestureDetector(
-                   onTap: () {
-                     deleteAllImagesAlertDialog(context);
-                   },
-                   //child: Icon(Icons.delete_rounded)),
-                   child: controller.localSessionListNew.isNotEmpty ?
-                   Container(child: Icon(Icons.delete_rounded)) : Container(),
-                 )  Container(), */
+                        controller.localCollageList.isNotEmpty
+                    ? GestureDetector(
+                        onTap: () {
+                          // tabController.index == 0 ? deleteAllImagesAlertDialog(context) : deleteAllCollageImagesAlertDialog(context);
+                          if (tabController.index == 0) {
+                            deleteAllImagesAlertDialog(context);
+                          } else {
+                            deleteAllCollageImagesAlertDialog(context);
+                          }
+                          //tabController.index == 0 ? deleteAllImagesAlertDialog(context) : Container();
+                          print('index:: ${tabController.index}');
+                        },
+                        child: Icon(Icons.delete_rounded),
+                        // child: controller.localSessionListNew.isNotEmpty && tabController.index == 0 ?
+                        //   Container(child: Icon(Icons.delete_rounded)) : Container(),
+                      )
+                    : Container(),
+                /* : tabController.index == 1 ?
+                   GestureDetector(
+                     onTap: () {
+                       deleteAllImagesAlertDialog(context);
+                     },
+                     //child: Icon(Icons.delete_rounded)),
+                     child: controller.localSessionListNew.isNotEmpty ?
+                     Container(child: Icon(Icons.delete_rounded)) : Container(),
+                   )  Container(), */
               ],
             ),
+          ),
         ),
       ),
     );
   }
 
-  Widget draftData(){
+  Widget draftData() {
     /*return ;*/
     return Obx(
-      ()=> controller.isLoading.value
-      ? Center(child: CircularProgressIndicator())
-      : Container(
-        child: TabBarView(
-          controller: tabController,
-          children: [
-
-               Container(
-                child: Column(
-                  children: [
-                    Container(
-                      height: 45,
-                      decoration: borderGradientDecoration(),
-                      child: Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Container(
-                          padding: EdgeInsets.only(left: 10, right: 10),
-                          decoration: containerBackgroundGradient(),
-                          child: TextField(
-                            controller: searchController,
-                            decoration: new InputDecoration(
-                                hintText: 'Search',
-                                hintStyle: TextStyle(fontFamily: ""),
-                                labelStyle: TextStyle(fontFamily: "Times New Roman"),
-                                helperStyle: TextStyle(fontFamily: ""),
-                                prefixIcon: Icon(Icons.search, color: Colors.black,),
-                                suffixIcon: GestureDetector(
-                                    onTap: (){
-                                      searchController.clear();
-                                      onSearchTextChanged('');
-                                    },
-                                    child: Icon(Icons.close, color: searchController.text.isNotEmpty ? Colors.black: Colors.grey,)),
-                                border: InputBorder.none),
-                            onChanged: onSearchTextChanged,
+      () => controller.isLoading.value
+          ? Center(child: CircularProgressIndicator())
+          : Container(
+              child: TabBarView(
+                controller: tabController,
+                children: [
+                  Container(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 45,
+                          decoration: borderGradientDecoration(),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Container(
+                              padding: EdgeInsets.only(left: 10, right: 10),
+                              decoration: containerBackgroundGradient(),
+                              child: TextField(
+                                controller: searchController,
+                                decoration: new InputDecoration(
+                                    hintText: 'Search',
+                                    hintStyle: TextStyle(fontFamily: ""),
+                                    labelStyle: TextStyle(
+                                        fontFamily: "Times New Roman"),
+                                    helperStyle: TextStyle(fontFamily: ""),
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      color: Colors.black,
+                                    ),
+                                    suffixIcon: GestureDetector(
+                                        onTap: () {
+                                          searchController.clear();
+                                          onSearchTextChanged('');
+                                        },
+                                        child: Icon(
+                                          Icons.close,
+                                          color:
+                                              searchController.text.isNotEmpty
+                                                  ? Colors.black
+                                                  : Colors.grey,
+                                        )),
+                                    border: InputBorder.none),
+                                onChanged: onSearchTextChanged,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    SizedBox(height: 10,),
-                    Expanded(
-                      child: Obx(()=>
-                         controller.localSessionList.length == 0
-                            ? Center(
-                          child: Text(
-                            'No Local Data Available',
-                            style: TextStyle(fontFamily: ""),
-                          ),
-                        )
-                            :
-                       /* GridView.builder(
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Expanded(
+                          child: Obx(() => controller.localSessionList.length ==
+                                  0
+                              ? Center(
+                                  child: Text(
+                                    'No Local Data Available',
+                                    style: TextStyle(fontFamily: ""),
+                                  ),
+                                )
+                              :
+                              /* GridView.builder(
                           itemCount:
                           controller.localSessionListNew.length,
                           physics: AlwaysScrollableScrollPhysics(),
@@ -306,310 +317,412 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                             );
                           },
                         ),*/
-                       controller.searchResult.length != 0 || searchController.text.isNotEmpty ?
-                       ListView.builder(
-                           itemCount: controller.searchResult.length,
-                           scrollDirection: Axis.vertical,
-                           shrinkWrap: true,
-                           physics: AlwaysScrollableScrollPhysics(),
-                           itemBuilder: (context, index){
-                             return Padding(
-                               padding: const EdgeInsets.all(5),
-                               child: GestureDetector(
-                                 onTap: () {
-                                   if (controller.localSessionList.isNotEmpty) {
-                                     Get.off(() => CameraScreen(),
-                                         arguments: [
-                                           File(
-                                               '${controller.localSessionList[index]}'),
-                                           SelectedModule.gallery
-                                         ]);
-                                   }
-                                 },
-                                 // onLongPress: () {
-                                 //   deleteSingleImageAlertDialog(
-                                 //       context, index);
-                                 // },
-                                 child: Row(
-                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                   //mainAxisAlignment: MainAxisAlignment.start,
-                                   children: [
-                                     Container(
-                                       height: 100,
-                                       width: 100,
-                                       decoration: BoxDecoration(
-                                         // borderRadius: BorderRadius.circular(10),
-                                         image: DecorationImage(
-                                           image: FileImage(File(
-                                               '${controller.searchResult[index]}')),
-                                         ),
-                                       ),
-                                       // child: Image.file(File('${controller.localSessionListNew![index]}')),
-                                     ),
-
-                                     SizedBox(width: 5,),
-
-                                     Column(
-                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                       //mainAxisAlignment: MainAxisAlignment.start,
-                                       children: [
-                                         // Text("PixyTrim ${time.day}-${time.month}-${time.year} ${time.hour}:${time.minute}:${time.second}",
-                                         //   style: TextStyle(fontFamily: ""),),
-                                         Text(controller.searchResult[index].split('cache/')[1],
-                                           style: TextStyle(fontFamily: "", fontSize: 16),),
-
-                                         SizedBox(height: 10,),
-
-                                         Row(
-                                           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                           children: [
-                                             GestureDetector(
-                                               onTap: () async {
-                                                 await shareImage(index);
-                                               },
-                                               child: Container(
-                                                 //width: Get.width,
-                                                 height: 40,
-                                                 //margin: EdgeInsets.only(right: 5),
-                                                 decoration: borderGradientDecoration(),
-                                                 child: Padding(
-                                                     padding: const EdgeInsets.all(3.0),
-                                                     child: Container(
-                                                         padding: EdgeInsets.only(left: 10, right: 10),
-                                                         decoration: containerBackgroundGradient(),
-                                                         child: Icon(Icons.share),),
-                                                 ),
-                                               ),
-                                             ),
-                                              SizedBox(width: 10,),
-                                             GestureDetector(
-                                               onTap: () async {
-                                                 await saveImage(index);
-                                               },
-                                               child: Container(
-                                                 //width: Get.width,
-                                                 height: 40,
-                                                 //margin: EdgeInsets.only(right: 5),
-                                                 decoration: borderGradientDecoration(),
-                                                 child: Padding(
-                                                   padding: const EdgeInsets.all(3.0),
-                                                   child: Container(
-                                                     padding: EdgeInsets.only(left: 10, right: 10),
-                                                     decoration: containerBackgroundGradient(),
-                                                     child: Icon(Icons.download),
-                                                   ),
-                                                 ),
-                                               ),
-                                             ),
-                                             SizedBox(width: 10,),
-                                             GestureDetector(
-                                               onTap: () async {
-                                                 deleteSingleImageAlertDialog(
-                                                     context, index);
-                                               },
-                                               child: Container(
-                                                 //width: Get.width,
-                                                 height: 40,
-                                                 //margin: EdgeInsets.only(right: 5),
-                                                 decoration: borderGradientDecoration(),
-                                                 child: Padding(
-                                                   padding: const EdgeInsets.all(3.0),
-                                                   child: Container(
-                                                     padding: EdgeInsets.only(left: 10, right: 10),
-                                                     decoration: containerBackgroundGradient(),
-                                                     child: Icon(Icons.delete),
-                                                   ),
-                                                 ),
-                                               ),
-                                             ),
-                                           ],
-                                         )
-
-
-
-
-                                         // SizedBox(height: 7,),
-                                         // GestureDetector(
-                                         //   onTap: () async {
-                                         //     setState(() {
-                                         //        controller.updateLocalSessionList(index);
-                                         //     });
-                                         //
-                                         //   },
-                                         //   child: Row(
-                                         //     children: [
-                                         //       Icon(Icons.delete),
-                                         //       SizedBox(width: 5,),
-                                         //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                         //     ],
-                                         //   ),
-                                         // ),
-                                       ],
-                                     )
-
-                                   ],
-                                 ),
-                               ),
-                             );
-                           }
-                       ):
-                        ListView.builder(
-                          //itemCount: _userDetails.length,
-                        itemCount: controller.localSessionList.length,
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          itemBuilder: (context, index){
-
-                            print("local image list: ${controller.localSessionList[index]}");
-                             //fileName = controller.localSessionList[index];
-                            //File file = new File(controller.localSessionList[index]);
-                            //String name = file.path.split('/').last;
-                            return Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: GestureDetector(
-                                onTap: () {
-                                  if (controller.localSessionList.isNotEmpty) {
-                                    Get.off(() => CameraScreen(),
-                                        arguments: [
-                                          File(
-                                              '${controller.localSessionList[index]}'),
-                                          SelectedModule.gallery
-                                        ]);
-                                  }
-                                },
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  //mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: 100,
-                                      width: 100,
-                                      decoration: BoxDecoration(
-                                        // borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                          image: FileImage(File(
-                                              '${controller.localSessionList[index]}')),
-                                        ),
-                                      ),
-                                      // child: Image.file(File('${controller.localSessionListNew![index]}')),
-                                    ),
-                                    SizedBox(width: 5,),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        //mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          // Text("PixyTrim ${time.day}-${time.month}-${time.year} ${time.hour}:${time.minute}:${time.second}",
-                                          //   style: TextStyle(fontFamily: ""),),
-                                          Text(controller.localSessionList[index].split('cache/')[1],
-                                            style: TextStyle(fontFamily: "", fontSize: 16),),
-                                          // Text("Pixytrim $index",
-                                          //   style: TextStyle(fontFamily: ""),),
-
-                                          SizedBox(height: 10,),
-
-                                          Row(
-                                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () async {
-                                                  await shareImage(index);
-                                                },
-                                                child: Container(
-                                                  //width: Get.width,
-                                                  height: 40,
-                                                  //margin: EdgeInsets.only(right: 5),
-                                                  decoration: borderGradientDecoration(),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(3.0),
-                                                    child: Container(
-                                                      padding: EdgeInsets.only(left: 10, right: 10),
-                                                      decoration: containerBackgroundGradient(),
-                                                      child: Icon(Icons.share),),
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(width: 10,),
-                                              GestureDetector(
-                                                onTap: () async {
-                                                  await saveImage(index);
-                                                },
-                                                child: Container(
-                                                  //width: Get.width,
-                                                  height: 40,
-                                                  //margin: EdgeInsets.only(right: 5),
-                                                  decoration: borderGradientDecoration(),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(3.0),
-                                                    child: Container(
-                                                      padding: EdgeInsets.only(left: 10, right: 10),
-                                                      decoration: containerBackgroundGradient(),
-                                                      child: Icon(Icons.download),
+                              controller.searchResult.length != 0 ||
+                                      searchController.text.isNotEmpty
+                                  ? ListView.builder(
+                                      itemCount: controller.searchResult.length,
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      physics: AlwaysScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              if (controller.localSessionList
+                                                  .isNotEmpty) {
+                                                Get.off(() => CameraScreen(),
+                                                    arguments: [
+                                                      File(
+                                                          '${controller.localSessionList[index]}'),
+                                                      SelectedModule.gallery
+                                                    ]);
+                                              }
+                                            },
+                                            // onLongPress: () {
+                                            //   deleteSingleImageAlertDialog(
+                                            //       context, index);
+                                            // },
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              //mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  height: 100,
+                                                  width: 100,
+                                                  decoration: BoxDecoration(
+                                                    // borderRadius: BorderRadius.circular(10),
+                                                    image: DecorationImage(
+                                                      image: FileImage(File(
+                                                          '${controller.searchResult[index]}')),
                                                     ),
                                                   ),
+                                                  // child: Image.file(File('${controller.localSessionListNew![index]}')),
                                                 ),
-                                              ),
-                                              SizedBox(width: 10,),
-                                              GestureDetector(
-                                                onTap: () async {
-                                                  deleteSingleImageAlertDialog(
-                                                      context, index);
-                                                },
-                                                child: Container(
-                                                  //width: Get.width,
-                                                  height: 40,
-                                                  //margin: EdgeInsets.only(right: 5),
-                                                  decoration: borderGradientDecoration(),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(3.0),
-                                                    child: Container(
-                                                      padding: EdgeInsets.only(left: 10, right: 10),
-                                                      decoration: containerBackgroundGradient(),
-                                                      child: Icon(Icons.delete),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  //mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    // Text("PixyTrim ${time.day}-${time.month}-${time.year} ${time.hour}:${time.minute}:${time.second}",
+                                                    //   style: TextStyle(fontFamily: ""),),
+                                                    Text(
+                                                      controller
+                                                          .searchResult[index]
+                                                          .split('cache/')[1],
+                                                      style: TextStyle(
+                                                          fontFamily: "",
+                                                          fontSize: 16),
+                                                    ),
+
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+
+                                                    Row(
+                                                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        GestureDetector(
+                                                          onTap: () async {
+                                                            await shareImage(
+                                                                index);
+                                                          },
+                                                          child: Container(
+                                                            //width: Get.width,
+                                                            height: 40,
+                                                            //margin: EdgeInsets.only(right: 5),
+                                                            decoration:
+                                                                borderGradientDecoration(),
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(3.0),
+                                                              child: Container(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        left:
+                                                                            10,
+                                                                        right:
+                                                                            10),
+                                                                decoration:
+                                                                    containerBackgroundGradient(),
+                                                                child: Icon(
+                                                                    Icons
+                                                                        .share),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        GestureDetector(
+                                                          onTap: () async {
+                                                            await saveImage(
+                                                                index);
+                                                          },
+                                                          child: Container(
+                                                            //width: Get.width,
+                                                            height: 40,
+                                                            //margin: EdgeInsets.only(right: 5),
+                                                            decoration:
+                                                                borderGradientDecoration(),
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(3.0),
+                                                              child: Container(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        left:
+                                                                            10,
+                                                                        right:
+                                                                            10),
+                                                                decoration:
+                                                                    containerBackgroundGradient(),
+                                                                child: Icon(Icons
+                                                                    .download),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        GestureDetector(
+                                                          onTap: () async {
+                                                            deleteSingleImageAlertDialog(
+                                                                context, index);
+                                                          },
+                                                          child: Container(
+                                                            //width: Get.width,
+                                                            height: 40,
+                                                            //margin: EdgeInsets.only(right: 5),
+                                                            decoration:
+                                                                borderGradientDecoration(),
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(3.0),
+                                                              child: Container(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        left:
+                                                                            10,
+                                                                        right:
+                                                                            10),
+                                                                decoration:
+                                                                    containerBackgroundGradient(),
+                                                                child: Icon(Icons
+                                                                    .delete),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )
+
+                                                    // SizedBox(height: 7,),
+                                                    // GestureDetector(
+                                                    //   onTap: () async {
+                                                    //     setState(() {
+                                                    //        controller.updateLocalSessionList(index);
+                                                    //     });
+                                                    //
+                                                    //   },
+                                                    //   child: Row(
+                                                    //     children: [
+                                                    //       Icon(Icons.delete),
+                                                    //       SizedBox(width: 5,),
+                                                    //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                                    //     ],
+                                                    //   ),
+                                                    // ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      })
+                                  : ListView.builder(
+                                      //itemCount: _userDetails.length,
+                                      itemCount:
+                                          controller.localSessionList.length,
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      physics: AlwaysScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        print(
+                                            "local image list: ${controller.localSessionList[index]}");
+                                        //fileName = controller.localSessionList[index];
+                                        //File file = new File(controller.localSessionList[index]);
+                                        //String name = file.path.split('/').last;
+                                        return Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              if (controller.localSessionList
+                                                  .isNotEmpty) {
+                                                Get.off(() => CameraScreen(),
+                                                    arguments: [
+                                                      File(
+                                                          '${controller.localSessionList[index]}'),
+                                                      SelectedModule.gallery
+                                                    ]);
+                                              }
+                                            },
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              //mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  height: 100,
+                                                  width: 100,
+                                                  decoration: BoxDecoration(
+                                                    // borderRadius: BorderRadius.circular(10),
+                                                    image: DecorationImage(
+                                                      image: FileImage(File(
+                                                          '${controller.localSessionList[index]}')),
                                                     ),
                                                   ),
+                                                  // child: Image.file(File('${controller.localSessionListNew![index]}')),
                                                 ),
-                                              ),
-                                            ],
-                                          )
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    //mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      // Text("PixyTrim ${time.day}-${time.month}-${time.year} ${time.hour}:${time.minute}:${time.second}",
+                                                      //   style: TextStyle(fontFamily: ""),),
+                                                      Text(
+                                                        controller
+                                                            .localSessionList[
+                                                                index]
+                                                            .split('cache/')[1],
+                                                        style: TextStyle(
+                                                            fontFamily: "",
+                                                            fontSize: 16),
+                                                      ),
+                                                      // Text("Pixytrim $index",
+                                                      //   style: TextStyle(fontFamily: ""),),
 
-                                          // SizedBox(height: 7,),
-                                          // GestureDetector(
-                                          //   onTap: () async {
-                                          //     setState(() {
-                                          //        controller.updateLocalSessionList(index);
-                                          //     });
-                                          //
-                                          //   },
-                                          //   child: Row(
-                                          //     children: [
-                                          //       Icon(Icons.delete),
-                                          //       SizedBox(width: 5,),
-                                          //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                          //     ],
-                                          //   ),
-                                          // ),
-                                        ],
-                                      ),
-                                    )
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
 
-                                  ],
-                                ),
-                              ),
-                            );
-                          }
-                      )
-                      ),
+                                                      Row(
+                                                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              await shareImage(
+                                                                  index);
+                                                            },
+                                                            child: Container(
+                                                              //width: Get.width,
+                                                              height: 40,
+                                                              //margin: EdgeInsets.only(right: 5),
+                                                              decoration:
+                                                                  borderGradientDecoration(),
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        3.0),
+                                                                child:
+                                                                    Container(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              10,
+                                                                          right:
+                                                                              10),
+                                                                  decoration:
+                                                                      containerBackgroundGradient(),
+                                                                  child: Icon(
+                                                                      Icons
+                                                                          .share),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              await saveImage(
+                                                                  index);
+                                                            },
+                                                            child: Container(
+                                                              //width: Get.width,
+                                                              height: 40,
+                                                              //margin: EdgeInsets.only(right: 5),
+                                                              decoration:
+                                                                  borderGradientDecoration(),
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        3.0),
+                                                                child:
+                                                                    Container(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              10,
+                                                                          right:
+                                                                              10),
+                                                                  decoration:
+                                                                      containerBackgroundGradient(),
+                                                                  child: Icon(Icons
+                                                                      .download),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              deleteSingleImageAlertDialog(
+                                                                  context,
+                                                                  index);
+                                                            },
+                                                            child: Container(
+                                                              //width: Get.width,
+                                                              height: 40,
+                                                              //margin: EdgeInsets.only(right: 5),
+                                                              decoration:
+                                                                  borderGradientDecoration(),
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        3.0),
+                                                                child:
+                                                                    Container(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              10,
+                                                                          right:
+                                                                              10),
+                                                                  decoration:
+                                                                      containerBackgroundGradient(),
+                                                                  child: Icon(Icons
+                                                                      .delete),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+
+                                                      // SizedBox(height: 7,),
+                                                      // GestureDetector(
+                                                      //   onTap: () async {
+                                                      //     setState(() {
+                                                      //        controller.updateLocalSessionList(index);
+                                                      //     });
+                                                      //
+                                                      //   },
+                                                      //   child: Row(
+                                                      //     children: [
+                                                      //       Icon(Icons.delete),
+                                                      //       SizedBox(width: 5,),
+                                                      //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                                      //     ],
+                                                      //   ),
+                                                      // ),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      })),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-
-              ),
-            Container(
-              child: Column(
-                children: [
-                  /*TextField(
+                  ),
+                  Container(
+                      child: Column(
+                    children: [
+                      /*TextField(
                     controller: searchCollageController,
                     decoration: new InputDecoration(
                         hintText: 'Search',
@@ -628,17 +741,17 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                   ),
                   SizedBox(height: 5,),*/
 
-                  Expanded(
-                    child: Obx(()=>
-                       controller.localCollageList.length == 0
-                          ? Center(
-                        child: Text(
-                          'No Collage Data Available In Local',
-                          style: TextStyle(fontFamily: ""),
-                        ),
-                      )
-                          :
-                      /*GridView.builder(
+                      Expanded(
+                        child: Obx(
+                          () => controller.localCollageList.length == 0
+                              ? Center(
+                                  child: Text(
+                                    'No Collage Data Available In Local',
+                                    style: TextStyle(fontFamily: ""),
+                                  ),
+                                )
+                              :
+                              /*GridView.builder(
                         itemCount: controller.localCollageList.length,
                         physics: AlwaysScrollableScrollPhysics(),
                         shrinkWrap: true,
@@ -666,211 +779,259 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                           );
                         },
                       ),*/
-                       controller.searchResult.length != 0 || searchController.text.isNotEmpty ?
-                       ListView.builder(
-                           itemCount: controller.searchResult.length,
-                           scrollDirection: Axis.vertical,
-                           shrinkWrap: true,
-                           physics: AlwaysScrollableScrollPhysics(),
-                           itemBuilder: (context, index){
-                             return Padding(
-                               padding: const EdgeInsets.all(5),
-                               child: Row(
-                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                 children: [
-                                   Container(
-                                     height: 75,
-                                     width: 75,
-                                     decoration: BoxDecoration(
-                                       // borderRadius: BorderRadius.circular(10),
-                                       image: DecorationImage(
-                                         image: FileImage(File(
-                                             '${controller.searchResult[index]}')),
-                                       ),
-                                     ),
-                                     // child: Image.file(File('${controller.localSessionListNew![index]}')),
-                                   ),
-
-                                   Row(
-                                     crossAxisAlignment: CrossAxisAlignment.start,
-                                     //mainAxisAlignment: MainAxisAlignment.start,
-                                     children: [
-                                       GestureDetector(
-                                         onTap: () async {
-                                           await shareImage1(index);
-                                         },
-                                         child: Icon(Icons.share),
-                                       ),
-                                       SizedBox(height: 7,),
-                                       GestureDetector(
-                                         onTap: () async {
-                                           await saveImage1(index);
-                                         },
-                                         child: Icon(Icons.download),
-                                       ),
-
-                                       // SizedBox(height: 7,),
-                                       // GestureDetector(
-                                       //   onTap: () async {
-                                       //     setState(() {
-                                       //        controller.updateLocalSessionList(index);
-                                       //     });
-                                       //
-                                       //   },
-                                       //   child: Row(
-                                       //     children: [
-                                       //       Icon(Icons.delete),
-                                       //       SizedBox(width: 5,),
-                                       //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                       //     ],
-                                       //   ),
-                                       // ),
-                                     ],
-                                   )
-                                 ],
-                               ),
-                             );
-                           }
-                       ):
-                      ListView.builder(
-                          itemCount: controller.localCollageList.length,
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          itemBuilder: (context, index){
-                            return Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: GestureDetector(
-                                onTap: (){
-                                  Get.back();
-                                  collageScreenController.imageFileList.clear();
-                                  for(int i=0; i < controller.localCollageList.length; i++){
-                                    File file = File('${controller.localCollageList[i]}');
-                                    XFile xFile = XFile('${file.path}');
-                                    collageScreenController.imageFileList.add(ImageFileItem(file: xFile));
-                                  }
-                                  Get.off(()=> CollageScreen());
-                                },
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      height: 75,
-                                      width: 75,
-                                      decoration: BoxDecoration(
-                                        // borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                          image: FileImage(File(
-                                              '${controller.localCollageList[index]}')),
-                                        ),
-                                      ),
-                                      // child: Image.file(File('${controller.localSessionListNew![index]}')),
-                                    ),
-                                    SizedBox(width: 5,),
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      //mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () async {
-                                            await shareImage1(index);
-                                          },
-                                          child: Container(
-                                           // width: 110,
-                                            height: 40,
-                                            //margin: EdgeInsets.only(right: 5),
-                                            decoration: borderGradientDecoration(),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(3.0),
-                                              child: Container(
-                                                padding: EdgeInsets.only(left: 10, right: 10),
-                                                decoration: containerBackgroundGradient(),
-                                                child: Center(
-                                                  child: Icon(Icons.share),
-                                                ),),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: 7,),
-                                        GestureDetector(
-                                          onTap: () async {
-                                            await saveImage1(index);
-                                          },
-                                          child: Container(
-                                            //width: 110,
-                                            height: 40,
-                                            //margin: EdgeInsets.only(right: 5),
-                                            decoration: borderGradientDecoration(),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(3.0),
-                                              child: Container(
-                                                padding: EdgeInsets.only(left: 10, right: 10),
-                                                decoration: containerBackgroundGradient(),
-                                                child: Center(
-                                                  child:Icon(Icons.download),
+                              controller.searchResult.length != 0 ||
+                                      searchController.text.isNotEmpty
+                                  ? ListView.builder(
+                                      itemCount: controller.searchResult.length,
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      physics: AlwaysScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                height: 75,
+                                                width: 75,
+                                                decoration: BoxDecoration(
+                                                  // borderRadius: BorderRadius.circular(10),
+                                                  image: DecorationImage(
+                                                    image: FileImage(File(
+                                                        '${controller.searchResult[index]}')),
+                                                  ),
                                                 ),
+                                                // child: Image.file(File('${controller.localSessionListNew![index]}')),
                                               ),
-                                            ),
-                                          ),
-                                        ),
+                                              Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                //mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () async {
+                                                      await shareImage1(index);
+                                                    },
+                                                    child: Icon(Icons.share),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 7,
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: () async {
+                                                      await saveImage1(index);
+                                                    },
+                                                    child: Icon(Icons.download),
+                                                  ),
 
-                                        SizedBox(width: 7,),
-                                        GestureDetector(
-                                          onTap: () async {
-                                            deleteSingleImageCollageAlertDialog(
-                                                context, index);
-                                          },
-                                          child: Container(
-                                           // width: 110,
-                                            height: 40,
-                                            //margin: EdgeInsets.only(right: 5),
-                                            decoration: borderGradientDecoration(),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(3.0),
-                                              child: Container(
-                                                padding: EdgeInsets.only(left: 10, right: 10),
-                                                decoration: containerBackgroundGradient(),
-                                                child: Center(
-                                                  child: Icon(Icons.delete),
+                                                  // SizedBox(height: 7,),
+                                                  // GestureDetector(
+                                                  //   onTap: () async {
+                                                  //     setState(() {
+                                                  //        controller.updateLocalSessionList(index);
+                                                  //     });
+                                                  //
+                                                  //   },
+                                                  //   child: Row(
+                                                  //     children: [
+                                                  //       Icon(Icons.delete),
+                                                  //       SizedBox(width: 5,),
+                                                  //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                                  //     ],
+                                                  //   ),
+                                                  // ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      })
+                                  : ListView.builder(
+                                      itemCount:
+                                          controller.localCollageList.length,
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      physics: AlwaysScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Get.back();
+                                              collageScreenController
+                                                  .imageFileList
+                                                  .clear();
+                                              for (int i = 0;
+                                                  i <
+                                                      controller
+                                                          .localCollageList
+                                                          .length;
+                                                  i++) {
+                                                File file = File(
+                                                    '${controller.localCollageList[i]}');
+                                                XFile xFile =
+                                                    XFile('${file.path}');
+                                                collageScreenController
+                                                    .imageFileList
+                                                    .add(ImageFileItem(
+                                                        file: xFile));
+                                              }
+                                              Get.off(() => CollageScreen());
+                                            },
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  height: 75,
+                                                  width: 75,
+                                                  decoration: BoxDecoration(
+                                                    // borderRadius: BorderRadius.circular(10),
+                                                    image: DecorationImage(
+                                                      image: FileImage(File(
+                                                          '${controller.localCollageList[index]}')),
+                                                    ),
+                                                  ),
+                                                  // child: Image.file(File('${controller.localSessionListNew![index]}')),
                                                 ),
-                                              ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  //mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () async {
+                                                        await shareImage1(
+                                                            index);
+                                                      },
+                                                      child: Container(
+                                                        // width: 110,
+                                                        height: 40,
+                                                        //margin: EdgeInsets.only(right: 5),
+                                                        decoration:
+                                                            borderGradientDecoration(),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(3.0),
+                                                          child: Container(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 10,
+                                                                    right: 10),
+                                                            decoration:
+                                                                containerBackgroundGradient(),
+                                                            child: Center(
+                                                              child: Icon(
+                                                                  Icons.share),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 7,
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () async {
+                                                        await saveImage1(index);
+                                                      },
+                                                      child: Container(
+                                                        //width: 110,
+                                                        height: 40,
+                                                        //margin: EdgeInsets.only(right: 5),
+                                                        decoration:
+                                                            borderGradientDecoration(),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(3.0),
+                                                          child: Container(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 10,
+                                                                    right: 10),
+                                                            decoration:
+                                                                containerBackgroundGradient(),
+                                                            child: Center(
+                                                              child: Icon(Icons
+                                                                  .download),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+
+                                                    SizedBox(
+                                                      width: 7,
+                                                    ),
+                                                    GestureDetector(
+                                                      onTap: () async {
+                                                        deleteSingleImageCollageAlertDialog(
+                                                            context, index);
+                                                      },
+                                                      child: Container(
+                                                        // width: 110,
+                                                        height: 40,
+                                                        //margin: EdgeInsets.only(right: 5),
+                                                        decoration:
+                                                            borderGradientDecoration(),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(3.0),
+                                                          child: Container(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 10,
+                                                                    right: 10),
+                                                            decoration:
+                                                                containerBackgroundGradient(),
+                                                            child: Center(
+                                                              child: Icon(
+                                                                  Icons.delete),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+
+                                                    // SizedBox(height: 7,),
+                                                    // GestureDetector(
+                                                    //   onTap: () async {
+                                                    //     setState(() {
+                                                    //        controller.updateLocalSessionList(index);
+                                                    //     });
+                                                    //
+                                                    //   },
+                                                    //   child: Row(
+                                                    //     children: [
+                                                    //       Icon(Icons.delete),
+                                                    //       SizedBox(width: 5,),
+                                                    //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
+                                                    //     ],
+                                                    //   ),
+                                                    // ),
+                                                  ],
+                                                )
+                                              ],
                                             ),
                                           ),
-                                        ),
-
-                                        // SizedBox(height: 7,),
-                                        // GestureDetector(
-                                        //   onTap: () async {
-                                        //     setState(() {
-                                        //        controller.updateLocalSessionList(index);
-                                        //     });
-                                        //
-                                        //   },
-                                        //   child: Row(
-                                        //     children: [
-                                        //       Icon(Icons.delete),
-                                        //       SizedBox(width: 5,),
-                                        //       Text("Delete", style: TextStyle(fontFamily: "", fontSize: 18),)
-                                        //     ],
-                                        //   ),
-                                        // ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          }
+                                        );
+                                      }),
+                        ),
                       ),
-                    ),
-                  ),
+                    ],
+                  )),
+                  //collageImagesPreviousSessionModule(),
                 ],
-              )
+              ),
             ),
-            //collageImagesPreviousSessionModule(),
-          ],
-        ),
-      ),
     );
   }
 
@@ -921,14 +1082,14 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
         fontSize: 16.0);
   }
 
-  Widget tabView(){
+  Widget tabView() {
     return TabBar(
       indicatorColor: Colors.transparent,
       indicatorSize: TabBarIndicatorSize.label,
       labelColor: Colors.black,
       labelPadding: EdgeInsets.only(top: 20.0),
       unselectedLabelColor: Colors.grey,
-      controller:  tabController,
+      controller: tabController,
       labelStyle: TextStyle(fontSize: 18),
       tabs: [
         Container(
@@ -955,80 +1116,24 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
                 child: Tab(text: "Collage Draft")),
           ),
         ),
-
       ],
     );
   }
 
   deleteAllImagesAlertDialog(BuildContext context) {
-    Widget cancelButton = TextButton(
-      child: Text(
-        "No",
-        style: TextStyle(fontFamily: ""),
-      ),
+    Widget cancelButton = IconsButton(
       onPressed: () {
         Get.back();
       },
+      text: 'No',
+      color: AppColor.kBorderGradientColor3,
+      textStyle: TextStyle(color: Colors.white),
     );
-    Widget continueButton = TextButton(
-      child: Text(
-        "Yes",
-        style: TextStyle(fontFamily: ""),
-      ),
+
+    Widget continueButton = IconsButton(
       onPressed: () async {
         controller.deleteLocalSessionList();
-        if(controller.localSessionList.isEmpty){
-          Fluttertoast.showToast(msg: 'List is Empty!');
-          Get.back();
-          // Get.back();
-        } else {
-        Fluttertoast.showToast(msg: 'Deleted Successfully!');
-        Get.back();
-        Get.back();
-
-        }
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      content: Text(
-        "Do you want to delete all images ?",
-        style: TextStyle(fontFamily: ""),
-      ),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-  deleteAllCollageImagesAlertDialog(BuildContext context) {
-    Widget cancelButton = TextButton(
-      child: Text(
-        "No",
-        style: TextStyle(fontFamily: ""),
-      ),
-      onPressed: () {
-        Get.back();
-      },
-    );
-    Widget continueButton = TextButton(
-      child: Text(
-        "Yes",
-        style: TextStyle(fontFamily: ""),
-      ),
-      onPressed: () async {
-        controller.deleteCollageLocalSessionList();
-        if(controller.localCollageList.isEmpty) {
+        if (controller.localSessionList.isEmpty) {
           Fluttertoast.showToast(msg: 'List is Empty!');
           Get.back();
           // Get.back();
@@ -1036,144 +1141,189 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen> with Sing
           Fluttertoast.showToast(msg: 'Deleted Successfully!');
           Get.back();
           Get.back();
-
         }
       },
+      text: 'yes',
+      color: AppColor.kBorderGradientColor1,
+      textStyle: TextStyle(color: Colors.white),
     );
 
     // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      content: Text(
-        "Do you want to delete all images ?",
-        style: TextStyle(fontFamily: ""),
+    Dialogs.materialDialog(
+      lottieBuilder: LottieBuilder.asset(
+        "assets/lotties/9511-loading.json",
       ),
+      color: Colors.white,
+      msg: "Do you want to delete all the images ?",
+      msgStyle: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      context: context,
       actions: [
         cancelButton,
         continueButton,
       ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
     );
   }
 
   deleteSingleImageAlertDialog(BuildContext context, int index) {
-    Widget cancelButton = TextButton(
-      child: Text(
-        "No",
-        style: TextStyle(fontFamily: ""),
-      ),
+    Widget cancelButton = IconsButton(
       onPressed: () {
         Get.back();
       },
+      text: 'No',
+      color: AppColor.kBorderGradientColor3,
+      textStyle: TextStyle(color: Colors.white),
     );
-    Widget continueButton = TextButton(
-      child: Text(
-        "Yes",
-        style: TextStyle(fontFamily: ""),
-      ),
+
+    Widget continueButton = IconsButton(
       onPressed: () async {
         controller.updateLocalSessionList(index);
         Get.back();
       },
+      text: 'yes',
+      color: AppColor.kBorderGradientColor1,
+      textStyle: TextStyle(color: Colors.white),
     );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      content: Text(
-        "Do you want to delete this image ?",
-        style: TextStyle(fontFamily: "",fontSize: 18),
+    Dialogs.materialDialog(
+      lottieBuilder: LottieBuilder.asset(
+        "assets/lotties/9511-loading.json",
       ),
+      color: Colors.white,
+      msg: "Do you want to delete the image ?",
+      msgStyle: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      context: context,
       actions: [
         cancelButton,
         continueButton,
       ],
     );
+  }
 
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
+  deleteAllCollageImagesAlertDialog(BuildContext context) {
+    Widget cancelButton = IconsButton(
+      onPressed: () {
+        Get.back();
       },
+      text: 'No',
+      color: AppColor.kBorderGradientColor3,
+      textStyle: TextStyle(color: Colors.white),
+    );
+
+    Widget continueButton = IconsButton(
+      onPressed: () async {
+        controller.deleteCollageLocalSessionList();
+        if (controller.localCollageList.isEmpty) {
+          Fluttertoast.showToast(msg: 'List is Empty!');
+          Get.back();
+          // Get.back();
+        } else {
+          Fluttertoast.showToast(msg: 'Deleted Successfully!');
+          Get.back();
+          Get.back();
+        }
+      },
+      text: 'yes',
+      color: AppColor.kBorderGradientColor1,
+      textStyle: TextStyle(color: Colors.white),
+    );
+
+    // set up the AlertDialog
+
+    // set up the AlertDialog
+    Dialogs.materialDialog(
+      lottieBuilder: LottieBuilder.asset(
+        "assets/lotties/9511-loading.json",
+      ),
+      color: Colors.white,
+      msg: "Do you want to delete all the images ?",
+      msgStyle: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      context: context,
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
     );
   }
 
   deleteSingleImageCollageAlertDialog(BuildContext context, int index) {
-    Widget cancelButton = TextButton(
-      child: Text(
-        "No",
-        style: TextStyle(fontFamily: ""),
-      ),
+    Widget cancelButton = IconsButton(
       onPressed: () {
         Get.back();
       },
+      text: 'No',
+      color: AppColor.kBorderGradientColor3,
+      textStyle: TextStyle(color: Colors.white),
     );
-    Widget continueButton = TextButton(
-      child: Text(
-        "Yes",
-        style: TextStyle(fontFamily: ""),
-      ),
+
+    Widget continueButton = IconsButton(
       onPressed: () async {
         controller.updateLocalCollageSessionList(index);
         Get.back();
       },
+      text: 'yes',
+      color: AppColor.kBorderGradientColor1,
+      textStyle: TextStyle(color: Colors.white),
     );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      content: Text(
-        "Do you want to delete this image ?",
-        style: TextStyle(fontFamily: "",fontSize: 18),
+    Dialogs.materialDialog(
+      lottieBuilder: LottieBuilder.asset(
+        "assets/lotties/9511-loading.json",
       ),
+      color: Colors.white,
+      msg: "Do you want to delete the image ?",
+      msgStyle: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      context: context,
       actions: [
         cancelButton,
         continueButton,
       ],
     );
 
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-  collageImagesPreviousSessionModule() {
-    return GestureDetector(
-      onTap: () {
-        Get.to(()=> CollageSessionScreen());
-      },
-      child: Container(
-        decoration: borderGradientDecoration(),
-        child: Padding(
-          padding: EdgeInsets.all(3),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: containerBackgroundGradient(),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                  'Collage Draft',
-                  style: TextStyle(
-                    fontFamily: "",
-                    fontWeight: FontWeight.bold,
+    collageImagesPreviousSessionModule() {
+      return GestureDetector(
+        onTap: () {
+          Get.to(() => CollageSessionScreen());
+        },
+        child: Container(
+          decoration: borderGradientDecoration(),
+          child: Padding(
+            padding: EdgeInsets.all(3),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: containerBackgroundGradient(),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    'Collage Draft',
+                    style: TextStyle(
+                      fontFamily: "",
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
 

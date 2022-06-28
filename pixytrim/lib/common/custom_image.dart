@@ -1,5 +1,4 @@
-
-class Images{
+class Images {
   static const root = 'assets/images/';
   static const root1 = 'assets/images/two_image_layout/';
   static const root2 = 'assets/images/three_image_layout/';
@@ -27,6 +26,7 @@ class Images{
 
   static const ic_crop = '$root' + 'crop.png';
   static const ic_filter = '$root' + 'filter.png';
+  static const ic_blend = '$root' + 'blend.png';
   static const ic_brightness = '$root' + 'brightness.png';
   static const ic_blur = '$root' + 'blur.png';
   static const ic_compress = '$root' + 'compress.png';
@@ -59,7 +59,8 @@ class Images{
   static const ic_service2 = '$root' + 'service2.png';
   static const ic_service3 = '$root' + 'service3.png';
 
-  static const ic_transparent_wallpaper1 = '$root' + 'transparent_wallpaper.jpg';
+  static const ic_transparent_wallpaper1 =
+      '$root' + 'transparent_wallpaper.jpg';
   static const ic_wallpaper1 = '$root' + 'wallpaper1.png';
   static const ic_wallpaper2 = '$root' + 'wallpaper2.png';
   static const ic_wallpaper3 = '$root' + 'wallpaper3.png';
@@ -190,7 +191,6 @@ class Images{
   static const ic_layout98 = '$root7' + '98.png';
   static const ic_layout99 = '$root7' + '99.png';
 
-
   // Image size ratio
   static const ic_sizeRatio1 = '$root6' + '1.2.png';
   static const ic_sizeRatio2 = '$root6' + '2.3.png';
@@ -211,5 +211,5 @@ class Images{
   static const ic_sizeRatio17 = '$root6' + 'pinterest post.png';
   static const ic_sizeRatio18 = '$root6' + 'twitter header.png';
   static const ic_sizeRatio19 = '$root6' + 'twitter post.png';
-  static const ic_sizeRatio20= '$root6' + 'youtubecover.png';
+  static const ic_sizeRatio20 = '$root6' + 'youtubecover.png';
 }

@@ -5,6 +5,8 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_color.dart';
 import 'package:pixytrim/common/custom_gradient_slider.dart';
@@ -40,14 +42,17 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => showAlertDialog(),
+      onWillPop: () {
+        return showAlertDialog();
+      },
       child: Scaffold(
         body: SafeArea(
           child: Stack(
             children: [
               MainBackgroundWidget(),
               Container(
-                margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                margin:
+                    EdgeInsets.only(left: 15, right: 15, bottom: 20, top: 10),
                 child: Column(
                   children: [
                     appBar(),
@@ -78,7 +83,6 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-
                     //widget.compressFile.delete();
                     //csController.compressSize.value;
                     showAlertDialog();
@@ -92,9 +96,10 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
                 ),
                 Container(
                   child: Text(
-                    csController.selectedModule == SelectedModule.camera
-                        ? "Camera"
-                        : "Gallery",
+                    "Compress Image",
+                    // csController.selectedModule == SelectedModule.camera
+                    //     ? "Camera"
+                    //     : "Gallery",
                     style: TextStyle(
                         fontFamily: "",
                         fontSize: 18,
@@ -122,14 +127,22 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
   Future saveImage() async {
     await GallerySaver.saveImage(widget.compressFile.path,
         albumName: "OTWPhotoEditingDemo");
-    Fluttertoast.showToast(
-        msg: "Save in to Gallery",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0);
+
+    showTopNotification(
+      displayText: "Save in to Gallery",
+      leadingIcon: Icon(
+        Icons.image,
+        color: AppColor.kBlackColor,
+      ),
+    );
+    // Fluttertoast.showToast(
+    //     msg: "Save in to Gallery",
+    //     toastLength: Toast.LENGTH_SHORT,
+    //     gravity: ToastGravity.CENTER,
+    //     timeInSecForIosWeb: 1,
+    //     backgroundColor: Colors.red,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
     widget.compressFile.delete();
   }
 
@@ -218,17 +231,20 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
                       () => SliderTheme(
                         data: SliderThemeData(
                           trackShape: GradientRectSliderTrackShape(
-                              gradient: gradient, darkenInactive: false,
+                            gradient: gradient,
+                            darkenInactive: false,
                           ),
                           valueIndicatorTextStyle: TextStyle(fontFamily: ""),
                         ),
                         child: Slider(
-                          label: 'Compress : ${csController.compressSize.value.toStringAsFixed(2)} %',
+                          label:
+                              'Compress : ${csController.compressSize.value.toStringAsFixed(2)} %',
                           onChanged: (value) {
                             setState(() {
                               print('value : $value');
                               csController.compressSize.value = value;
-                              compressImage(csController.addImageFromCameraList[widget.index]);
+                              compressImage(csController
+                                  .addImageFromCameraList[widget.index]);
                               print('Compressed Index : ${widget.index}');
                               csController.loading();
                             });
@@ -280,38 +296,42 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
   }
 
   showAlertDialog() {
+    Widget cancelButton = IconsButton(
+      onPressed: () {
+        Get.back();
+        // Get.back();
+      },
+      text: 'No',
+      color: AppColor.kBorderGradientColor3,
+      textStyle: TextStyle(color: Colors.white),
+    );
 
-    Widget cancelButton = TextButton(
-      child: Text("No", style: TextStyle(fontFamily: ""),),
-      onPressed:  () {
+    Widget continueButton = IconsButton(
+      onPressed: () async {
+        Get.back();
         Get.back();
       },
-    );
-    Widget continueButton = TextButton(
-      child: Text("Yes", style: TextStyle(fontFamily: ""),),
-      onPressed:  () async{
-          Get.back();
-          Get.back();
-      },
+      text: 'yes',
+      color: AppColor.kBorderGradientColor1,
+      textStyle: TextStyle(color: Colors.white),
     );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      //title: Text("AlertDialog"),
-      content: Text("Do you want to exit?", style: TextStyle(fontFamily: ""),),
+    Dialogs.materialDialog(
+      lottieBuilder: LottieBuilder.asset(
+        "assets/lotties/9511-loading.json",
+      ),
+      color: Colors.white,
+      msg: "Do you want to exit?",
+      msgStyle: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      context: context,
       actions: [
         cancelButton,
         continueButton,
       ],
     );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
-
 }

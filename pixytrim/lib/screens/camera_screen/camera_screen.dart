@@ -7,6 +7,8 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/common/store_session_local/store_session_local.dart';
@@ -21,6 +23,8 @@ import 'package:pixytrim/screens/image_size_ratio_screen/image_size_ratio_screen
 import 'package:share/share.dart';
 import 'package:image/image.dart' as imageLib;
 
+import '../../common/custom_color.dart';
+import '../photo_blend_screen/photo_blend_screen.dart';
 
 enum SelectedModule { camera, gallery }
 
@@ -44,14 +48,17 @@ class _CameraScreenState extends State<CameraScreen> {
   Widget build(BuildContext context) {
     print("path===${cameraScreenController.selectedModule}");
     return WillPopScope(
-      onWillPop: () async => showAlertDialog(),
+      onWillPop: () {
+        return showAlertDialog();
+      },
       child: Scaffold(
         body: SafeArea(
           child: Stack(
             children: [
               MainBackgroundWidget(),
               Container(
-                margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                margin:
+                    EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 10),
                 child: Column(
                   children: [
                     appBar(),
@@ -122,7 +129,9 @@ class _CameraScreenState extends State<CameraScreen> {
                               ? Images.ic_camera2
                               : Images.ic_gallery1,
                           scale: cameraScreenController.selectedModule ==
-                              SelectedModule.camera ? 1.7 : 1.7,
+                                  SelectedModule.camera
+                              ? 1.7
+                              : 1.7,
                         ),
                       ),
                     ),
@@ -158,96 +167,107 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  Widget cameraModule(){
+  Widget cameraModule() {
     return Container(
       child: Expanded(
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15),
           child: Obx(
-                ()=> cameraScreenController.isLoading.value
+            () => cameraScreenController.isLoading.value
                 ? Center(child: CircularProgressIndicator())
                 : Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  Obx(
-                        ()=> Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
                       children: [
-                        Expanded(
-                          child: Container(
-                            child: cameraScreenController.addImageFromCameraList.length.isGreaterThan(0)
-                                ? Image.file(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value])
-                                : null,
+                        Obx(
+                          () => Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  child: cameraScreenController
+                                          .addImageFromCameraList.length
+                                          .isGreaterThan(0)
+                                      ? Image.file(cameraScreenController
+                                              .addImageFromCameraList[
+                                          cameraScreenController
+                                              .selectedImage.value])
+                                      : null,
+                                ),
+                              ),
+                            ],
                           ),
+                        ),
+                        Container(
+                          padding:
+                              EdgeInsets.only(left: 10, right: 10, bottom: 0.5),
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.black26,
+                          ),
+                          child: Obx(
+                            () => ListView.builder(
+                              itemCount: cameraScreenController
+                                  .addImageFromCameraList.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, i) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 5),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        cameraScreenController
+                                            .selectedImage.value = i;
+                                        print(
+                                            'selectedImage1 : ${cameraScreenController.selectedImage.value}');
+                                      });
+                                    },
+                                    child: Container(
+                                      height: 45,
+                                      width: 45,
+                                      child: Image.file(
+                                        cameraScreenController
+                                            .addImageFromCameraList[i],
+                                        fit: BoxFit.cover,
+                                      ),
+                                      decoration: BoxDecoration(
+                                          border: cameraScreenController
+                                                      .selectedImage.value ==
+                                                  i
+                                              ? Border.all(color: Colors.black)
+                                              : Border.all(
+                                                  color: Colors.transparent)),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          // child: Obx(
+                          //       () => Row(
+                          //     mainAxisAlignment: MainAxisAlignment.center,
+                          //     children: List.generate(
+                          //       cameraScreenController.addImageFromCameraList.length,
+                          //           (index) => Container(
+                          //         width: 30,
+                          //         height: 30,
+                          //         child: Image.file(
+                          //           cameraScreenController
+                          //               .addImageFromCameraList[index],
+                          //           fit: BoxFit.cover,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ),
                       ],
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(left: 10, right: 10, bottom: 0.5),
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.black26,
-                    ),
-                    child: Obx(
-                          ()=> ListView.builder(
-                        itemCount: cameraScreenController.addImageFromCameraList.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, i){
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 5),
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  cameraScreenController.selectedImage.value = i;
-                                  print('selectedImage1 : ${cameraScreenController.selectedImage.value}');
-                                });
-                              },
-                              child: Container(
-                                height: 45,
-                                width: 45,
-                                child: Image.file(
-                                  cameraScreenController
-                                      .addImageFromCameraList[i],
-                                  fit: BoxFit.cover,
-                                ),
-                                decoration: BoxDecoration(
-                                    border: cameraScreenController.selectedImage.value == i
-                                        ? Border.all(color: Colors.black)
-                                        : Border.all(color: Colors.transparent)
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    // child: Obx(
-                    //       () => Row(
-                    //     mainAxisAlignment: MainAxisAlignment.center,
-                    //     children: List.generate(
-                    //       cameraScreenController.addImageFromCameraList.length,
-                    //           (index) => Container(
-                    //         width: 30,
-                    //         height: 30,
-                    //         child: Image.file(
-                    //           cameraScreenController
-                    //               .addImageFromCameraList[index],
-                    //           fit: BoxFit.cover,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                  ),
-                ],
-              ),
-            ),
           ),
         ),
       ),
@@ -255,64 +275,63 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   showAlertDialog() {
-
-    Widget cancelButton = TextButton(
-      child: Text("No", style: TextStyle(fontFamily: ""),),
-      onPressed:  () {
+    Widget cancelButton = IconsButton(
+      onPressed: () {
         Get.back();
         Get.back();
       },
+      text: 'Don\'t save'.toUpperCase(),
+      color: AppColor.kBorderGradientColor3,
+      textStyle: TextStyle(color: Colors.white),
     );
-    Widget continueButton = TextButton(
-      child: Text("Yes", style: TextStyle(fontFamily: ""),),
-      onPressed: () async {
-        if(cameraScreenController.addImageFromCameraList.isNotEmpty){
-          for(int i = 0; i < cameraScreenController.addImageFromCameraList.length; i++) {
-            print('Initial File Name : ${cameraScreenController.addImageFromCameraList[i].path}');
-            //todo
-            String orgPath = cameraScreenController.addImageFromCameraList[i].path;
-            String frontPath = orgPath.split('cache')[0]; // Getting Front Path of file Path
-            print('frontPath: $frontPath');
-            List<String> ogPathList = orgPath.split('/');
-            print('ogPathList: $ogPathList');
-            String ogExt = ogPathList[ogPathList.length - 1].split('.')[1];
-            print('ogExt: $ogExt');
-            DateTime today = new DateTime.now();
-            String dateSlug = "${today.day}-${today.month}-${today.year}_${today.hour}:${today.minute}:${today.second}";
-            print('Date: $dateSlug');
-            // cameraScreenController.addImageFromCameraList.removeAt(i);
-            // cameraScreenController.addImageFromCameraList.insert(i, File("${frontPath}cache/pixytrim_${i}_$dateSlug.$ogExt"));
-            cameraScreenController.addImageFromCameraList[i]
-            = await cameraScreenController.addImageFromCameraList[i].rename("${frontPath}cache/pixytrim_${i}_${i}_$dateSlug.$ogExt");
 
-            print('Final FIle Name : ${cameraScreenController.addImageFromCameraList[i].path}');
-            localList.add(cameraScreenController.addImageFromCameraList[i].path);
+    Widget continueButton = IconsButton(
+      onPressed: () async {
+        if (cameraScreenController.addImageFromCameraList.isNotEmpty) {
+          for (int i = 0;
+              i < cameraScreenController.addImageFromCameraList.length;
+              i++) {
+            localList
+                .add(cameraScreenController.addImageFromCameraList[i].path);
           }
           print('localList : $localList');
-          if(localList.isNotEmpty){
+          if (localList.isNotEmpty) {
             await localStorage.storeMainList(localList);
           }
           Get.back();
         }
         Get.back();
-
-        // if(cameraScreenController.addImageFromCameraList.isNotEmpty){
-        //   for(int i = 0; i < cameraScreenController.addImageFromCameraList.length; i++){
-        //     localList.add(cameraScreenController.addImageFromCameraList[i].path);
-        //   }
-        //   print('localList : $localList');
-        //   if(localList.isNotEmpty){
-        //     localStorage.storeMainList(localList);
-        //   }
-        //   Get.back();
-        // }
       },
+      text: 'save draft'.toUpperCase(),
+      color: AppColor.kButtonCyanColor,
+      textStyle: TextStyle(color: Colors.white),
+    );
+
+    Dialogs.materialDialog(
+      lottieBuilder: LottieBuilder.asset(
+        "assets/lotties/9511-loading.json",
+      ),
+      color: Colors.white,
+      msg: "Do you want to save draft Project before exiting?",
+      msgStyle: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      context: context,
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       //title: Text("AlertDialog"),
-      content: Text("Do you want to save in Draft ?", style: TextStyle(fontFamily: ""),),
+      content: Text(
+        "Do you want to save in Draft ?",
+        style: TextStyle(fontFamily: ""),
+      ),
       actions: [
         cancelButton,
         continueButton,
@@ -359,7 +378,9 @@ class _CameraScreenState extends State<CameraScreen> {
   shareImage() async {
     try {
       // final ByteData bytes = await rootBundle.load('${file!.path}');
-      await Share.shareFiles(['${cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value].path}']);
+      await Share.shareFiles([
+        '${cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value].path}'
+      ]);
     } catch (e) {
       print('Share Error : $e');
     }
@@ -368,125 +389,154 @@ class _CameraScreenState extends State<CameraScreen> {
   // Image Save Module
   Future saveImage() async {
     // renameImage();
-    await GallerySaver.saveImage(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value].path,
+    await GallerySaver.saveImage(
+        cameraScreenController
+            .addImageFromCameraList[cameraScreenController.selectedImage.value]
+            .path,
         albumName: "OTWPhotoEditingDemo");
-    Fluttertoast.showToast(
-        msg: "Save in to Gallery",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0);
+
+    showTopNotification(
+      displayText: "Saved to photo Gallery",
+      leadingIcon: Icon(
+        Icons.image,
+        color: AppColor.kBlackColor,
+      ),
+    );
+
+    // Fluttertoast.showToast(
+    //     msg: "Save in to Gallery",
+    //     toastLength: Toast.LENGTH_SHORT,
+    //     gravity: ToastGravity.CENTER,
+    //     timeInSecForIosWeb: 1,
+    //     backgroundColor: Colors.red,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
   Widget editingIconList() {
     return Container(
-      height: 60,
+      height: 85,
       child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemCount: cameraScreenController.iconList.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                i = index;
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        itemCount: cameraScreenController.iconList.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              i = index;
 
-                if (i == 0) {
-                  Get.to(() => CropImageScreen(
-                        file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value],
-                    newIndex: cameraScreenController.selectedImage.value,
-                      ))!.whenComplete(() {
-                        cameraScreenController.loading();
-                  })/*.then((value){
+              if (i == 0) {
+                Get.to(() => CropImageScreen(
+                              file: cameraScreenController
+                                      .addImageFromCameraList[
+                                  cameraScreenController.selectedImage.value],
+                              newIndex:
+                                  cameraScreenController.selectedImage.value,
+                            ))!
+                        .whenComplete(() {
+                  cameraScreenController.loading();
+                }) /*.then((value){
                          cameraScreenController.loading();
-                  })*/;
-                  //cropImage();
-                } else if (i == 1) {
-                  Get.to(() => FilterScreen());
-                } else if (i == 2) {
-                  Get.to(() => BrightnessScreen());
-                } else if (i == 3) {
-                  Get.to(() => BlurScreen());
-                } else if (i == 4) {
-                  compressImage(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]).then((value) {
-                    print('index index : ${cameraScreenController.selectedImage.value}');
-                    Get.to(() => CompressImageScreen(
-                              compressFile: compressFile!,
-                              index: cameraScreenController.selectedImage.value,
-                            ));
-                  });
-                } else if (i == 5) {
-                  resizeImage(cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value]).then((value) {
-                    /*Get.to(() => CompressImageScreen(
+                  })*/
+                    ;
+                //cropImage();
+              } else if (i == 1) {
+                Get.to(() => FilterScreen());
+              } else if (i == 2) {
+                Get.to(() => PhotoBlendScreen());
+              } else if (i == 3) {
+                Get.to(() => BrightnessScreen());
+              } else if (i == 4) {
+                Get.to(() => BlurScreen());
+              } else if (i == 5) {
+                compressImage(cameraScreenController.addImageFromCameraList[
+                        cameraScreenController.selectedImage.value])
+                    .then((value) {
+                  print(
+                      'index index : ${cameraScreenController.selectedImage.value}');
+                  Get.to(() => CompressImageScreen(
+                        compressFile: compressFile!,
+                        index: cameraScreenController.selectedImage.value,
+                      ));
+                });
+              } else if (i == 6) {
+                resizeImage(cameraScreenController.addImageFromCameraList[
+                        cameraScreenController.selectedImage.value])
+                    .then((value) {
+                  /*Get.to(() => CompressImageScreen(
                       file: widget.file,
                       compressFile: compressFile!,
                     ))!
                         .then((value) {
                       // setState(() {});
                     });*/
-                    Fluttertoast.showToast(
-                        msg: "Original length: ${imageTemp!.length}\n"
-                            "Resize length: ${resize!.length}",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        timeInSecForIosWeb: 5,
-                        backgroundColor: Colors.blue,
-                        textColor: Colors.white,
-                        fontSize: 16.0);
-                    /*Get.to(() => ResizeScreen(
-                                resize: resize!
-                              ))!.then((value) {
-                                Fluttertoast.showToast(
-                                    msg: "Resize length: ${resize!.length}",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.red,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0
-                                );
-                              });*/
-                  });
-                } else if (i == 6) {
-                  Get.to(() =>
-                      ImageEditorScreen(file: cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value], newIndex: cameraScreenController.selectedImage.value));
-                } else if (i == 7) {
-                  print('Value : ${cameraScreenController.selectedImage.value}');
-                  Get.to(() => ImageSizeRatioScreen(),
-                      arguments: [cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value], cameraScreenController.selectedImage.value]);
+                  showTopNotification(
+                    displayText: "Original length: ${imageTemp!.length} Kb\n"
+                        "Resize length: ${resize!.length} Kb",
+                    leadingIcon: Icon(
+                      Icons.photo_filter,
+                      color: AppColor.kBlackColor,
+                    ),
+                  );
+                });
+              } else if (i == 7) {
+                Get.to(() => ImageEditorScreen(
+                    file: cameraScreenController.addImageFromCameraList[
+                        cameraScreenController.selectedImage.value],
+                    newIndex: cameraScreenController.selectedImage.value));
+              } else if (i == 8) {
+                print('Value : ${cameraScreenController.selectedImage.value}');
+                Get.to(() => ImageSizeRatioScreen(), arguments: [
+                  cameraScreenController.addImageFromCameraList[
+                      cameraScreenController.selectedImage.value],
+                  cameraScreenController.selectedImage.value
+                ]);
 
-                  //Get.to(() => ImageEditorScreen(file: widget.file));
-                } /*else if(i == 8) {
-                  for(int i =0; i <= cameraScreenController.addImageFromCameraList.length; i++){
-                    collageScreenController.imageFileList.add(ImageFileItem(file: cameraScreenController.addImageFromCameraList[i]));
-                  }
-                  // collageScreenController.imageFileList.addAll(cameraScreenController.addImageFromCameraList);
-                  Get.to(()=> CollageScreen());
-                }*/
-              
-              },
-              child: Container(
-                padding: EdgeInsets.all(2),
-                height: 60,
-                width: 60,
-                margin: EdgeInsets.only(right: 8),
-                decoration: borderGradientDecoration(),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                  child: Center(
-                    child: Image.asset(
-                      cameraScreenController.iconList[index],
-                      scale: 2,
+                //Get.to(() => ImageEditorScreen(file: widget.file));
+              }
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(2),
+                  height: 60,
+                  width: 60,
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: borderGradientDecoration(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: Center(
+                      child: Image.asset(
+                        cameraScreenController.iconList[index],
+                        scale: 2,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
-          }),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${cameraScreenController.bottomToolsList[index]}",
+                      style: TextStyle(
+                        color: AppColor.kBlackColor.withOpacity(0.5),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -509,7 +559,7 @@ class _CameraScreenState extends State<CameraScreen> {
     print("Compress path : ${result!.lengthSync()}");
     setState(() {
       compressFile = result;
-       //cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value] = result;
+      //cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value] = result;
     });
     // setState Required
     setState(() {});
@@ -518,8 +568,6 @@ class _CameraScreenState extends State<CameraScreen> {
     //
     // });
   }
-
-
 
   Future resizeImage(File file) async {
     imageTemp = imageLib.decodeImage(file.readAsBytesSync());
@@ -561,13 +609,12 @@ class _CameraScreenState extends State<CameraScreen> {
           title: 'Crop',
         ));
     if (croppedFile != null) {
-      cameraScreenController.addImageFromCameraList[cameraScreenController.selectedImage.value] = croppedFile;
+      cameraScreenController.addImageFromCameraList[
+          cameraScreenController.selectedImage.value] = croppedFile;
       setState(() {});
       //setState(() {
       // state = AppState.cropped;
       //});
     }
   }
-
-
 }
