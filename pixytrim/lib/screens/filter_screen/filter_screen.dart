@@ -1,36 +1,52 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:image/image.dart' as img;
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
 import 'dart:ui' as ui;
 
+import '../../common/custom_color.dart';
 
 class FilterScreen extends StatefulWidget {
   @override
   FilterScreenState createState() => FilterScreenState();
 }
-class FilterScreenState extends State<FilterScreen> {
+
+class FilterScreenState extends State<FilterScreen>
+    with SingleTickerProviderStateMixin {
   // FilterScreenController filterScreenController = Get.put(FilterScreenController());
   CameraScreenController csController = Get.find<CameraScreenController>();
   File? file;
- final GlobalKey key = GlobalKey();
+  final GlobalKey key = GlobalKey();
+
+  late TabController categoryTabController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    categoryTabController = TabController(length: 3, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
     print('selectedImage : ${csController.selectedImage.value}');
     return WillPopScope(
-      onWillPop: () async {return false;},
+      onWillPop: () {
+        return showAlertDialog();
+      },
       child: Scaffold(
           body: SafeArea(
-            child: Stack(
-        children: [
+        child: Stack(
+          children: [
             MainBackgroundWidget(),
             Container(
               margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
@@ -38,7 +54,7 @@ class FilterScreenState extends State<FilterScreen> {
                 children: [
                   appBar(),
                   SizedBox(height: 20),
-                  Expanded (
+                  Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -52,89 +68,148 @@ class FilterScreenState extends State<FilterScreen> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  filterList()
+                  filterCategoryView(),
+                  filterCategoryBar(),
                 ],
               ),
             )
+          ],
+        ),
+      )),
+    );
+  }
+
+  Widget filterCategoryBar() {
+    return Container(
+      height: Get.size.height * 0.056,
+      alignment: Alignment.centerLeft,
+      child: TabBar(
+        isScrollable: true,
+        indicatorColor: Colors.transparent,
+        indicatorSize: TabBarIndicatorSize.label,
+        labelColor: AppColor.kBlackColor,
+        labelPadding:
+            EdgeInsets.only(top: 10.0, bottom: 5, left: 10, right: 15),
+        unselectedLabelColor: AppColor.kBlackColor.withOpacity(0.35),
+        controller: categoryTabController,
+        labelStyle: TextStyle(fontSize: 16),
+        tabs: [
+          Tab(text: "Simple"),
+          Tab(text: "Color"),
+          Tab(text: "B&W"),
+          // Container(child: Tab(text: "Border Radius")),
+          // Container(child: Tab(text: "WallPapers")),
         ],
       ),
-          )),
     );
   }
 
-
-
-  Widget appBar() {
+  Widget filterCategoryView() {
     return Container(
-      height: 50,
-      width: Get.width,
-      decoration: borderGradientDecoration(),
-      child: Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: Container(
-            padding: EdgeInsets.only(left: 10, right: 10),
-            decoration: containerBackgroundGradient(),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    //Get.back();
-                    showAlertDialog();
-                  },
-                  child: Container(
-                      child: Image.asset(
-                    Images.ic_left_arrow,
-                    scale: 2.5,
-                  )),
-                ),
-                Container(
-                  child: Text(
-                    "Filter",
-                    style: TextStyle(
-                        fontFamily: "",
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
-                    await _capturePng().then((value) {
-                      Get.back();
-                    });
-                  },
-                  child: Container(child: Icon(Icons.check_rounded)),
-                ),
-              ],
-            )),
+      height: Get.height * 0.135,
+      child: TabBarView(
+        controller: categoryTabController,
+        children: [
+          simpleFilterList(),
+          colorFilterList(),
+          BlackWhiteFilterList(),
+          // LayoutScreen(),
+          // BorderWidthScreen(),
+          // BorderColorScreen(),
+          // BorderRadiusScreen(),
+          // WallPapersScreen(),
+        ],
       ),
     );
   }
 
-  Widget filterList() {
+  Widget appBar() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Container(
+        height: 50,
+        width: Get.width,
+        decoration: borderGradientDecoration(),
+        child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Container(
+              padding: EdgeInsets.only(left: 10, right: 10),
+              decoration: containerBackgroundGradient(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      //Get.back();
+                      return showAlertDialog();
+                    },
+                    child: Container(
+                        child: Image.asset(
+                      Images.ic_left_arrow,
+                      scale: 2.5,
+                    )),
+                  ),
+                  Container(
+                    child: Text(
+                      "Filters",
+                      style: TextStyle(
+                          fontFamily: "",
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      showTopNotification(
+                        displayText: "Please Wait...",
+                        leadingIcon: Icon(
+                          Icons.image,
+                          color: AppColor.kBlackColor,
+                        ),
+                        displayTime: 2,
+                      );
+
+                      // Fluttertoast.showToast(
+                      //   msg: 'Please Wait...',
+                      //   toastLength: Toast.LENGTH_LONG,
+                      //   timeInSecForIosWeb: 1,
+                      // );
+                      await _capturePng().then((value) {
+                        Get.back();
+                      });
+                    },
+                    child: Container(child: Icon(Icons.check_rounded)),
+                  ),
+                ],
+              )),
+        ),
+      ),
+    );
+  }
+
+  Widget simpleFilterList() {
     return Container(
-      height: 134,
+      height: 140,
       child: ListView.builder(
-        itemCount: csController.filterOptions.length,
+        itemCount: csController.simpleFilterOptions.length,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
+          final filter = csController.simpleFilterOptions[index];
           return GestureDetector(
-            onTap: (){
+            onTap: () {
               setState(() {
-                csController.selectedIndex.value = index;
+                csController.simpleSelectedIndex.value = index;
                 print(
-                    'selectedIndex : ${csController.selectedIndex.value}');
+                    'selectedIndex : ${csController.simpleSelectedIndex.value}');
               });
             },
-            child: Container(
-              // width: 100,
+            child: Expanded(
               child: Column(
                 children: [
                   Container(
-                    height: Get.height / 8,
-
+                    height: 75,
+                    width: 75,
                     padding: EdgeInsets.all(4),
                     margin: EdgeInsets.only(right: 10),
                     decoration: borderGradientDecoration(),
@@ -143,17 +218,23 @@ class FilterScreenState extends State<FilterScreen> {
                       width: 95,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child:
-                            csController.filterOptions[index].filterListWidget,
+                        child: csController
+                            .simpleFilterOptions[index].filterListWidget,
                       ),
                     ),
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 10),
                   Text(
-                    "${csController.filterOptions[index].filterName}",
-                     style: TextStyle(fontFamily: "",
-                         color: csController.selectedIndex.value == index ? Colors.black87 : Colors.grey.shade600,
-                     fontWeight: csController.selectedIndex.value == index ? FontWeight.bold : FontWeight.normal),
+                    "${filter.filterName}",
+                    style: TextStyle(
+                        fontFamily: "",
+                        color: csController.simpleSelectedIndex.value == index
+                            ? Colors.black87
+                            : Colors.grey.shade600,
+                        fontWeight:
+                            csController.simpleSelectedIndex.value == index
+                                ? FontWeight.bold
+                                : FontWeight.normal),
                   ),
                 ],
               ),
@@ -164,42 +245,300 @@ class FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Widget filterImage(){
+  Widget colorFilterList() {
+    return Container(
+      height: 140,
+      child: ListView.builder(
+        itemCount: csController.colorFilterOptions.length,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                csController.colorSelectedIndex.value = index;
+                print(
+                    'selectedIndex : ${csController.colorSelectedIndex.value}');
+              });
+            },
+            child: Expanded(
+              child: Column(
+                children: [
+                  Container(
+                    height: 75,
+                    width: 75,
+                    padding: EdgeInsets.all(4),
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: borderGradientDecoration(),
+                    child: Container(
+                      height: 95,
+                      width: 95,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: csController
+                            .colorFilterOptions[index].filterListWidget,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "${csController.colorFilterOptions[index].filterName}",
+                    style: TextStyle(
+                        fontFamily: "",
+                        color: csController.colorSelectedIndex.value == index
+                            ? Colors.black87
+                            : Colors.grey.shade600,
+                        fontWeight:
+                            csController.colorSelectedIndex.value == index
+                                ? FontWeight.bold
+                                : FontWeight.normal),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget BlackWhiteFilterList() {
+    return Container(
+      height: 140,
+      child: ListView.builder(
+        itemCount: csController.blackWhiteFilterOptions.length,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                csController.bwSelectedIndex.value = index;
+                print('selectedIndex : ${csController.bwSelectedIndex.value}');
+              });
+            },
+            child: Expanded(
+              child: Column(
+                children: [
+                  Container(
+                    height: 75,
+                    width: 75,
+                    padding: EdgeInsets.all(4),
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: borderGradientDecoration(),
+                    child: Container(
+                      height: 95,
+                      width: 95,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: csController
+                            .blackWhiteFilterOptions[index].filterListWidget,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    "${csController.blackWhiteFilterOptions[index].filterName}",
+                    style: TextStyle(
+                        fontFamily: "",
+                        color: csController.bwSelectedIndex.value == index
+                            ? Colors.black87
+                            : Colors.grey.shade600,
+                        fontWeight: csController.bwSelectedIndex.value == index
+                            ? FontWeight.bold
+                            : FontWeight.normal),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  displayImage() {
+    if (categoryTabController.index == 0) {
+      return csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty &&
+              csController.simpleSelectedIndex.value == 0
+          ? csController.simpleFilterOptions[0].filterWidget
+          : csController.addImageFromCameraList[csController.selectedImage.value].path
+                      .toString()
+                      .isNotEmpty &&
+                  csController.simpleSelectedIndex.value == 1
+              ? csController.simpleFilterOptions[1].filterWidget
+              : csController.addImageFromCameraList[csController.selectedImage.value].path
+                          .toString()
+                          .isNotEmpty &&
+                      csController.simpleSelectedIndex.value == 2
+                  ? csController.simpleFilterOptions[2].filterWidget
+                  : csController.addImageFromCameraList[csController.selectedImage.value].path
+                              .toString()
+                              .isNotEmpty &&
+                          csController.simpleSelectedIndex.value == 3
+                      ? csController.simpleFilterOptions[3].filterWidget
+                      : csController.addImageFromCameraList[csController.selectedImage.value].path
+                                  .toString()
+                                  .isNotEmpty &&
+                              csController.simpleSelectedIndex.value == 4
+                          ? csController.simpleFilterOptions[4].filterWidget
+                          : csController.addImageFromCameraList[csController.selectedImage.value].path
+                                      .toString()
+                                      .isNotEmpty &&
+                                  csController.simpleSelectedIndex.value == 5
+                              ? csController.simpleFilterOptions[5].filterWidget
+                              : csController.addImageFromCameraList[csController.selectedImage.value].path
+                                          .toString()
+                                          .isNotEmpty &&
+                                      csController.simpleSelectedIndex.value ==
+                                          6
+                                  ? csController
+                                      .simpleFilterOptions[6].filterWidget
+                                  : csController
+                                              .addImageFromCameraList[csController.selectedImage.value]
+                                              .path
+                                              .toString()
+                                              .isNotEmpty &&
+                                          csController.simpleSelectedIndex.value == 7
+                                      ? csController.simpleFilterOptions[7].filterWidget
+                                      : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.simpleSelectedIndex.value == 8
+                                          ? csController.simpleFilterOptions[8].filterWidget
+                                          : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.simpleSelectedIndex.value == 9
+                                              ? csController.simpleFilterOptions[9].filterWidget
+                                              : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.simpleSelectedIndex.value == 10
+                                                  ? csController.simpleFilterOptions[10].filterWidget
+                                                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.simpleSelectedIndex.value == 11
+                                                      ? csController.simpleFilterOptions[11].filterWidget
+                                                      : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.simpleSelectedIndex.value == 12
+                                                          ? csController.simpleFilterOptions[12].filterWidget
+                                                          : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.simpleSelectedIndex.value == 13
+                                                              ? csController.simpleFilterOptions[13].filterWidget
+                                                              : Container();
+    } else if (categoryTabController.index == 1) {
+      return csController
+                  .addImageFromCameraList[csController.selectedImage.value].path
+                  .toString()
+                  .isNotEmpty &&
+              csController.colorSelectedIndex.value == 0
+          ? csController.colorFilterOptions[0].filterWidget
+          : csController.addImageFromCameraList[csController.selectedImage.value].path
+                      .toString()
+                      .isNotEmpty &&
+                  csController.colorSelectedIndex.value == 1
+              ? csController.colorFilterOptions[1].filterWidget
+              : csController.addImageFromCameraList[csController.selectedImage.value].path
+                          .toString()
+                          .isNotEmpty &&
+                      csController.colorSelectedIndex.value == 2
+                  ? csController.colorFilterOptions[2].filterWidget
+                  : csController.addImageFromCameraList[csController.selectedImage.value].path
+                              .toString()
+                              .isNotEmpty &&
+                          csController.colorSelectedIndex.value == 3
+                      ? csController.colorFilterOptions[3].filterWidget
+                      : csController.addImageFromCameraList[csController.selectedImage.value].path
+                                  .toString()
+                                  .isNotEmpty &&
+                              csController.colorSelectedIndex.value == 4
+                          ? csController.colorFilterOptions[4].filterWidget
+                          : csController.addImageFromCameraList[csController.selectedImage.value].path
+                                      .toString()
+                                      .isNotEmpty &&
+                                  csController.colorSelectedIndex.value == 5
+                              ? csController.colorFilterOptions[5].filterWidget
+                              : csController.addImageFromCameraList[csController.selectedImage.value].path
+                                          .toString()
+                                          .isNotEmpty &&
+                                      csController.colorSelectedIndex.value == 6
+                                  ? csController
+                                      .colorFilterOptions[6].filterWidget
+                                  : csController
+                                              .addImageFromCameraList[csController.selectedImage.value]
+                                              .path
+                                              .toString()
+                                              .isNotEmpty &&
+                                          csController.colorSelectedIndex.value == 7
+                                      ? csController.colorFilterOptions[7].filterWidget
+                                      : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.colorSelectedIndex.value == 8
+                                          ? csController.colorFilterOptions[8].filterWidget
+                                          : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.colorSelectedIndex.value == 9
+                                              ? csController.colorFilterOptions[9].filterWidget
+                                              : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.colorSelectedIndex.value == 10
+                                                  ? csController.colorFilterOptions[10].filterWidget
+                                                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.colorSelectedIndex.value == 11
+                                                      ? csController.colorFilterOptions[11].filterWidget
+                                                      : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.colorSelectedIndex.value == 12
+                                                          ? csController.colorFilterOptions[12].filterWidget
+                                                          : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.colorSelectedIndex.value == 13
+                                                              ? csController.colorFilterOptions[13].filterWidget
+                                                              : Container();
+    } else if (categoryTabController.index == 2) {
+      return csController.addImageFromCameraList[csController.selectedImage.value].path
+                  .toString()
+                  .isNotEmpty &&
+              csController.bwSelectedIndex.value == 0
+          ? csController.blackWhiteFilterOptions[0].filterWidget
+          : csController.addImageFromCameraList[csController.selectedImage.value].path
+                      .toString()
+                      .isNotEmpty &&
+                  csController.bwSelectedIndex.value == 1
+              ? csController.blackWhiteFilterOptions[1].filterWidget
+              : csController.addImageFromCameraList[csController.selectedImage.value].path
+                          .toString()
+                          .isNotEmpty &&
+                      csController.bwSelectedIndex.value == 2
+                  ? csController.blackWhiteFilterOptions[2].filterWidget
+                  : csController.addImageFromCameraList[csController.selectedImage.value].path
+                              .toString()
+                              .isNotEmpty &&
+                          csController.bwSelectedIndex.value == 3
+                      ? csController.blackWhiteFilterOptions[3].filterWidget
+                      : csController.addImageFromCameraList[csController.selectedImage.value].path
+                                  .toString()
+                                  .isNotEmpty &&
+                              csController.bwSelectedIndex.value == 4
+                          ? csController.blackWhiteFilterOptions[4].filterWidget
+                          : csController.addImageFromCameraList[csController.selectedImage.value].path
+                                      .toString()
+                                      .isNotEmpty &&
+                                  csController.bwSelectedIndex.value == 5
+                              ? csController
+                                  .blackWhiteFilterOptions[5].filterWidget
+                              : csController.addImageFromCameraList[csController.selectedImage.value].path
+                                          .toString()
+                                          .isNotEmpty &&
+                                      csController.bwSelectedIndex.value == 6
+                                  ? csController
+                                      .blackWhiteFilterOptions[6].filterWidget
+                                  : csController.addImageFromCameraList[csController.selectedImage.value].path
+                                              .toString()
+                                              .isNotEmpty &&
+                                          csController.bwSelectedIndex.value == 7
+                                      ? csController.blackWhiteFilterOptions[7].filterWidget
+                                      : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.bwSelectedIndex.value == 8
+                                          ? csController.blackWhiteFilterOptions[8].filterWidget
+                                          : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.bwSelectedIndex.value == 9
+                                              ? csController.blackWhiteFilterOptions[9].filterWidget
+                                              : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.bwSelectedIndex.value == 10
+                                                  ? csController.blackWhiteFilterOptions[10].filterWidget
+                                                  : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.bwSelectedIndex.value == 11
+                                                      ? csController.blackWhiteFilterOptions[11].filterWidget
+                                                      : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.bwSelectedIndex.value == 12
+                                                          ? csController.blackWhiteFilterOptions[12].filterWidget
+                                                          : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.bwSelectedIndex.value == 13
+                                                              ? csController.blackWhiteFilterOptions[13].filterWidget
+                                                              : Container();
+    }
+  }
+
+  Widget filterImage() {
     return Obx(
-      ()=> ClipRRect(
+      () => ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: RepaintBoundary(
           key: key,
           child: Container(
-            child: csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 0
-                ? csController.filterOptions[0].filterWidget
-                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 1
-                ? csController.filterOptions[1].filterWidget
-                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 2
-                ? csController.filterOptions[2].filterWidget
-                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 3
-                ? csController.filterOptions[3].filterWidget
-                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 4
-                ? csController.filterOptions[4].filterWidget
-                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 5
-                ? csController.filterOptions[5].filterWidget
-                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 6
-                ? csController.filterOptions[6].filterWidget
-                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 7
-                ? csController.filterOptions[7].filterWidget
-                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 8
-                ? csController.filterOptions[8].filterWidget
-                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 9
-                ? csController.filterOptions[9].filterWidget
-                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 10
-                ? csController.filterOptions[10].filterWidget
-                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 11
-                ? csController.filterOptions[11].filterWidget
-                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 12
-                ? csController.filterOptions[12].filterWidget
-                : csController.addImageFromCameraList[csController.selectedImage.value].path.toString().isNotEmpty && csController.selectedIndex.value == 13
-                ? csController.filterOptions[13].filterWidget
-                : Container(),
+            child: displayImage(),
           ),
         ),
       ),
@@ -212,21 +551,23 @@ class FilterScreenState extends State<FilterScreen> {
       String imgName = "${time.hour}-${time.minute}-${time.second}";
       print('inside');
       RenderRepaintBoundary boundary =
-      key.currentContext!.findRenderObject() as RenderRepaintBoundary;
+          key.currentContext!.findRenderObject() as RenderRepaintBoundary;
       print(boundary);
       ui.Image image = await boundary.toImage(pixelRatio: 3.0);
       print("image:===$image");
       final directory = (await getApplicationDocumentsDirectory()).path;
       ByteData? byteData =
-      await image.toByteData(format: ui.ImageByteFormat.png);
+          await image.toByteData(format: ui.ImageByteFormat.png);
       print("byte data:===$byteData");
       Uint8List pngBytes = byteData!.buffer.asUint8List();
       File imgFile = new File('$directory/$imgName.jpg');
       await imgFile.writeAsBytes(pngBytes);
       setState(() {
-        csController.addImageFromCameraList[csController.selectedImage.value] = imgFile;
+        csController.addImageFromCameraList[csController.selectedImage.value] =
+            imgFile;
       });
-      print("File path====:${csController.addImageFromCameraList[csController.selectedImage.value].path}");
+      print(
+          "File path====:${csController.addImageFromCameraList[csController.selectedImage.value].path}");
 
       // await saveImage();
     } catch (e) {
@@ -235,40 +576,41 @@ class FilterScreenState extends State<FilterScreen> {
   }
 
   showAlertDialog() {
-
-    Widget cancelButton = TextButton(
-      child: Text("No", style: TextStyle(fontFamily: ""),),
-      onPressed:  () {
+    Widget cancelButton = IconsButton(
+      onPressed: () {
         Get.back();
-        //Get.back();
       },
-    );
-    Widget continueButton = TextButton(
-      child: Text("Yes", style: TextStyle(fontFamily: ""),),
-      onPressed:  () async{
-        //await _capturePng().then((value) {
-          Get.back();
-          Get.back();
-        //});
-      },
+      text: 'No',
+      color: AppColor.kBorderGradientColor3,
+      textStyle: TextStyle(color: Colors.white),
     );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      //title: Text("AlertDialog"),
-      content: Text("Do you want to exit?", style: TextStyle(fontFamily: ""),),
+    Widget continueButton = IconsButton(
+      onPressed: () async {
+        Get.back();
+        Get.back();
+      },
+      text: 'yes',
+      color: AppColor.kBorderGradientColor1,
+      textStyle: TextStyle(color: Colors.white),
+    );
+
+    Dialogs.materialDialog(
+      lottieBuilder: LottieBuilder.asset(
+        "assets/lotties/9511-loading.json",
+      ),
+      color: Colors.white,
+      msg: "Do you want to Exit ?",
+      msgStyle: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      context: context,
       actions: [
         cancelButton,
         continueButton,
       ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
     );
   }
 
@@ -276,6 +618,5 @@ class FilterScreenState extends State<FilterScreen> {
   //   await GallerySaver.saveImage("${csController.addImageFromCameraList[csController.selectedImage.value].path}",
   //       albumName: "OTWPhotoEditingDemo");
   // }
-
 
 }

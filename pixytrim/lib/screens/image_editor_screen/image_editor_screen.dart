@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
 import 'package:pixytrim/screens/image_editor_screen/_paint_over_image.dart';
+
+import '../../common/custom_color.dart';
 
 class ImageEditorScreen extends StatefulWidget {
   File file;
@@ -26,21 +30,20 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {return false;},
+      onWillPop: () {
+        return showAlertDialog();
+      },
       child: Scaffold(
         body: SafeArea(
           child: Stack(
             children: [
               MainBackgroundWidget(),
-
               Container(
                 margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
                 child: Column(
                   children: [
                     appBar(),
-
                     SizedBox(height: 20),
-
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -61,11 +64,9 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                         ],
                       ),
                     ),
-
                   ],
                 ),
               )
-
             ],
           ),
         ),
@@ -74,13 +75,15 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
   }
 
   Widget appBar() {
-    return Container(
-      height: 50,
-      width: Get.width,
-      decoration: borderGradientDecoration(),
-      child: Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: Container(
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Container(
+        height: 50,
+        width: Get.width,
+        decoration: borderGradientDecoration(),
+        child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Container(
             padding: EdgeInsets.only(left: 10, right: 10),
             decoration: containerBackgroundGradient(),
             child: Row(
@@ -89,11 +92,13 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                 GestureDetector(
                   onTap: () {
                     //Get.back();
-                    showAlertDialog();
+                    return showAlertDialog();
                   },
                   child: Container(
-                      child: Image.asset(Images.ic_left_arrow, scale: 2.5,)
-                  ),
+                      child: Image.asset(
+                    Images.ic_left_arrow,
+                    scale: 2.5,
+                  )),
                 ),
                 Container(
                   child: Text(
@@ -105,8 +110,21 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () async{
-                    Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
+                  onTap: () async {
+                    showTopNotification(
+                      displayText: "Please Wait...",
+                      leadingIcon: Icon(
+                        Icons.image,
+                        color: AppColor.kBlackColor,
+                      ),
+                      displayTime: 2,
+                    );
+
+                    // Fluttertoast.showToast(
+                    //   msg: 'Please Wait...',
+                    //   toastLength: Toast.LENGTH_LONG,
+                    //   timeInSecForIosWeb: 1,
+                    // );
                     await renameAndSaveImage().then((value) {
                       Get.back();
                     });
@@ -115,12 +133,13 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                 ),
               ],
             ),
+          ),
         ),
       ),
     );
   }
 
-  Widget imageEditingIcon(){
+  Widget imageEditingIcon() {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,18 +158,15 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                     color: Colors.white,
                   ),
                   child: Center(
-                      child: Image.asset(
-                        Images.ic_edit,
-                        scale: 2.5,
-                      ),
+                    child: Image.asset(
+                      Images.ic_edit,
+                      scale: 2.5,
+                    ),
                   ),
                 ),
               ),
-
-
               GestureDetector(
-                onTap: (){
-                },
+                onTap: () {},
                 child: Container(
                   padding: EdgeInsets.all(2),
                   height: 50,
@@ -166,13 +182,12 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
 
                     child: Center(
                         child: Image.asset(
-                          Images.ic_color_palate,
-                          scale: 2.5,
-                        )),
+                      Images.ic_color_palate,
+                      scale: 2.5,
+                    )),
                   ),
                 ),
               ),
-
               Container(
                 padding: EdgeInsets.all(2),
                 height: 50,
@@ -186,12 +201,11 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                   ),
                   child: Center(
                       child: Image.asset(
-                        Images.ic_paint_brush,
-                        scale: 2.5,
-                      )),
+                    Images.ic_paint_brush,
+                    scale: 2.5,
+                  )),
                 ),
               ),
-
               Container(
                 padding: EdgeInsets.all(2),
                 height: 50,
@@ -205,23 +219,26 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                   ),
                   child: Center(
                       child: Image.asset(
-                        Images.ic_text,
-                        scale: 2.5,
-                      )),
+                    Images.ic_text,
+                    scale: 2.5,
+                  )),
                 ),
               ),
             ],
           ),
-
           Row(
             children: [
               Center(
-                  child: Icon(Icons.undo_outlined, size: 30,)),
-              SizedBox(width: 10,),
+                  child: Icon(
+                Icons.undo_outlined,
+                size: 30,
+              )),
+              SizedBox(
+                width: 10,
+              ),
               Center(child: Icon(Icons.close, size: 30)),
             ],
           )
-
         ],
       ),
     );
@@ -230,7 +247,8 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
   // Rename & Save Capture Image
   Future renameAndSaveImage() async {
     DateTime time = DateTime.now();
-    final imgName = "${time.day}_${time.month}_${time.year}_${time.hour}_${time.minute}_${time.second}";
+    final imgName =
+        "${time.day}_${time.month}_${time.year}_${time.hour}_${time.minute}_${time.second}";
     final image = await _imageKey.currentState!.exportImage();
     final directory = (await getApplicationDocumentsDirectory()).path;
     await Directory('$directory/sample').create(recursive: true);
@@ -239,8 +257,6 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
     imgFile.writeAsBytesSync(image!);
     csController.addImageFromCameraList[widget.newIndex] = imgFile;
     // await GallerySaver.saveImage(imgFile.path, albumName: "OTWPhotoEditingDemo");
-
-
   }
 
   // Future _capturePng() async {
@@ -276,46 +292,47 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
   // }
 
   showAlertDialog() {
-
-    Widget cancelButton = TextButton(
-      child: Text("No", style: TextStyle(fontFamily: ""),),
-      onPressed:  () {
+    Widget cancelButton = IconsButton(
+      onPressed: () {
         Get.back();
       },
-    );
-    Widget continueButton = TextButton(
-      child: Text("Yes", style: TextStyle(fontFamily: ""),),
-      onPressed:  () async{
-        //await renameAndSaveImage().then((value) {
-          Get.back();
-          Get.back();
-        //});
-      },
+      text: 'No',
+      color: AppColor.kBorderGradientColor3,
+      textStyle: TextStyle(color: Colors.white),
     );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      //title: Text("AlertDialog"),
-      content: Text("Do you want to exit?", style: TextStyle(fontFamily: ""),),
+    Widget continueButton = IconsButton(
+      onPressed: () async {
+        Get.back();
+        Get.back();
+      },
+      text: 'yes',
+      color: AppColor.kBorderGradientColor1,
+      textStyle: TextStyle(color: Colors.white),
+    );
+
+    Dialogs.materialDialog(
+      lottieBuilder: LottieBuilder.asset(
+        "assets/lotties/9511-loading.json",
+      ),
+      color: Colors.white,
+      msg: "Do you want to exit?",
+      msgStyle: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      context: context,
       actions: [
         cancelButton,
         continueButton,
       ],
     );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 
   @override
   void dispose() {
-    if(!mounted) return;
+    if (!mounted) return;
     super.dispose();
   }
 }
-

@@ -14,15 +14,17 @@ class LiveCameraFramesScreen extends StatefulWidget {
   @override
   _LiveCameraFramesScreenState createState() => _LiveCameraFramesScreenState();
 }
-class _LiveCameraFramesScreenState extends State<LiveCameraFramesScreen> {
-  final lCFCScreenController = Get.put(LiveCameraFramesCaptureScreenController());
-  // CameraController? controller;
 
+class _LiveCameraFramesScreenState extends State<LiveCameraFramesScreen> {
+  final lCFCScreenController =
+      Get.put(LiveCameraFramesCaptureScreenController());
+  // CameraController? controller;
 
   @override
   void initState() {
     super.initState();
-    lCFCScreenController.controller = CameraController(cameras![0], ResolutionPreset.max);
+    lCFCScreenController.controller =
+        CameraController(cameras![0], ResolutionPreset.max);
     lCFCScreenController.controller!.initialize().then((_) {
       if (!mounted) {
         return;
@@ -36,7 +38,6 @@ class _LiveCameraFramesScreenState extends State<LiveCameraFramesScreen> {
     lCFCScreenController.controller?.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +56,12 @@ class _LiveCameraFramesScreenState extends State<LiveCameraFramesScreen> {
                 ],
               ),
             ),
-
             Positioned(
               bottom: 70,
               // right: 15,
               child: goToNextScreenButton(),
             ),
             layoutListModule(),
-
           ],
         ),
       ),
@@ -146,7 +145,7 @@ class _LiveCameraFramesScreenState extends State<LiveCameraFramesScreen> {
         itemCount: lCFCScreenController.twoImageLayout.length,
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
-        itemBuilder: (context, i){
+        itemBuilder: (context, i) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
@@ -186,7 +185,6 @@ class _LiveCameraFramesScreenState extends State<LiveCameraFramesScreen> {
       child: IconButton(
         onPressed: () async {
           await onPressedClick();
-
         },
         icon: Icon(
           Icons.camera_alt_rounded,
@@ -203,13 +201,13 @@ class _LiveCameraFramesScreenState extends State<LiveCameraFramesScreen> {
         setState(() {
           lCFCScreenController.imageFile = file;
         });
-        if (lCFCScreenController.imageFile != null){
-          lCFCScreenController.newFile = File("${lCFCScreenController.imageFile!.path}");
-          Get.to(()=> LiveCameraFramesCaptureScreen());
+        if (lCFCScreenController.imageFile != null) {
+          lCFCScreenController.newFile =
+              File("${lCFCScreenController.imageFile!.path}");
+          Get.to(() => LiveCameraFramesCaptureScreen());
         }
       }
     });
-
   }
 
   Future<XFile?> takePicture() async {
@@ -244,5 +242,4 @@ class _LiveCameraFramesScreenState extends State<LiveCameraFramesScreen> {
       print('Error: $code');
     }
   }
-
 }

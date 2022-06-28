@@ -33,37 +33,39 @@ class PDFScreen extends StatelessWidget {
   }
 
   Widget appBar() {
-    return Container(
-      height: 50,
-      width: Get.width,
-      decoration: borderGradientDecoration(),
-      child: Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: Container(
-            padding: EdgeInsets.only(left: 10, right: 10),
-            decoration: containerBackgroundGradient(),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    // Get.back();
-                  },
-                  child: Container(child: Icon(Icons.close)),
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    child: Image.asset(
-                      Images.ic_downloading,
-                      scale: 2,
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Container(
+        height: 50,
+        width: Get.width,
+        decoration: borderGradientDecoration(),
+        child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Container(
+              padding: EdgeInsets.only(left: 10, right: 10),
+              decoration: containerBackgroundGradient(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // Get.back();
+                    },
+                    child: Container(child: Icon(Icons.close)),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      child: Image.asset(
+                        Images.ic_downloading,
+                        scale: 2,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            )),
+                ],
+              )),
+        ),
       ),
     );
   }
-
 }

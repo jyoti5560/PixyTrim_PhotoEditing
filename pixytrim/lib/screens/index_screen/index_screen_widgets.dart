@@ -43,8 +43,7 @@ class GalleryModule extends StatelessWidget {
                   ),
                   Text(
                     "Gallery",
-                    style:
-                    TextStyle(fontFamily: "", fontSize: 20),
+                    style: TextStyle(fontFamily: "", fontSize: 20),
                   ),
                 ],
               ),

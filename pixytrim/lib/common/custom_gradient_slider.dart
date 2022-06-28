@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 
-class GradientRectSliderTrackShape extends SliderTrackShape with BaseSliderTrackShape {
+class GradientRectSliderTrackShape extends SliderTrackShape
+    with BaseSliderTrackShape {
   /// Based on https://www.youtube.com/watch?v=Wl4F5V6BoJw
   /// Create a slider track that draws two rectangles with rounded outer edges.
   final LinearGradient gradient;
   final bool darkenInactive;
-  const GradientRectSliderTrackShape({ this.gradient: const LinearGradient(colors: [Colors.lightBlue, Colors.blue]), this.darkenInactive: true});
+  const GradientRectSliderTrackShape(
+      {this.gradient:
+          const LinearGradient(colors: [Colors.lightBlue, Colors.blue]),
+      this.darkenInactive: true});
 
   @override
   void paint(
-      PaintingContext context,
-      Offset offset, {
-        RenderBox ? parentBox,
-        @required SliderThemeData ? sliderTheme,
-        @required Animation<double> ? enableAnimation,
-        @required TextDirection ? textDirection,
-        @required Offset ? thumbCenter,
-        bool isDiscrete = false,
-        bool isEnabled = false,
-        double additionalActiveTrackHeight = 2,
-      }) {
+    PaintingContext context,
+    Offset offset, {
+    RenderBox? parentBox,
+    @required SliderThemeData? sliderTheme,
+    @required Animation<double>? enableAnimation,
+    @required TextDirection? textDirection,
+    @required Offset? thumbCenter,
+    bool isDiscrete = false,
+    bool isEnabled = false,
+    double additionalActiveTrackHeight = 2,
+  }) {
     assert(context != null);
     assert(offset != null);
     assert(parentBox != null);
@@ -39,7 +43,7 @@ class GradientRectSliderTrackShape extends SliderTrackShape with BaseSliderTrack
       return;
     }
 
-    final Rect  trackRect = getPreferredRect(
+    final Rect trackRect = getPreferredRect(
       parentBox: parentBox!,
       offset: offset,
       sliderTheme: sliderTheme,
@@ -49,9 +53,13 @@ class GradientRectSliderTrackShape extends SliderTrackShape with BaseSliderTrack
 
     // Assign the track segment paints, which are leading: active and
     // trailing: inactive.
-    final ColorTween activeTrackColorTween = ColorTween(begin: sliderTheme.disabledActiveTrackColor, end: sliderTheme.activeTrackColor);
+    final ColorTween activeTrackColorTween = ColorTween(
+        begin: sliderTheme.disabledActiveTrackColor,
+        end: sliderTheme.activeTrackColor);
     final ColorTween inactiveTrackColorTween = darkenInactive
-        ? ColorTween(begin: sliderTheme.disabledInactiveTrackColor, end: sliderTheme.inactiveTrackColor)
+        ? ColorTween(
+            begin: sliderTheme.disabledInactiveTrackColor,
+            end: sliderTheme.inactiveTrackColor)
         : activeTrackColorTween;
     final Paint activePaint = Paint()
       ..shader = gradient.createShader(trackRect)
@@ -59,8 +67,8 @@ class GradientRectSliderTrackShape extends SliderTrackShape with BaseSliderTrack
     final Paint inactivePaint = Paint()
       ..shader = gradient.createShader(trackRect)
       ..color = inactiveTrackColorTween.evaluate(enableAnimation)!;
-    Paint ? leftTrackPaint;
-    Paint ? rightTrackPaint;
+    Paint? leftTrackPaint;
+    Paint? rightTrackPaint;
     switch (textDirection) {
       case TextDirection.ltr:
         leftTrackPaint = activePaint;
@@ -70,6 +78,8 @@ class GradientRectSliderTrackShape extends SliderTrackShape with BaseSliderTrack
         leftTrackPaint = inactivePaint;
         rightTrackPaint = activePaint;
         break;
+      default:
+        break;
     }
     final Radius trackRadius = Radius.circular(trackRect.height / 2);
     final Radius activeTrackRadius = Radius.circular(trackRect.height / 2 + 1);
@@ -77,22 +87,38 @@ class GradientRectSliderTrackShape extends SliderTrackShape with BaseSliderTrack
     context.canvas.drawRRect(
       RRect.fromLTRBAndCorners(
         trackRect.left,
-        (textDirection == TextDirection.ltr) ? trackRect.top - (additionalActiveTrackHeight / 2): trackRect.top,
+        (textDirection == TextDirection.ltr)
+            ? trackRect.top - (additionalActiveTrackHeight / 2)
+            : trackRect.top,
         thumbCenter!.dx,
-        (textDirection == TextDirection.ltr) ? trackRect.bottom + (additionalActiveTrackHeight / 2) : trackRect.bottom,
-        topLeft: (textDirection == TextDirection.ltr) ? activeTrackRadius : trackRadius,
-        bottomLeft: (textDirection == TextDirection.ltr) ? activeTrackRadius: trackRadius,
+        (textDirection == TextDirection.ltr)
+            ? trackRect.bottom + (additionalActiveTrackHeight / 2)
+            : trackRect.bottom,
+        topLeft: (textDirection == TextDirection.ltr)
+            ? activeTrackRadius
+            : trackRadius,
+        bottomLeft: (textDirection == TextDirection.ltr)
+            ? activeTrackRadius
+            : trackRadius,
       ),
       leftTrackPaint!,
     );
     context.canvas.drawRRect(
       RRect.fromLTRBAndCorners(
         thumbCenter.dx,
-        (textDirection == TextDirection.rtl) ? trackRect.top - (additionalActiveTrackHeight / 2) : trackRect.top,
+        (textDirection == TextDirection.rtl)
+            ? trackRect.top - (additionalActiveTrackHeight / 2)
+            : trackRect.top,
         trackRect.right,
-        (textDirection == TextDirection.rtl) ? trackRect.bottom + (additionalActiveTrackHeight / 2) : trackRect.bottom,
-        topRight: (textDirection == TextDirection.rtl) ? activeTrackRadius : trackRadius,
-        bottomRight: (textDirection == TextDirection.rtl) ? activeTrackRadius : trackRadius,
+        (textDirection == TextDirection.rtl)
+            ? trackRect.bottom + (additionalActiveTrackHeight / 2)
+            : trackRect.bottom,
+        topRight: (textDirection == TextDirection.rtl)
+            ? activeTrackRadius
+            : trackRadius,
+        bottomRight: (textDirection == TextDirection.rtl)
+            ? activeTrackRadius
+            : trackRadius,
       ),
       rightTrackPaint!,
     );

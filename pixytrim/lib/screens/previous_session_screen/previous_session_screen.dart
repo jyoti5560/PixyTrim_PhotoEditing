@@ -1,11 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:material_dialogs/material_dialogs.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/previous_session_screen_controller/previous_session_screen_controller.dart';
-import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 
+import '../../common/custom_color.dart';
+import '../camera_screen/camera_screen.dart';
 import 'collage_session_screen/collage_session_screen.dart';
 
 class PreviousSessionScreen extends StatelessWidget {
@@ -57,7 +60,8 @@ class PreviousSessionScreen extends StatelessWidget {
                                           padding: const EdgeInsets.all(5),
                                           child: GestureDetector(
                                             onTap: () {
-                                              if (controller.localSessionListNew.isNotEmpty) {
+                                              if (controller.localSessionListNew
+                                                  .isNotEmpty) {
                                                 Get.off(() => CameraScreen(),
                                                     arguments: [
                                                       File(
@@ -99,13 +103,15 @@ class PreviousSessionScreen extends StatelessWidget {
   }
 
   Widget appBar(BuildContext context) {
-    return Container(
-      height: 50,
-      width: Get.width,
-      decoration: borderGradientDecoration(),
-      child: Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: Container(
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Container(
+        height: 50,
+        width: Get.width,
+        decoration: borderGradientDecoration(),
+        child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Container(
             padding: EdgeInsets.only(left: 10, right: 10),
             decoration: containerBackgroundGradient(),
             child: Row(
@@ -136,12 +142,15 @@ class PreviousSessionScreen extends StatelessWidget {
                   onTap: () {
                     deleteAllImagesAlertDialog(context);
                   },
-                  child: controller.localSessionListNew.length == 0 ? Container() : Container(
-                    child: Icon(Icons.delete_rounded),
-                  ),
+                  child: controller.localSessionListNew.length == 0
+                      ? Container()
+                      : Container(
+                          child: Icon(Icons.delete_rounded),
+                        ),
                 ),
               ],
             ),
+          ),
         ),
       ),
     );
@@ -149,93 +158,87 @@ class PreviousSessionScreen extends StatelessWidget {
 
   // Delete Alert Dialog Box
   deleteAllImagesAlertDialog(BuildContext context) {
-    Widget cancelButton = TextButton(
-      child: Text(
-        "No",
-        style: TextStyle(fontFamily: ""),
-      ),
+    Widget cancelButton = IconsButton(
       onPressed: () {
         Get.back();
       },
+      text: 'No',
+      color: AppColor.kBorderGradientColor3,
+      textStyle: TextStyle(color: Colors.white),
     );
-    Widget continueButton = TextButton(
-      child: Text(
-        "Yes",
-        style: TextStyle(fontFamily: ""),
-      ),
+
+    Widget continueButton = IconsButton(
       onPressed: () async {
         controller.deleteLocalSessionList();
       },
+      text: 'yes',
+      color: AppColor.kBorderGradientColor1,
+      textStyle: TextStyle(color: Colors.white),
     );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      content: Text(
-        "Do you want to delete All Images ?",
-        style: TextStyle(fontFamily: ""),
+    Dialogs.materialDialog(
+      lottieBuilder: LottieBuilder.asset(
+        "assets/lotties/9511-loading.json",
       ),
+      color: Colors.white,
+      msg: "Do you want to delete all the images ?",
+      msgStyle: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      context: context,
       actions: [
         cancelButton,
         continueButton,
       ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
     );
   }
 
   // Delete Single Image Dialog box
   deleteSingleImageAlertDialog(BuildContext context, int index) {
-    Widget cancelButton = TextButton(
-      child: Text(
-        "No",
-        style: TextStyle(fontFamily: ""),
-      ),
+    Widget cancelButton = IconsButton(
       onPressed: () {
         Get.back();
       },
+      text: 'No',
+      color: AppColor.kBorderGradientColor3,
+      textStyle: TextStyle(color: Colors.white),
     );
-    Widget continueButton = TextButton(
-      child: Text(
-        "Yes",
-        style: TextStyle(fontFamily: ""),
-      ),
+
+    Widget continueButton = IconsButton(
       onPressed: () async {
         controller.updateLocalSessionList(index);
         Get.back();
       },
+      text: 'yes',
+      color: AppColor.kBorderGradientColor1,
+      textStyle: TextStyle(color: Colors.white),
     );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      content: Text(
-        "Do you want to delete this image ?",
-        style: TextStyle(fontFamily: "",fontSize: 18),
+    Dialogs.materialDialog(
+      lottieBuilder: LottieBuilder.asset(
+        "assets/lotties/9511-loading.json",
       ),
+      color: Colors.white,
+      msg: "Do you want to delete the image ?",
+      msgStyle: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+        fontWeight: FontWeight.w500,
+      ),
+      context: context,
       actions: [
         cancelButton,
         continueButton,
       ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
     );
   }
 
   collageImagesPreviousSessionModule() {
     return GestureDetector(
       onTap: () {
-        Get.to(()=> CollageSessionScreen());
+        Get.to(() => CollageSessionScreen());
       },
       child: Container(
         decoration: borderGradientDecoration(),
@@ -261,6 +264,4 @@ class PreviousSessionScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }

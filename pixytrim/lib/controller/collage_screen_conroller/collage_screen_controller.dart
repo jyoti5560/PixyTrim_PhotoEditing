@@ -1,9 +1,16 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
+import 'package:image_size_getter/file_input.dart';
+import 'package:image_size_getter/image_size_getter.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
+import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
 
-class CollageScreenController extends GetxController{
+class CollageScreenController extends GetxController {
   RxDouble borderWidthValue = 0.0.obs;
   List<Color> borderColor = [
     Colors.black,
@@ -18,6 +25,7 @@ class CollageScreenController extends GetxController{
     Colors.blueAccent
   ];
   RxList<ImageFileItem> imageFileList = <ImageFileItem>[].obs;
+
   RxInt activeColor = 0.obs;
   RxBool isLoading = false.obs;
   RxInt selectedIndex = 0.obs;
@@ -46,8 +54,6 @@ class CollageScreenController extends GetxController{
   RxDouble previousScale7 = 1.0.obs;
   RxDouble scale8 = 1.0.obs;
   RxDouble previousScale8 = 1.0.obs;
-
-
 
   List<String> wallpapers = [
     Images.ic_wallpaper1,

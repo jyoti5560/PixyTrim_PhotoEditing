@@ -51,7 +51,6 @@ class _StickerScreenState extends State<StickerScreen> {
         child: Stack(
           children: [
             MainBackgroundWidget(),
-
             Container(
               margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
               child: Column(
@@ -92,9 +91,6 @@ class _StickerScreenState extends State<StickerScreen> {
                   //     ),
                   //   ),
                   // ),
-
-
-
                 ],
               ),
             )
@@ -105,43 +101,46 @@ class _StickerScreenState extends State<StickerScreen> {
   }
 
   Widget appBar() {
-    return Container(
-      height: 50,
-      width: Get.width,
-      decoration: borderGradientDecoration(),
-      child: Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: Container(
-            padding: EdgeInsets.only(left: 10, right: 10),
-            decoration: containerBackgroundGradient(),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Container(child: Icon(Icons.close)),
-                ),
-                Container(
-                  child: Text(
-                    "Sticker",
-                    style: TextStyle(
-                        fontFamily: "",
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Container(
+        height: 50,
+        width: Get.width,
+        decoration: borderGradientDecoration(),
+        child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Container(
+              padding: EdgeInsets.only(left: 10, right: 10),
+              decoration: containerBackgroundGradient(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Container(child: Icon(Icons.close)),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () async{
-                    //await _capturePng();
-                    // saveImage();
-                    Get.back();
-                  },
-                  child: Container(child: Icon(Icons.check_rounded)),
-                ),
-              ],
-            )),
+                  Container(
+                    child: Text(
+                      "Sticker",
+                      style: TextStyle(
+                          fontFamily: "",
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      //await _capturePng();
+                      // saveImage();
+                      Get.back();
+                    },
+                    child: Container(child: Icon(Icons.check_rounded)),
+                  ),
+                ],
+              )),
+        ),
       ),
     );
   }

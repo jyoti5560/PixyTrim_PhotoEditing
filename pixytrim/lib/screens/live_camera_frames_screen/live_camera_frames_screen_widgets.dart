@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pixytrim/controller/live_camera_frames_capture_screen_controller/live_camera_frames_capture_screen_controller.dart';
 
+import '../filter_screen/filter_screen_widgets.dart';
+
 
 
 class SingleImageShowModule extends StatelessWidget {

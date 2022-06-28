@@ -60,7 +60,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
     return ListView.builder(
       itemCount: collageScreenController.threeImageLayout.length,
       scrollDirection: Axis.horizontal,
-      shrinkWrap: true,
+      // shrinkWrap: true,
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
