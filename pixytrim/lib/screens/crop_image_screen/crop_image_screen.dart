@@ -67,7 +67,8 @@ class _CropImageScreenState extends State<CropImageScreen> {
             children: [
               MainBackgroundWidget(),
               Container(
-                margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                margin:
+                    EdgeInsets.only(left: 15, right: 15, bottom: 20, top: 10),
                 child: Column(
                   children: [
                     appBar(),

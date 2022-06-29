@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -5,9 +7,11 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
 import 'package:pixytrim/controller/photo_blend_controller/photo_blend_controller.dart';
-
+import 'package:search_choices/search_choices.dart';
+import 'dart:ui' as ui;
 import '../../common/common_widgets.dart';
 import '../../common/custom_color.dart';
 import '../../common/custom_image.dart';
@@ -19,6 +23,7 @@ class PhotoBlendScreen extends StatefulWidget {
 
 class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
   final GlobalKey key = GlobalKey();
+
   GlobalKey<ExtendedImageEditorState> editorKey = GlobalKey();
 
   PhotoBlendController imageSizeRatioController =
@@ -111,9 +116,9 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
                       //   toastLength: Toast.LENGTH_LONG,
                       //   timeInSecForIosWeb: 1,
                       // );
-                      // await _capturePng().then((value) {
-                      Get.back();
-                      // });
+                      await _capturePng().then((value) {
+                        Get.back();
+                      });
 
                       // saveImage();
                     },
@@ -126,6 +131,61 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
         ),
       ),
     );
+  }
+
+  Future _capturePng() async {
+    try {
+      DateTime time = DateTime.now();
+      String imgName = "${time.hour}-${time.minute}-${time.second}";
+      print('inside');
+      RenderRepaintBoundary boundary =
+          key.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      print(boundary);
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      print("image:===$image");
+      final directory = (await getApplicationDocumentsDirectory()).path;
+      print("Directory: $directory");
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      print("byte data:===$byteData");
+      Uint8List pngBytes = byteData!.buffer.asUint8List();
+      File imgFile = new File('$directory/$imgName.jpg');
+      print("Image path: $imgFile");
+      await imgFile.writeAsBytes(pngBytes);
+      setState(() {
+        csController.addImageFromCameraList[csController.selectedImage.value] =
+            imgFile;
+      });
+      print(
+          "File path====:${csController.addImageFromCameraList[csController.selectedImage.value].path}");
+      renameImage();
+      // await saveImage();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  renameImage() async {
+    String orgPath = csController
+        .addImageFromCameraList[csController.selectedImage.value].path;
+    String frontPath =
+        orgPath.split('app_flutter')[0]; // Getting Front Path of file Path
+    print('frontPath: $frontPath');
+    List<String> ogPathList = orgPath.split('/');
+    print('ogPathList: $ogPathList');
+    String ogExt = ogPathList[ogPathList.length - 1].split('.')[1];
+    print('ogExt: $ogExt');
+    DateTime today = new DateTime.now();
+    String dateSlug =
+        "${today.day}-${today.month}-${today.year}_${today.hour}:${today.minute}:${today.second}";
+    print('Date: $dateSlug');
+    csController.addImageFromCameraList[csController.selectedImage.value] =
+        await csController
+            .addImageFromCameraList[csController.selectedImage.value]
+            .rename("${frontPath}cache/pixytrim_$dateSlug.$ogExt");
+
+    print(
+        'Final FIle Name : ${csController.addImageFromCameraList[csController.selectedImage.value].path}');
   }
 
   Widget imageList() {
@@ -202,144 +262,193 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
       children: [
         SizedBox(height: 40),
         Container(
-          alignment: AlignmentDirectional.centerStart,
-          margin: EdgeInsets.only(left: 10),
+          // alignment: AlignmentDirectional.centerStart,
+          margin: EdgeInsets.only(left: 10, right: 10),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Selected Color  :  ${blendController.selectedColor.value.toString()}",
+                "Select Color",
                 style: TextStyle(
                   color: AppColor.kBlackColor,
-                  fontSize: 15,
+                  fontSize: 18,
                   fontWeight: FontWeight.w500,
                 ),
               ),
+              SizedBox(width: 16),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: const Text('Pick a color!'),
+                        content: SingleChildScrollView(
+                          child: ColorPicker(
+                            pickerColor: pickerColor,
+                            onColorChanged: changeColor,
+                          ),
+                        ),
+                        actions: <Widget>[
+                          ElevatedButton(
+                            child: const Text('Got it'),
+                            onPressed: () {
+                              blendController.selectedColor.value = pickerColor;
+                              setState(() {});
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  child: Container(
+                    height: 30,
+                    width: Get.size.width * 0.5,
+                    decoration: BoxDecoration(
+                      // shape: BoxShape.circle,
+                      borderRadius: BorderRadius.all(Radius.circular(28)),
+                      color: blendController.selectedColor.value,
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),
-        SizedBox(height: 12),
-        selectColorButton(),
+        SizedBox(height: 25),
+        // selectColorButton(),
         SizedBox(height: 20),
         selectBlendModeButton(),
+        SizedBox(height: 20),
       ],
     );
   }
 
-  Widget selectColorButton() {
-    return GestureDetector(
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: const Text('Pick a color!'),
-            content: SingleChildScrollView(
-              child: ColorPicker(
-                pickerColor: pickerColor,
-                onColorChanged: changeColor,
-              ),
-            ),
-            actions: <Widget>[
-              ElevatedButton(
-                child: const Text('Got it'),
-                onPressed: () {
-                  blendController.selectedColor.value = pickerColor;
-                  setState(() {});
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-        );
-      },
-      child: Container(
-        margin: EdgeInsets.all(4),
-        height: 50,
-        width: Get.size.width * 0.9,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              AppColor.kBorderGradientColor1,
-              AppColor.kBorderGradientColor2,
-              AppColor.kBorderGradientColor3,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-        child: Center(
-          child: Text(
-            "Select Color",
-            style: TextStyle(
-              color: AppColor.kBlackColor,
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  List<DropdownMenuItem<String>> get blendingItems {
-    List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(
-        child: Text("clear"),
-        value: "clear",
-      ),
-      DropdownMenuItem(
-        child: Text("darken"),
-        value: "darken",
-      ),
-    ];
-    return menuItems;
-  }
+  // Widget selectColorButton() {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       showDialog(
+  //         context: context,
+  //         builder: (ctx) => AlertDialog(
+  //           title: const Text('Pick a color!'),
+  //           content: SingleChildScrollView(
+  //             child: ColorPicker(
+  //               pickerColor: pickerColor,
+  //               onColorChanged: changeColor,
+  //             ),
+  //           ),
+  //           actions: <Widget>[
+  //             ElevatedButton(
+  //               child: const Text('Got it'),
+  //               onPressed: () {
+  //                 blendController.selectedColor.value = pickerColor;
+  //                 setState(() {});
+  //                 Navigator.of(context).pop();
+  //               },
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //     child: Container(
+  //       margin: EdgeInsets.all(4),
+  //       height: 50,
+  //       width: Get.size.width * 0.9,
+  //       decoration: BoxDecoration(
+  //         gradient: LinearGradient(
+  //           colors: [
+  //             AppColor.kBorderGradientColor1,
+  //             AppColor.kBorderGradientColor2,
+  //             AppColor.kBorderGradientColor3,
+  //           ],
+  //           begin: Alignment.topLeft,
+  //           end: Alignment.bottomRight,
+  //         ),
+  //         borderRadius: BorderRadius.all(Radius.circular(15)),
+  //       ),
+  //       child: Center(
+  //         child: Text(
+  //           "Select Color",
+  //           style: TextStyle(
+  //             color: AppColor.kBlackColor.withOpacity(0.8),
+  //             fontSize: 20,
+  //             fontWeight: FontWeight.w500,
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget selectBlendModeButton() {
-    return DropdownButtonFormField(
-      menuMaxHeight: 200,
-      decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.blue,
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(20),
+    return Container(
+      height: 50,
+      width: Get.size.width * 0.9,
+      padding: EdgeInsets.only(top: 3),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            AppColor.kBorderGradientColor1,
+            AppColor.kBorderGradientColor2,
+            AppColor.kBorderGradientColor3,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.blue,
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+      child: SearchChoices.single(
+        padding: 10,
+        displayClearIcon: false,
+        items: blendController.blendingItems,
+        searchHint: "Search Blend Mode",
+        hint: blendController.selectedBlendModeText.value,
+        isExpanded: true,
+        underline: SizedBox(),
+        style: TextStyle(
+          color: AppColor.kBlackColor,
+          fontWeight: FontWeight.w500,
+          fontSize: 17,
         ),
-        filled: true,
-        fillColor: Colors.blueAccent,
-        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-        isCollapsed: false,
-        isDense: false,
-      ),
-      dropdownColor: Colors.blueAccent,
-      style: TextStyle(
-        color: AppColor.kBlackColor,
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-      ),
-      elevation: 0,
-      value: blendController.selectedBlendModeText.value,
-      items: blendingItems,
-      onTap: () {},
-      onChanged: (value) {
-        blendController.selectedBlendModeText.value = value.toString();
-      },
-    );
-  }
-
-  _getDslDecoration() {
-    return BoxDecoration(
-      border: BorderDirectional(
-        bottom: BorderSide(width: 1, color: Colors.black12),
-        top: BorderSide(width: 1, color: Colors.black12),
+        onChanged: (value) {
+          setState(() {
+            blendController.selectedBlendModeText.value = value;
+          });
+        },
+        doneButton: TextButton(
+          child: Text("Done"),
+          onPressed: () {
+            Get.back();
+          },
+        ),
+        displayItem: (item, selected) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 2,
+              horizontal: 5,
+            ),
+            child: Row(
+              children: [
+                SizedBox(width: 10),
+                selected
+                    ? Icon(
+                        Icons.radio_button_checked,
+                        color: Colors.blue,
+                      )
+                    : Icon(
+                        Icons.radio_button_unchecked,
+                        color: Colors.grey,
+                      ),
+                SizedBox(width: 7),
+                Expanded(
+                  child: item,
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
