@@ -5,6 +5,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:material_dialogs/material_dialogs.dart';
@@ -20,10 +21,12 @@ import 'package:pixytrim/screens/crop_image_screen/crop_image_screen.dart';
 import 'package:pixytrim/screens/filter_screen/filter_screen.dart';
 import 'package:pixytrim/screens/image_editor_screen/image_editor_screen.dart';
 import 'package:pixytrim/screens/image_size_ratio_screen/image_size_ratio_screen.dart';
+import 'package:pixytrim/screens/image_size_ratio_screen/image_size_ratio_screen_widgets.dart';
 import 'package:share/share.dart';
 import 'package:image/image.dart' as imageLib;
 
 import '../../common/custom_color.dart';
+import '../../common/helper/ad_helper.dart';
 import '../photo_blend_screen/photo_blend_screen.dart';
 
 enum SelectedModule { camera, gallery }
@@ -47,6 +50,7 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     print("path===${cameraScreenController.selectedModule}");
+
     return WillPopScope(
       onWillPop: () {
         return showAlertDialog();
@@ -57,8 +61,7 @@ class _CameraScreenState extends State<CameraScreen> {
             children: [
               MainBackgroundWidget(),
               Container(
-                margin:
-                    EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 10),
+                margin: EdgeInsets.only(left: 15, right: 15, top: 10),
                 child: Column(
                   children: [
                     appBar(),
@@ -66,6 +69,11 @@ class _CameraScreenState extends State<CameraScreen> {
                     cameraModule(),
                     SizedBox(height: 20),
                     editingIconList(),
+                    SizedBox(height: 10),
+                    Container(
+                      height: 48,
+                      child: cameraScreenController.adWidget,
+                    )
                   ],
                 ),
               )
@@ -138,7 +146,11 @@ class _CameraScreenState extends State<CameraScreen> {
                     SizedBox(width: 10),
                     GestureDetector(
                       onTap: () {
-                        saveImage();
+                        cameraScreenController.rewardedAd.show(
+                          onUserEarnedReward: (ad, reward) {
+                            saveImage();
+                          },
+                        );
                       },
                       child: Container(
                         child: Image.asset(
@@ -150,7 +162,11 @@ class _CameraScreenState extends State<CameraScreen> {
                     SizedBox(width: 10),
                     GestureDetector(
                       onTap: () async {
-                        await shareImage();
+                        cameraScreenController.rewardedAd.show(
+                          onUserEarnedReward: (ad, reward) async {
+                            await shareImage();
+                          },
+                        );
                       },
                       child: Container(
                         child: Image.asset(
@@ -192,10 +208,25 @@ class _CameraScreenState extends State<CameraScreen> {
                                   child: cameraScreenController
                                           .addImageFromCameraList.length
                                           .isGreaterThan(0)
-                                      ? Image.file(cameraScreenController
-                                              .addImageFromCameraList[
+                                      ? Image.file(
                                           cameraScreenController
-                                              .selectedImage.value])
+                                                  .addImageFromCameraList[
+                                              cameraScreenController
+                                                  .selectedImage.value],
+                                          errorBuilder: (ctx, obj, st) {
+                                            return Center(
+                                              child: Container(
+                                                height: 35,
+                                                width: 35,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: AppColor
+                                                      .kBorderGradientColor1,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        )
                                       : null,
                                 ),
                               ),
@@ -279,6 +310,9 @@ class _CameraScreenState extends State<CameraScreen> {
       onPressed: () {
         Get.back();
         Get.back();
+        cameraScreenController.rewardedAd.show(
+          onUserEarnedReward: (ad, reward) {},
+        );
       },
       text: 'Don\'t save'.toUpperCase(),
       color: AppColor.kBorderGradientColor3,
@@ -301,6 +335,9 @@ class _CameraScreenState extends State<CameraScreen> {
           Get.back();
         }
         Get.back();
+        cameraScreenController.rewardedAd.show(
+          onUserEarnedReward: (ad, reward) {},
+        );
       },
       text: 'save draft'.toUpperCase(),
       color: AppColor.kButtonCyanColor,
@@ -324,8 +361,6 @@ class _CameraScreenState extends State<CameraScreen> {
         continueButton,
       ],
     );
-
-
   }
 
   void openCamera() async {

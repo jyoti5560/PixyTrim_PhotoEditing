@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:image_size_getter/image_size_getter.dart';
@@ -12,6 +13,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pixytrim/common/common_widgets.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/collage_screen_conroller/collage_screen_controller.dart';
+import 'package:pixytrim/controller/index_screen_controller/index_screen_controller.dart';
 import 'package:pixytrim/models/collage_screen_model/single_image_file_model.dart';
 import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
 import 'package:pixytrim/screens/collage_screen/collage_screen.dart';
@@ -20,6 +22,7 @@ import 'package:pixytrim/screens/previous_session_screen/previous_session_screen
 import 'package:pixytrim/screens/profile_screen/profile_screen.dart';
 
 import '../../common/custom_color.dart';
+import '../../common/helper/ad_helper.dart';
 import 'index_screen_widgets.dart';
 // import 'package:pixytrim/screens/trim_video_screen/trim_video_screen.dart';
 
@@ -38,6 +41,8 @@ class _IndexScreenState extends State<IndexScreen> {
   CollageScreenController collageScreenController =
       Get.put(CollageScreenController());
 
+  IndexScreenController indexController = Get.put(IndexScreenController());
+
   File? file;
   File? compressFile;
 
@@ -55,92 +60,97 @@ class _IndexScreenState extends State<IndexScreen> {
                     color: AppColor.kBorderGradientColor1,
                   )
                 : SafeArea(
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          // Header Name "Pixy Trim"
-                          HeaderTextModule(),
-                          Container(
-                            height: Get.height * 0.40,
-                            margin: EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  flex: 6,
-                                  child: Row(
-                                    children: [
-                                      // Gallery Module
-                                      Expanded(
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            openGallery();
-                                          },
-                                          child: GalleryModule(),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          child: Column(
-                                            children: [
-                                              // Camera Module
-                                              Expanded(
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    openCamera();
-                                                  },
-                                                  child: CameraModule(),
-                                                ),
-                                              ),
-
-                                              // Trim Video Module
-                                              Expanded(
-                                                child: GestureDetector(
-                                                  onTap: () => selectImages(),
-                                                  child: CollageModule(),
-                                                ),
-                                              ),
-                                            ],
+                    child: Stack(
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // Header Name "Pixy Trim"
+                            SizedBox(height: Get.size.height * 0.01),
+                            HeaderTextModule(),
+                            Container(
+                              height: Get.height * 0.40,
+                              margin: EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    flex: 6,
+                                    child: Row(
+                                      children: [
+                                        // Gallery Module
+                                        Expanded(
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              openGallery();
+                                            },
+                                            child: GalleryModule(),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        Expanded(
+                                          child: Container(
+                                            child: Column(
+                                              children: [
+                                                // Camera Module
+                                                Expanded(
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      openCamera();
+                                                    },
+                                                    child: CameraModule(),
+                                                  ),
+                                                ),
+
+                                                // Trim Video Module
+                                                Expanded(
+                                                  child: GestureDetector(
+                                                    onTap: () => selectImages(),
+                                                    child: CollageModule(),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: GestureDetector(
-                                    onTap: () =>
-                                        Get.to(() => PreviousSessionScreen()),
-                                    child: LocalStoreDataModule(),
+                                  Expanded(
+                                    flex: 3,
+                                    child: GestureDetector(
+                                      onTap: () =>
+                                          Get.to(() => PreviousSessionScreen()),
+                                      child: LocalStoreDataModule(),
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => ProfileScreen(
-                                            result: widget.result,
-                                          ));
-                                    },
-                                    child: AddProfile(),
+                                  Expanded(
+                                    flex: 3,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Get.to(() => ProfileScreen(
+                                              result: widget.result,
+                                            ));
+                                      },
+                                      child: AddProfile(),
+                                    ),
                                   ),
-                                ),
-                                /* Expanded(
-                          flex: 3,
-                          child: GestureDetector(
-                            onTap: () {
-                              //Get.to(()=> LiveImageCaptureScreen());
-                            },
-                            child: LiveImageCaptureModule(),
-                          ),
-                        ),*/
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          Container(),
-                        ],
-                      ),
+
+                            Container(
+                              height: 48,
+                              child: indexController.adWidget,
+                            )
+                          ],
+                        ),
+                        // Align(
+                        //   alignment: Alignment.bottomCenter,
+                        //   child: Container(
+                        //     height: 50,
+                        //     child: indexController.adWidget,
+                        //   ),
+                        // ),
+                      ],
                     ),
                   ),
           ),

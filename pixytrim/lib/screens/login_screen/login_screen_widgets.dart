@@ -20,14 +20,22 @@ class welcomeText extends StatelessWidget {
     return Column(
       children: [
         Container(
-          child: Image.asset(Images.ic_logo, scale: 5,),
+          child: Image.asset(
+            Images.ic_logo,
+            scale: 5,
+          ),
         ),
-        SizedBox(height: 15,),
+        SizedBox(
+          height: 15,
+        ),
         Container(
           child: Text(
             "Welcome to PixyTrim",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 35, fontFamily: "Lemon Jelly", fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 35,
+                fontFamily: "Lemon Jelly",
+                fontWeight: FontWeight.bold),
           ),
         ),
       ],
@@ -36,8 +44,6 @@ class welcomeText extends StatelessWidget {
 }
 
 class socialLogin extends StatefulWidget {
-
-
   @override
   _socialLoginState createState() => _socialLoginState();
 }
@@ -50,20 +56,19 @@ class _socialLoginState extends State<socialLogin> {
   final loginScreenController = Get.find<LoginScreenController>();
   //bool ? isLogin = false;
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         GestureDetector(
-          onTap: (){
+          onTap: () {
             loginScreenController.googleAuthentication(context);
           },
           child: Padding(
             padding: const EdgeInsets.all(5),
             child: Container(
               height: 60,
-              width: Get.width/1.4,
+              width: Get.width / 1.4,
               decoration: borderGradientDecoration(),
               child: Padding(
                 padding: const EdgeInsets.all(3),
@@ -91,24 +96,20 @@ class _socialLoginState extends State<socialLogin> {
             ),
           ),
         ),
-
         GestureDetector(
-          onTap: ()async {
-
+          onTap: () async {
             //facebookAuthentication(context);
             _onPressedLogInButton().then((value) {
-              if(loginScreenController.profile!.userId.isNotEmpty){
-
+              if (loginScreenController.profile!.userId.isNotEmpty) {
                 Get.off(() => IndexScreen());
               }
-
             });
           },
           child: Padding(
             padding: const EdgeInsets.all(5),
             child: Container(
               height: 60,
-              width: Get.width/1.4,
+              width: Get.width / 1.4,
               decoration: borderGradientDecoration(),
               child: Padding(
                 padding: const EdgeInsets.all(3),
@@ -136,33 +137,35 @@ class _socialLoginState extends State<socialLogin> {
             ),
           ),
         ),
-        SizedBox(height: 20,),
-
+        SizedBox(
+          height: 20,
+        ),
         GestureDetector(
-          onTap: (){
+          onTap: () {
             Get.off(() => IndexScreen());
           },
           child: Container(
-            child: Text("Skip", style: TextStyle(
-              fontFamily: "", fontSize: 19, decoration: TextDecoration.underline
-            ),),
+            child: Text(
+              "Skip",
+              style: TextStyle(
+                  fontFamily: "",
+                  fontSize: 19,
+                  decoration: TextDecoration.underline),
+            ),
           ),
         )
       ],
     );
   }
 
-
-
   Future<void> _onPressedLogInButton() async {
     await loginScreenController.plugin.logIn(
-        permissions: [
-          FacebookPermission.publicProfile,
-          FacebookPermission.email,
-        ],
+      permissions: [
+        FacebookPermission.publicProfile,
+        FacebookPermission.email,
+      ],
     );
     await loginScreenController.updateLoginInfo();
     await loginScreenController.plugin.logOut();
   }
-
 }

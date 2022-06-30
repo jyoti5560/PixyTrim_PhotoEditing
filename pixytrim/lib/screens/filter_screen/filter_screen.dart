@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,6 +13,7 @@ import 'package:pixytrim/controller/camera_screen_controller/camera_screen_contr
 import 'dart:ui' as ui;
 
 import '../../common/custom_color.dart';
+import '../../common/helper/ad_helper.dart';
 
 class FilterScreen extends StatefulWidget {
   @override
@@ -27,10 +29,55 @@ class FilterScreenState extends State<FilterScreen>
 
   late TabController categoryTabController;
 
+  late AdWidget? adWidget;
+
+  late BannerAdListener listener;
+
+  final AdManagerBannerAd myBanner = AdManagerBannerAd(
+    adUnitId: AdHelper.bannerAdUnitId,
+    sizes: [
+      AdSize.banner,
+    ],
+    request: AdManagerAdRequest(),
+    listener: AdManagerBannerAdListener(),
+  );
+
+  @override
+  void dispose() {
+    super.dispose();
+    myBanner.dispose();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    listener = BannerAdListener(
+      // Called when an ad is successfully received.
+      onAdLoaded: (Ad ad) {
+        print('Ad loaded.');
+      },
+
+      // Called when an ad request failed.
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        // Dispose the ad here to free resources.
+
+        ad.dispose();
+        print('Ad failed to load: $error');
+      },
+
+      // Called when an ad opens an overlay that covers the screen.
+      onAdOpened: (Ad ad) => print('Ad opened.'),
+      // Called when an ad removes an overlay that covers the screen.
+      onAdClosed: (Ad ad) => print('Ad closed.'),
+      // Called when an impression occurs on the ad.
+      onAdImpression: (Ad ad) => print('Ad impression.'),
+    );
+
+    adWidget = AdWidget(
+      ad: myBanner,
+    );
+    myBanner.load();
     categoryTabController = TabController(length: 3, vsync: this);
   }
 
@@ -44,17 +91,15 @@ class FilterScreenState extends State<FilterScreen>
       child: Scaffold(
           body: SafeArea(
         child: Stack(
-          
           children: [
             MainBackgroundWidget(),
             Container(
-              margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+              margin: EdgeInsets.only(left: 15, right: 15),
               child: Column(
                 children: [
                   appBar(),
                   SizedBox(height: 20),
                   Expanded(
-
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -67,6 +112,11 @@ class FilterScreenState extends State<FilterScreen>
                   SizedBox(height: 20),
                   filterCategoryView(),
                   filterCategoryBar(),
+                  SizedBox(height: 5),
+                  Container(
+                    height: 48,
+                    child: adWidget,
+                  ),
                 ],
               ),
             )
@@ -283,10 +333,9 @@ class FilterScreenState extends State<FilterScreen>
                       color: csController.colorSelectedIndex.value == index
                           ? Colors.black87
                           : Colors.grey.shade600,
-                      fontWeight:
-                          csController.colorSelectedIndex.value == index
-                              ? FontWeight.bold
-                              : FontWeight.normal),
+                      fontWeight: csController.colorSelectedIndex.value == index
+                          ? FontWeight.bold
+                          : FontWeight.normal),
                 ),
               ],
             ),

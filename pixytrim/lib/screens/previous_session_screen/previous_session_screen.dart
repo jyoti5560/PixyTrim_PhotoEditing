@@ -28,6 +28,7 @@ class PreviousSessionScreen extends StatefulWidget {
 class _PreviousSessionScreenState extends State<PreviousSessionScreen>
     with SingleTickerProviderStateMixin {
   final controller = Get.put(PreviousSessionScreenController());
+
   late TabController tabController;
 
   @override
@@ -71,7 +72,7 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen>
               controller.isLoading.value
                   ? Center(child: CircularProgressIndicator())
                   : Container(
-                      margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                      margin: EdgeInsets.only(left: 15, right: 15),
                       child: Column(
                         children: [
                           appBar(context),
@@ -91,7 +92,12 @@ class _PreviousSessionScreenState extends State<PreviousSessionScreen>
                           ),*/
                           Expanded(child: draftData()),
                           // const SizedBox(height: 20),
-                          tabView()
+                          tabView(),
+                          SizedBox(height: 20),
+                          Container(
+                            height: 48,
+                            child: controller.adWidget,
+                          )
                         ],
                       ),
                     ),

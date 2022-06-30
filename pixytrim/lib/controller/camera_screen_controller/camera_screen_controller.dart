@@ -1,8 +1,12 @@
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/models/filter_screen_model/single_filter_option.dart';
 import 'package:flutter/material.dart';
+import 'package:pixytrim/screens/camera_screen/camera_screen.dart';
+
+import '../../common/helper/ad_helper.dart';
 
 class CameraScreenController extends GetxController {
   RxBool isLoading = false.obs;
@@ -48,9 +52,79 @@ class CameraScreenController extends GetxController {
   List<SingleFilterOption> simpleFilterOptions = [];
   List<SingleFilterOption> blackWhiteFilterOptions = [];
 
+  late AdWidget? adWidget;
+  late BannerAdListener listener;
+
+  late RewardedAd rewardedAd;
+
+  void loadRewardedAd() {
+    RewardedAd.load(
+      adUnitId: AdHelper.rewardedAdUnitId,
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          rewardedAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              loadRewardedAd();
+            },
+          );
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load a rewarded ad: ${err.message}');
+        },
+      ),
+    );
+  }
+
+  final AdManagerBannerAd myBanner = AdManagerBannerAd(
+    adUnitId: AdHelper.bannerAdUnitId,
+    sizes: [
+      AdSize.banner,
+    ],
+    request: AdManagerAdRequest(),
+    listener: AdManagerBannerAdListener(),
+  );
+
+  @override
+  void dispose() {
+    super.dispose();
+    myBanner.dispose();
+  }
+
   @override
   void onInit() {
     // Image List Clear And Add 1st Image in List
+
+    listener = BannerAdListener(
+      // Called when an ad is successfully received.
+      onAdLoaded: (Ad ad) {
+        print('Ad loaded.');
+      },
+
+      // Called when an ad request failed.
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        // Dispose the ad here to free resources.
+
+        ad.dispose();
+        print('Ad failed to load: $error');
+      },
+
+      // Called when an ad opens an overlay that covers the screen.
+      onAdOpened: (Ad ad) => print('Ad opened.'),
+      // Called when an ad removes an overlay that covers the screen.
+      onAdClosed: (Ad ad) => print('Ad closed.'),
+      // Called when an impression occurs on the ad.
+      onAdImpression: (Ad ad) => print('Ad impression.'),
+    );
+
+    myBanner.load();
+    loadRewardedAd();
+    adWidget = AdWidget(
+      ad: myBanner,
+    );
+
     addImageFromCameraList.clear();
     print('addImageFromCameraList 1 : ${addImageFromCameraList.length}');
     addImageFromCameraList.add(file);

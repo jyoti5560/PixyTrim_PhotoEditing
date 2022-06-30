@@ -21,20 +21,15 @@ class _LoginScreenState extends State<LoginScreen> {
         alignment: Alignment.center,
         children: [
           MainBackgroundWidget(),
-
           SafeArea(
             child: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  welcomeText(),
-
-                  socialLogin()
-                ],
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [welcomeText(), socialLogin()],
               ),
             ),
           )
-
         ],
       ),
     );

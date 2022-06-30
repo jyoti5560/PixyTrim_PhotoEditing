@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:pixytrim/common/store_session_local/store_session_local.dart';
+
+import '../../common/helper/ad_helper.dart';
 
 class PreviousSessionScreenController extends GetxController {
   RxBool isLoading = false.obs;
@@ -12,10 +15,64 @@ class PreviousSessionScreenController extends GetxController {
   //File localSessionName = Get.arguments[0];
   RxList<String> localCollageList = RxList();
 
+  late AdWidget? adWidget;
+  late BannerAdListener listener;
+
+  final AdManagerBannerAd myBanner = AdManagerBannerAd(
+    adUnitId: AdHelper.bannerAdUnitId,
+    sizes: [
+      AdSize.banner,
+    ],
+    request: AdManagerAdRequest(),
+    listener: AdManagerBannerAdListener(),
+  );
+
+  @override
+  Future<void> onInit() async {
+    // TODO: implement onInit
+    super.onInit();
+    await getLocalSessionList();
+    await getLocalCollageSessionList();
+    super.onInit();
+
+    listener = BannerAdListener(
+      // Called when an ad is successfully received.
+      onAdLoaded: (Ad ad) {
+        print('Ad loaded.');
+      },
+
+      // Called when an ad request failed.
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        // Dispose the ad here to free resources.
+
+        ad.dispose();
+        print('Ad failed to load: $error');
+      },
+
+      // Called when an ad opens an overlay that covers the screen.
+      onAdOpened: (Ad ad) => print('Ad opened.'),
+      // Called when an ad removes an overlay that covers the screen.
+      onAdClosed: (Ad ad) => print('Ad closed.'),
+      // Called when an impression occurs on the ad.
+      onAdImpression: (Ad ad) => print('Ad impression.'),
+    );
+
+    myBanner.load();
+    adWidget = AdWidget(
+      ad: myBanner,
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    myBanner.dispose();
+  }
+
   getLocalSessionList() async {
     isLoading(true);
     localSessionList.value = await localStorage.getMainList();
-    if(localSessionList.isEmpty){
+    if (localSessionList.isEmpty) {
       localSessionList.value = [];
     }
     print("local session list: $localSessionList");
@@ -46,7 +103,7 @@ class PreviousSessionScreenController extends GetxController {
   getLocalCollageSessionList() async {
     isLoading(true);
     localCollageList.value = await localStorage.getCollageMainList();
-    if(localCollageList.isEmpty){
+    if (localCollageList.isEmpty) {
       localCollageList.value = [];
     }
     isLoading(false);
@@ -54,7 +111,6 @@ class PreviousSessionScreenController extends GetxController {
 
   deleteLocalSessionList() async {
     await localStorage.deleteImage();
-
   }
 
   updateLocalSessionList(int i) async {
@@ -78,14 +134,4 @@ class PreviousSessionScreenController extends GetxController {
   deleteCollageLocalSessionList() async {
     await localStorage.deleteCollageImage();
   }
-
-
-  @override
-  void onInit() async {
-    await getLocalSessionList();
-    await getLocalCollageSessionList();
-    super.onInit();
-  }
-
-
 }

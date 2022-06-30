@@ -5,6 +5,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:pixytrim/common/common_widgets.dart';
@@ -12,6 +13,8 @@ import 'package:pixytrim/common/custom_color.dart';
 import 'package:pixytrim/common/custom_gradient_slider.dart';
 import 'package:pixytrim/common/custom_image.dart';
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
+
+import '../../common/helper/ad_helper.dart';
 
 enum SelectedModule { camera, gallery }
 
@@ -39,6 +42,58 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
 
   double sat = 1;
 
+  late AdWidget? adWidget;
+
+  late BannerAdListener listener;
+
+  final AdManagerBannerAd myBanner = AdManagerBannerAd(
+    adUnitId: AdHelper.bannerAdUnitId,
+    sizes: [
+      AdSize.banner,
+    ],
+    request: AdManagerAdRequest(),
+    listener: AdManagerBannerAdListener(),
+  );
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    listener = BannerAdListener(
+      // Called when an ad is successfully received.
+      onAdLoaded: (Ad ad) {
+        print('Ad loaded.');
+      },
+
+      // Called when an ad request failed.
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        // Dispose the ad here to free resources.
+
+        ad.dispose();
+        print('Ad failed to load: $error');
+      },
+
+      // Called when an ad opens an overlay that covers the screen.
+      onAdOpened: (Ad ad) => print('Ad opened.'),
+      // Called when an ad removes an overlay that covers the screen.
+      onAdClosed: (Ad ad) => print('Ad closed.'),
+      // Called when an impression occurs on the ad.
+      onAdImpression: (Ad ad) => print('Ad impression.'),
+    );
+
+    adWidget = AdWidget(
+      ad: myBanner,
+    );
+    myBanner.load();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    myBanner.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -51,13 +106,18 @@ class _CompressImageScreenState extends State<CompressImageScreen> {
             children: [
               MainBackgroundWidget(),
               Container(
-                margin:
-                    EdgeInsets.only(left: 15, right: 15, bottom: 20, top: 10),
+                margin: EdgeInsets.only(left: 15, right: 15, top: 10),
                 child: Column(
                   children: [
                     appBar(),
                     SizedBox(height: 20),
                     imageList(),
+                    SizedBox(height: 15),
+                    Spacer(),
+                    Container(
+                      height: 48,
+                      child: adWidget,
+                    )
                   ],
                 ),
               )

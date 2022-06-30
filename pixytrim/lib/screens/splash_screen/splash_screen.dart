@@ -17,7 +17,7 @@ class SplashScreen extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('${Images.ic_background1}'),
-              fit: BoxFit.cover,
+            fit: BoxFit.cover,
           ),
         ),
         child: Container(
@@ -28,13 +28,22 @@ class SplashScreen extends StatelessWidget {
             //mainAxisSize: MainAxisSize.max,
             children: [
               Container(
-                child: Image.asset(Images.ic_logo, scale: 3,),
-
+                child: Image.asset(
+                  Images.ic_logo,
+                  scale: 3,
+                ),
               ),
-              SizedBox(height: 20,),
-
+              SizedBox(
+                height: 20,
+              ),
               Container(
-                child: Text("Pixy Trim", style: TextStyle(fontSize: 50, fontFamily: "Lemon Jelly"),),
+                child: Text(
+                  "Pixy Trim",
+                  style: TextStyle(
+                    fontSize: 50,
+                    fontFamily: "Lemon Jelly",
+                  ),
+                ),
               )
             ],
           ),

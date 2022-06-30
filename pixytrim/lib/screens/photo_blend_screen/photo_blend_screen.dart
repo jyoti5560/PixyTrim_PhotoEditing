@@ -45,7 +45,7 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
             children: [
               MainBackgroundWidget(),
               Container(
-                margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                margin: EdgeInsets.only(left: 15, right: 15),
                 child: Column(
                   children: [
                     appBar(),
@@ -53,6 +53,11 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
                     imageList(),
                     SizedBox(height: 20),
                     colorBlendingToolsList(),
+                    SizedBox(height: 5),
+                    Container(
+                      height: 48,
+                      child: blendController.adWidget,
+                    )
                   ],
                 ),
               )

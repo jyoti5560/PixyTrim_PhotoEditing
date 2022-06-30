@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,6 +13,7 @@ import 'package:pixytrim/controller/camera_screen_controller/camera_screen_contr
 import 'package:pixytrim/screens/image_editor_screen/_paint_over_image.dart';
 
 import '../../common/custom_color.dart';
+import '../../common/helper/ad_helper.dart';
 
 class ImageEditorScreen extends StatefulWidget {
   File file;
@@ -27,6 +29,59 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
   final GlobalKey repaintKey = GlobalKey();
   final csController = Get.find<CameraScreenController>();
 
+  late AdWidget? adWidget;
+
+  late BannerAdListener listener;
+
+  final AdManagerBannerAd myBanner = AdManagerBannerAd(
+    adUnitId: AdHelper.bannerAdUnitId,
+    sizes: [
+      AdSize.banner,
+    ],
+    request: AdManagerAdRequest(),
+    listener: AdManagerBannerAdListener(),
+  );
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    listener = BannerAdListener(
+      // Called when an ad is successfully received.
+      onAdLoaded: (Ad ad) {
+        print('Ad loaded.');
+      },
+
+      // Called when an ad request failed.
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        // Dispose the ad here to free resources.
+
+        ad.dispose();
+        print('Ad failed to load: $error');
+      },
+
+      // Called when an ad opens an overlay that covers the screen.
+      onAdOpened: (Ad ad) => print('Ad opened.'),
+      // Called when an ad removes an overlay that covers the screen.
+      onAdClosed: (Ad ad) => print('Ad closed.'),
+      // Called when an impression occurs on the ad.
+      onAdImpression: (Ad ad) => print('Ad impression.'),
+    );
+
+    adWidget = AdWidget(
+      ad: myBanner,
+    );
+    myBanner.load();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (!mounted) return;
+    myBanner.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -39,7 +94,7 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
             children: [
               MainBackgroundWidget(),
               Container(
-                margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                margin: EdgeInsets.only(left: 15, right: 15),
                 child: Column(
                   children: [
                     appBar(),
@@ -61,6 +116,11 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                               ),
                             ),
                           ),
+                          SizedBox(height: 15),
+                          Container(
+                            height: 48,
+                            child: adWidget,
+                          )
                         ],
                       ),
                     ),
@@ -345,11 +405,5 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
         continueButton,
       ],
     );
-  }
-
-  @override
-  void dispose() {
-    if (!mounted) return;
-    super.dispose();
   }
 }

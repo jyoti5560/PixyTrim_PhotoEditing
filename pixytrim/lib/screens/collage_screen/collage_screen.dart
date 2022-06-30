@@ -59,7 +59,12 @@ class _CollageScreenState extends State<CollageScreen>
             children: [
               MainBackgroundWidget(),
               Container(
-                margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                margin: EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                  bottom: 15,
+                  top: 10,
+                ),
                 child: Column(
                   children: [
                     appBar(),
