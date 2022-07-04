@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -16,6 +15,8 @@ import '../../common/common_widgets.dart';
 import '../../common/custom_color.dart';
 import '../../common/custom_image.dart';
 
+
+
 class PhotoBlendScreen extends StatefulWidget {
   @override
   State<PhotoBlendScreen> createState() => _PhotoBlendScreenState();
@@ -26,12 +27,10 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
 
   GlobalKey<ExtendedImageEditorState> editorKey = GlobalKey();
 
-  PhotoBlendController imageSizeRatioController =
+  PhotoBlendController blendController =
       Get.put(PhotoBlendController());
 
   CameraScreenController csController = Get.find<CameraScreenController>();
-
-  PhotoBlendController blendController = Get.find<PhotoBlendController>();
 
   @override
   Widget build(BuildContext context) {
