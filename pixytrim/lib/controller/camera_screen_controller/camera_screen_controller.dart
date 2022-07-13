@@ -26,7 +26,7 @@ class CameraScreenController extends GetxController {
   List<String> iconList = [
     Images.ic_crop,
     Images.ic_filter,
-    Images.ic_blend,
+
     Images.ic_brightness,
     Images.ic_blur,
     Images.ic_compress,
@@ -39,7 +39,6 @@ class CameraScreenController extends GetxController {
   List<String> bottomToolsList = [
     "Crop",
     "Filters",
-    "Blend",
     "Adjust",
     "Blur",
     "Reduce",

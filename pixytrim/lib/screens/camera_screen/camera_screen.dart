@@ -457,14 +457,18 @@ class _CameraScreenState extends State<CameraScreen> {
                     ;
                 //cropImage();
               } else if (i == 1) {
-                Get.to(() => FilterScreen());
+                Get.to(
+                  () => FilterScreen(),
+                );
               } else if (i == 2) {
-                Get.to(() => PhotoBlendScreen());
+                Get.to(
+                  () => BrightnessScreen(),
+                );
               } else if (i == 3) {
-                Get.to(() => BrightnessScreen());
+                Get.to(
+                  () => BlurScreen(),
+                );
               } else if (i == 4) {
-                Get.to(() => BlurScreen());
-              } else if (i == 5) {
                 compressImage(cameraScreenController.addImageFromCameraList[
                         cameraScreenController.selectedImage.value])
                     .then((value) {
@@ -475,7 +479,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         index: cameraScreenController.selectedImage.value,
                       ));
                 });
-              } else if (i == 6) {
+              } else if (i == 5) {
                 resizeImage(cameraScreenController.addImageFromCameraList[
                         cameraScreenController.selectedImage.value])
                     .then((value) {
@@ -495,7 +499,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     ),
                   );
                 });
-              } else if (i == 7) {
+              } else if (i == 6) {
                 Get.to(() => ImageEditorScreen(
                     file: cameraScreenController.addImageFromCameraList[
                         cameraScreenController.selectedImage.value],
