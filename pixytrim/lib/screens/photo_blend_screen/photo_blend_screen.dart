@@ -9,7 +9,7 @@ import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pixytrim/controller/camera_screen_controller/camera_screen_controller.dart';
 import 'package:pixytrim/controller/photo_blend_controller/photo_blend_controller.dart';
-import 'package:search_choices/search_choices.dart';
+// import 'package:search_choices/search_choices.dart';
 import 'dart:ui' as ui;
 import '../../common/common_widgets.dart';
 import '../../common/custom_color.dart';
@@ -324,7 +324,7 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
         SizedBox(height: 25),
         // selectColorButton(),
         SizedBox(height: 20),
-        selectBlendModeButton(),
+        // selectBlendModeButton(),
         SizedBox(height: 20),
       ],
     );
@@ -386,76 +386,76 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
   //   );
   // }
 
-  Widget selectBlendModeButton() {
-    return Container(
-      height: 50,
-      width: Get.size.width * 0.9,
-      padding: EdgeInsets.only(top: 3),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            AppColor.kBorderGradientColor1,
-            AppColor.kBorderGradientColor2,
-            AppColor.kBorderGradientColor3,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
-      child: SearchChoices.single(
-        padding: 10,
-        displayClearIcon: false,
-        items: blendController.blendingItems,
-        searchHint: "Search Blend Mode",
-        hint: blendController.selectedBlendModeText.value,
-        isExpanded: true,
-        underline: SizedBox(),
-        style: TextStyle(
-          color: AppColor.kBlackColor,
-          fontWeight: FontWeight.w500,
-          fontSize: 17,
-        ),
-        onChanged: (value) {
-          setState(() {
-            blendController.selectedBlendModeText.value = value;
-          });
-        },
-        doneButton: TextButton(
-          child: Text("Done"),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-        displayItem: (item, selected) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 2,
-              horizontal: 5,
-            ),
-            child: Row(
-              children: [
-                SizedBox(width: 10),
-                selected
-                    ? Icon(
-                        Icons.radio_button_checked,
-                        color: Colors.blue,
-                      )
-                    : Icon(
-                        Icons.radio_button_unchecked,
-                        color: Colors.grey,
-                      ),
-                SizedBox(width: 7),
-                Expanded(
-                  child: item,
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
+  // Widget selectBlendModeButton() {
+  //   return Container(
+  //     height: 50,
+  //     width: Get.size.width * 0.9,
+  //     padding: EdgeInsets.only(top: 3),
+  //     decoration: BoxDecoration(
+  //       gradient: LinearGradient(
+  //         colors: [
+  //           AppColor.kBorderGradientColor1,
+  //           AppColor.kBorderGradientColor2,
+  //           AppColor.kBorderGradientColor3,
+  //         ],
+  //         begin: Alignment.topLeft,
+  //         end: Alignment.bottomRight,
+  //       ),
+  //       borderRadius: BorderRadius.all(Radius.circular(15)),
+  //     ),
+  //     child: SearchChoices.single(
+  //       padding: 10,
+  //       displayClearIcon: false,
+  //       items: blendController.blendingItems,
+  //       searchHint: "Search Blend Mode",
+  //       hint: blendController.selectedBlendModeText.value,
+  //       isExpanded: true,
+  //       underline: SizedBox(),
+  //       style: TextStyle(
+  //         color: AppColor.kBlackColor,
+  //         fontWeight: FontWeight.w500,
+  //         fontSize: 17,
+  //       ),
+  //       onChanged: (value) {
+  //         setState(() {
+  //           blendController.selectedBlendModeText.value = value;
+  //         });
+  //       },
+  //       doneButton: TextButton(
+  //         child: Text("Done"),
+  //         onPressed: () {
+  //           Get.back();
+  //         },
+  //       ),
+  //       displayItem: (item, selected) {
+  //         return Padding(
+  //           padding: const EdgeInsets.symmetric(
+  //             vertical: 2,
+  //             horizontal: 5,
+  //           ),
+  //           child: Row(
+  //             children: [
+  //               SizedBox(width: 10),
+  //               selected
+  //                   ? Icon(
+  //                       Icons.radio_button_checked,
+  //                       color: Colors.blue,
+  //                     )
+  //                   : Icon(
+  //                       Icons.radio_button_unchecked,
+  //                       color: Colors.grey,
+  //                     ),
+  //               SizedBox(width: 7),
+  //               Expanded(
+  //                 child: item,
+  //               ),
+  //             ],
+  //           ),
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 
   showAlertDialog() {
     Widget cancelButton = IconsButton(

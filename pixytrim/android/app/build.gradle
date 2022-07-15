@@ -32,8 +32,8 @@ android {
         applicationId "com.omtecweb.pixytrim"
         minSdkVersion 24
         targetSdkVersion 32
-        versionCode 3
-        versionName "1.3"
+        versionCode 4
+        versionName "1.4"
     }
 
     buildTypes {
