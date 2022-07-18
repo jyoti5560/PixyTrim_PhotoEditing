@@ -264,7 +264,7 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
     return Column(
       children: [
         SizedBox(height: 40),
-        Container(
+        /*Container(
           // alignment: AlignmentDirectional.centerStart,
           margin: EdgeInsets.only(left: 10, right: 10),
           child: Row(
@@ -319,17 +319,10 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
               )
             ],
           ),
-        ),
-        SizedBox(height: 25),
-        // selectColorButton(),
-        SizedBox(height: 20),
-        // selectBlendModeButton(),
-        SizedBox(height: 20),
-      ],
+        ),*/
         selectColorModule(),
         SizedBox(height: 35),
-        // SizedBox(height: 20),
-        selectBlendModeModule(),
+        selectBlendModeButton(),
         SizedBox(height: 20),
       ],
     );
