@@ -15,8 +15,6 @@ import '../../common/common_widgets.dart';
 import '../../common/custom_color.dart';
 import '../../common/custom_image.dart';
 
-
-
 class PhotoBlendScreen extends StatefulWidget {
   @override
   State<PhotoBlendScreen> createState() => _PhotoBlendScreenState();
@@ -27,8 +25,7 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
 
   GlobalKey<ExtendedImageEditorState> editorKey = GlobalKey();
 
-  PhotoBlendController blendController =
-      Get.put(PhotoBlendController());
+  PhotoBlendController blendController = Get.put(PhotoBlendController());
 
   CameraScreenController csController = Get.find<CameraScreenController>();
 
@@ -45,19 +42,21 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
               MainBackgroundWidget(),
               Container(
                 margin: EdgeInsets.only(left: 15, right: 15),
-                child: Column(
-                  children: [
-                    appBar(),
-                    SizedBox(height: 20),
-                    imageList(),
-                    SizedBox(height: 20),
-                    colorBlendingToolsList(),
-                    SizedBox(height: 5),
-                    Container(
-                      height: 48,
-                      child: blendController.adWidget,
-                    )
-                  ],
+                child: Obx(
+                  () => Column(
+                    children: [
+                      appBar(),
+                      SizedBox(height: 20),
+                      imageList(),
+                      SizedBox(height: 20),
+                      colorBlendingToolsList(),
+                      SizedBox(height: 5),
+                      Container(
+                        height: 48,
+                        child: blendController.adWidget,
+                      )
+                    ],
+                  ),
                 ),
               )
             ],
@@ -327,10 +326,180 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
         // selectBlendModeButton(),
         SizedBox(height: 20),
       ],
+        selectColorModule(),
+        SizedBox(height: 35),
+        // SizedBox(height: 20),
+        selectBlendModeModule(),
+        SizedBox(height: 20),
+      ],
     );
   }
 
-  // Widget selectColorButton() {
+  Container selectBlendModeModule() {
+    return Container(
+      // alignment: AlignmentDirectional.centerStart,
+      margin: EdgeInsets.only(left: 10, right: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 3,
+            child: Text(
+              "Color Blend Mode",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColor.kBlackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          SizedBox(width: 10),
+          Expanded(
+            flex: 5,
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: const Text('Pick a color!'),
+                    content: SingleChildScrollView(
+                      child: ColorPicker(
+                        pickerColor: pickerColor,
+                        onColorChanged: changeColor,
+                      ),
+                    ),
+                    actions: <Widget>[
+                      ElevatedButton(
+                        child: const Text('Got it'),
+                        onPressed: () {
+                          blendController.selectedColor.value = pickerColor;
+                          setState(() {});
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+              child: Container(
+                height: 40,
+                width: Get.size.width * 0.5,
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  // shape: BoxShape.circle,
+                  borderRadius: BorderRadius.all(Radius.circular(28)),
+                  color: AppColor.kWhiteColor,
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: blendController.selectedBlendModeText.value,
+                    items: blendController.blendingItems.map((item) {
+                      return DropdownMenuItem<String>(
+                        child: item.child,
+                        value: item.value,
+                        onTap: item.onTap,
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        blendController.selectedBlendModeText.value = value!;
+                      });
+                    },
+                    hint: Text("Select Blend Mode"),
+                    disabledHint: Text("Disabled"),
+                    elevation: 8,
+                    style: TextStyle(
+                      color: AppColor.kBlackColor,
+                      fontSize: 16,
+                    ),
+                    icon: Icon(Icons.keyboard_arrow_down_rounded),
+                    iconDisabledColor: Colors.grey,
+                    iconEnabledColor: AppColor.kBorderGradientColor1,
+                    isExpanded: true,
+                    dropdownColor: AppColor.kWhiteColor,
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Container selectColorModule() {
+    return Container(
+      // alignment: AlignmentDirectional.centerStart,
+      margin: EdgeInsets.only(left: 10, right: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 3,
+            child: Text(
+              "Select Color",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColor.kBlackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          SizedBox(width: 10),
+          Expanded(
+            flex: 5,
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: const Text('Pick a color!'),
+                    content: SingleChildScrollView(
+                      child: ColorPicker(
+                        pickerColor: pickerColor,
+                        onColorChanged: changeColor,
+                      ),
+                    ),
+                    actions: <Widget>[
+                      ElevatedButton(
+                        child: const Text('Got it'),
+                        onPressed: () {
+                          blendController.selectedColor.value = pickerColor;
+                          setState(() {});
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+              child: Container(
+                height: 40,
+                width: Get.size.width * 0.5,
+                decoration: BoxDecoration(
+                  // shape: BoxShape.circle,
+                  border: Border.all(
+                    color: AppColor.kBorderGradientColor1,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(28)),
+                  color: blendController.selectedColor.value,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  //             ),
+  //           ],
+  //       // Widget selectColorButton() {
   //   return GestureDetector(
   //     onTap: () {
   //       showDialog(
@@ -350,9 +519,6 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
   //                 blendController.selectedColor.value = pickerColor;
   //                 setState(() {});
   //                 Navigator.of(context).pop();
-  //               },
-  //             ),
-  //           ],
   //         ),
   //       );
   //     },
@@ -456,6 +622,78 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
   //     ),
   //   );
   // }
+  Widget selectBlendModeButton() {
+    return Container(
+      height: 50,
+      width: Get.size.width * 0.9,
+      padding: EdgeInsets.only(top: 3),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            AppColor.kBorderGradientColor1,
+            AppColor.kBorderGradientColor2,
+            AppColor.kBorderGradientColor3,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+      child: Text(""),
+
+      // SearchChoices.single(
+      //   padding: 10,
+      //   displayClearIcon: false,
+      //   items: blendController.blendingItems,
+      //   searchHint: "Search Blend Mode",
+      //   hint: blendController.selectedBlendModeText.value,
+      //   isExpanded: true,
+      //   underline: SizedBox(),
+      //   style: TextStyle(
+      //     color: AppColor.kBlackColor,
+      //     fontWeight: FontWeight.w500,
+      //     fontSize: 17,
+      //   ),
+      //   onChanged: (value) {
+      //     setState(() {
+      //       blendController.selectedBlendModeText.value = value;
+      //     });
+      //   },
+      //   doneButton: TextButton(
+      //     child: Text("Done"),
+      //     onPressed: () {
+      //       Get.back();
+      //     },
+      //   ),
+      //   displayItem: (item, selected) {
+      //     return Padding(
+      //       padding: const EdgeInsets.symmetric(
+      //         vertical: 2,
+      //         horizontal: 5,
+      //       ),
+      //       child: Row(
+      //         children: [
+      //           SizedBox(width: 10),
+      //           selected
+      //               ? Icon(
+      //                   Icons.radio_button_checked,
+      //                   color: Colors.blue,
+      //                 )
+      //               : Icon(
+      //                   Icons.radio_button_unchecked,
+      //                   color: Colors.grey,
+      //                 ),
+      //           SizedBox(width: 7),
+      //           Expanded(
+      //             child: item,
+      //           ),
+      //         ],
+      //       ),
+      //     );
+      //   },
+      // ),
+    );
+  }
 
   showAlertDialog() {
     Widget cancelButton = IconsButton(
@@ -489,7 +727,7 @@ class _PhotoBlendScreenState extends State<PhotoBlendScreen> {
         color: Colors.black,
         fontWeight: FontWeight.w500,
       ),
-      context: context,
+      context: Get.context!,
       actions: [
         cancelButton,
         continueButton,

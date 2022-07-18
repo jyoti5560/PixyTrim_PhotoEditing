@@ -21,10 +21,26 @@ class IndexScreenController extends GetxController {
     listener: AdManagerBannerAdListener(),
   );
 
+  RequestConfiguration? requestConfiguration;
+
+  // MobileAds().getRequestConfiguration();
+
+  initAds() async {
+    requestConfiguration = RequestConfiguration(
+      testDeviceIds: [
+        "7DC439E3F9AB79A198A10BB10E256801",
+      ],
+    );
+    await MobileAds.instance.updateRequestConfiguration(requestConfiguration!);
+  }
+
   @override
   void onInit() {
     // TODO: implement initState
     super.onInit();
+    // ignore: unnecessary_statements
+
+    initAds();
 
     listener = BannerAdListener(
       // Called when an ad is successfully received.

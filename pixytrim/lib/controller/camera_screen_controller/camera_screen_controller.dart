@@ -29,6 +29,7 @@ class CameraScreenController extends GetxController {
 
     Images.ic_brightness,
     Images.ic_blur,
+    Images.ic_blend,
     Images.ic_compress,
     Images.ic_resize,
     Images.ic_edit_image,
@@ -41,6 +42,7 @@ class CameraScreenController extends GetxController {
     "Filters",
     "Adjust",
     "Blur",
+    "Blend",
     "Reduce",
     "Resize",
     "Edit",
@@ -319,17 +321,17 @@ class CameraScreenController extends GetxController {
         filterName: 'Linear',
         filterListWidget: linear(width: 100, height: 100, fit: BoxFit.cover),
       ),
-      SingleFilterOption(
-        filterWidget: sepiaFilter(),
-        filterName: 'Sepia',
-        filterListWidget:
-            sepiaFilter(width: 100, height: 100, fit: BoxFit.cover),
-      ),
-      SingleFilterOption(
-        filterWidget: invertFilter(),
-        filterName: 'Invert',
-        filterListWidget: linear(width: 100, height: 100, fit: BoxFit.cover),
-      ),
+      // SingleFilterOption(
+      //   filterWidget: sepiaFilter(),
+      //   filterName: 'Sepia',
+      //   filterListWidget:
+      //       sepiaFilter(width: 100, height: 100, fit: BoxFit.cover),
+      // ),
+      // SingleFilterOption(
+      //   filterWidget: invertFilter(),
+      //   filterName: 'Invert',
+      //   filterListWidget: linear(width: 100, height: 100, fit: BoxFit.cover),
+      // ),
       SingleFilterOption(
         filterWidget: greyscaleFilter(),
         filterName: 'GreyScale',
@@ -349,11 +351,11 @@ class CameraScreenController extends GetxController {
         filterName: 'B&W 1',
         filterListWidget: bw1(width: 100, height: 100, fit: BoxFit.cover),
       ),
-      SingleFilterOption(
-        filterWidget: bw2(),
-        filterName: 'B&W 2',
-        filterListWidget: bw2(width: 100, height: 100, fit: BoxFit.cover),
-      ),
+      // SingleFilterOption(
+      //   filterWidget: bw2(),
+      //   filterName: 'B&W 2',
+      //   filterListWidget: bw2(width: 100, height: 100, fit: BoxFit.cover),
+      // ),
     ];
 
     super.onInit();
@@ -998,44 +1000,46 @@ class CameraScreenController extends GetxController {
     );
   }
 
-  Widget bw2({double? width, double? height, BoxFit? fit}) {
-    return Obx(
-      () => Container(
-        width: width ?? null,
-        height: height ?? null,
-        child: ColorFiltered(
-          colorFilter: ColorFilter.matrix([
-            0.2126,
-            0.7152,
-            0.0722,
-            0,
-            0,
-            0.2126,
-            0.7152,
-            0.0722,
-            0,
-            0,
-            0.2126,
-            0.7152,
-            0.0722,
-            0,
-            0.2126,
-            0.0722,
-            0,
-            0,
-            1,
-            0,
-          ]),
-          child: Image.file(
-            addImageFromCameraList[selectedImage.value],
-            width: width ?? null,
-            height: height ?? null,
-            fit: fit ?? null,
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget bw2({double? width, double? height, BoxFit? fit}) {
+  //   return Obx(
+  //     () => Container(
+  //       width: width ?? null,
+  //       height: height ?? null,
+  //       child: ColorFiltered(
+  //         colorFilter: ColorFilter.matrix(
+  //           [
+  //             0.2126,
+  //             0.7152,
+  //             0.0722,
+  //             0,
+  //             0,
+  //             0.2126,
+  //             0.7152,
+  //             0.0722,
+  //             0,
+  //             0,
+  //             0.2126,
+  //             0.7152,
+  //             0.0722,
+  //             0,
+  //             0.2126,
+  //             0.0722,
+  //             0,
+  //             0,
+  //             1,
+  //             0,
+  //           ],
+  //         ),
+  //         child: Image.file(
+  //           addImageFromCameraList[selectedImage.value],
+  //           width: width ?? null,
+  //           height: height ?? null,
+  //           fit: fit ?? null,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget srgb({double? width, double? height, BoxFit? fit}) {
     return Obx(
@@ -1073,83 +1077,83 @@ class CameraScreenController extends GetxController {
     );
   }
 
-  Widget invertFilter({double? width, double? height, BoxFit? fit}) {
-    return Obx(
-      () => Container(
-        width: width ?? null,
-        height: height ?? null,
-        child: ColorFiltered(
-          colorFilter: ColorFilter.matrix([
-            -1,
-            0,
-            0,
-            0,
-            255,
-            0,
-            -1,
-            0,
-            0,
-            255,
-            0,
-            0,
-            -1,
-            0,
-            255,
-            0,
-            0,
-            0,
-            1,
-            0,
-          ]),
-          child: Image.file(
-            addImageFromCameraList[selectedImage.value],
-            width: width ?? null,
-            height: height ?? null,
-            fit: fit ?? null,
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget invertFilter({double? width, double? height, BoxFit? fit}) {
+  //   return Obx(
+  //     () => Container(
+  //       width: width ?? null,
+  //       height: height ?? null,
+  //       child: ColorFiltered(
+  //         colorFilter: ColorFilter.matrix([
+  //           -1,
+  //           0,
+  //           0,
+  //           0,
+  //           255,
+  //           0,
+  //           -1,
+  //           0,
+  //           0,
+  //           255,
+  //           0,
+  //           0,
+  //           -1,
+  //           0,
+  //           255,
+  //           0,
+  //           0,
+  //           0,
+  //           1,
+  //           0,
+  //         ]),
+  //         child: Image.file(
+  //           addImageFromCameraList[selectedImage.value],
+  //           width: width ?? null,
+  //           height: height ?? null,
+  //           fit: fit ?? null,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget sepiaFilter({double? width, double? height, BoxFit? fit}) {
-    return Obx(
-      () => Container(
-        width: width ?? null,
-        height: height ?? null,
-        child: ColorFiltered(
-          colorFilter: ColorFilter.matrix([
-            -1,
-            0,
-            0,
-            0,
-            255,
-            0,
-            -1,
-            0,
-            0,
-            255,
-            0,
-            0,
-            -1,
-            0,
-            255,
-            0,
-            0,
-            0,
-            1,
-            0,
-          ]),
-          child: Image.file(
-            addImageFromCameraList[selectedImage.value],
-            width: width ?? null,
-            height: height ?? null,
-            fit: fit ?? null,
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget sepiaFilter({double? width, double? height, BoxFit? fit}) {
+  //   return Obx(
+  //     () => Container(
+  //       width: width ?? null,
+  //       height: height ?? null,
+  //       child: ColorFiltered(
+  //         colorFilter: ColorFilter.matrix([
+  //           -1,
+  //           0,
+  //           0,
+  //           0,
+  //           255,
+  //           0,
+  //           -1,
+  //           0,
+  //           0,
+  //           255,
+  //           0,
+  //           0,
+  //           -1,
+  //           0,
+  //           255,
+  //           0,
+  //           0,
+  //           0,
+  //           1,
+  //           0,
+  //         ]),
+  //         child: Image.file(
+  //           addImageFromCameraList[selectedImage.value],
+  //           width: width ?? null,
+  //           height: height ?? null,
+  //           fit: fit ?? null,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget greyscaleFilter({double? width, double? height, BoxFit? fit}) {
     return Obx(

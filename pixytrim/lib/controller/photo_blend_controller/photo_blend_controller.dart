@@ -19,6 +19,8 @@ class PhotoBlendController extends GetxController {
 
   late BannerAdListener listener;
 
+  TextEditingController blendTextController = TextEditingController();
+
   final AdManagerBannerAd myBanner = AdManagerBannerAd(
     adUnitId: AdHelper.bannerAdUnitId,
     sizes: [
@@ -66,6 +68,38 @@ class PhotoBlendController extends GetxController {
     super.dispose();
     myBanner.dispose();
   }
+
+  List<String> BlendingList = [
+    "clear",
+    "color",
+    "colorBurn",
+    "colorDodge",
+    "darken",
+    "difference",
+    "dst",
+    "dstATop",
+    "dstIn",
+    "dstOut",
+    "dstOver",
+    "exclusion",
+    "hardLight",
+    "hue",
+    "lighten",
+    "luminosity",
+    "modulate",
+    "multiply",
+    "overlay",
+    "plus",
+    "saturation",
+    "screen",
+    "softLight",
+    "src",
+    "srcATop",
+    "srcIn",
+    "srcOut",
+    "srcOver",
+    "xor",
+  ];
 
   List<DropdownMenuItem<String>> get blendingItems {
     List<DropdownMenuItem<String>> menuItems = [
@@ -214,6 +248,8 @@ class PhotoBlendController extends GetxController {
         value: "saturation",
         onTap: () {
           blendMode.value = BlendMode.saturation;
+
+          print("saturation selected");
         },
       ),
       DropdownMenuItem(

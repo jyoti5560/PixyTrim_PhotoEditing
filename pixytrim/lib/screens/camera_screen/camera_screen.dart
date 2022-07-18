@@ -469,6 +469,10 @@ class _CameraScreenState extends State<CameraScreen> {
                   () => BlurScreen(),
                 );
               } else if (i == 4) {
+                Get.to(
+                  () => PhotoBlendScreen(),
+                );
+              } else if (i == 5) {
                 compressImage(cameraScreenController.addImageFromCameraList[
                         cameraScreenController.selectedImage.value])
                     .then((value) {
@@ -479,7 +483,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         index: cameraScreenController.selectedImage.value,
                       ));
                 });
-              } else if (i == 5) {
+              } else if (i == 6) {
                 resizeImage(cameraScreenController.addImageFromCameraList[
                         cameraScreenController.selectedImage.value])
                     .then((value) {
@@ -499,7 +503,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     ),
                   );
                 });
-              } else if (i == 6) {
+              } else if (i == 7) {
                 Get.to(() => ImageEditorScreen(
                     file: cameraScreenController.addImageFromCameraList[
                         cameraScreenController.selectedImage.value],
