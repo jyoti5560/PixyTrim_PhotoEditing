@@ -653,6 +653,7 @@ class FilterScreenState extends State<FilterScreen>
 
     Widget continueButton = IconsButton(
       onPressed: () async {
+        csController.interstitialAd.show();
         Get.back();
         Get.back();
       },

@@ -16,9 +16,7 @@ class HeaderTextModule extends StatelessWidget {
             scale: 5,
           ),
         ),
-        SizedBox(
-          height: 15,
-        ),
+        SizedBox(height: 15),
         Container(
           child: Text(
             "Pixy Trim",

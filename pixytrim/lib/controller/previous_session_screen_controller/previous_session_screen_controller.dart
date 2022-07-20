@@ -33,7 +33,7 @@ class PreviousSessionScreenController extends GetxController {
     super.onInit();
     await getLocalSessionList();
     await getLocalCollageSessionList();
-    super.onInit();
+    // super.onInit();
 
     listener = BannerAdListener(
       // Called when an ad is successfully received.

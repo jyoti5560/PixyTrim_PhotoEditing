@@ -210,6 +210,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
                     //   timeInSecForIosWeb: 1,
                     // );
                     await _capturePng().then((value) {
+                      csController.interstitialAd.show();
                       Get.back();
                     });
 
@@ -542,6 +543,7 @@ class _BrightnessScreenState extends State<BrightnessScreen> {
     Widget continueButton = IconsButton(
       onPressed: () async {
         await _capturePng().then((value) {
+          csController.interstitialAd.show();
           Get.back();
           Get.back();
         });

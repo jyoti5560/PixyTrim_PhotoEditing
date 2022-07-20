@@ -146,11 +146,8 @@ class _CameraScreenState extends State<CameraScreen> {
                     SizedBox(width: 10),
                     GestureDetector(
                       onTap: () {
-                        cameraScreenController.rewardedAd.show(
-                          onUserEarnedReward: (ad, reward) {
-                            saveImage();
-                          },
-                        );
+                        saveImage();
+                        cameraScreenController.interstitialAd.show();
                       },
                       child: Container(
                         child: Image.asset(
@@ -162,11 +159,8 @@ class _CameraScreenState extends State<CameraScreen> {
                     SizedBox(width: 10),
                     GestureDetector(
                       onTap: () async {
-                        cameraScreenController.rewardedAd.show(
-                          onUserEarnedReward: (ad, reward) async {
-                            await shareImage();
-                          },
-                        );
+                        await shareImage();
+                        // cameraScreenController.interstitialAd.show();
                       },
                       child: Container(
                         child: Image.asset(
@@ -310,9 +304,7 @@ class _CameraScreenState extends State<CameraScreen> {
       onPressed: () {
         Get.back();
         Get.back();
-        cameraScreenController.rewardedAd.show(
-          onUserEarnedReward: (ad, reward) {},
-        );
+        // imageListScreenController.interstitialAd.show();
       },
       text: 'Don\'t save'.toUpperCase(),
       color: AppColor.kBorderGradientColor3,
@@ -335,9 +327,7 @@ class _CameraScreenState extends State<CameraScreen> {
           Get.back();
         }
         Get.back();
-        cameraScreenController.rewardedAd.show(
-          onUserEarnedReward: (ad, reward) {},
-        );
+        cameraScreenController.interstitialAd.show();
       },
       text: 'save draft'.toUpperCase(),
       color: AppColor.kButtonCyanColor,

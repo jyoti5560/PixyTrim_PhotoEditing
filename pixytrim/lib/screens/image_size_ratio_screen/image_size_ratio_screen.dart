@@ -192,6 +192,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
                       );
 
                       await _capturePng(pRation: pixelRatio).then((value) {
+                        csController.interstitialAd.show();
                         Get.back();
                       });
                     },
@@ -474,6 +475,7 @@ class _ImageSizeRatioScreenState extends State<ImageSizeRatioScreen> {
 
     Widget continueButton = IconsButton(
       onPressed: () async {
+        csController.interstitialAd.show();
         Get.back();
         Get.back();
       },

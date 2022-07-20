@@ -56,9 +56,10 @@ class CameraScreenController extends GetxController {
   late AdWidget? adWidget;
   late BannerAdListener listener;
 
-  late RewardedAd rewardedAd;
+  // late RewardedAd rewardedAd;
+  late InterstitialAd interstitialAd;
 
-  void loadRewardedAd() {
+ /* void loadRewardedAd() {
     RewardedAd.load(
       adUnitId: AdHelper.rewardedAdUnitId,
       request: AdRequest(),
@@ -76,6 +77,40 @@ class CameraScreenController extends GetxController {
           print('Failed to load a rewarded ad: ${err.message}');
         },
       ),
+    );
+  }*/
+
+  void loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdHelper.interstitialAdUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          interstitialAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              loadInterstitialAd();
+            },
+          );
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load a interstitial ad: ${err.message}');
+        },
+      ),
+    );
+    interstitialAd.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (InterstitialAd ad) =>
+          print('%ad onAdShowedFullScreenContent.'),
+      onAdDismissedFullScreenContent: (InterstitialAd ad) {
+        print('$ad onAdDismissedFullScreenContent.');
+        ad.dispose();
+      },
+      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+        print('$ad onAdFailedToShowFullScreenContent: $error');
+        ad.dispose();
+      },
+      onAdImpression: (InterstitialAd ad) => print('$ad impression occurred.'),
     );
   }
 
@@ -121,7 +156,6 @@ class CameraScreenController extends GetxController {
     );
 
     myBanner.load();
-    loadRewardedAd();
     adWidget = AdWidget(
       ad: myBanner,
     );
@@ -357,7 +391,7 @@ class CameraScreenController extends GetxController {
       //   filterListWidget: bw2(width: 100, height: 100, fit: BoxFit.cover),
       // ),
     ];
-
+    loadInterstitialAd();
     super.onInit();
   }
 

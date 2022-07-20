@@ -181,6 +181,7 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
                     );
                     // Fluttertoast.showToast(msg: 'Please Wait...', toastLength: Toast.LENGTH_LONG, timeInSecForIosWeb: 1,);
                     await renameAndSaveImage().then((value) {
+                      csController.interstitialAd.show();
                       Get.back();
                     });
                   },
@@ -380,6 +381,7 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
 
     Widget continueButton = IconsButton(
       onPressed: () async {
+        csController.interstitialAd.show();
         Get.back();
         Get.back();
       },

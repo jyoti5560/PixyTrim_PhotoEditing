@@ -125,12 +125,12 @@ class _IndexScreenState extends State<IndexScreen> {
                                   Expanded(
                                     flex: 3,
                                     child: GestureDetector(
-                                      onTap: () {
+                                      /*onTap: () {
                                         Get.to(() => ProfileScreen(
                                               result: widget.result,
                                             ));
-                                      },
-                                      child: AddProfile(),
+                                      },*/
+                                      // child: AddProfile(),
                                     ),
                                   ),
                                 ],
