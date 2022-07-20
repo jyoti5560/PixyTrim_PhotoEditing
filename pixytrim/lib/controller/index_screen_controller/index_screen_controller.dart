@@ -27,9 +27,9 @@ class IndexScreenController extends GetxController {
 
   initAds() async {
     requestConfiguration = RequestConfiguration(
-      testDeviceIds: [
-        "7DC439E3F9AB79A198A10BB10E256801",
-      ],
+      // testDeviceIds: [
+      //   "7DC439E3F9AB79A198A10BB10E256801",
+      // ],
     );
     await MobileAds.instance.updateRequestConfiguration(requestConfiguration!);
   }
